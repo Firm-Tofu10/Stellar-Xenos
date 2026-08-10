@@ -10,11 +10,15 @@ param()
 $ErrorActionPreference = "Stop"
 
 . (Join-Path (Split-Path -Parent $PSCommandPath) "portrait-exit.ps1")
+. (Join-Path (Split-Path -Parent $PSCommandPath) "portrait-xenotypes.ps1")
 
 Add-Type -AssemblyName System.Drawing
 
 $SupportedExtensions = @(".png", ".jpg", ".jpeg", ".webp")
-$CanonicalPattern = '^dog(\d+)_(.+)_stellaris\.png$'
+# Canonical: dogNN_<name>_<xeno>_stellaris.png
+$CanonicalPattern = '^dog(\d+)_(.+)_([a-z]{3})_stellaris\.png$'
+# Legacy (pre-abbreviation) — still recognized for inventory / migration
+$LegacyCanonicalPattern = '^dog(\d+)_(.+)_stellaris\.png$'
 
 # ---------------------------------------------------------------------------
 # Path helpers
@@ -47,18 +51,37 @@ function Test-IsSupportedExtension {
 function Get-CanonicalPortraitInfo {
     param([string]$FileName)
 
-    $m = [regex]::Match($FileName.ToLowerInvariant(), $CanonicalPattern)
-    if (-not $m.Success) { return $null }
-
-    $rawName = $m.Groups[2].Value
-    if ([string]::IsNullOrWhiteSpace($rawName)) { return $null }
-
-    return [PSCustomObject]@{
-        FileName    = $FileName
-        Number      = [int]$m.Groups[1].Value
-        Name        = $rawName.ToLowerInvariant()
-        IsCanonical = $true
+    $lower = $FileName.ToLowerInvariant()
+    $m = [regex]::Match($lower, $CanonicalPattern)
+    if ($m.Success) {
+        $rawName = $m.Groups[2].Value
+        $abbr = $m.Groups[3].Value
+        if ([string]::IsNullOrWhiteSpace($rawName)) { return $null }
+        return [PSCustomObject]@{
+            FileName    = $FileName
+            Number      = [int]$m.Groups[1].Value
+            Name        = $rawName.ToLowerInvariant()
+            XenoAbbr    = $abbr
+            IsCanonical = $true
+            IsLegacy    = $false
+        }
     }
+
+    $legacy = [regex]::Match($lower, $LegacyCanonicalPattern)
+    if ($legacy.Success) {
+        $rawName = $legacy.Groups[2].Value
+        if ([string]::IsNullOrWhiteSpace($rawName)) { return $null }
+        return [PSCustomObject]@{
+            FileName    = $FileName
+            Number      = [int]$legacy.Groups[1].Value
+            Name        = $rawName.ToLowerInvariant()
+            XenoAbbr    = $null
+            IsCanonical = $true
+            IsLegacy    = $true
+        }
+    }
+
+    return $null
 }
 
 function Get-PortraitClassification {
@@ -283,9 +306,13 @@ function Read-DogNameInteractive {
 function Get-CanonicalFileName {
     param(
         [int]$Number,
-        [string]$Slug
+        [string]$Slug,
+        [string]$XenoAbbr
     )
-    return ("dog{0:D2}_{1}_stellaris.png" -f $Number, $Slug)
+    if ([string]::IsNullOrWhiteSpace($XenoAbbr)) {
+        throw "Canonical filename requires a xenotype abbreviation."
+    }
+    return ("dog{0:D2}_{1}_{2}_stellaris.png" -f $Number, $Slug, $XenoAbbr.ToLowerInvariant())
 }
 
 # ---------------------------------------------------------------------------
@@ -511,8 +538,9 @@ function Invoke-CandidateIntake {
         [string]$AssetsSource
     )
 
-    # Name FIRST (mandatory interactive). Numbering happens only after a valid name.
+    # Name first, then xenotype — filename is never used for either.
     $nameInfo = Read-DogNameInteractive -CandidateFileName $Candidate.Name
+    $xeno = Read-PortraitXenotypeInteractive -PortraitDisplayName $nameInfo.Display
 
     $live = Scan-ImgHere -ImgHere $ImgHere
     if ($live.Conflicts.Count -gt 0) {
@@ -522,13 +550,15 @@ function Invoke-CandidateIntake {
     $nextNumber = $live.Inventory.Next
     $existingNames = @($live.Canonical | ForEach-Object { $_.Name })
     $slug = $nameInfo.Slug
-    $canonicalName = Get-CanonicalFileName -Number $nextNumber -Slug $slug
+    $canonicalName = Get-CanonicalFileName -Number $nextNumber -Slug $slug -XenoAbbr $xeno.FilenameAbbr
 
     if (-not (Test-SdPipelineMode)) {
         Write-Host ""
         Write-Host ("Got it - preparing {0}..." -f $nameInfo.Display)
     }
 
+    # Portrait ID / DDS slug is the character name only — same name is a conflict
+    # even if the xenotype abbreviation would differ.
     if ($existingNames -contains $slug) {
         throw ("Conflict: a canonical portrait named '{0}' already exists. Refusing to create {1}." -f $slug, $canonicalName)
     }
@@ -589,10 +619,13 @@ function Invoke-CandidateIntake {
     }
 
     $global:STELLAR_DOGOS_LAST_DISPLAY_NAME = $nameInfo.Display
+    $global:STELLAR_DOGOS_LAST_XENOTYPE_ID = $xeno.Id
 
     return [PSCustomObject]@{
         CanonicalName = $canonicalName
         DisplayName   = $nameInfo.Display
+        XenotypeId    = $xeno.Id
+        XenoAbbr      = $xeno.FilenameAbbr
         ImgHerePath   = $destImgHere
         AssetsPath    = $destAssets
         Validation    = $v1

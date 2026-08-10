@@ -1,5 +1,5 @@
 # Stellar Dogos — Phase 5/7: Portrait Registration
-# Registers an existing Phase 4 DDS into the experiment mod:
+# Registers an existing Phase 4 DDS into the production mod (mod/stellar_dogos):
 #   portrait definition + xenotype portrait set + category exposure.
 # Does not convert images or touch vanilla Stellaris.
 
@@ -16,9 +16,11 @@ param(
 $ErrorActionPreference = "Stop"
 
 . (Join-Path (Split-Path -Parent $PSCommandPath) "portrait-exit.ps1")
+. (Join-Path (Split-Path -Parent $PSCommandPath) "portrait-paths.ps1")
 
 $DdsNamePattern = '^sd_dog_(.+)\.dds$'
-$ProtectedIds = @('sd_dog_piglet', 'sd_dog_02', 'sd_dog_angus', 'sd_dog_bruce', 'sd_dog_cedar')
+# Populated after paths resolve (every currently registered ID, including Maple).
+$ProtectedIds = @()
 
 . (Join-Path (Split-Path -Parent $PSCommandPath) "portrait-xenotypes.ps1")
 
@@ -27,8 +29,7 @@ $ProtectedIds = @('sd_dog_piglet', 'sd_dog_02', 'sd_dog_angus', 'sd_dog_bruce', 
 # ---------------------------------------------------------------------------
 
 function Get-RepoRoot {
-    $scriptDir = Split-Path -Parent $PSCommandPath
-    return (Resolve-Path (Join-Path $scriptDir "..")).Path
+    return Get-SdRepoRoot
 }
 
 function Resolve-DdsPath {
@@ -41,10 +42,11 @@ function Resolve-DdsPath {
         return (Resolve-Path -LiteralPath $SourceArg).Path
     }
 
+    $prod = Get-SdModPaths -RepoRoot $RepoRoot -Which Production
     $candidates = @(
         (Join-Path $RepoRoot $SourceArg),
-        (Join-Path $RepoRoot "experiment\sd_static_portrait_test\gfx\models\portraits\sd_static_test\$SourceArg"),
-        (Join-Path (Join-Path $RepoRoot "experiment\sd_static_portrait_test\gfx\models\portraits\sd_static_test") ([IO.Path]::GetFileName($SourceArg)))
+        (Join-Path $prod.DdsDir $SourceArg),
+        (Join-Path $prod.DdsDir ([IO.Path]::GetFileName($SourceArg)))
     )
 
     foreach ($c in $candidates) {
@@ -57,16 +59,9 @@ function Resolve-DdsPath {
 }
 
 function Get-ExperimentPaths {
+    # Compatibility alias — production is the canonical write target.
     param([string]$RepoRoot)
-
-    $exp = Join-Path $RepoRoot "experiment\sd_static_portrait_test"
-    return [PSCustomObject]@{
-        ExpRoot      = $exp
-        DdsDir       = Join-Path $exp "gfx\models\portraits\sd_static_test"
-        PortraitsTxt = Join-Path $exp "gfx\portraits\portraits\00_sd_static_test_portraits.txt"
-        SetTxt       = Join-Path $exp "common\portrait_sets\00_sd_static_test_portrait_sets.txt"
-        CategoryTxt  = Join-Path $exp "common\portrait_categories\zzz_sd_static_test_portrait_categories.txt"
-    }
+    return (Get-SdModPaths -RepoRoot $RepoRoot -Which Production)
 }
 
 # ---------------------------------------------------------------------------
@@ -313,7 +308,7 @@ function Build-PortraitsFile {
 
     $sb = New-Object System.Text.StringBuilder
     [void]$sb.AppendLine("##############################################################")
-    [void]$sb.AppendLine("### SD Static Portrait Test (EXPERIMENT ONLY)")
+    [void]$sb.AppendLine("### Stellar Dogos - static portrait definitions")
     [void]$sb.AppendLine("###")
     [void]$sb.AppendLine("### Portraits:")
     foreach ($id in $OrderedIds) {
@@ -347,12 +342,12 @@ function Build-SetsFile {
 
     $sb = New-Object System.Text.StringBuilder
     [void]$sb.AppendLine("##############################################################")
-    [void]$sb.AppendLine("### SD Static Portrait Test - portrait sets (EXPERIMENT ONLY)")
+    [void]$sb.AppendLine("### Stellar Dogos - portrait sets")
     [void]$sb.AppendLine("###")
     [void]$sb.AppendLine("### Pattern from vanilla common/portrait_sets/00_portrait_sets.txt:")
-    [void]$sb.AppendLine("### - species_class = <CLASS>")
+    [void]$sb.AppendLine("### - species_class = CLASS")
     [void]$sb.AppendLine("### - portraits = { `"id`" }")
-    [void]$sb.AppendLine("### - non_randomized_portraits so random AI empires avoid this test art")
+    [void]$sb.AppendLine("### - non_randomized_portraits so random AI empires avoid this art")
     [void]$sb.AppendLine("##############################################################")
     [void]$sb.AppendLine("")
 
@@ -381,12 +376,11 @@ function Build-CategoriesFile {
 
     $sb = New-Object System.Text.StringBuilder
     [void]$sb.AppendLine("##############################################################")
-    [void]$sb.AppendLine("### SD Static Portrait Test - category overrides (EXPERIMENT)")
+    [void]$sb.AppendLine("### Stellar Dogos - portrait category overrides")
     [void]$sb.AppendLine("###")
     [void]$sb.AppendLine("### Each block REPLACES the vanilla category of the same key so")
-    [void]$sb.AppendLine("### we can append one experiment set with minimal change.")
+    [void]$sb.AppendLine("### we can append one mod set with minimal change.")
     [void]$sb.AppendLine("### Vanilla set lists were copied from Stellaris 4.4.x.")
-    [void]$sb.AppendLine("### Revert method: delete this file from the experiment mod.")
     [void]$sb.AppendLine("##############################################################")
     [void]$sb.AppendLine("")
 
@@ -472,13 +466,11 @@ if (-not (Test-SdPipelineMode)) {
     Write-Host ("Registering as {0}..." -f $xeno.DisplayName)
     Write-Host ""
 }
-# Protect existing DDS hashes
-$protectedDds = @{
-    'sd_dog_piglet.dds' = $null
-    'sd_dog_02.dds'     = $null
-    'sd_dog_angus.dds'  = $null
-    'sd_dog_bruce.dds'  = $null
-    'sd_dog_cedar.dds'  = $null
+# Protect every currently registered portrait (IDs + DDS hashes), including Maple.
+$ProtectedIds = @(Get-SdProtectedPortraitIds -PortraitsTxt $paths.PortraitsTxt)
+$protectedDds = @{}
+foreach ($k in (Get-SdProtectedDdsFileNames -PortraitsTxt $paths.PortraitsTxt)) {
+    $protectedDds[$k] = $null
 }
 foreach ($k in @($protectedDds.Keys)) {
     $p = Join-Path $paths.DdsDir $k

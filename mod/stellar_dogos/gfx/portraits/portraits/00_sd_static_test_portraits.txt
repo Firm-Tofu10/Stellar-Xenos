@@ -1,0 +1,113 @@
+﻿##############################################################
+### Stellar Dogos - static portrait definitions
+###
+### Portraits:
+###   sd_dog_piglet - Piglet
+###   sd_dog_02 - Oakley
+###   sd_dog_angus - Angus
+###   sd_dog_bruce - Bruce
+###   sd_dog_cedar - Cedar
+###   sd_dog_liberty - Liberty
+###   sd_dog_sparrow - Sparrow
+###   sd_dog_maple - Maple
+###   sd_dog_lemon - Lemon
+###   sd_dog_pepper - Pepper
+###   sd_dog_nova - Nova
+###   sd_dog_zaldrin - Zaldrin
+###   sd_dog_blitz - Blitz
+##############################################################
+
+portraits = {
+	sd_dog_piglet = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_piglet.dds"
+	}
+
+	sd_dog_02 = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_02.dds"
+	}
+
+	sd_dog_angus = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_angus.dds"
+	}
+
+	sd_dog_bruce = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_bruce.dds"
+	}
+
+	sd_dog_cedar = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_cedar.dds"
+	}
+
+	sd_dog_liberty = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_liberty.dds"
+	}
+
+	sd_dog_sparrow = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "avian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_sparrow.dds"
+	}
+
+	sd_dog_maple = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_maple.dds"
+	}
+
+	sd_dog_lemon = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "reptilian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_lemon.dds"
+	}
+
+	sd_dog_pepper = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "reptilian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_pepper.dds"
+	}
+
+	sd_dog_nova = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "reptilian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_nova.dds"
+	}
+
+	sd_dog_zaldrin = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "avian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_zaldrin.dds"
+	}
+
+	sd_dog_blitz = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "fungoid_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_blitz.dds"
+	}
+
+}
+

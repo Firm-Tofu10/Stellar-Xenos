@@ -1,0 +1,75 @@
+﻿##############################################################
+### Stellar Dogos - portrait sets
+###
+### Pattern from vanilla common/portrait_sets/00_portrait_sets.txt:
+### - species_class = CLASS
+### - portraits = { "id" }
+### - non_randomized_portraits so random AI empires avoid this art
+##############################################################
+
+sd_static_test = {
+	species_class = MAM
+
+	portraits = {
+		"sd_dog_piglet"
+		"sd_dog_02"
+		"sd_dog_angus"
+		"sd_dog_bruce"
+		"sd_dog_cedar"
+		"sd_dog_liberty"
+		"sd_dog_maple"
+	}
+
+	non_randomized_portraits = {
+		"sd_dog_piglet"
+		"sd_dog_02"
+		"sd_dog_angus"
+		"sd_dog_bruce"
+		"sd_dog_cedar"
+		"sd_dog_liberty"
+		"sd_dog_maple"
+	}
+}
+
+sd_static_test_avi = {
+	species_class = AVI
+
+	portraits = {
+		"sd_dog_sparrow"
+		"sd_dog_zaldrin"
+	}
+
+	non_randomized_portraits = {
+		"sd_dog_sparrow"
+		"sd_dog_zaldrin"
+	}
+}
+
+sd_static_test_rep = {
+	species_class = REP
+
+	portraits = {
+		"sd_dog_lemon"
+		"sd_dog_pepper"
+		"sd_dog_nova"
+	}
+
+	non_randomized_portraits = {
+		"sd_dog_lemon"
+		"sd_dog_pepper"
+		"sd_dog_nova"
+	}
+}
+
+sd_static_test_fun = {
+	species_class = FUN
+
+	portraits = {
+		"sd_dog_blitz"
+	}
+
+	non_randomized_portraits = {
+		"sd_dog_blitz"
+	}
+}
+

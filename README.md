@@ -26,7 +26,7 @@ These prompts are **not** Stellar Dogos software commands. They do **not** creat
 7. Run the Portrait Creator (command below).
 8. Enter the **character's name**.
 9. Select the **Stellaris species type** (should match the prompt you used).
-10. Stellar Dogos prepares the technical game files and registers the portrait in the experiment mod.
+10. Stellar Dogos prepares the technical game files and registers the portrait in the production mod.
 11. Enable the mod in Stellaris and create a species of that type to find your portrait.
 
 ```text
@@ -42,10 +42,10 @@ Generated Stellaris-style portrait
 ImgHERE/
         │
         ▼
-Portrait Creator (name + species type)
+Portrait Creator (name → species type → canonical filename)
         │
         ▼
-Stellaris (experiment mod)
+Stellaris (mod/stellar_dogos)
 ```
 
 ---
@@ -56,9 +56,10 @@ Stellaris (experiment mod)
 |------|--------|
 | Image-generation prompt library (xenotype prompts) | **DOCUMENTED** — see [docs/portrait-generation-prompts.md](docs/portrait-generation-prompts.md) |
 | Technical pipeline (intake → DDS → register) | **IMPLEMENTED** / working |
-| Interactive species-type selector | **IMPLEMENTED** for the types listed in the tool (not Toxoid) |
+| Interactive species-type selector | **IMPLEMENTED** (12 types, including Toxoid) |
 | Toxoid generation prompt | **DOCUMENTED** |
-| Toxoid in Portrait Creator selector | **NOT YET IMPLEMENTED** (intentional) |
+| Toxoid in Portrait Creator selector / registration | **IMPLEMENTED** (Stellaris 4.4.x `toxoids` / `TOX`) |
+| Canonical PNG naming (`dogNN_<name>_<xeno>_stellaris.png`) | **IMPLEMENTED** |
 | Species creation (Piglet / Oakley / Angus) | **CONFIRMED** on Stellaris **v4.4.6** |
 | Full UI compatibility (leaders, diplomacy, …) | **NEEDS VERIFICATION** |
 | Steam Workshop | **FUTURE** / not ready |
@@ -74,7 +75,7 @@ Full xenotype prompts live here:
 
 Each documented prompt is meant to preserve the reference subject's identity while transforming biology to that Stellaris xenotype (not a generic alien, and not a human with a costume).
 
-**Note:** In the current source export, **Mammalian** and **Machine** generation prompts were **not present** as full prompt bodies. **Toxoid** is documented as a generation prompt only. See the inventory table in that file.
+**Note:** In the current source export, **Mammalian** and **Machine** generation prompts were **not present** as full prompt bodies. **Toxoid** has a documented generation prompt and is also available in the Portrait Creator selector. See the inventory table in that file.
 
 Older dog-development framing prompts remain in [docs/portrait-prompts.md](docs/portrait-prompts.md).
 
@@ -94,10 +95,10 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools\portrait-pipeline.ps1
 
 4. The tool shows which image it found.
 5. Enter the character's name.
-6. Select the Stellaris species type with **↑ / ↓**, then **Enter**.
-7. Wait for success, then enable the experiment mod in Stellaris.
+6. Select the Stellaris species type with **↑ / ↓**, then **Enter** (includes **Toxoid**).
+7. Wait for success, then enable the **Stellar Dogos** production mod in Stellaris.
 
-You do **not** need to manually create DDS files, portrait IDs, definitions, sets, categories, or dog numbers. The tool handles those.
+You do **not** need to manually create DDS files, portrait IDs, definitions, sets, categories, or dog numbers. The tool handles those. Candidate filenames in `ImgHERE/` are never interpreted as the character name, xenotype, or sequence number.
 
 ### What you will see (summary)
 
@@ -108,26 +109,55 @@ New portrait found:
   your_image.png
 
 What is this character's name?
-> …
+> Lemon
 
 Which Stellaris species type should this portrait belong to?
-…
+This determines which Stellaris species category the portrait will appear under.
+Use ↑ / ↓ to choose, then press Enter.
+  Mammalian
+  …
+> Reptilian
+  …
+  Toxoid
+
+✓ Reptilian selected.
+Preparing your portrait...
 
 ✓ Portrait created successfully!
+Name: Lemon
+Species type: Reptilian
 ```
 
-### Toxoid reminder
+Canonical source filename example: `dog06_lemon_rep_stellaris.png`  
+DDS / portrait ID stay name-based: `sd_dog_lemon.dds` / `sd_dog_lemon`
 
-You can use the **Toxoid** image-generation prompt from the library to create artwork, but the Portrait Creator **does not yet** offer Toxoid in its species-type menu. Registering Toxoid portraits is a **future** software task.
+### Filename abbreviations (canonical PNGs only)
+
+| Xenotype | Filename abbreviation |
+|----------|-----------------------|
+| Mammalian | mam |
+| Avian | avi |
+| Reptilian | rep |
+| Amphibian | amp |
+| Arthropoid | art |
+| Molluscoid | mol |
+| Fungoid | fun |
+| Plantoid | pla |
+| Lithoid | lit |
+| Necroid | nec |
+| Machine | mac |
+| Toxoid | tox |
 
 ---
 
 ## Enable the mod in Stellaris
 
-Working mod folder: `experiment/sd_static_portrait_test/`
+Working mod folder: `mod/stellar_dogos/`
 
-1. Point a `.mod` descriptor at that folder if needed.
-2. In the launcher, enable **SD Static Portrait Test**.
+(`experiment/sd_static_portrait_test/` remains as a temporary regression/reference copy until a later cleanup task.)
+
+1. Point a `.mod` descriptor at `mod/stellar_dogos/` if needed (forward slashes; no developer-only absolute path required inside the package `descriptor.mod`).
+2. In the launcher, enable **Stellar Dogos**.
 3. Create an empire → pick the species type you chose → select your portrait.
 
 Do **not** edit the vanilla Stellaris installation.
@@ -142,13 +172,12 @@ Do **not** edit the vanilla Stellaris installation.
 4. Save into `ImgHERE/` (any temporary filename is fine).
 5. Run `tools\portrait-pipeline.ps1`.
 6. Enter a name; select **Avian**.
-7. Play Stellaris with the experiment mod enabled.
+7. Play Stellaris with the **Stellar Dogos** production mod enabled.
 
 ---
 
 ## Future work (not implemented)
 
-- Toxoid in the interactive selector / registration path  
 - Leader portrait variants  
 - Changing xenotype on an existing portrait  
 - Broader verification across Stellaris UI contexts  

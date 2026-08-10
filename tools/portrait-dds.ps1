@@ -13,9 +13,11 @@ param(
 
 $ErrorActionPreference = "Stop"
 . (Join-Path (Split-Path -Parent $PSCommandPath) "portrait-exit.ps1")
+. (Join-Path (Split-Path -Parent $PSCommandPath) "portrait-paths.ps1")
 Add-Type -AssemblyName System.Drawing
 
-$CanonicalSourcePattern = '^dog(\d+)_(.+)_stellaris\.png$'
+$CanonicalSourcePattern = '^dog(\d+)_(.+)_([a-z]{3})_stellaris\.png$'
+$LegacyCanonicalSourcePattern = '^dog(\d+)_(.+)_stellaris\.png$'
 $DdsSize = 256
 
 # ---------------------------------------------------------------------------
@@ -54,19 +56,32 @@ function Resolve-SourcePath {
 
 function Get-DdsOutputDir {
     param([string]$RepoRoot)
-    return Join-Path $RepoRoot "experiment\sd_static_portrait_test\gfx\models\portraits\sd_static_test"
+    return (Get-SdModPaths -RepoRoot $RepoRoot -Which Production).DdsDir
 }
 
 function Get-CanonicalSourceInfo {
     param([string]$FileName)
 
-    $m = [regex]::Match($FileName.ToLowerInvariant(), $CanonicalSourcePattern)
-    if (-not $m.Success) { return $null }
-
-    return [PSCustomObject]@{
-        Number = [int]$m.Groups[1].Value
-        Name   = $m.Groups[2].Value.ToLowerInvariant()
+    $lower = $FileName.ToLowerInvariant()
+    $m = [regex]::Match($lower, $CanonicalSourcePattern)
+    if ($m.Success) {
+        return [PSCustomObject]@{
+            Number   = [int]$m.Groups[1].Value
+            Name     = $m.Groups[2].Value.ToLowerInvariant()
+            XenoAbbr = $m.Groups[3].Value.ToLowerInvariant()
+        }
     }
+
+    $legacy = [regex]::Match($lower, $LegacyCanonicalSourcePattern)
+    if ($legacy.Success) {
+        return [PSCustomObject]@{
+            Number   = [int]$legacy.Groups[1].Value
+            Name     = $legacy.Groups[2].Value.ToLowerInvariant()
+            XenoAbbr = $null
+        }
+    }
+
+    return $null
 }
 
 function Get-DdsFileName {
@@ -387,8 +402,8 @@ if (Test-Path -LiteralPath $outPath) {
     return
 }
 
-# Regression snapshots (read-only)
-$protected = @('sd_dog_piglet.dds', 'sd_dog_02.dds', 'sd_dog_angus.dds')
+# Regression snapshots (read-only) — every currently registered portrait DDS.
+$protected = @(Get-SdProtectedDdsFileNames)
 $hashesBefore = @{}
 foreach ($f in $protected) {
     $p = Join-Path $ddsDir $f

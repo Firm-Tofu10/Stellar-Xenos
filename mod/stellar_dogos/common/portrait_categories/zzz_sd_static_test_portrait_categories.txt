@@ -1,0 +1,56 @@
+﻿##############################################################
+### Stellar Dogos - portrait category overrides
+###
+### Each block REPLACES the vanilla category of the same key so
+### we can append one mod set with minimal change.
+### Vanilla set lists were copied from Stellaris 4.4.x.
+##############################################################
+
+mammalians = {
+	name = MAM
+
+	sets = {
+		mammalians
+		cybernetic_mammalians
+		biogenesis_mammalians
+		psionic_mammalians
+		sd_static_test
+	}
+}
+
+avians = {
+	name = AVI
+
+	sets = {
+		avians
+		cybernetic_avians
+		synthetic_avians
+		biogenesis_avians
+		psionic_avians
+		sd_static_test_avi
+	}
+}
+
+reptilians = {
+	name = REP
+
+	sets = {
+		reptilians
+		cybernetic_reptilians
+		biogenesis_reptilians
+		pdx_signup_reptilian
+		sd_static_test_rep
+	}
+}
+
+fungoids = {
+	name = FUN
+
+	sets = {
+		fungoids
+		cybernetic_fungoids
+		psionic_fungoids
+		sd_static_test_fun
+	}
+}
+

@@ -67,14 +67,17 @@ Designed to support additional dogs later.
 | Phase 4 DDS generation | **IMPLEMENTED** (`tools/portrait-dds.ps1`) |
 | Phase 5 Stellaris registration | **IMPLEMENTED** (`tools/portrait-register.ps1`) |
 | Phase 6 end-to-end pipeline | **IMPLEMENTED** (`tools/portrait-pipeline.ps1`) |
-| Phase 7 xenotype selection | **IMPLEMENTED** (`tools/portrait-xenotypes.ps1`) — Mam/Avi files **CONFIRMED**; in-game **NEEDS VERIFICATION** |
-| Xenotype image-generation prompt library | **DOCUMENTED** ([docs/portrait-generation-prompts.md](docs/portrait-generation-prompts.md)); Mammalian & Machine bodies **ABSENT** from source export; Toxoid prompt **DOCUMENTED**, selector **NOT YET IMPLEMENTED** |
+| Phase 7 xenotype selection | **IMPLEMENTED** (`tools/portrait-xenotypes.ps1`) — 12 types including Toxoid; Mam/Avi/Rep/Fun file paths **CONFIRMED**; in-game **NEEDS VERIFICATION** |
+| Canonical PNG naming (`dogNN_<name>_<xeno>_stellaris.png`) | **IMPLEMENTED** — xenotype abbreviation in source filename only; DDS/ID unchanged |
+| Xenotype image-generation prompt library | **DOCUMENTED** ([docs/portrait-generation-prompts.md](docs/portrait-generation-prompts.md)); Mammalian & Machine bodies **ABSENT** from source export; Toxoid prompt **DOCUMENTED**; Toxoid selector/registration **IMPLEMENTED** |
 | Full UI compatibility (leaders, council, diplomacy, …) | **NEEDS VERIFICATION** |
 | Steam Workshop release | **NOT READY** |
 
 Working implementation lives in:
 
-`experiment/sd_static_portrait_test/`
+`mod/stellar_dogos/`
+
+(`experiment/sd_static_portrait_test/` is retained temporarily as a regression/reference copy.)
 
 ---
 

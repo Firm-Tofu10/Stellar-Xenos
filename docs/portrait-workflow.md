@@ -63,7 +63,11 @@ Do not describe `texturefile` as merely theoretical. Do not claim vanilla curren
 
 ## 3. Proof-of-concept path
 
-Working experiment:
+Production mod (canonical):
+
+`mod/stellar_dogos/`
+
+Regression/reference copy (temporary):
 
 `experiment/sd_static_portrait_test/`
 
@@ -125,24 +129,44 @@ Initial implementation used a raw photo cutout. Regenerated Stellaris-style art 
 
 ### Canonical internal filename (pipeline format)
 
-The pipeline’s stable internal name remains:
+The pipeline’s stable internal name is:
 
-`dog##_<name>_stellaris.png`
+`dog##_<name>_<xeno>_stellaris.png`
 
-Examples already in use:
+Examples:
 
-- `dog01_piglet_stellaris.png`
-- `dog02_oakley_stellaris.png`
-- `dog03_angus_stellaris.png`
+- `dog01_piglet_mam_stellaris.png`
+- `dog02_oakley_mam_stellaris.png`
+- `dog03_angus_mam_stellaris.png`
+- `dog06_lemon_rep_stellaris.png`
+- `dog08_zaldrin_avi_stellaris.png`
 
-Users are **not** required to invent or type this format. Numbering and canonical renaming are tool responsibilities (Phase 3.1 design).
+Users are **not** required to invent or type this format. Numbering, xenotype abbreviation, and canonical renaming are tool responsibilities. The source filename in `ImgHERE/` never implies name, xenotype, or sequence number.
+
+DDS files and portrait IDs remain name-based only (`sd_dog_<name>.dds` / `sd_dog_<name>`) — the xenotype abbreviation is **not** part of the portrait ID.
+
+| Xenotype | Filename abbreviation |
+|----------|-----------------------|
+| Mammalian | mam |
+| Avian | avi |
+| Reptilian | rep |
+| Amphibian | amp |
+| Arthropoid | art |
+| Molluscoid | mol |
+| Fungoid | fun |
+| Plantoid | pla |
+| Lithoid | lit |
+| Necroid | nec |
+| Machine | mac |
+| Toxoid | tox |
 
 ### Phase 3.1 user flow (**IMPLEMENTED** — `tools/portrait-intake.ps1`)
 
 ```text
-Drop a dog image into ImgHERE
-  → run tools/portrait-intake.ps1
-  → enter the dog's name when prompted
+Drop any supported image into ImgHERE
+  → run tools/portrait-intake.ps1 (or full pipeline)
+  → enter the character's name when prompted
+  → select Stellaris species type (↑/↓; includes Toxoid)
   → tool assigns the next available dog number
   → tool prepares the canonical source image
 ```
@@ -151,15 +175,16 @@ Supported drop formats: PNG, JPG/JPEG, WEBP (System.Drawing must be able to load
 
 ```text
 ImgHERE/<any supported image>
-  → console: "What is this dog's name?" / "> "
-  → e.g. Liberty → dog04_liberty_stellaris.png
-  → ImgHERE/dog04_liberty_stellaris.png
-  → assets/source/dog04_liberty_stellaris.png
+  → console: "What is this character's name?" / "> "
+  → e.g. Liberty
+  → species type: Mammalian → dog04_liberty_mam_stellaris.png
+  → ImgHERE/dog04_liberty_mam_stellaris.png
+  → assets/source/dog04_liberty_mam_stellaris.png
   → temporary input deleted from ImgHERE after successful validation
-  → STOP (Phase 3.1)
+  → STOP (Phase 3.1) or continue (pipeline)
 ```
 
-If a file is **already** named `dog##_<name>_stellaris.png`, do not ask again — it is reported as canonical.
+If a file is **already** named `dog##_<name>_<xeno>_stellaris.png`, do not ask again — it is reported as canonical. Legacy `dog##_<name>_stellaris.png` files are still recognized for inventory/migration.
 
 Conflicts: if the target canonical name already exists, stop and explain; never overwrite existing canons.
 
@@ -188,7 +213,7 @@ Generated portrait
   ↓
 ImgHERE/   (drop any supported image; tool will name — or use existing canon)
   ↓
-copy / write prepared canon to assets/source/dog##_<name>_stellaris.png
+copy / write prepared canon to assets/source/dog##_<name>_<xeno>_stellaris.png
   ↓
 validate alpha
   ↓
@@ -226,10 +251,10 @@ Paths:
 |------|------|
 | Staging | `ImgHERE/` |
 | Source archive | `assets/source/` |
-| Game DDS | `experiment/sd_static_portrait_test/gfx/models/portraits/sd_static_test/` |
-| Portrait defs | `experiment/sd_static_portrait_test/gfx/portraits/portraits/` |
-| Portrait sets | `experiment/sd_static_portrait_test/common/portrait_sets/` |
-| Category override | `experiment/sd_static_portrait_test/common/portrait_categories/` |
+| Game DDS | `mod/stellar_dogos/gfx/models/portraits/sd_static_test/` |
+| Portrait defs | `mod/stellar_dogos/gfx/portraits/portraits/` |
+| Portrait sets | `mod/stellar_dogos/common/portrait_sets/` |
+| Category override | `mod/stellar_dogos/common/portrait_categories/` |
 
 Keep source PNGs and game DDS separate.
 
@@ -301,7 +326,7 @@ High-resolution canonical PNGs stay in `assets/source/`. DDS is the game texture
 - `tools/portrait-xenotypes.ps1` — isolated xenotype → Stellaris mapping
 - `tools/portrait-pipeline.ps1` — intake → DDS → register (name + xenotype)
 
-Registration uses the proven `texturefile` pattern. Players pick a friendly species type (arrow-key menu); the tool maps that to the correct experiment set/category. It does **not** prove every Stellaris UI context.
+Registration uses the proven `texturefile` pattern. Players pick a friendly species type (arrow-key menu; one in-place selection highlight); the tool maps that to the correct set/category under `mod/stellar_dogos/`. It does **not** prove every Stellaris UI context. Toxoid uses vanilla `toxoids` / `TOX` / `tox_portrait_01`.
 
 ### Phase 7 xenotype proof
 
@@ -309,6 +334,9 @@ Registration uses the proven `texturefile` pattern. Players pick a friendly spec
 |------|--------|
 | Liberty → Mammalian / `sd_static_test` | **CONFIRMED** (files) |
 | Sparrow → Avian / `sd_static_test_avi` | **CONFIRMED** (files) |
+| Lemon → Reptilian / `sd_static_test_rep` | **CONFIRMED** (files) |
+| Blitz → Fungoid / `sd_static_test_fun` | **CONFIRMED** (files) |
+| Toxoid registration path (`sd_static_test_tox`) | **CONFIRMED** (file registration; cleaned after test) |
 | Invalid xenotype rejected | **CONFIRMED** |
 | Idempotent re-register | **CONFIRMED** |
 | Cross-xenotype move refused | **CONFIRMED** |

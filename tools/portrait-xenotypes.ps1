@@ -1,7 +1,10 @@
 # Stellar Dogos — Phase 7: Xenotype catalog (isolated mapping)
-# Dot-source from portrait-register.ps1 / portrait-pipeline.ps1.
+# Dot-source from portrait-register.ps1 / portrait-pipeline.ps1 / portrait-intake.ps1.
 # Vanilla category keys / species_class / set lists inspected from Stellaris 4.4.x
 # common/portrait_categories/00_portrait_categories.txt (read-only).
+#
+# FilenameAbbr is for canonical PNG names only (dogNN_name_<abbr>_stellaris.png).
+# It is NOT a Stellaris species_class and must never be used as a portrait ID.
 
 function Get-PortraitXenotypeCatalog {
     # Order = console menu order. DisplayName is user-facing; Ids/classes are internal.
@@ -9,6 +12,7 @@ function Get-PortraitXenotypeCatalog {
         [PSCustomObject]@{
             Id              = "mammalian"
             DisplayName     = "Mammalian"
+            FilenameAbbr    = "mam"
             CategoryKey     = "mammalians"
             SpeciesClass    = "MAM"
             SetName         = "sd_static_test"          # historical / existing set — do not rename
@@ -18,6 +22,7 @@ function Get-PortraitXenotypeCatalog {
         [PSCustomObject]@{
             Id              = "avian"
             DisplayName     = "Avian"
+            FilenameAbbr    = "avi"
             CategoryKey     = "avians"
             SpeciesClass    = "AVI"
             SetName         = "sd_static_test_avi"
@@ -27,6 +32,7 @@ function Get-PortraitXenotypeCatalog {
         [PSCustomObject]@{
             Id              = "reptilian"
             DisplayName     = "Reptilian"
+            FilenameAbbr    = "rep"
             CategoryKey     = "reptilians"
             SpeciesClass    = "REP"
             SetName         = "sd_static_test_rep"
@@ -37,6 +43,7 @@ function Get-PortraitXenotypeCatalog {
             # User-facing label is Amphibian; Stellaris class remains AQUATIC.
             Id              = "aquatic"
             DisplayName     = "Amphibian"
+            FilenameAbbr    = "amp"
             CategoryKey     = "aquatics"
             SpeciesClass    = "AQUATIC"
             SetName         = "sd_static_test_aquatic"
@@ -46,6 +53,7 @@ function Get-PortraitXenotypeCatalog {
         [PSCustomObject]@{
             Id              = "arthropoid"
             DisplayName     = "Arthropoid"
+            FilenameAbbr    = "art"
             CategoryKey     = "arthropoids"
             SpeciesClass    = "ART"
             SetName         = "sd_static_test_art"
@@ -55,6 +63,7 @@ function Get-PortraitXenotypeCatalog {
         [PSCustomObject]@{
             Id              = "molluscoid"
             DisplayName     = "Molluscoid"
+            FilenameAbbr    = "mol"
             CategoryKey     = "molluscoids"
             SpeciesClass    = "MOL"
             SetName         = "sd_static_test_mol"
@@ -64,6 +73,7 @@ function Get-PortraitXenotypeCatalog {
         [PSCustomObject]@{
             Id              = "fungoid"
             DisplayName     = "Fungoid"
+            FilenameAbbr    = "fun"
             CategoryKey     = "fungoids"
             SpeciesClass    = "FUN"
             SetName         = "sd_static_test_fun"
@@ -73,6 +83,7 @@ function Get-PortraitXenotypeCatalog {
         [PSCustomObject]@{
             Id              = "plantoid"
             DisplayName     = "Plantoid"
+            FilenameAbbr    = "pla"
             CategoryKey     = "plantoids"
             SpeciesClass    = "PLANT"
             SetName         = "sd_static_test_plant"
@@ -82,6 +93,7 @@ function Get-PortraitXenotypeCatalog {
         [PSCustomObject]@{
             Id              = "lithoid"
             DisplayName     = "Lithoid"
+            FilenameAbbr    = "lit"
             CategoryKey     = "lithoids"
             SpeciesClass    = "LITHOID"
             SetName         = "sd_static_test_lithoid"
@@ -91,6 +103,7 @@ function Get-PortraitXenotypeCatalog {
         [PSCustomObject]@{
             Id              = "necroid"
             DisplayName     = "Necroid"
+            FilenameAbbr    = "nec"
             CategoryKey     = "necroids"
             SpeciesClass    = "NECROID"
             SetName         = "sd_static_test_necroid"
@@ -100,11 +113,27 @@ function Get-PortraitXenotypeCatalog {
         [PSCustomObject]@{
             Id              = "machine"
             DisplayName     = "Machine"
+            FilenameAbbr    = "mac"
             CategoryKey     = "machines"
             SpeciesClass    = "MACHINE"
             SetName         = "sd_static_test_machine"
             GreetingSound   = "robot_mammalian_greetings"
             VanillaSets     = @("machines", "biogenesis_machines", "psionic_machines")
+        }
+        [PSCustomObject]@{
+            # Verified from Stellaris 4.4.x:
+            #   portrait_categories: toxoids { name = TOX; sets = { toxoids } }
+            #   portrait_sets: toxoids { species_class = TOX }
+            #   species_classes: TOX = { ... }
+            #   greeting example: tox_portrait_01
+            Id              = "toxoid"
+            DisplayName     = "Toxoid"
+            FilenameAbbr    = "tox"
+            CategoryKey     = "toxoids"
+            SpeciesClass    = "TOX"
+            SetName         = "sd_static_test_tox"
+            GreetingSound   = "tox_portrait_01"
+            VanillaSets     = @("toxoids")
         }
     )
 }
@@ -138,7 +167,9 @@ function Resolve-PortraitXenotype {
     }
 
     foreach ($x in $catalog) {
-        if ($x.Id -eq $lower -or $x.DisplayName.ToLowerInvariant() -eq $lower) {
+        if ($x.Id -eq $lower -or
+            $x.DisplayName.ToLowerInvariant() -eq $lower -or
+            $x.FilenameAbbr -eq $lower) {
             return $x
         }
     }
@@ -161,22 +192,50 @@ function Read-PortraitXenotypeArrowMenu {
 
     $selected = 0
     $menuTop = [Console]::CursorTop
+    $menuLines = $Catalog.Count
     $prevVisible = [Console]::CursorVisible
     [Console]::CursorVisible = $false
+    $esc = [char]27
+
+    function Move-CursorToMenuTop {
+        try {
+            if ($menuTop -ge 0 -and $menuTop -lt [Console]::BufferHeight) {
+                [Console]::SetCursorPosition(0, $menuTop)
+                return $true
+            }
+        } catch { }
+        try {
+            [Console]::CursorTop = $menuTop
+            [Console]::CursorLeft = 0
+            return $true
+        } catch { }
+        # Absolute reposition failed (scrolled buffer). Move up relatively via VT.
+        try {
+            $cur = [Console]::CursorTop
+            if ($cur -ge $menuLines) {
+                Write-Host -NoNewline ("{0}[{1}A" -f $esc, $menuLines)
+                return $true
+            }
+        } catch { }
+        return $false
+    }
 
     function Write-XenoMenu {
         param([int]$SelectedIndex)
-        try {
-            [Console]::SetCursorPosition(0, $menuTop)
-        } catch {
-            # Some hosts disallow SetCursorPosition; fall through and rewrite below.
+
+        $repositioned = Move-CursorToMenuTop
+        if (-not $repositioned) {
+            # Last resort: do not print a second copy; skip redraw.
+            return
         }
+
         for ($i = 0; $i -lt $Catalog.Count; $i++) {
+            Write-Host -NoNewline ("{0}[2K" -f $esc)
             $label = $Catalog[$i].DisplayName
             if ($i -eq $SelectedIndex) {
-                Write-Host (("  > {0}" -f $label).PadRight(36)) -ForegroundColor Cyan
+                Write-Host (("  > {0}" -f $label).PadRight(40)) -ForegroundColor Cyan
             } else {
-                Write-Host (("    {0}" -f $label).PadRight(36))
+                Write-Host (("    {0}" -f $label).PadRight(40))
             }
         }
     }
@@ -185,6 +244,10 @@ function Read-PortraitXenotypeArrowMenu {
         Write-XenoMenu -SelectedIndex $selected
         while ($true) {
             $key = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+            # Ignore key-up / repeat noise if present.
+            if ($null -ne $key.PSObject.Properties["KeyDown"] -and -not $key.KeyDown) {
+                continue
+            }
             switch ($key.VirtualKeyCode) {
                 38 { # Up arrow
                     $selected = ($selected - 1)
@@ -196,7 +259,12 @@ function Read-PortraitXenotypeArrowMenu {
                     Write-XenoMenu -SelectedIndex $selected
                 }
                 13 { # Enter
-                    Write-Host ""
+                    try {
+                        [Console]::CursorTop = $menuTop + $menuLines
+                        [Console]::CursorLeft = 0
+                    } catch {
+                        Write-Host ""
+                    }
                     $check = [char]0x2713
                     Write-Host ("{0} {1} selected." -f $check, $Catalog[$selected].DisplayName)
                     return $Catalog[$selected]

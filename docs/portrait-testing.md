@@ -95,7 +95,7 @@ Also note `error.log` / `game.log` lines mentioning the portrait ID or DDS path 
 
 ## Suggested audit procedure (Phase 2)
 
-1. Enable the current experiment mod (`experiment/sd_static_portrait_test/`).
+1. Enable the production mod (`mod/stellar_dogos/`). The experiment folder may still exist as a reference copy.
 2. Create or load an empire using **Oakley** (`sd_dog_02`).
 3. Walk the matrix above in a single play session when possible.
 4. Capture notes (and screenshots if useful) per row.

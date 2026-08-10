@@ -18,12 +18,14 @@ param()
 
 $ErrorActionPreference = "Stop"
 
-$ProtectedDds = @('sd_dog_piglet.dds', 'sd_dog_02.dds', 'sd_dog_angus.dds')
-$CanonicalPattern = '^dog(\d+)_(.+)_stellaris\.png$'
+. (Join-Path (Split-Path -Parent $PSCommandPath) "portrait-exit.ps1")
+. (Join-Path (Split-Path -Parent $PSCommandPath) "portrait-paths.ps1")
+
+$CanonicalPattern = '^dog(\d+)_(.+)_([a-z]{3})_stellaris\.png$'
+$LegacyCanonicalPattern = '^dog(\d+)_(.+)_stellaris\.png$'
 
 function Get-RepoRoot {
-    $scriptDir = Split-Path -Parent $PSCommandPath
-    return (Resolve-Path (Join-Path $scriptDir "..")).Path
+    return Get-SdRepoRoot
 }
 
 function Get-Sha256Map {
@@ -73,7 +75,10 @@ function Get-CanonicalNames {
     if (-not (Test-Path -LiteralPath $Directory)) { return @() }
     return @(
         Get-ChildItem -LiteralPath $Directory -File |
-            Where-Object { $_.Name -match $CanonicalPattern } |
+            Where-Object {
+                $n = $_.Name.ToLowerInvariant()
+                ($n -match $CanonicalPattern) -or ($n -match $LegacyCanonicalPattern)
+            } |
             ForEach-Object { $_.Name } |
             Sort-Object
     )
@@ -130,23 +135,24 @@ $repoRoot = Get-RepoRoot
 $toolsDir = Join-Path $repoRoot "tools"
 $imgHere = Join-Path $repoRoot "ImgHERE"
 $assetsSource = Join-Path $repoRoot "assets\source"
-$ddsDir = Join-Path $repoRoot "experiment\sd_static_portrait_test\gfx\models\portraits\sd_static_test"
+$modPaths = Get-SdModPaths -RepoRoot $repoRoot -Which Production
+$ddsDir = $modPaths.DdsDir
+$ProtectedDds = @(Get-SdProtectedDdsFileNames -PortraitsTxt $modPaths.PortraitsTxt)
 $intakeScript = Join-Path $toolsDir "portrait-intake.ps1"
 $ddsScript = Join-Path $toolsDir "portrait-dds.ps1"
 $registerScript = Join-Path $toolsDir "portrait-register.ps1"
 $xenotypesScript = Join-Path $toolsDir "portrait-xenotypes.ps1"
-$exitHelper = Join-Path $toolsDir "portrait-exit.ps1"
+$pathsHelper = Join-Path $toolsDir "portrait-paths.ps1"
 
 Write-Host "Stellar Dogos - Portrait Creator"
 Write-Host ""
 
-foreach ($required in @($imgHere, $assetsSource, $ddsDir, $intakeScript, $ddsScript, $registerScript, $xenotypesScript, $exitHelper)) {
+foreach ($required in @($imgHere, $assetsSource, $ddsDir, $modPaths.PortraitsTxt, $modPaths.SetTxt, $modPaths.CategoryTxt, $intakeScript, $ddsScript, $registerScript, $xenotypesScript, $pathsHelper)) {
     if (-not (Test-Path -LiteralPath $required)) {
         throw ("Required path missing: {0}" -f $required)
     }
 }
 
-. $exitHelper
 . $xenotypesScript
 
 $env:STELLAR_DOGOS_PIPELINE = "1"
@@ -154,6 +160,7 @@ try {
     $hashesBefore = Get-Sha256Map -Directory $ddsDir -FileNames $ProtectedDds
     $canonsBefore = Get-CanonicalNames -Directory $imgHere
     $global:STELLAR_DOGOS_LAST_DISPLAY_NAME = $null
+    $global:STELLAR_DOGOS_LAST_XENOTYPE_ID = $null
 
     $intakeResult = Invoke-ChildScript -ScriptPath $intakeScript -PhaseName "portrait preparation"
 
@@ -190,9 +197,10 @@ try {
 
     $m = [regex]::Match($canonicalName.ToLowerInvariant(), $CanonicalPattern)
     if (-not $m.Success) {
-        throw ("Unexpected prepared filename: {0}" -f $canonicalName)
+        throw ("Unexpected prepared filename (expected dogNN_name_xeno_stellaris.png): {0}" -f $canonicalName)
     }
     $slug = $m.Groups[2].Value
+    $xenoAbbr = $m.Groups[3].Value
     $displayName = $global:STELLAR_DOGOS_LAST_DISPLAY_NAME
     if ([string]::IsNullOrWhiteSpace($displayName)) {
         $displayName = (Get-Culture).TextInfo.ToTitleCase($slug.Replace('_', ' '))
@@ -200,8 +208,18 @@ try {
     $ddsName = "sd_dog_$slug.dds"
     $ddsPath = Join-Path $ddsDir $ddsName
 
-    # Ask species type immediately after the name (player-facing order).
-    $xeno = Read-PortraitXenotypeInteractive -PortraitDisplayName $displayName
+    # Xenotype was selected during intake (before the canonical filename was created).
+    $xenoId = $global:STELLAR_DOGOS_LAST_XENOTYPE_ID
+    if ([string]::IsNullOrWhiteSpace($xenoId)) {
+        $xenoId = $xenoAbbr
+    }
+    $xeno = Resolve-PortraitXenotype -Selection $xenoId
+    if ($null -eq $xeno) {
+        throw ("Could not resolve species type from intake selection '{0}'." -f $xenoId)
+    }
+    if ($xeno.FilenameAbbr -ne $xenoAbbr) {
+        throw ("Filename xenotype '{0}' does not match selected species type '{1}'." -f $xenoAbbr, $xeno.DisplayName)
+    }
     $speciesLabel = $xeno.DisplayName
 
     Write-Host ""
@@ -222,7 +240,7 @@ try {
         throw ("Expected game texture was not created: {0}" -f $ddsPath)
     }
 
-    $regRel = Join-Path "experiment\sd_static_portrait_test\gfx\models\portraits\sd_static_test" $ddsName
+    $regRel = Join-Path $modPaths.DdsRelPrefix $ddsName
     $regResult = Invoke-ChildScript -ScriptPath $registerScript -Arguments @{
         Source   = $regRel
         Xenotype = $xeno.Id

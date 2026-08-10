@@ -18,16 +18,18 @@ Certainty labels: **CONFIRMED** / **ASSUMPTION** / **TARGET** / **NEEDS VERIFICA
 | Static `texturefile` portraits in 4.4.6 | **CONFIRMED** (species creation) |
 | Three dogs (Piglet, Oakley, Angus) | Working in species creation |
 | Automated portrait importer | **IMPLEMENTED** through Phase 7 (intake → DDS → xenotype register → pipeline) |
+| Production mod path | **IMPLEMENTED** — canonical output `mod/stellar_dogos/` (`tools/portrait-paths.ps1`); experiment copy retained as reference |
 | Phase 3.1 source intake (interactive naming) | **IMPLEMENTED** (`tools/portrait-intake.ps1`) |
 | Phase 4 DDS generation | **IMPLEMENTED** (`tools/portrait-dds.ps1`) |
 | Phase 5 Stellaris registration | **IMPLEMENTED** (`tools/portrait-register.ps1`) |
 | Phase 6 end-to-end pipeline proof | **IMPLEMENTED** (`tools/portrait-pipeline.ps1`) |
-| Phase 7 xenotype selection | **IMPLEMENTED** (`tools/portrait-xenotypes.ps1`) — Mammalian + Avian file path **CONFIRMED**; in-game **NEEDS VERIFICATION** |
-| Xenotype image-generation prompt library | **DOCUMENTED** ([portrait-generation-prompts.md](portrait-generation-prompts.md)) — Mammalian & Machine prompt bodies **ABSENT** from source export; Toxoid prompt **DOCUMENTED**, selector **NOT YET IMPLEMENTED** |
+| Phase 7 xenotype selection | **IMPLEMENTED** (`tools/portrait-xenotypes.ps1`) — 12 types including Toxoid; Mam/Avi/Rep/Fun file paths **CONFIRMED**; in-game **NEEDS VERIFICATION** |
+| Canonical PNG naming (`dogNN_<name>_<xeno>_stellaris.png`) | **IMPLEMENTED** |
+| Xenotype image-generation prompt library | **DOCUMENTED** ([portrait-generation-prompts.md](portrait-generation-prompts.md)) — Mammalian & Machine prompt bodies **ABSENT** from source export; Toxoid prompt **DOCUMENTED**; Toxoid selector/registration **IMPLEMENTED** |
 | Full UI portrait compatibility | **NEEDS VERIFICATION** |
 | Steam Workshop release | **NOT READY** |
 
-Phases 3.1–7 cover intake → DDS → xenotype-aware registration → end-to-end orchestration. The player-facing **prompt library** is documented separately from the software pipeline. Broader UI-context audit, Toxoid selector support, and Workshop packaging remain later.
+Phases 3.1–7 cover intake → DDS → xenotype-aware registration → end-to-end orchestration. The player-facing **prompt library** is documented separately from the software pipeline. Broader UI-context audit and Workshop packaging remain later.
 
 ---
 
@@ -103,7 +105,7 @@ Before full implementation:
 - Define importer architecture (phased: 3.1 source prep → later DDS/registration)
 - Define validation contracts
 - Define failure behavior
-- Define naming rules (canonical `dogNN_<name>_stellaris.png` is **internal**; users are not required to type it)
+- Define naming rules (canonical `dogNN_<name>_<xeno>_stellaris.png` is **internal**; users are not required to type it)
 
 ### Phase 3.1 — Source intake & preparation
 
@@ -112,44 +114,64 @@ Before full implementation:
 **User workflow:**
 
 ```text
-Drop a dog image into ImgHERE
-  → run tools/portrait-intake.ps1
-  → enter the dog's name when prompted (mandatory; no bypass)
+Drop any image into ImgHERE
+  → run tools/portrait-intake.ps1 (or portrait-pipeline.ps1)
+  → enter the character's name when prompted (mandatory; no bypass)
+  → select Stellaris species type (↑/↓ or numbered fallback)
   → tool assigns the next available dog number
-  → tool prepares the canonical source image
-  → writes ImgHERE/dog##_<name>_stellaris.png and assets/source/...
+  → tool prepares the canonical source image (includes xenotype abbr)
+  → writes ImgHERE/dog##_<name>_<xeno>_stellaris.png and assets/source/...
   → deletes the temporary input from ImgHERE (success only)
-  → STOP
+  → STOP (intake alone) / continue to DDS+register (pipeline)
 ```
 
 Phase 3.1 ends at prepared canonical PNG sources. It does **not** create DDS, portrait IDs, or registration edits.
 
-#### Interactive naming
+#### Interactive naming + xenotype
 
-Users must **not** be required to manually invent `dog04_…` filenames.
+Users must **not** be required to manually invent `dog04_…` filenames. Candidate filenames never imply name, xenotype, or sequence number.
 
 1. User places a supported image in `ImgHERE/` (any reasonable name; PNG/JPG/JPEG/WEBP at minimum).
 2. Tool detects a new supported candidate (not already a canonical asset).
-3. Tool asks in the console: `What is this dog's name?`
+3. Tool asks: `What is this character's name?`
 4. User enters the authoritative display name (e.g. `Liberty`).
 5. Tool normalizes the name **only** as needed for a safe filename (`Liberty` → `liberty`).
 6. Empty/invalid names: keep asking — do not invent a name. No `-DogName` bypass.
-7. **After** a valid name, tool chooses the next free dog number from existing canonical sources.
-8. Tool generates canonical filename: `dog##_<name>_stellaris.png`.
-9. Tool validates/prepares the image (PNG, square, RGBA, real alpha — no artistic regen).
-10. Canonical prepared source is written to:
-    - `ImgHERE/dog##_<name>_stellaris.png`
-    - `assets/source/dog##_<name>_stellaris.png`
-11. On **success**, delete the temporary input from `ImgHERE`. On **failure**, leave it untouched.
-12. **Stop.** No DDS / portrait ID / set / category / vanilla changes. No `_originals` archive.
+7. Tool asks for Stellaris species type (12 options including Toxoid). Selection moves in one menu; Enter accepts.
+8. **After** name + xenotype, tool chooses the next free dog number from existing canonical sources.
+9. Tool generates canonical filename: `dog##_<name>_<xeno>_stellaris.png` (e.g. `dog04_liberty_mam_stellaris.png`).
+10. Tool validates/prepares the image (PNG, square, RGBA, real alpha — no artistic regen).
+11. Canonical prepared source is written to:
+    - `ImgHERE/dog##_<name>_<xeno>_stellaris.png`
+    - `assets/source/dog##_<name>_<xeno>_stellaris.png`
+12. On **success**, delete the temporary input from `ImgHERE`. On **failure**, leave it untouched.
+13. **Stop** (intake) or continue to DDS/register (pipeline). No vanilla changes. No `_originals` archive.
+
+Filename abbreviations (PNG only; not species_class / not portrait ID):
+
+| Xenotype | Abbreviation |
+|----------|--------------|
+| Mammalian | mam |
+| Avian | avi |
+| Reptilian | rep |
+| Amphibian | amp |
+| Arthropoid | art |
+| Molluscoid | mol |
+| Fungoid | fun |
+| Plantoid | pla |
+| Lithoid | lit |
+| Necroid | nec |
+| Machine | mac |
+| Toxoid | tox |
 
 Example:
 
 ```text
 ImgHERE/my_dog.png
   → user enters "Liberty"
-  → ImgHERE/dog04_liberty_stellaris.png
-  → assets/source/dog04_liberty_stellaris.png
+  → user selects Mammalian
+  → ImgHERE/dog04_liberty_mam_stellaris.png
+  → assets/source/dog04_liberty_mam_stellaris.png
 ```
 
 #### Automatic dog numbering
@@ -160,13 +182,14 @@ ImgHERE/my_dog.png
 
 #### Already-canonical files
 
-If a file is already named `dog##_<name>_stellaris.png`:
+If a file is already named `dog##_<name>_<xeno>_stellaris.png`:
 
 - Do **not** ask for the name again
 - Treat as an explicitly named canonical asset
 - Validate/prepare normally
 - Do **not** assign another number or create duplicate canons
 
+Legacy `dog##_<name>_stellaris.png` names remain recognizable for inventory; new intakes always write the `<xeno>` form.
 #### Conflicts & safety
 
 - If the normalized canonical filename already exists → **stop and explain**; never silently overwrite
@@ -203,7 +226,7 @@ assets/source/dog##_<name>_stellaris.png
 ```
 
 **Output location:**  
-`experiment/sd_static_portrait_test/gfx/models/portraits/sd_static_test/sd_dog_<name>.dds`
+`mod/stellar_dogos/gfx/models/portraits/sd_static_test/sd_dog_<name>.dds`
 
 **Command:**
 
@@ -378,19 +401,19 @@ Completed in the documentation pass:
 
 - [portrait-generation-prompts.md](portrait-generation-prompts.md) — xenotype image-generation prompts extracted from ChatGPT export (`Stellaris.html`)
 - README explains: photograph → external prompt → `ImgHERE/` → Portrait Creator
-- Toxoid clearly marked **prompt DOCUMENTED / selector NOT YET IMPLEMENTED**
+- Toxoid: generation prompt **DOCUMENTED**; selector + registration **IMPLEMENTED** (`toxoids` / `TOX` / `tox_portrait_01`)
 - Still absent from source export (not invented): **Mammalian** and **Machine** xenotype generation prompt bodies
 
-README user workflow (TARGET):
+README user workflow:
 
 1. Choose a xenotype and generate a portrait with the matching prompt ([portrait-generation-prompts.md](portrait-generation-prompts.md))
-2. Put it in `ImgHERE`
+2. Put it in `ImgHERE` (any filename)
 3. Run `portrait-pipeline.ps1`
 4. Enter the portrait's name
-5. Select xenotype (Toxoid not yet available in the selector)
-6. DDS + registration (automatic via pipeline)
+5. Select xenotype (including Toxoid)
+6. Pipeline creates `dogNN_<name>_<xeno>_stellaris.png`, then DDS + registration under `mod/stellar_dogos/`
 7. Launch Stellaris
-8. Enable experiment mod / test the portrait
+8. Enable **Stellar Dogos** / test the portrait
 
 Developer docs explain architecture.
 
