@@ -6,3 +6,4 @@ tags={
 name="Stellar Xeno"
 picture="thumbnail.png"
 supported_version="v4.4.*"
+remote_file_id="3780940726"
