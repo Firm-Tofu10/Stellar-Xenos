@@ -9,6 +9,8 @@ param()
 
 $ErrorActionPreference = "Stop"
 
+. (Join-Path (Split-Path -Parent $PSCommandPath) "portrait-exit.ps1")
+
 Add-Type -AssemblyName System.Drawing
 
 $SupportedExtensions = @(".png", ".jpg", ".jpeg", ".webp")
@@ -248,11 +250,13 @@ function Test-IsValidDogDisplayName {
 function Read-DogNameInteractive {
     param([string]$CandidateFileName)
 
+    # CandidateFileName is shown so the player knows which image was found.
+    # It is never used as the character name.
     Write-Host ""
-    Write-Host "New portrait candidate detected:"
+    Write-Host "New portrait found:"
     Write-Host ("  {0}" -f $CandidateFileName)
     Write-Host ""
-    Write-Host "What is this dog's name?"
+    Write-Host "What is this character's name?"
 
     while ($true) {
         Write-Host -NoNewline "> "
@@ -260,7 +264,7 @@ function Read-DogNameInteractive {
         if ([Console]::IsInputRedirected) {
             $entered = [Console]::In.ReadLine()
             if ($null -eq $entered) {
-                throw "No dog name provided (stdin closed)."
+                throw "Name cannot be empty. Please enter the character's name."
             }
             Write-Host $entered
         } else {
@@ -272,13 +276,7 @@ function Read-DogNameInteractive {
             return [PSCustomObject]@{ Display = $entered.Trim(); Slug = $check.Slug }
         }
 
-        if ($check.Reason -eq "empty") {
-            Write-Host "Dog name cannot be empty."
-            Write-Host "Please enter the dog's name:"
-        } else {
-            Write-Host "Dog name is invalid (no usable filename characters)."
-            Write-Host "Please enter the dog's name:"
-        }
+        Write-Host "Name cannot be empty. Please enter the character's name."
     }
 }
 
@@ -526,12 +524,10 @@ function Invoke-CandidateIntake {
     $slug = $nameInfo.Slug
     $canonicalName = Get-CanonicalFileName -Number $nextNumber -Slug $slug
 
-    Write-Host ""
-    Write-Host "Assigned:"
-    Write-Host ("  display name : {0}" -f $nameInfo.Display)
-    Write-Host ("  slug         : {0}" -f $slug)
-    Write-Host ("  dog number   : {0}" -f $nextNumber)
-    Write-Host ("  canonical    : {0}" -f $canonicalName)
+    if (-not (Test-SdPipelineMode)) {
+        Write-Host ""
+        Write-Host ("Got it - preparing {0}..." -f $nameInfo.Display)
+    }
 
     if ($existingNames -contains $slug) {
         throw ("Conflict: a canonical portrait named '{0}' already exists. Refusing to create {1}." -f $slug, $canonicalName)
@@ -547,8 +543,10 @@ function Invoke-CandidateIntake {
         throw ("Conflict: '{0}' already exists in assets/source. Refusing to overwrite." -f $destAssets)
     }
 
-    Write-Host ""
-    Write-Host "Preparing image (technical only - no artistic regeneration)..."
+    if (-not (Test-SdPipelineMode)) {
+        Write-Host ""
+        Write-Host "Preparing image..."
+    }
     $prepared = $null
     $wroteOutputs = $false
     $v1 = $null
@@ -585,22 +583,16 @@ function Invoke-CandidateIntake {
     # SUCCESS only: delete the temporary intake file (keep ImgHERE clean).
     Remove-Item -LiteralPath $Candidate.FullName -Force
 
-    Write-Host ""
-    Write-Host "Intake complete."
-    Write-Host ("  ImgHERE      : {0}" -f $destImgHere)
-    Write-Host ("  assets/source: {0}" -f $destAssets)
-    Write-Host ("  dimensions   : {0}x{1}" -f $v1.Width, $v1.Height)
-    Write-Host ("  square       : {0}" -f $v1.IsSquare)
-    Write-Host ("  RGBA         : {0} ({1})" -f $v1.IsRgba, $v1.PixelFormat)
-    Write-Host ("  genuine alpha: {0} (transparent pixels: {1})" -f $v1.HasGenuineAlpha, $v1.TransparentPixels)
-    Write-Host ("  corner alpha : {0}" -f $v1.CornerAlpha)
-    Write-Host ("  bg plate rem.: {0}" -f $bgRemoved)
-    Write-Host ("  temp input   : deleted after successful validation")
-    Write-Host ""
-    Write-Host "Phase 3.1 STOP - no DDS / portrait registration performed."
+    if (-not (Test-SdPipelineMode)) {
+        Write-Host ""
+        Write-Host "Portrait image prepared."
+    }
+
+    $global:STELLAR_DOGOS_LAST_DISPLAY_NAME = $nameInfo.Display
 
     return [PSCustomObject]@{
         CanonicalName = $canonicalName
+        DisplayName   = $nameInfo.Display
         ImgHerePath   = $destImgHere
         AssetsPath    = $destAssets
         Validation    = $v1
@@ -615,32 +607,36 @@ $repoRoot = Get-RepoRoot
 $imgHere = Get-ImgHerePath -RepoRoot $repoRoot
 $assetsSource = Get-AssetsSourcePath -RepoRoot $repoRoot
 
-Write-Host "Stellar Dogos Portrait Intake"
-Write-Host "Phase 3.1 - Source preparation (no DDS / no Stellaris registration)"
-Write-Host ""
-Write-Host "ImgHERE: $imgHere"
-Write-Host ""
+if (-not (Test-SdPipelineMode)) {
+    Write-Host "Stellar Dogos - Portrait Creator"
+    Write-Host ""
+}
 
 if (-not (Test-Path -LiteralPath $imgHere -PathType Container)) {
-    Write-Host "ERROR: ImgHERE directory not found."
+    Write-Host "Could not find the ImgHERE folder."
     Write-Host "Expected: $imgHere"
-    exit 1
+    Exit-SdTool 1
+    return
 }
 
 $scan = Scan-ImgHere -ImgHere $imgHere
-Write-IntakeReport -Scan $scan
+if (-not (Test-SdPipelineMode)) {
+    Write-IntakeReport -Scan $scan
+}
 
 if ($scan.Conflicts.Count -gt 0) {
     Write-Host ""
-    Write-Host "Existing canonical conflicts detected. Resolve them before intake."
-    exit 2
+    Write-Host "There is a problem with existing portrait files. Please resolve conflicts before continuing."
+    Exit-SdTool 2
+    return
 }
 
 if ($scan.Candidates.Count -eq 0) {
     Write-Host ""
-    Write-Host "No new portrait candidates to process."
-    Write-Host "Phase 3.1 idle complete (scan only)."
-    exit 0
+    Write-Host "No new portrait image was found in ImgHERE."
+    Write-Host "Place a finished portrait image there, then run the tool again."
+    Exit-SdTool 0
+    return
 }
 
 # Process candidates sequentially. Naming is always interactive (no -DogName bypass).
@@ -655,12 +651,16 @@ foreach ($candidate in $scan.Candidates) {
         $processed++
     } catch {
         Write-Host ""
-        Write-Host ("INTAKE FAILED for '{0}': {1}" -f $candidate.Name, $_.Exception.Message)
-        Write-Host "Original candidate left in ImgHERE for retry."
-        exit 1
+        Write-Host ("Could not prepare '{0}': {1}" -f $candidate.Name, $_.Exception.Message)
+        Write-Host "Your original image was left in ImgHERE so you can try again."
+        Exit-SdTool 1
+        return
     }
 }
 
-Write-Host ""
-Write-Host ("Processed {0} candidate(s)." -f $processed)
-exit 0
+if (-not (Test-SdPipelineMode)) {
+    Write-Host ""
+    Write-Host "Portrait image prepared."
+}
+Exit-SdTool 0
+return

@@ -49,6 +49,10 @@ assets/
     dog03_angus_stellaris_portrait_rgba.png
     dog03_angus_stellaris_portrait.png
     dog03_angus_stellaris.png
+    dog04_liberty_stellaris.png
+    dog05_bruce_stellaris.png
+    dog05_maple_stellaris.png
+    dog06_birch_stellaris.png
     piglet_stellaris_portrait_framed_v2.png
     piglet_stellaris_portrait_framed.png
     piglet_stellaris_portrait_framed.png.bak_before_halo_scale
@@ -80,6 +84,7 @@ experiment/
             sd_dog_02.dds.sha256_before_piglet_refine
             sd_dog_angus.dds
             sd_dog_angus.dds.bak_before_imghere_new
+            sd_dog_bruce.dds
             sd_dog_piglet.dds
             sd_dog_piglet.dds.bak_before_framed
             sd_dog_piglet.dds.bak_before_halo_scale
@@ -96,10 +101,14 @@ experiment/
     README.md
   sd_static_portrait_test.mod.example
 ImgHERE/
-  ChatGPT Image Aug 9, 2026, 08_00_43 PM.png
   dog01_piglet_stellaris.png
   dog02_oakley_stellaris.png
   dog03_angus_stellaris.png
+  dog04_liberty_stellaris.png
+  dog05_bruce_stellaris.png
+tools/
+  portrait-dds.ps1
+  portrait-intake.ps1
 .gitattributes
 PROJECT_PLAN.md
 README.md
@@ -215,326 +224,6 @@ Repomix snapshot
 The next engineering task is **not** the importer.
 
 It is the **Portrait Context Compatibility Audit** (Oakley gold-standard). See [portrait-testing.md](portrait-testing.md) and [development-roadmap.md](development-roadmap.md) Phase 2.
-</file>
-
-<file path="docs/development-roadmap.md">
-# Stellar Dogos — Development Roadmap
-
-Authoritative phase status for future sessions. Cross-references:
-
-- [AI development workflow](ai-development-workflow.md)
-- [Portrait workflow](portrait-workflow.md)
-- [Portrait testing](portrait-testing.md)
-- [Project plan](../PROJECT_PLAN.md)
-
-Certainty labels: **CONFIRMED** / **ASSUMPTION** / **TARGET** / **NEEDS VERIFICATION** — see [PROJECT_PLAN.md](../PROJECT_PLAN.md).
-
----
-
-## Current position
-
-| Item | Status |
-|------|--------|
-| Static `texturefile` portraits in 4.4.6 | **CONFIRMED** (species creation) |
-| Three dogs (Piglet, Oakley, Angus) | Working in species creation |
-| Automated portrait importer | **NOT BUILT** |
-| Phase 3.1 source intake (interactive naming) | **DESIGNED** — not implemented |
-| Full UI portrait compatibility | **NEEDS VERIFICATION** |
-| Steam Workshop release | **NOT READY** |
-
-**Immediate next task (game):** Phase 2 — Portrait Context Compatibility Audit (Oakley).
-
-**Design status:** Phase 3.1 interactive naming + source preparation is documented; do **not** implement until explicitly tasked. Full importer (DDS/registration) remains later.
-
----
-
-## Phase 0 — Discovery
-
-**STATUS: COMPLETE**
-
-- Investigate Stellaris **Pegasus v4.4.6** (`modsCompatibilityVersion = 4.4`)
-- Investigate portrait categories / sets / species classes / gfx portraits
-- Test `texturefile` via minimal experiment
-- Prove static portrait loading in species creation
-- Establish DDS requirements (256×256 uncompressed 32-bit RGBA, `pfFlags=0x41`, alpha)
-
----
-
-## Phase 1 — Portrait Calibration
-
-**STATUS: MOSTLY COMPLETE**
-
-Done:
-
-- Piglet working (`sd_dog_piglet`) — protected reference
-- Oakley working (`sd_dog_02`) — gold-standard visual reference
-- Angus working (`sd_dog_angus`) — regenerated ImgHERE art wired; framing accepted for now
-- Transparency / alpha rules established
-- Scale / framing empirical targets established (~91–92% vertical fill)
-- Image-generation prompts preserved ([portrait-prompts.md](portrait-prompts.md))
-- Manual DDS pipeline established
-- ImgHERE staging convention established
-
-Remaining:
-
-- Final side-by-side visual comparison of all three
-- Decide whether Piglet needs any further refinement (do not casually regenerate)
-
----
-
-## Phase 2 — In-Game Compatibility Audit
-
-**STATUS: NEXT**
-
-Use **Oakley** as the primary test asset.
-
-Test portrait appearance in:
-
-- Species UI (beyond creation checklist already partly confirmed)
-- Leader UI
-- Council
-- Government / empire UI
-- Diplomacy
-- Contacts
-- Factions
-- Events
-- Other relevant portrait contexts
-
-**Question to answer:** Does one static portrait DDS work correctly everywhere Stellaris displays that portrait?
-
-See [portrait-testing.md](portrait-testing.md).
-
-Only after this audit should importer architecture be finalized.
-
----
-
-## Phase 3 — Portrait Importer Design
-
-**STATUS: IN PROGRESS (design)**
-
-Before full implementation:
-
-- Fresh Repomix snapshot when coding begins
-- ChatGPT reconstructs repository
-- Determine exact implementation files
-- Define importer architecture (phased: 3.1 source prep → later DDS/registration)
-- Define validation contracts
-- Define failure behavior
-- Define naming rules (canonical `dogNN_<name>_stellaris.png` is **internal**; users are not required to type it)
-
-### Phase 3.1 — Source intake & preparation (design)
-
-**STATUS: DESIGNED — not implemented yet**
-
-**Intended user workflow:**
-
-```text
-Drop a dog image into ImgHERE
-  → enter the dog's name when prompted
-  → tool assigns the next available dog number
-  → tool prepares the canonical source image
-```
-
-Phase 3.1 ends at prepared canonical PNG sources. It does **not** create DDS, portrait IDs, or registration edits.
-
-#### Interactive naming
-
-Users must **not** be required to manually invent `dog04_…` filenames.
-
-1. User places a supported image in `ImgHERE/` (any reasonable name; PNG/JPG/JPEG/WEBP at minimum).
-2. Tool detects a new supported candidate (not already a canonical asset).
-3. Tool asks in the console: `What is this dog's name?`
-4. User enters the authoritative display name (e.g. `Liberty`).
-5. Tool normalizes the name **only** as needed for a safe filename (`Liberty` → `liberty`).
-6. Empty/invalid names: ask again — do not invent a name.
-7. Tool chooses the next free dog number from existing canonical sources (see below).
-8. Tool generates canonical filename: `dog##_<name>_stellaris.png`.
-9. Interactive naming completes **before** any irreversible file write that could overwrite assets.
-10. Tool validates/prepares the image (PNG, square, RGBA, real alpha, framing checks — no artistic regen).
-11. Canonical prepared source is written to:
-    - `ImgHERE/dog##_<name>_stellaris.png`
-    - `assets/source/dog##_<name>_stellaris.png`
-12. **Stop.** No DDS / portrait ID / set / category / vanilla changes.
-
-Example:
-
-```text
-ImgHERE/my_dog.png
-  → user enters "Liberty"
-  → ImgHERE/dog04_liberty_stellaris.png
-  → assets/source/dog04_liberty_stellaris.png
-```
-
-#### Automatic dog numbering
-
-- Scan existing canonical Stellar Dogos source assets (e.g. `assets/source/dog##_…_stellaris.png` and matching ImgHERE canons).
-- Next number = lowest unused integer after the highest present (today: dog01–dog03 → next is **dog04**).
-- Do **not** reuse numbers, renumber existing dogs, or touch Piglet / Oakley / Angus.
-
-#### Already-canonical files
-
-If a file is already named `dog##_<name>_stellaris.png`:
-
-- Do **not** ask for the name again
-- Treat as an explicitly named canonical asset
-- Validate/prepare normally
-- Do **not** assign another number or create duplicate canons
-
-#### Conflicts & safety
-
-- If the normalized canonical filename already exists → **stop and explain**; never silently overwrite
-- Do not overwrite existing prepared sources, DDS, definitions, or sets
-- Existing working dogs are regression fixtures and must remain untouched
-- Distinguish: canonical assets / new candidates / unsupported files / raw-reference images to ignore
-- If unsure whether a file is a new portrait → **ask the user**; do not guess
-- Do not process unrelated files
-
-#### Explicitly outside Phase 3.1
-
-- PNG → DDS conversion
-- DDS → portrait definition
-- Portrait definition → portrait set / category registration
-- In-game testing claims for the new dog
-
-Those remain later phases (Phase 4+).
-
----
-
-## Phase 4 — Portrait Importer Implementation
-
-**STATUS: PLANNED**
-
-Implement the full pipeline **after** Phase 3.1 design/tooling is proven. Phase 4 builds on Phase 3.1 intake and then:
-
-1. Detect new files in `ImgHERE/` (with interactive naming from 3.1)
-2. Identify the portrait / assign stable internal portrait ID
-3. Preserve existing portraits (no silent rebuilds)
-4. Validate source image
-5. Validate / produce alpha transparency
-6. Normalize dimensions
-7. Apply established framing/scale rules (**TARGET** — after Phase 2)
-8. Generate 256×256 RGBA DDS
-9. Create/update portrait definition
-10. Add portrait to the portrait set
-11. Validate registration
-12. Verify existing portraits unchanged (hashes)
-13. Produce a clear completion report
-
-Must **not**:
-
-- Automatically modify unrelated portraits
-- Modify vanilla Stellaris
-- Delete originals in `ImgHERE` without a defined safe policy
-
-Use backups or safe transactional behavior.
-
----
-
-## Phase 5 — Fourth-Dog Test
-
-**STATUS: PLANNED**
-
-Do **not** use only Piglet/Oakley/Angus as the importer proof.
-
-- Create a brand-new fourth dog
-- Put only the finished portrait into `ImgHERE`
-- Run importer
-- Verify fourth dog created, existing three unchanged, fourth appears in-game
-
----
-
-## Phase 6 — Failure Testing
-
-**STATUS: PLANNED**
-
-Importer must fail safely on:
-
-- Invalid image
-- Unsupported extension
-- Missing alpha
-- Malformed image
-- Duplicate name
-- Duplicate ID
-- Multiple new images
-- Missing conversion dependency
-- Malformed portrait definition
-- Interrupted processing
-
----
-
-## Phase 7 — Documentation / UX
-
-**STATUS: PLANNED**
-
-README user workflow (TARGET):
-
-1. Generate a portrait
-2. Put it in `ImgHERE`
-3. Run importer
-4. Launch Stellaris
-5. Enable Stellar Dogos
-6. Test the portrait
-
-Developer docs explain architecture.
-
----
-
-## Phase 8 — Release Preparation
-
-**STATUS: PLANNED**
-
-- Remove experimental/development-only artifacts where appropriate
-- Rename experiment paths into production structure
-- Clean repository
-- Update README / version
-- Test from a fresh clone
-- Test packaged mod
-- Verify no vanilla files are required
-- Verify Workshop package contents
-
----
-
-## Phase 9 — Steam Workshop
-
-**STATUS: FUTURE**
-
-Only after:
-
-- Importer works
-- Compatibility audit complete
-- Fresh-install test passes
-- Documentation complete
-- Production mod structure finalized
-
-Then publish **Stellar Dogos** to Steam Workshop.
-
----
-
-## Engineering lesson — do not automate too early
-
-The project intentionally performed several portraits **manually** before automation.
-
-That discovered:
-
-- Transparency requirements
-- Halo / light-fringe problems
-- Framing problems
-- Scale differences
-- DDS requirements
-- Portrait registration requirements
-- In-game behavior (species creation)
-
-The importer must be built from this **proven** workflow, not from early assumptions.
-
----
-
-## Regression protection
-
-Treat **Piglet** and **Oakley** as protected regression fixtures.
-
-- Importer must never silently rebuild existing portraits
-- Before/after hashes during development
-- Existing portraits change only when a task explicitly requests it
 </file>
 
 <file path="docs/portrait-prompts.md">
@@ -1251,9 +940,1563 @@ tags={
 version="0.0.1"
 </file>
 
+<file path="tools/portrait-dds.ps1">
+# Stellar Dogos — Phase 4: Canonical PNG → DDS
+# Converts a validated Phase 3.1 source PNG into a 256x256 uncompressed
+# 32-bit RGBA DDS matching the known-good working dog portraits.
+#
+# Does NOT: ask for dog names, register portraits, modify defs/sets/categories,
+# or touch vanilla Stellaris.
+
+[CmdletBinding()]
+param(
+    [Parameter(Mandatory = $true, Position = 0)]
+    [string]$Source
+)
+
+$ErrorActionPreference = "Stop"
+Add-Type -AssemblyName System.Drawing
+
+$CanonicalSourcePattern = '^dog(\d+)_(.+)_stellaris\.png$'
+$DdsSize = 256
+
+# ---------------------------------------------------------------------------
+# Paths
+# ---------------------------------------------------------------------------
+
+function Get-RepoRoot {
+    $scriptDir = Split-Path -Parent $PSCommandPath
+    return (Resolve-Path (Join-Path $scriptDir "..")).Path
+}
+
+function Resolve-SourcePath {
+    param(
+        [string]$RepoRoot,
+        [string]$SourceArg
+    )
+
+    if ([IO.Path]::IsPathRooted($SourceArg) -and (Test-Path -LiteralPath $SourceArg)) {
+        return (Resolve-Path -LiteralPath $SourceArg).Path
+    }
+
+    $candidates = @(
+        (Join-Path $RepoRoot $SourceArg),
+        (Join-Path $RepoRoot "assets\source\$SourceArg"),
+        (Join-Path (Join-Path $RepoRoot "assets\source") ([IO.Path]::GetFileName($SourceArg)))
+    )
+
+    foreach ($c in $candidates) {
+        if (Test-Path -LiteralPath $c) {
+            return (Resolve-Path -LiteralPath $c).Path
+        }
+    }
+
+    throw ("Source PNG not found: {0}" -f $SourceArg)
+}
+
+function Get-DdsOutputDir {
+    param([string]$RepoRoot)
+    return Join-Path $RepoRoot "experiment\sd_static_portrait_test\gfx\models\portraits\sd_static_test"
+}
+
+function Get-CanonicalSourceInfo {
+    param([string]$FileName)
+
+    $m = [regex]::Match($FileName.ToLowerInvariant(), $CanonicalSourcePattern)
+    if (-not $m.Success) { return $null }
+
+    return [PSCustomObject]@{
+        Number = [int]$m.Groups[1].Value
+        Name   = $m.Groups[2].Value.ToLowerInvariant()
+    }
+}
+
+function Get-DdsFileName {
+    param([string]$Slug)
+    # Established named-dog pattern: sd_dog_piglet.dds, sd_dog_angus.dds
+    # (Oakley sd_dog_02.dds is historical; new dogs use the name slug.)
+    return ("sd_dog_{0}.dds" -f $Slug)
+}
+
+# ---------------------------------------------------------------------------
+# Binary helpers (avoid PowerShell signed-int issues with 0xFF000000)
+# ---------------------------------------------------------------------------
+
+function Write-Bytes32 {
+    param(
+        [byte[]]$Buffer,
+        [int]$Offset,
+        [uint64]$Value
+    )
+    # Little-endian u32 via unsigned shifts only
+    $Buffer[$Offset]     = [byte]($Value -band 0xFF)
+    $Buffer[$Offset + 1] = [byte](($Value -shr 8) -band 0xFF)
+    $Buffer[$Offset + 2] = [byte](($Value -shr 16) -band 0xFF)
+    $Buffer[$Offset + 3] = [byte](($Value -shr 24) -band 0xFF)
+}
+
+function Get-DdsHeaderInfo {
+    param([byte[]]$Bytes)
+
+    return [PSCustomObject]@{
+        Magic   = [Text.Encoding]::ASCII.GetString($Bytes, 0, 4)
+        Size    = [BitConverter]::ToUInt32($Bytes, 4)
+        Flags   = [BitConverter]::ToUInt32($Bytes, 8)
+        Height  = [BitConverter]::ToUInt32($Bytes, 12)
+        Width   = [BitConverter]::ToUInt32($Bytes, 16)
+        Pitch   = [BitConverter]::ToUInt32($Bytes, 20)
+        Mips    = [BitConverter]::ToUInt32($Bytes, 28)
+        PfSize  = [BitConverter]::ToUInt32($Bytes, 76)
+        PfFlags = [BitConverter]::ToUInt32($Bytes, 80)
+        FourCC  = [Text.Encoding]::ASCII.GetString($Bytes, 84, 4).Trim([char]0)
+        Bpp     = [BitConverter]::ToUInt32($Bytes, 88)
+        MaskR   = [BitConverter]::ToUInt32($Bytes, 92)
+        MaskG   = [BitConverter]::ToUInt32($Bytes, 96)
+        MaskB   = [BitConverter]::ToUInt32($Bytes, 100)
+        MaskA   = [BitConverter]::ToUInt32($Bytes, 104)
+        Caps    = [BitConverter]::ToUInt32($Bytes, 108)
+        Length  = $Bytes.Length
+    }
+}
+
+function Test-KnownGoodDdsHeader {
+    param([object]$Header)
+
+    $issues = New-Object System.Collections.Generic.List[string]
+    if ($Header.Magic -ne "DDS ") { [void]$issues.Add("magic") }
+    if ($Header.Size -ne 124) { [void]$issues.Add("header size") }
+    if ($Header.Flags -ne 0x100F) { [void]$issues.Add("header flags") }
+    if ($Header.Width -ne 256 -or $Header.Height -ne 256) { [void]$issues.Add("dimensions") }
+    if ($Header.Pitch -ne 1024) { [void]$issues.Add("pitch") }
+    if ($Header.Mips -ne 0) { [void]$issues.Add("mipmaps") }
+    if ($Header.PfSize -ne 32) { [void]$issues.Add("pfSize") }
+    if ($Header.PfFlags -ne 0x41) { [void]$issues.Add("pfFlags") }
+    if ($Header.FourCC -ne "") { [void]$issues.Add("fourCC/compression") }
+    if ($Header.Bpp -ne 32) { [void]$issues.Add("bit depth") }
+    if ($Header.Caps -ne 0x1000) { [void]$issues.Add("caps") }
+    if ($Header.Length -ne 262272) { [void]$issues.Add("file size") }
+    # R/G/B/A channel masks are verified by byte-for-byte header match vs Piglet reference
+    return @($issues)
+}
+
+# ---------------------------------------------------------------------------
+# Source validation
+# ---------------------------------------------------------------------------
+
+function Test-SourcePngForDds {
+    param([string]$Path)
+
+    $name = [IO.Path]::GetFileName($Path)
+    if ($name.ToLowerInvariant() -notmatch '\.png$') {
+        throw "Source must be a PNG file."
+    }
+
+    $canon = Get-CanonicalSourceInfo -FileName $name
+    if ($null -eq $canon) {
+        throw ("Source filename must match dog##_<name>_stellaris.png (got '{0}')." -f $name)
+    }
+
+    $bmp = [System.Drawing.Bitmap]::FromFile($Path)
+    try {
+        if ($bmp.Width -ne $bmp.Height) {
+            throw ("Source must be square (got {0}x{1})." -f $bmp.Width, $bmp.Height)
+        }
+        $fmt = $bmp.PixelFormat.ToString()
+        if ($fmt -notmatch 'Argb|PArgb') {
+            throw ("Source must be RGBA/ARGB (got {0})." -f $fmt)
+        }
+
+        $fmt32 = [System.Drawing.Imaging.PixelFormat]::Format32bppArgb
+        $rect = New-Object System.Drawing.Rectangle 0, 0, $bmp.Width, $bmp.Height
+        $data = $bmp.LockBits($rect, [System.Drawing.Imaging.ImageLockMode]::ReadOnly, $fmt32)
+        try {
+            $stride = [Math]::Abs($data.Stride)
+            $raw = New-Object byte[] ($stride * $bmp.Height)
+            [Runtime.InteropServices.Marshal]::Copy($data.Scan0, $raw, 0, $raw.Length)
+        } finally {
+            $bmp.UnlockBits($data)
+        }
+
+        $a0 = 0
+        $aOpaque = 0
+        for ($y = 0; $y -lt $bmp.Height; $y += 4) {
+            for ($x = 0; $x -lt $bmp.Width; $x += 4) {
+                $a = $raw[($y * $stride) + ($x * 4) + 3]
+                if ($a -eq 0) { $a0++ }
+                elseif ($a -ge 250) { $aOpaque++ }
+            }
+        }
+
+        if ($a0 -lt 50) {
+            throw "Source does not appear to have genuine alpha transparency."
+        }
+
+        $corner = $bmp.GetPixel(0, 0)
+        return [PSCustomObject]@{
+            Path         = $Path
+            Width        = $bmp.Width
+            Height       = $bmp.Height
+            PixelFormat  = $fmt
+            DogNumber    = $canon.Number
+            DogName      = $canon.Name
+            CornerAlpha  = $corner.A
+            SampleA0     = $a0
+            SampleOpaque = $aOpaque
+        }
+    } finally {
+        $bmp.Dispose()
+    }
+}
+
+# ---------------------------------------------------------------------------
+# Conversion
+# ---------------------------------------------------------------------------
+
+function ConvertTo-PortraitDdsPixels {
+    param(
+        [string]$SourcePath,
+        [int]$Size
+    )
+
+    $src = [System.Drawing.Bitmap]::FromFile($SourcePath)
+    $canvas = $null
+    $g = $null
+    try {
+        $canvas = New-Object System.Drawing.Bitmap $Size, $Size, ([System.Drawing.Imaging.PixelFormat]::Format32bppArgb)
+        $g = [System.Drawing.Graphics]::FromImage($canvas)
+        $g.Clear([System.Drawing.Color]::FromArgb(0, 0, 0, 0))
+        $g.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
+        $g.CompositingMode = [System.Drawing.Drawing2D.CompositingMode]::SourceCopy
+        $g.PixelOffsetMode = [System.Drawing.Drawing2D.PixelOffsetMode]::HighQuality
+        $g.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::HighQuality
+        $g.DrawImage($src, 0, 0, $Size, $Size)
+
+        $rect = New-Object System.Drawing.Rectangle 0, 0, $Size, $Size
+        $data = $canvas.LockBits($rect, [System.Drawing.Imaging.ImageLockMode]::ReadOnly, [System.Drawing.Imaging.PixelFormat]::Format32bppArgb)
+        try {
+            $stride = [Math]::Abs($data.Stride)
+            $raw = New-Object byte[] ($stride * $Size)
+            [Runtime.InteropServices.Marshal]::Copy($data.Scan0, $raw, 0, $raw.Length)
+        } finally {
+            $canvas.UnlockBits($data)
+        }
+
+        $pixels = New-Object byte[] ($Size * $Size * 4)
+        for ($y = 0; $y -lt $Size; $y++) {
+            [Array]::Copy($raw, $y * $stride, $pixels, $y * $Size * 4, $Size * 4)
+        }
+
+        $a0 = 0
+        for ($i = 3; $i -lt $pixels.Length; $i += 4) {
+            if ($pixels[$i] -eq 0) { $a0++ }
+        }
+
+        return [PSCustomObject]@{
+            Pixels            = $pixels
+            TransparentPixels = $a0
+            CornerAlpha       = $pixels[3]
+        }
+    } finally {
+        if ($null -ne $g) { $g.Dispose() }
+        if ($null -ne $canvas) { $canvas.Dispose() }
+        $src.Dispose()
+    }
+}
+
+function Write-UncompressedRgbaDds {
+    param(
+        [string]$Path,
+        [byte[]]$PixelsBgra,
+        [int]$Width,
+        [int]$Height
+    )
+
+    $header = New-Object byte[] 128
+    [Text.Encoding]::ASCII.GetBytes("DDS ").CopyTo($header, 0)
+    Write-Bytes32 $header 4 124
+    Write-Bytes32 $header 8 0x100F
+    Write-Bytes32 $header 12 $Height
+    Write-Bytes32 $header 16 $Width
+    Write-Bytes32 $header 20 ($Width * 4)
+    Write-Bytes32 $header 28 0
+    Write-Bytes32 $header 76 32
+    Write-Bytes32 $header 80 0x41
+    Write-Bytes32 $header 88 32
+    Write-Bytes32 $header 92 ([uint64]0x00FF0000)
+    Write-Bytes32 $header 96 ([uint64]0x0000FF00)
+    Write-Bytes32 $header 100 ([uint64]0x000000FF)
+    # Alpha mask 0xFF000000 as raw LE bytes (avoid signed hex literals)
+    $header[104] = 0
+    $header[105] = 0
+    $header[106] = 0
+    $header[107] = 255
+    Write-Bytes32 $header 108 ([uint64]0x1000)
+    $tmp = $Path + ".partial"
+    if (Test-Path -LiteralPath $tmp) { Remove-Item -LiteralPath $tmp -Force }
+
+    $fs = [IO.File]::Open($tmp, [IO.FileMode]::Create, [IO.FileAccess]::Write)
+    try {
+        $fs.Write($header, 0, 128)
+        $fs.Write($PixelsBgra, 0, $PixelsBgra.Length)
+    } finally {
+        $fs.Close()
+    }
+
+    Move-Item -LiteralPath $tmp -Destination $Path -Force
+}
+
+function Test-GeneratedDds {
+    param(
+        [string]$Path,
+        [string]$ReferencePath
+    )
+
+    $bytes = [IO.File]::ReadAllBytes($Path)
+    $header = Get-DdsHeaderInfo -Bytes $bytes
+    $issues = Test-KnownGoodDdsHeader -Header $header
+
+    $a0 = 0
+    $midA = $bytes[128 + ((128 * 256) + 128) * 4 + 3]
+    $cornerA = $bytes[128 + 3]
+    for ($y = 0; $y -lt 256; $y++) {
+        for ($x = 0; $x -lt 256; $x++) {
+            $a = $bytes[128 + (($y * 256) + $x) * 4 + 3]
+            if ($a -eq 0) { $a0++ }
+        }
+    }
+
+    $ref = [IO.File]::ReadAllBytes($ReferencePath)
+    $headerMatch = $true
+    for ($i = 0; $i -lt 128; $i++) {
+        if ($bytes[$i] -ne $ref[$i]) { $headerMatch = $false; break }
+    }
+
+    return [PSCustomObject]@{
+        Header            = $header
+        Issues            = $issues
+        TransparentPixels = $a0
+        CornerAlpha       = $cornerA
+        MidAlpha          = $midA
+        HeaderMatchesRef  = $headerMatch
+        HasGenuineAlpha   = ($a0 -gt 100 -and $cornerA -eq 0)
+    }
+}
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+
+$repoRoot = Get-RepoRoot
+$ddsDir = Get-DdsOutputDir -RepoRoot $repoRoot
+$refDds = Join-Path $ddsDir "sd_dog_piglet.dds"
+
+Write-Host "Stellar Dogos DDS Generator"
+Write-Host "Phase 4 - Canonical PNG to DDS (no Stellaris registration)"
+Write-Host ""
+
+$sourcePath = Resolve-SourcePath -RepoRoot $repoRoot -SourceArg $Source
+Write-Host "Source:"
+Write-Host ("  {0}" -f $sourcePath)
+Write-Host ""
+
+Write-Host "Validating source..."
+$srcInfo = Test-SourcePngForDds -Path $sourcePath
+Write-Host ("  dog number : {0}" -f $srcInfo.DogNumber)
+Write-Host ("  dog name   : {0}" -f $srcInfo.DogName)
+Write-Host ("  dimensions : {0}x{1}" -f $srcInfo.Width, $srcInfo.Height)
+Write-Host ("  format     : {0}" -f $srcInfo.PixelFormat)
+Write-Host ("  corner A   : {0}" -f $srcInfo.CornerAlpha)
+Write-Host ""
+
+$ddsName = Get-DdsFileName -Slug $srcInfo.DogName
+$outPath = Join-Path $ddsDir $ddsName
+Write-Host "Output:"
+Write-Host ("  {0}" -f $outPath)
+Write-Host ""
+
+if (-not (Test-Path -LiteralPath $ddsDir)) {
+    throw ("DDS output directory missing: {0}" -f $ddsDir)
+}
+if (-not (Test-Path -LiteralPath $refDds)) {
+    throw ("Known-good reference DDS missing: {0}" -f $refDds)
+}
+
+if (Test-Path -LiteralPath $outPath) {
+    Write-Host ("CONFLICT: '{0}' already exists." -f $outPath)
+    Write-Host "Phase 4 refuses to overwrite existing DDS files."
+    Write-Host "Remove or rename the existing file explicitly if replacement is intended."
+    exit 2
+}
+
+# Regression snapshots (read-only)
+$protected = @('sd_dog_piglet.dds', 'sd_dog_02.dds', 'sd_dog_angus.dds')
+$hashesBefore = @{}
+foreach ($f in $protected) {
+    $p = Join-Path $ddsDir $f
+    if (Test-Path -LiteralPath $p) {
+        $hashesBefore[$f] = (Get-FileHash -LiteralPath $p -Algorithm SHA256).Hash
+    }
+}
+
+Write-Host "Converting..."
+$converted = ConvertTo-PortraitDdsPixels -SourcePath $sourcePath -Size $DdsSize
+
+$partial = $outPath + ".partial"
+try {
+    Write-UncompressedRgbaDds -Path $outPath -PixelsBgra $converted.Pixels -Width $DdsSize -Height $DdsSize
+} catch {
+    if (Test-Path -LiteralPath $partial) { Remove-Item -LiteralPath $partial -Force -ErrorAction SilentlyContinue }
+    if (Test-Path -LiteralPath $outPath) { Remove-Item -LiteralPath $outPath -Force -ErrorAction SilentlyContinue }
+    throw
+}
+
+Write-Host "Validating DDS..."
+$validation = Test-GeneratedDds -Path $outPath -ReferencePath $refDds
+if ($validation.Issues.Count -gt 0 -or -not $validation.HasGenuineAlpha -or -not $validation.HeaderMatchesRef) {
+    Remove-Item -LiteralPath $outPath -Force -ErrorAction SilentlyContinue
+    $detail = if ($validation.Issues.Count -gt 0) { $validation.Issues -join ", " } else { "alpha/header mismatch" }
+    throw ("DDS validation failed ({0}). Output removed." -f $detail)
+}
+
+Write-Host ""
+Write-Host "DDS generation successful."
+Write-Host ("  path        : {0}" -f $outPath)
+Write-Host ("  dimensions  : {0}x{1}" -f $validation.Header.Width, $validation.Header.Height)
+Write-Host ("  pfFlags     : 0x{0:X}" -f $validation.Header.PfFlags)
+Write-Host ("  bpp         : {0}" -f $validation.Header.Bpp)
+Write-Host ("  compression : none (uncompressed RGBA)")
+Write-Host ("  pitch       : {0}" -f $validation.Header.Pitch)
+Write-Host ("  mips        : {0}" -f $validation.Header.Mips)
+Write-Host ("  alpha A0 px : {0}" -f $validation.TransparentPixels)
+Write-Host ("  corner A    : {0}" -f $validation.CornerAlpha)
+Write-Host ("  header==Piglet reference: {0}" -f $validation.HeaderMatchesRef)
+Write-Host ""
+
+Write-Host "Protected DDS regression:"
+$regOk = $true
+foreach ($f in $protected) {
+    $p = Join-Path $ddsDir $f
+    if (-not $hashesBefore.ContainsKey($f)) { continue }
+    $after = (Get-FileHash -LiteralPath $p -Algorithm SHA256).Hash
+    $ok = ($after -eq $hashesBefore[$f])
+    if (-not $ok) { $regOk = $false }
+    Write-Host ("  {0}: {1}" -f $f, $(if ($ok) { "unchanged" } else { "CHANGED" }))
+}
+if (-not $regOk) {
+    throw "Protected DDS assets changed unexpectedly."
+}
+
+Write-Host ""
+Write-Host "Phase 4 STOP - no portrait definition / set / category registration performed."
+exit 0
+</file>
+
+<file path="tools/portrait-intake.ps1">
+# Stellar Dogos — Phase 3.1 Portrait Intake / Source Preparation
+# Discover → classify → interactive name → number → prepare → validate → cleanup
+#
+# Does NOT: create DDS, portrait IDs, or Stellaris registration.
+# Does NOT: accept a -DogName bypass. Naming is always interactive for new candidates.
+
+[CmdletBinding()]
+param()
+
+$ErrorActionPreference = "Stop"
+
+Add-Type -AssemblyName System.Drawing
+
+$SupportedExtensions = @(".png", ".jpg", ".jpeg", ".webp")
+$CanonicalPattern = '^dog(\d+)_(.+)_stellaris\.png$'
+
+# ---------------------------------------------------------------------------
+# Path helpers
+# ---------------------------------------------------------------------------
+
+function Get-RepoRoot {
+    $scriptDir = Split-Path -Parent $PSCommandPath
+    return (Resolve-Path (Join-Path $scriptDir "..")).Path
+}
+
+function Get-ImgHerePath {
+    param([string]$RepoRoot)
+    return Join-Path $RepoRoot "ImgHERE"
+}
+
+function Get-AssetsSourcePath {
+    param([string]$RepoRoot)
+    return Join-Path $RepoRoot "assets\source"
+}
+
+# ---------------------------------------------------------------------------
+# Classification / parsing (Steps 1-3)
+# ---------------------------------------------------------------------------
+
+function Test-IsSupportedExtension {
+    param([string]$Extension)
+    return $SupportedExtensions -contains $Extension.ToLowerInvariant()
+}
+
+function Get-CanonicalPortraitInfo {
+    param([string]$FileName)
+
+    $m = [regex]::Match($FileName.ToLowerInvariant(), $CanonicalPattern)
+    if (-not $m.Success) { return $null }
+
+    $rawName = $m.Groups[2].Value
+    if ([string]::IsNullOrWhiteSpace($rawName)) { return $null }
+
+    return [PSCustomObject]@{
+        FileName    = $FileName
+        Number      = [int]$m.Groups[1].Value
+        Name        = $rawName.ToLowerInvariant()
+        IsCanonical = $true
+    }
+}
+
+function Get-PortraitClassification {
+    param([System.IO.FileInfo]$File)
+
+    if (-not (Test-IsSupportedExtension -Extension $File.Extension)) {
+        return [PSCustomObject]@{ Kind = "IGNORED"; Info = $null }
+    }
+
+    $info = Get-CanonicalPortraitInfo -FileName $File.Name
+    if ($null -ne $info) {
+        return [PSCustomObject]@{ Kind = "CANONICAL"; Info = $info }
+    }
+
+    return [PSCustomObject]@{ Kind = "NEW_CANDIDATE"; Info = $null }
+}
+
+function Get-NumberInventory {
+    param([object[]]$CanonicalInfos)
+
+    $numbers = @($CanonicalInfos | ForEach-Object { $_.Number } | Sort-Object -Unique)
+    $highest = $null
+    $next = 1
+    if ($numbers.Count -gt 0) {
+        $highest = ($numbers | Measure-Object -Maximum).Maximum
+        $next = $highest + 1
+    }
+
+    return [PSCustomObject]@{
+        Numbers = $numbers
+        Highest = $highest
+        Next    = $next
+    }
+}
+
+function Get-CanonicalConflicts {
+    param([object[]]$CanonicalInfos)
+
+    $conflicts = New-Object System.Collections.Generic.List[string]
+
+    foreach ($g in ($CanonicalInfos | Group-Object Number)) {
+        if ($g.Count -gt 1) {
+            $files = ($g.Group | ForEach-Object { $_.FileName }) -join ", "
+            [void]$conflicts.Add(("Duplicate dog number {0}: {1}" -f $g.Name, $files))
+        }
+    }
+
+    foreach ($g in ($CanonicalInfos | Group-Object Name)) {
+        if ($g.Count -gt 1) {
+            $files = ($g.Group | ForEach-Object { $_.FileName }) -join ", "
+            [void]$conflicts.Add(("Duplicate dog name '{0}': {1}" -f $g.Name, $files))
+        }
+    }
+
+    return @($conflicts)
+}
+
+function Scan-ImgHere {
+    param([string]$ImgHere)
+
+    $allFiles = @(Get-ChildItem -LiteralPath $ImgHere -File -Force | Sort-Object Name)
+    $canonical = New-Object System.Collections.Generic.List[object]
+    $candidates = New-Object System.Collections.Generic.List[System.IO.FileInfo]
+    $ignored = New-Object System.Collections.Generic.List[string]
+
+    foreach ($f in $allFiles) {
+        $c = Get-PortraitClassification -File $f
+        switch ($c.Kind) {
+            "CANONICAL" { [void]$canonical.Add($c.Info) }
+            "NEW_CANDIDATE" { [void]$candidates.Add($f) }
+            "IGNORED" { [void]$ignored.Add($f.Name) }
+        }
+    }
+
+    $canonicalSorted = @($canonical | Sort-Object Number, FileName)
+    return [PSCustomObject]@{
+        Canonical  = $canonicalSorted
+        Candidates = @($candidates)
+        Ignored    = @($ignored)
+        Inventory  = (Get-NumberInventory -CanonicalInfos $canonicalSorted)
+        Conflicts  = (Get-CanonicalConflicts -CanonicalInfos $canonicalSorted)
+    }
+}
+
+function Write-IntakeReport {
+    param($Scan)
+
+    Write-Host "Canonical portraits:"
+    if ($Scan.Canonical.Count -eq 0) {
+        Write-Host "  none"
+    } else {
+        foreach ($info in $Scan.Canonical) {
+            Write-Host ("  [OK] {0}" -f $info.FileName)
+            Write-Host ("       number: {0}" -f $info.Number)
+            Write-Host ("       name: {0}" -f $info.Name)
+        }
+    }
+
+    Write-Host ""
+    Write-Host "New portrait candidates:"
+    if ($Scan.Candidates.Count -eq 0) {
+        Write-Host "  none"
+    } else {
+        foreach ($f in $Scan.Candidates) {
+            Write-Host ("  [?] {0}" -f $f.Name)
+            Write-Host "       name: unknown"
+            Write-Host "       number: unassigned"
+        }
+    }
+
+    Write-Host ""
+    Write-Host "Ignored:"
+    if ($Scan.Ignored.Count -eq 0) {
+        Write-Host "  none"
+    } else {
+        foreach ($name in $Scan.Ignored) {
+            Write-Host ("  - {0}" -f $name)
+        }
+    }
+
+    Write-Host ""
+    Write-Host "Existing dog numbers:"
+    if ($Scan.Inventory.Numbers.Count -eq 0) {
+        Write-Host "  none"
+    } else {
+        Write-Host ("  {0}" -f ($Scan.Inventory.Numbers -join ", "))
+    }
+
+    Write-Host ""
+    Write-Host "Highest existing dog number:"
+    if ($null -eq $Scan.Inventory.Highest) {
+        Write-Host "  none"
+    } else {
+        Write-Host ("  {0}" -f $Scan.Inventory.Highest)
+    }
+
+    Write-Host ""
+    Write-Host "Next available number:"
+    Write-Host ("  {0}" -f $Scan.Inventory.Next)
+
+    Write-Host ""
+    Write-Host "Conflicts:"
+    if ($Scan.Conflicts.Count -eq 0) {
+        Write-Host "  none"
+    } else {
+        foreach ($c in $Scan.Conflicts) {
+            Write-Host ("  ! {0}" -f $c)
+        }
+    }
+
+    Write-Host ""
+    Write-Host "Summary:"
+    Write-Host ("  {0} canonical portrait(s)" -f $Scan.Canonical.Count)
+    Write-Host ("  {0} new portrait candidate(s)" -f $Scan.Candidates.Count)
+    Write-Host ("  {0} ignored file(s)" -f $Scan.Ignored.Count)
+    Write-Host ("  {0} conflict(s)" -f $Scan.Conflicts.Count)
+}
+
+# ---------------------------------------------------------------------------
+# Naming (Step 4-5)
+# ---------------------------------------------------------------------------
+
+function ConvertTo-SafeDogSlug {
+    param([string]$DisplayName)
+
+    $slug = $DisplayName.Trim().ToLowerInvariant()
+    $slug = $slug -replace '\s+', '_'
+    $slug = $slug -replace '[^a-z0-9_\-]', ''
+    $slug = $slug -replace '_+', '_'
+    $slug = $slug.Trim('_')
+    return $slug
+}
+
+function Test-IsValidDogDisplayName {
+    param([string]$DisplayName)
+
+    if ([string]::IsNullOrWhiteSpace($DisplayName)) {
+        return [PSCustomObject]@{ Ok = $false; Reason = "empty" }
+    }
+
+    $slug = ConvertTo-SafeDogSlug -DisplayName $DisplayName
+    if ([string]::IsNullOrWhiteSpace($slug)) {
+        return [PSCustomObject]@{ Ok = $false; Reason = "unusable" }
+    }
+
+    return [PSCustomObject]@{ Ok = $true; Reason = ""; Slug = $slug }
+}
+
+function Read-DogNameInteractive {
+    param([string]$CandidateFileName)
+
+    Write-Host ""
+    Write-Host "New portrait candidate detected:"
+    Write-Host ("  {0}" -f $CandidateFileName)
+    Write-Host ""
+    Write-Host "What is this dog's name?"
+
+    while ($true) {
+        Write-Host -NoNewline "> "
+        $entered = $null
+        if ([Console]::IsInputRedirected) {
+            $entered = [Console]::In.ReadLine()
+            if ($null -eq $entered) {
+                throw "No dog name provided (stdin closed)."
+            }
+            Write-Host $entered
+        } else {
+            $entered = Read-Host
+        }
+
+        $check = Test-IsValidDogDisplayName -DisplayName $entered
+        if ($check.Ok) {
+            return [PSCustomObject]@{ Display = $entered.Trim(); Slug = $check.Slug }
+        }
+
+        if ($check.Reason -eq "empty") {
+            Write-Host "Dog name cannot be empty."
+            Write-Host "Please enter the dog's name:"
+        } else {
+            Write-Host "Dog name is invalid (no usable filename characters)."
+            Write-Host "Please enter the dog's name:"
+        }
+    }
+}
+
+function Get-CanonicalFileName {
+    param(
+        [int]$Number,
+        [string]$Slug
+    )
+    return ("dog{0:D2}_{1}_stellaris.png" -f $Number, $Slug)
+}
+
+# ---------------------------------------------------------------------------
+# Image preparation (Step 6)
+# ---------------------------------------------------------------------------
+
+function Test-BitmapHasGenuineAlpha {
+    param([System.Drawing.Bitmap]$Bitmap)
+
+    $fmt32 = [System.Drawing.Imaging.PixelFormat]::Format32bppArgb
+    $rect = New-Object System.Drawing.Rectangle 0, 0, $Bitmap.Width, $Bitmap.Height
+    $data = $Bitmap.LockBits($rect, [System.Drawing.Imaging.ImageLockMode]::ReadOnly, $fmt32)
+    try {
+        $stride = [Math]::Abs($data.Stride)
+        $raw = New-Object byte[] ($stride * $Bitmap.Height)
+        [Runtime.InteropServices.Marshal]::Copy($data.Scan0, $raw, 0, $raw.Length)
+    } finally {
+        $Bitmap.UnlockBits($data)
+    }
+
+    $transparent = 0
+    $opaque = 0
+    for ($y = 0; $y -lt $Bitmap.Height; $y++) {
+        $row = $y * $stride
+        for ($x = 0; $x -lt $Bitmap.Width; $x++) {
+            $a = $raw[$row + ($x * 4) + 3]
+            if ($a -eq 0) { $transparent++ }
+            elseif ($a -ge 250) { $opaque++ }
+        }
+    }
+
+    return [PSCustomObject]@{
+        TransparentPixels = $transparent
+        NearOpaquePixels  = $opaque
+        HasGenuineAlpha   = ($transparent -gt 100)
+    }
+}
+
+function Convert-NearWhiteBackgroundToAlpha {
+    # Technical plate removal only (border flood-fill of near-white). Does not regenerate art.
+    param(
+        [System.Drawing.Bitmap]$Source,
+        [int]$Threshold = 245
+    )
+
+    $w = $Source.Width
+    $h = $Source.Height
+    $fmt32 = [System.Drawing.Imaging.PixelFormat]::Format32bppArgb
+    $bmp = New-Object System.Drawing.Bitmap $w, $h, $fmt32
+    $g = [System.Drawing.Graphics]::FromImage($bmp)
+    $g.DrawImage($Source, 0, 0, $w, $h)
+    $g.Dispose()
+
+    function Test-NearWhite([System.Drawing.Color]$c, [int]$t) {
+        return ($c.A -gt 0 -and $c.R -ge $t -and $c.G -ge $t -and $c.B -ge $t)
+    }
+
+    $queue = New-Object System.Collections.Generic.Queue[object]
+    $visited = New-Object 'bool[,]' $w, $h
+
+    function Enqueue-IfPlate([int]$x, [int]$y) {
+        if ($x -lt 0 -or $y -lt 0 -or $x -ge $w -or $y -ge $h) { return }
+        if ($visited[$x, $y]) { return }
+        $c = $bmp.GetPixel($x, $y)
+        if (Test-NearWhite $c $Threshold) {
+            $visited[$x, $y] = $true
+            $queue.Enqueue(@($x, $y))
+        }
+    }
+
+    for ($x = 0; $x -lt $w; $x++) {
+        Enqueue-IfPlate $x 0
+        Enqueue-IfPlate $x ($h - 1)
+    }
+    for ($y = 0; $y -lt $h; $y++) {
+        Enqueue-IfPlate 0 $y
+        Enqueue-IfPlate ($w - 1) $y
+    }
+
+    $cleared = 0
+    while ($queue.Count -gt 0) {
+        $p = $queue.Dequeue()
+        $x = $p[0]; $y = $p[1]
+        $bmp.SetPixel($x, $y, [System.Drawing.Color]::FromArgb(0, 0, 0, 0))
+        $cleared++
+        Enqueue-IfPlate ($x + 1) $y
+        Enqueue-IfPlate ($x - 1) $y
+        Enqueue-IfPlate $x ($y + 1)
+        Enqueue-IfPlate $x ($y - 1)
+    }
+
+    return [PSCustomObject]@{ Bitmap = $bmp; Cleared = $cleared }
+}
+
+function ConvertTo-SquareRgbaPortrait {
+    # Fit into a square RGBA canvas. Preserve artwork; no creative crop/regen.
+    # Taller sources: align to bottom (preserve bottom-edge crop). Wider: center.
+    param([System.Drawing.Bitmap]$Source)
+
+    $side = [Math]::Max($Source.Width, $Source.Height)
+    $canvas = New-Object System.Drawing.Bitmap $side, $side, ([System.Drawing.Imaging.PixelFormat]::Format32bppArgb)
+    $g = [System.Drawing.Graphics]::FromImage($canvas)
+    $g.Clear([System.Drawing.Color]::FromArgb(0, 0, 0, 0))
+    $g.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
+    $g.CompositingMode = [System.Drawing.Drawing2D.CompositingMode]::SourceCopy
+    $g.PixelOffsetMode = [System.Drawing.Drawing2D.PixelOffsetMode]::HighQuality
+
+    $dx = [int](($side - $Source.Width) / 2)
+    if ($Source.Height -ge $Source.Width) {
+        $dy = $side - $Source.Height
+        if ($dy -lt 0) { $dy = 0 }
+    } else {
+        $dy = [int](($side - $Source.Height) / 2)
+    }
+
+    $g.DrawImage($Source, $dx, $dy, $Source.Width, $Source.Height)
+    $g.Dispose()
+    return $canvas
+}
+
+function Save-Png32 {
+    param(
+        [System.Drawing.Bitmap]$Bitmap,
+        [string]$Path
+    )
+
+    $dir = Split-Path -Parent $Path
+    if (-not (Test-Path -LiteralPath $dir)) {
+        New-Item -ItemType Directory -Force -Path $dir | Out-Null
+    }
+
+    # Save via MemoryStream to avoid GDI+ lock issues on overwrite paths
+    $ms = New-Object System.IO.MemoryStream
+    $Bitmap.Save($ms, [System.Drawing.Imaging.ImageFormat]::Png)
+    [IO.File]::WriteAllBytes($Path, $ms.ToArray())
+    $ms.Dispose()
+}
+
+function New-PreparedPortraitPng {
+    param([string]$SourcePath)
+
+    $loaded = $null
+    try {
+        $loaded = [System.Drawing.Bitmap]::FromFile($SourcePath)
+    } catch {
+        throw ("Failed to load image '{0}': {1}" -f $SourcePath, $_.Exception.Message)
+    }
+
+    $working = $null
+    $bgRemoved = $false
+    $cleared = 0
+
+    try {
+        $alpha = Test-BitmapHasGenuineAlpha -Bitmap $loaded
+        if ($alpha.HasGenuineAlpha) {
+            $working = New-Object System.Drawing.Bitmap $loaded.Width, $loaded.Height, ([System.Drawing.Imaging.PixelFormat]::Format32bppArgb)
+            $g = [System.Drawing.Graphics]::FromImage($working)
+            $g.DrawImage($loaded, 0, 0, $loaded.Width, $loaded.Height)
+            $g.Dispose()
+        } else {
+            $cut = Convert-NearWhiteBackgroundToAlpha -Source $loaded
+            $working = $cut.Bitmap
+            $bgRemoved = $true
+            $cleared = $cut.Cleared
+            $alpha2 = Test-BitmapHasGenuineAlpha -Bitmap $working
+            if (-not $alpha2.HasGenuineAlpha) {
+                throw "Could not establish genuine alpha transparency. Provide a transparent PNG or a near-white plate background."
+            }
+        }
+
+        $square = ConvertTo-SquareRgbaPortrait -Source $working
+        return [PSCustomObject]@{
+            Bitmap           = $square
+            BackgroundRemoved = $bgRemoved
+            PlatePixelsCleared = $cleared
+            SourceWidth      = $loaded.Width
+            SourceHeight     = $loaded.Height
+            OutputWidth      = $square.Width
+            OutputHeight     = $square.Height
+        }
+    } finally {
+        if ($null -ne $working) { $working.Dispose() }
+        if ($null -ne $loaded) { $loaded.Dispose() }
+    }
+}
+
+function Test-PreparedPortraitFile {
+    param([string]$Path)
+
+    $bmp = [System.Drawing.Bitmap]::FromFile($Path)
+    try {
+        $square = ($bmp.Width -eq $bmp.Height)
+        $fmt = $bmp.PixelFormat.ToString()
+        $rgba = ($fmt -match 'Argb|PArgb')
+        $alpha = Test-BitmapHasGenuineAlpha -Bitmap $bmp
+        $corner = $bmp.GetPixel(0, 0)
+
+        return [PSCustomObject]@{
+            Path              = $Path
+            Width             = $bmp.Width
+            Height            = $bmp.Height
+            IsSquare          = $square
+            PixelFormat       = $fmt
+            IsRgba            = $rgba
+            HasGenuineAlpha   = $alpha.HasGenuineAlpha
+            TransparentPixels = $alpha.TransparentPixels
+            CornerAlpha       = $corner.A
+            LooksLikeOpaquePlate = ($corner.A -eq 255 -and -not $alpha.HasGenuineAlpha)
+        }
+    } finally {
+        $bmp.Dispose()
+    }
+}
+
+# ---------------------------------------------------------------------------
+# Intake processing
+# ---------------------------------------------------------------------------
+
+function Invoke-CandidateIntake {
+    param(
+        [System.IO.FileInfo]$Candidate,
+        [string]$ImgHere,
+        [string]$AssetsSource
+    )
+
+    # Name FIRST (mandatory interactive). Numbering happens only after a valid name.
+    $nameInfo = Read-DogNameInteractive -CandidateFileName $Candidate.Name
+
+    $live = Scan-ImgHere -ImgHere $ImgHere
+    if ($live.Conflicts.Count -gt 0) {
+        throw "Existing canonical conflicts detected. Resolve them before intake."
+    }
+
+    $nextNumber = $live.Inventory.Next
+    $existingNames = @($live.Canonical | ForEach-Object { $_.Name })
+    $slug = $nameInfo.Slug
+    $canonicalName = Get-CanonicalFileName -Number $nextNumber -Slug $slug
+
+    Write-Host ""
+    Write-Host "Assigned:"
+    Write-Host ("  display name : {0}" -f $nameInfo.Display)
+    Write-Host ("  slug         : {0}" -f $slug)
+    Write-Host ("  dog number   : {0}" -f $nextNumber)
+    Write-Host ("  canonical    : {0}" -f $canonicalName)
+
+    if ($existingNames -contains $slug) {
+        throw ("Conflict: a canonical portrait named '{0}' already exists. Refusing to create {1}." -f $slug, $canonicalName)
+    }
+
+    $destImgHere = Join-Path $ImgHere $canonicalName
+    $destAssets = Join-Path $AssetsSource $canonicalName
+
+    if (Test-Path -LiteralPath $destImgHere) {
+        throw ("Conflict: '{0}' already exists in ImgHERE. Refusing to overwrite." -f $destImgHere)
+    }
+    if (Test-Path -LiteralPath $destAssets) {
+        throw ("Conflict: '{0}' already exists in assets/source. Refusing to overwrite." -f $destAssets)
+    }
+
+    Write-Host ""
+    Write-Host "Preparing image (technical only - no artistic regeneration)..."
+    $prepared = $null
+    $wroteOutputs = $false
+    $v1 = $null
+    $bgRemoved = $false
+    try {
+        $prepared = New-PreparedPortraitPng -SourcePath $Candidate.FullName
+        $bgRemoved = $prepared.BackgroundRemoved
+        Save-Png32 -Bitmap $prepared.Bitmap -Path $destImgHere
+        Save-Png32 -Bitmap $prepared.Bitmap -Path $destAssets
+        $wroteOutputs = $true
+
+        $v1 = Test-PreparedPortraitFile -Path $destImgHere
+        $v2 = Test-PreparedPortraitFile -Path $destAssets
+
+        if (-not $v1.IsSquare -or -not $v1.IsRgba -or -not $v1.HasGenuineAlpha -or $v1.LooksLikeOpaquePlate) {
+            throw "Prepared ImgHERE file failed validation."
+        }
+        if (-not $v2.IsSquare -or -not $v2.IsRgba -or -not $v2.HasGenuineAlpha -or $v2.LooksLikeOpaquePlate) {
+            throw "Prepared assets/source file failed validation."
+        }
+    } catch {
+        # Failure safety: never delete the original candidate. Remove any partial outputs.
+        if ($wroteOutputs) {
+            if (Test-Path -LiteralPath $destImgHere) { Remove-Item -LiteralPath $destImgHere -Force -ErrorAction SilentlyContinue }
+            if (Test-Path -LiteralPath $destAssets) { Remove-Item -LiteralPath $destAssets -Force -ErrorAction SilentlyContinue }
+        }
+        throw
+    } finally {
+        if ($null -ne $prepared -and $null -ne $prepared.Bitmap) {
+            $prepared.Bitmap.Dispose()
+        }
+    }
+
+    # SUCCESS only: delete the temporary intake file (keep ImgHERE clean).
+    Remove-Item -LiteralPath $Candidate.FullName -Force
+
+    Write-Host ""
+    Write-Host "Intake complete."
+    Write-Host ("  ImgHERE      : {0}" -f $destImgHere)
+    Write-Host ("  assets/source: {0}" -f $destAssets)
+    Write-Host ("  dimensions   : {0}x{1}" -f $v1.Width, $v1.Height)
+    Write-Host ("  square       : {0}" -f $v1.IsSquare)
+    Write-Host ("  RGBA         : {0} ({1})" -f $v1.IsRgba, $v1.PixelFormat)
+    Write-Host ("  genuine alpha: {0} (transparent pixels: {1})" -f $v1.HasGenuineAlpha, $v1.TransparentPixels)
+    Write-Host ("  corner alpha : {0}" -f $v1.CornerAlpha)
+    Write-Host ("  bg plate rem.: {0}" -f $bgRemoved)
+    Write-Host ("  temp input   : deleted after successful validation")
+    Write-Host ""
+    Write-Host "Phase 3.1 STOP - no DDS / portrait registration performed."
+
+    return [PSCustomObject]@{
+        CanonicalName = $canonicalName
+        ImgHerePath   = $destImgHere
+        AssetsPath    = $destAssets
+        Validation    = $v1
+    }
+}
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+
+$repoRoot = Get-RepoRoot
+$imgHere = Get-ImgHerePath -RepoRoot $repoRoot
+$assetsSource = Get-AssetsSourcePath -RepoRoot $repoRoot
+
+Write-Host "Stellar Dogos Portrait Intake"
+Write-Host "Phase 3.1 - Source preparation (no DDS / no Stellaris registration)"
+Write-Host ""
+Write-Host "ImgHERE: $imgHere"
+Write-Host ""
+
+if (-not (Test-Path -LiteralPath $imgHere -PathType Container)) {
+    Write-Host "ERROR: ImgHERE directory not found."
+    Write-Host "Expected: $imgHere"
+    exit 1
+}
+
+$scan = Scan-ImgHere -ImgHere $imgHere
+Write-IntakeReport -Scan $scan
+
+if ($scan.Conflicts.Count -gt 0) {
+    Write-Host ""
+    Write-Host "Existing canonical conflicts detected. Resolve them before intake."
+    exit 2
+}
+
+if ($scan.Candidates.Count -eq 0) {
+    Write-Host ""
+    Write-Host "No new portrait candidates to process."
+    Write-Host "Phase 3.1 idle complete (scan only)."
+    exit 0
+}
+
+# Process candidates sequentially. Naming is always interactive (no -DogName bypass).
+$processed = 0
+
+foreach ($candidate in $scan.Candidates) {
+    try {
+        Invoke-CandidateIntake `
+            -Candidate $candidate `
+            -ImgHere $imgHere `
+            -AssetsSource $assetsSource | Out-Null
+        $processed++
+    } catch {
+        Write-Host ""
+        Write-Host ("INTAKE FAILED for '{0}': {1}" -f $candidate.Name, $_.Exception.Message)
+        Write-Host "Original candidate left in ImgHERE for retry."
+        exit 1
+    }
+}
+
+Write-Host ""
+Write-Host ("Processed {0} candidate(s)." -f $processed)
+exit 0
+</file>
+
 <file path=".gitattributes">
 # Auto detect text files and perform LF normalization
 * text=auto
+</file>
+
+<file path="docs/development-roadmap.md">
+# Stellar Dogos — Development Roadmap
+
+Authoritative phase status for future sessions. Cross-references:
+
+- [AI development workflow](ai-development-workflow.md)
+- [Portrait workflow](portrait-workflow.md)
+- [Portrait testing](portrait-testing.md)
+- [Project plan](../PROJECT_PLAN.md)
+
+Certainty labels: **CONFIRMED** / **ASSUMPTION** / **TARGET** / **NEEDS VERIFICATION** — see [PROJECT_PLAN.md](../PROJECT_PLAN.md).
+
+---
+
+## Current position
+
+| Item | Status |
+|------|--------|
+| Static `texturefile` portraits in 4.4.6 | **CONFIRMED** (species creation) |
+| Three dogs (Piglet, Oakley, Angus) | Working in species creation |
+| Automated portrait importer | Partial: 3.1 intake + 4 DDS; registration = Phase 5 |
+| Phase 3.1 source intake (interactive naming) | **IMPLEMENTED** (`tools/portrait-intake.ps1`) |
+| Phase 4 DDS generation | **IMPLEMENTED** (`tools/portrait-dds.ps1`) |
+| Full UI portrait compatibility | **NEEDS VERIFICATION** |
+| Steam Workshop release | **NOT READY** |
+
+Phase 3.1 + Phase 4 are available. **Portrait registration remains Phase 5** (not implemented).
+
+---
+
+## Phase 0 — Discovery
+
+**STATUS: COMPLETE**
+
+- Investigate Stellaris **Pegasus v4.4.6** (`modsCompatibilityVersion = 4.4`)
+- Investigate portrait categories / sets / species classes / gfx portraits
+- Test `texturefile` via minimal experiment
+- Prove static portrait loading in species creation
+- Establish DDS requirements (256×256 uncompressed 32-bit RGBA, `pfFlags=0x41`, alpha)
+
+---
+
+## Phase 1 — Portrait Calibration
+
+**STATUS: MOSTLY COMPLETE**
+
+Done:
+
+- Piglet working (`sd_dog_piglet`) — protected reference
+- Oakley working (`sd_dog_02`) — gold-standard visual reference
+- Angus working (`sd_dog_angus`) — regenerated ImgHERE art wired; framing accepted for now
+- Transparency / alpha rules established
+- Scale / framing empirical targets established (~91–92% vertical fill)
+- Image-generation prompts preserved ([portrait-prompts.md](portrait-prompts.md))
+- Manual DDS pipeline established
+- ImgHERE staging convention established
+
+Remaining:
+
+- Final side-by-side visual comparison of all three
+- Decide whether Piglet needs any further refinement (do not casually regenerate)
+
+---
+
+## Phase 2 — In-Game Compatibility Audit
+
+**STATUS: NEXT**
+
+Use **Oakley** as the primary test asset.
+
+Test portrait appearance in:
+
+- Species UI (beyond creation checklist already partly confirmed)
+- Leader UI
+- Council
+- Government / empire UI
+- Diplomacy
+- Contacts
+- Factions
+- Events
+- Other relevant portrait contexts
+
+**Question to answer:** Does one static portrait DDS work correctly everywhere Stellaris displays that portrait?
+
+See [portrait-testing.md](portrait-testing.md).
+
+Only after this audit should importer architecture be finalized.
+
+---
+
+## Phase 3 — Portrait Importer Design / Phase 3.1 Intake
+
+**STATUS: Phase 3.1 IMPLEMENTED** (`tools/portrait-intake.ps1`); later Phase 3/4 DDS+registration still PLANNED
+
+Before full implementation:
+
+- Fresh Repomix snapshot when coding begins
+- ChatGPT reconstructs repository
+- Determine exact implementation files
+- Define importer architecture (phased: 3.1 source prep → later DDS/registration)
+- Define validation contracts
+- Define failure behavior
+- Define naming rules (canonical `dogNN_<name>_stellaris.png` is **internal**; users are not required to type it)
+
+### Phase 3.1 — Source intake & preparation
+
+**STATUS: IMPLEMENTED** — `tools/portrait-intake.ps1`
+
+**User workflow:**
+
+```text
+Drop a dog image into ImgHERE
+  → run tools/portrait-intake.ps1
+  → enter the dog's name when prompted (mandatory; no bypass)
+  → tool assigns the next available dog number
+  → tool prepares the canonical source image
+  → writes ImgHERE/dog##_<name>_stellaris.png and assets/source/...
+  → deletes the temporary input from ImgHERE (success only)
+  → STOP
+```
+
+Phase 3.1 ends at prepared canonical PNG sources. It does **not** create DDS, portrait IDs, or registration edits.
+
+#### Interactive naming
+
+Users must **not** be required to manually invent `dog04_…` filenames.
+
+1. User places a supported image in `ImgHERE/` (any reasonable name; PNG/JPG/JPEG/WEBP at minimum).
+2. Tool detects a new supported candidate (not already a canonical asset).
+3. Tool asks in the console: `What is this dog's name?`
+4. User enters the authoritative display name (e.g. `Liberty`).
+5. Tool normalizes the name **only** as needed for a safe filename (`Liberty` → `liberty`).
+6. Empty/invalid names: keep asking — do not invent a name. No `-DogName` bypass.
+7. **After** a valid name, tool chooses the next free dog number from existing canonical sources.
+8. Tool generates canonical filename: `dog##_<name>_stellaris.png`.
+9. Tool validates/prepares the image (PNG, square, RGBA, real alpha — no artistic regen).
+10. Canonical prepared source is written to:
+    - `ImgHERE/dog##_<name>_stellaris.png`
+    - `assets/source/dog##_<name>_stellaris.png`
+11. On **success**, delete the temporary input from `ImgHERE`. On **failure**, leave it untouched.
+12. **Stop.** No DDS / portrait ID / set / category / vanilla changes. No `_originals` archive.
+
+Example:
+
+```text
+ImgHERE/my_dog.png
+  → user enters "Liberty"
+  → ImgHERE/dog04_liberty_stellaris.png
+  → assets/source/dog04_liberty_stellaris.png
+```
+
+#### Automatic dog numbering
+
+- Scan existing canonical Stellar Dogos source assets (e.g. `assets/source/dog##_…_stellaris.png` and matching ImgHERE canons).
+- Next number = lowest unused integer after the highest present (today: dog01–dog03 → next is **dog04**).
+- Do **not** reuse numbers, renumber existing dogs, or touch Piglet / Oakley / Angus.
+
+#### Already-canonical files
+
+If a file is already named `dog##_<name>_stellaris.png`:
+
+- Do **not** ask for the name again
+- Treat as an explicitly named canonical asset
+- Validate/prepare normally
+- Do **not** assign another number or create duplicate canons
+
+#### Conflicts & safety
+
+- If the normalized canonical filename already exists → **stop and explain**; never silently overwrite
+- Do not overwrite existing prepared sources, DDS, definitions, or sets
+- Existing working dogs are regression fixtures and must remain untouched
+- Distinguish: canonical assets / new candidates / unsupported files / raw-reference images to ignore
+- If unsure whether a file is a new portrait → **ask the user**; do not guess
+- Do not process unrelated files
+
+#### Explicitly outside Phase 3.1
+
+- PNG → DDS conversion
+- DDS → portrait definition
+- Portrait definition → portrait set / category registration
+- In-game testing claims for the new dog
+
+Those remain later phases (Phase 5+ for registration; Phase 4 is DDS only).
+
+---
+
+## Phase 4 — DDS Generation / Technical Asset Pipeline
+
+**STATUS: IMPLEMENTED** — `tools/portrait-dds.ps1`
+
+Converts a validated Phase 3.1 canonical PNG into a game DDS matching the known-good working portraits.
+
+```text
+assets/source/dog##_<name>_stellaris.png
+  → validate square RGBA + alpha
+  → downscale to 256×256 (preserve alpha; do not alter source PNG)
+  → write uncompressed 32-bit RGBA DDS (pfFlags=0x41, no mips)
+  → validate header vs Piglet reference + alpha
+  → STOP
+```
+
+**Output location:**  
+`experiment/sd_static_portrait_test/gfx/models/portraits/sd_static_test/sd_dog_<name>.dds`
+
+**Command:**
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\portrait-dds.ps1 -Source assets\source\dog05_bruce_stellaris.png
+```
+
+**Safety:** refuses to overwrite an existing DDS; does not modify Piglet/Oakley/Angus; does not touch portrait defs/sets/categories or vanilla Stellaris.
+
+**Explicitly outside Phase 4:** portrait IDs, definition/set/category registration, in-game claims.
+
+---
+
+## Phase 5 — Portrait Registration
+
+**STATUS: PLANNED**
+
+Wire a generated DDS into Stellaris:
+
+1. Create/update portrait definition (`texturefile`)
+2. Add portrait ID to portrait set
+3. Ensure Mammalian category still exposes the set
+4. Protect existing portraits (hash checks)
+5. In-game verification
+
+Do **not** treat Phase 4 DDS creation as registration success.
+
+---
+
+## Phase 6 — End-to-End Automation / Fourth-Dog Proof
+
+**STATUS: PLANNED**
+
+Do **not** use only Piglet/Oakley/Angus as the full-pipeline proof.
+
+- New dog through intake → DDS → registration
+- Verify existing dogs unchanged
+- Verify new dog appears in-game
+
+---
+
+## Phase 7 — Failure Testing
+
+**STATUS: PLANNED**
+
+Importer/pipeline must fail safely on:
+
+- Invalid image
+- Unsupported extension
+- Missing alpha
+- Malformed image
+- Duplicate name
+- Duplicate ID
+- Multiple new images
+- Missing conversion dependency
+- Malformed portrait definition
+- Interrupted processing
+
+---
+
+## Phase 8 — Documentation / UX
+
+**STATUS: PLANNED**
+
+README user workflow (TARGET):
+
+1. Generate a portrait
+2. Put it in `ImgHERE`
+3. Run intake
+4. Run DDS generator
+5. (Later) registration → Launch Stellaris
+6. Enable Stellar Dogos
+7. Test the portrait
+
+Developer docs explain architecture.
+
+---
+
+## Phase 9 — Release Preparation
+
+**STATUS: PLANNED**
+
+- Remove experimental/development-only artifacts where appropriate
+- Rename experiment paths into production structure
+- Clean repository
+- Update README / version
+- Test from a fresh clone
+- Test packaged mod
+- Verify no vanilla files are required
+- Verify Workshop package contents
+
+---
+
+## Phase 10 — Steam Workshop
+
+**STATUS: FUTURE**
+
+Only after:
+
+- Full pipeline works
+- Compatibility audit complete
+- Fresh-install test passes
+- Documentation complete
+- Production mod structure finalized
+
+Then publish **Stellar Dogos** to Steam Workshop.
+
+---
+
+## Engineering lesson — do not automate too early
+
+The project intentionally performed several portraits **manually** before automation.
+
+That discovered:
+
+- Transparency requirements
+- Halo / light-fringe problems
+- Framing problems
+- Scale differences
+- DDS requirements
+- Portrait registration requirements
+- In-game behavior (species creation)
+
+The importer must be built from this **proven** workflow, not from early assumptions.
+
+---
+
+## Regression protection
+
+Treat **Piglet** and **Oakley** as protected regression fixtures.
+
+- Importer must never silently rebuild existing portraits
+- Before/after hashes during development
+- Existing portraits change only when a task explicitly requests it
+</file>
+
+<file path="experiment/sd_static_portrait_test/common/portrait_sets/00_sd_static_test_portrait_sets.txt">
+##############################################################
+### SD Static Portrait Test - portrait set (EXPERIMENT ONLY)
+###
+### VANILLA-VERIFIED pattern from common/portrait_sets/00_portrait_sets.txt:
+### - species_class = MAM
+### - portraits = { "id" }
+### - non_randomized_portraits so random AI empires avoid this test art
+##############################################################
+
+sd_static_test = {
+	species_class = MAM
+
+	portraits = {
+		"sd_dog_piglet"
+		"sd_dog_02"
+		"sd_dog_angus"
+	}
+
+	non_randomized_portraits = {
+		"sd_dog_piglet"
+		"sd_dog_02"
+		"sd_dog_angus"
+	}
+}
+</file>
+
+<file path="experiment/sd_static_portrait_test/gfx/portraits/portraits/00_sd_static_test_portraits.txt">
+##############################################################
+### SD Static Portrait Test (EXPERIMENT ONLY)
+###
+### Portraits:
+###   sd_dog_piglet - Piglet
+###   sd_dog_02    - Oakley
+###   sd_dog_angus - Angus
+##############################################################
+
+portraits = {
+	sd_dog_piglet = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_piglet.dds"
+	}
+
+	sd_dog_02 = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_02.dds"
+	}
+
+	sd_dog_angus = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_angus.dds"
+	}
+}
+</file>
+
+<file path="experiment/sd_static_portrait_test/README.md">
+# SD Static Portrait Test (experiment)
+
+Working proof-of-concept for **Stellar Dogos** static species portraits on Stellaris **Pegasus v4.4.6**.
+
+**CONFIRMED:** `texturefile` static portraits appear in Mammalian species creation.
+
+Current portraits: `sd_dog_piglet` (Piglet), `sd_dog_02` (Oakley), `sd_dog_angus` (Angus).
+
+Project docs (authoritative):
+
+- `../../PROJECT_PLAN.md`
+- `../../docs/portrait-workflow.md`
+- `../../docs/development-roadmap.md`
+- `../../docs/portrait-testing.md`
+
+## Enable in the launcher
+
+1. Ensure `Documents\Paradox Interactive\Stellaris\mod\` exists.
+2. Point a `.mod` descriptor `path=` at this folder (forward slashes).
+3. Enable the mod in the Stellaris launcher.
+4. Empire creation → **Mammalian** → select a dog portrait.
+
+## Important
+
+- Do not modify the vanilla Stellaris installation.
+- Piglet and Oakley are protected regression fixtures unless a task explicitly changes them.
+- Full UI compatibility beyond species creation is **not** fully verified yet.
+
+## Revert
+
+Disable/delete the launcher `.mod` descriptor and/or this folder. No vanilla files need restoring.
 </file>
 
 <file path="docs/portrait-workflow.md">
@@ -1396,39 +2639,45 @@ Examples already in use:
 
 Users are **not** required to invent or type this format. Numbering and canonical renaming are tool responsibilities (Phase 3.1 design).
 
-### Intended Phase 3.1 user flow (**TARGET** — not implemented yet)
+### Phase 3.1 user flow (**IMPLEMENTED** — `tools/portrait-intake.ps1`)
 
 ```text
 Drop a dog image into ImgHERE
+  → run tools/portrait-intake.ps1
   → enter the dog's name when prompted
   → tool assigns the next available dog number
   → tool prepares the canonical source image
 ```
 
-Supported drop formats (minimum design): PNG, JPG/JPEG, WEBP. Preparation converts to canonical PNG source.
+Supported drop formats: PNG, JPG/JPEG, WEBP (System.Drawing must be able to load the file). Preparation converts to a square RGBA PNG source.
 
 ```text
 ImgHERE/<any supported image>
-  → console: "What is this dog's name?"
+  → console: "What is this dog's name?" / "> "
   → e.g. Liberty → dog04_liberty_stellaris.png
   → ImgHERE/dog04_liberty_stellaris.png
   → assets/source/dog04_liberty_stellaris.png
+  → temporary input deleted from ImgHERE after successful validation
   → STOP (Phase 3.1)
 ```
 
-If a file is **already** named `dog##_<name>_stellaris.png`, do not ask again — validate/prepare that canon only.
+If a file is **already** named `dog##_<name>_stellaris.png`, do not ask again — it is reported as canonical.
 
-Conflicts: if the target canonical name already exists, stop and explain; never overwrite Piglet/Oakley/Angus or other existing canons.
+Conflicts: if the target canonical name already exists, stop and explain; never overwrite existing canons.
 
-Do not treat every file in `ImgHERE` as a new dog (ignore unsupported / raw-reference files; ask when unsure). Full design: [development-roadmap.md](development-roadmap.md) Phase 3.1.
+Empty names are rejected and the tool keeps asking. Naming is always interactive for new candidates (no `-DogName` bypass).
+
+Do not treat every file in `ImgHERE` as a new dog (ignore unsupported extensions). See [development-roadmap.md](development-roadmap.md) Phase 3.1.
 
 **Rules:**
 
-- Finished portraits and new candidates go here for intake
-- Raw reference photographs that are not finished portraits should not be auto-ingested (e.g. historical Angus JPG)
-- Do **not** automatically delete originals in `ImgHERE`
+- Finished portraits and new candidates go in the ImgHERE root for intake
+- Raw reference photographs that are not finished portraits should not be auto-ingested
+- On **success**, the temporary input image is removed from `ImgHERE`
+- On **failure**, the original input remains untouched in `ImgHERE` for retry
+- The tool does **not** maintain an `_originals` archive
 
-Later phases (after 3.1) add DDS + Stellaris registration. Full importer UX remains future work.
+Later phases add DDS + Stellaris registration.
 
 ---
 
@@ -1466,7 +2715,7 @@ Stellaris
 in-game test
 ```
 
-Asset prep through `assets/source/` is still largely **MANUAL** until Phase 3.1 is implemented. See [development-roadmap.md](development-roadmap.md).
+Canonical source intake is automated by `tools/portrait-intake.ps1`. DDS and Stellaris registration remain later phases. See [development-roadmap.md](development-roadmap.md).
 
 Paths:
 
@@ -1527,25 +2776,40 @@ Future importer must **validate** alpha, not assume it.
 
 ## 9. DDS requirements
 
-**CONFIRMED** empirical game format for this project:
+**CONFIRMED** empirical game format for this project (matches Piglet/Oakley/Angus):
 
 | Property | Value |
 |----------|--------|
 | Size | **256×256** |
-| Compression | **Uncompressed** |
+| Compression | **Uncompressed** (no FourCC / DXT) |
 | Channels | **32-bit RGBA** |
 | `pfFlags` | **0x41** |
+| Pitch | **1024** |
+| Mipmaps | **0** |
+| Caps | **0x1000** |
 | Alpha | Preserved; transparent outside dog |
 
-Do not introduce compression unless later testing proves another format works.
+High-resolution canonical PNGs stay in `assets/source/`. DDS is the game texture only.
+
+### Phase 4 tool
+
+`tools/portrait-dds.ps1` converts:
+
+`assets/source/dog##_<name>_stellaris.png` → `…/sd_static_test/sd_dog_<name>.dds`
+
+It validates the source, refuses overwrite conflicts, and compares the DDS header to the Piglet reference. It does **not** register portraits (Phase 5).
 
 ---
 
 ## 10. Future portrait importer (summary)
 
-See [development-roadmap.md](development-roadmap.md) Phases 3–6.
+See [development-roadmap.md](development-roadmap.md):
 
-Must detect `ImgHERE` drops, validate, process, register, protect existing portraits, and report clearly. Must not touch vanilla or unrelated dogs.
+- Phase 3.1 — intake / naming / source PNG (**done**)
+- Phase 4 — DDS (**done**)
+- Phase 5 — Stellaris registration (**planned**)
+
+Must protect existing portraits and never touch vanilla.
 
 **Do not automate too early** — manual portraits taught the real constraints.
 
@@ -1572,101 +2836,6 @@ Full UI matrix: [portrait-testing.md](portrait-testing.md).
 - Generate for framing; do not expect DDS conversion to fix composition
 - Protect Piglet/Oakley as regression fixtures
 - Document before automating
-</file>
-
-<file path="experiment/sd_static_portrait_test/common/portrait_sets/00_sd_static_test_portrait_sets.txt">
-##############################################################
-### SD Static Portrait Test - portrait set (EXPERIMENT ONLY)
-###
-### VANILLA-VERIFIED pattern from common/portrait_sets/00_portrait_sets.txt:
-### - species_class = MAM
-### - portraits = { "id" }
-### - non_randomized_portraits so random AI empires avoid this test art
-##############################################################
-
-sd_static_test = {
-	species_class = MAM
-
-	portraits = {
-		"sd_dog_piglet"
-		"sd_dog_02"
-		"sd_dog_angus"
-	}
-
-	non_randomized_portraits = {
-		"sd_dog_piglet"
-		"sd_dog_02"
-		"sd_dog_angus"
-	}
-}
-</file>
-
-<file path="experiment/sd_static_portrait_test/gfx/portraits/portraits/00_sd_static_test_portraits.txt">
-##############################################################
-### SD Static Portrait Test (EXPERIMENT ONLY)
-###
-### Portraits:
-###   sd_dog_piglet - Piglet
-###   sd_dog_02    - Oakley
-###   sd_dog_angus - Angus
-##############################################################
-
-portraits = {
-	sd_dog_piglet = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_piglet.dds"
-	}
-
-	sd_dog_02 = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_02.dds"
-	}
-
-	sd_dog_angus = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_angus.dds"
-	}
-}
-</file>
-
-<file path="experiment/sd_static_portrait_test/README.md">
-# SD Static Portrait Test (experiment)
-
-Working proof-of-concept for **Stellar Dogos** static species portraits on Stellaris **Pegasus v4.4.6**.
-
-**CONFIRMED:** `texturefile` static portraits appear in Mammalian species creation.
-
-Current portraits: `sd_dog_piglet` (Piglet), `sd_dog_02` (Oakley), `sd_dog_angus` (Angus).
-
-Project docs (authoritative):
-
-- `../../PROJECT_PLAN.md`
-- `../../docs/portrait-workflow.md`
-- `../../docs/development-roadmap.md`
-- `../../docs/portrait-testing.md`
-
-## Enable in the launcher
-
-1. Ensure `Documents\Paradox Interactive\Stellaris\mod\` exists.
-2. Point a `.mod` descriptor `path=` at this folder (forward slashes).
-3. Enable the mod in the Stellaris launcher.
-4. Empire creation → **Mammalian** → select a dog portrait.
-
-## Important
-
-- Do not modify the vanilla Stellaris installation.
-- Piglet and Oakley are protected regression fixtures unless a task explicitly changes them.
-- Full UI compatibility beyond species creation is **not** fully verified yet.
-
-## Revert
-
-Disable/delete the launcher `.mod` descriptor and/or this folder. No vanilla files need restoring.
 </file>
 
 <file path="PROJECT_PLAN.md">
@@ -1735,7 +2904,9 @@ Designed to support additional dogs later.
 | DDS format (256×256 uncompressed 32-bit RGBA, `pfFlags=0x41`) | **CONFIRMED** |
 | Transparency / alpha requirements | **CONFIRMED** |
 | ImgHERE staging workflow | **CONFIRMED** |
-| Automated importer | **NOT BUILT** |
+| Phase 3.1 interactive source intake | **IMPLEMENTED** (`tools/portrait-intake.ps1`) |
+| Phase 4 DDS generation | **IMPLEMENTED** (`tools/portrait-dds.ps1`) |
+| Phase 5 Stellaris registration | **NOT BUILT** |
 | Full UI compatibility (leaders, council, diplomacy, …) | **NEEDS VERIFICATION** |
 | Steam Workshop release | **NOT READY** |
 
@@ -1786,15 +2957,13 @@ Do not invent additional portrait syntax beyond the working pattern. See [docs/p
 
 ---
 
-## 6. Immediate next task
+## 6. Immediate next engineering task
 
-**Not** the importer.
+**Phase 5 — Portrait registration** (wire DDS → portrait definition → set).
 
-**Portrait Context Compatibility Audit** — use **Oakley** as the primary test portrait across species / leader / council / government / diplomacy / contacts / factions / events / other UI.
+DDS generation (Phase 4) is implemented; registration is not. In-game appearance of new dogs still requires Phase 5.
 
-Document results in [docs/portrait-testing.md](docs/portrait-testing.md).
-
-Only after that audit should importer architecture be finalized ([docs/development-roadmap.md](docs/development-roadmap.md) Phase 2 → 3).
+Phase 2 compatibility audit (Oakley across UI contexts) remains important before Workshop.
 
 ---
 
@@ -1828,7 +2997,7 @@ Phases 0–9 (discovery → calibration → compatibility audit → importer →
 
 Stellaris **4.4.x** mod that adds real-world dogs as selectable **Mammalian** species portraits.
 
-Current dogs: **Piglet**, **Oakley**, **Angus**.
+Current in-game dogs: **Piglet**, **Oakley**, **Angus**.
 
 ---
 
@@ -1837,7 +3006,9 @@ Current dogs: **Piglet**, **Oakley**, **Angus**.
 | Item | State |
 |------|--------|
 | Species creation portraits | Working (static `texturefile` path confirmed on Pegasus **v4.4.6**) |
-| Automated portrait importer | Not built yet |
+| Phase 3.1 portrait intake | Implemented (`tools/portrait-intake.ps1`) |
+| Phase 4 DDS generation | Implemented (`tools/portrait-dds.ps1`) |
+| Phase 5 Stellaris registration | Not implemented |
 | Full UI compatibility (leaders, diplomacy, …) | Not fully verified — see [docs/portrait-testing.md](docs/portrait-testing.md) |
 | Steam Workshop | Not ready |
 
@@ -1865,21 +3036,45 @@ Do **not** modify the vanilla Stellaris installation.
 
 ---
 
-## Adding a new dog today (manual)
+## Adding a Dog Portrait
 
-Until intake tooling exists, developers may still prepare assets by hand using the pipeline in [docs/portrait-workflow.md](docs/portrait-workflow.md). You do **not** need to invent numbers yourself once Phase 3.1 exists — see below.
+1. Place the new dog image into `ImgHERE/`.
+2. Open PowerShell in the Stellar Dogos repository.
+3. Run:
 
-`ImgHERE/` is the intake folder for finished portraits (and future candidate drops). Raw reference photos that are not finished portraits should not be treated as intake.
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\portrait-intake.ps1
+```
 
----
+4. The tool will detect the new image and ask:
 
-## Future user workflow (target)
+```text
+What is this dog's name?
+```
 
-**Phase 3.1 intake (designed, not built):** Drop a dog image into `ImgHERE` → enter the dog's name when prompted → the tool handles naming and numbering (`dog##_<name>_stellaris.png`) and prepares `assets/source/`.
+5. Enter the dog's name.
 
-**Later (full importer):** DDS generation, Stellaris registration, then launch Stellaris and test.
+6. The tool automatically:
 
-Details: [docs/development-roadmap.md](docs/development-roadmap.md) Phase 3.1, [docs/portrait-workflow.md](docs/portrait-workflow.md).
+- assigns the next dog number
+- creates the canonical filename
+- prepares the portrait source PNG
+- copies the prepared source to `assets/source/`
+- removes the temporary input image after successful processing
+
+7. The tool stops.
+
+### DDS generation (Phase 4)
+
+After intake, convert the canonical source PNG to a game DDS:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\portrait-dds.ps1 -Source assets\source\dog05_bruce_stellaris.png
+```
+
+This writes `sd_dog_<name>.dds` under the experiment portrait models folder. It does **not** register the portrait in Stellaris.
+
+Stellaris registration is handled by a later stage of the project (Phase 5).
 
 ---
 

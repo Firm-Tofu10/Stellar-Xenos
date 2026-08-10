@@ -17,13 +17,17 @@ Certainty labels: **CONFIRMED** / **ASSUMPTION** / **TARGET** / **NEEDS VERIFICA
 |------|--------|
 | Static `texturefile` portraits in 4.4.6 | **CONFIRMED** (species creation) |
 | Three dogs (Piglet, Oakley, Angus) | Working in species creation |
-| Automated portrait importer | Partial: 3.1 intake + 4 DDS; registration = Phase 5 |
+| Automated portrait importer | **IMPLEMENTED** through Phase 7 (intake → DDS → xenotype register → pipeline) |
 | Phase 3.1 source intake (interactive naming) | **IMPLEMENTED** (`tools/portrait-intake.ps1`) |
 | Phase 4 DDS generation | **IMPLEMENTED** (`tools/portrait-dds.ps1`) |
+| Phase 5 Stellaris registration | **IMPLEMENTED** (`tools/portrait-register.ps1`) |
+| Phase 6 end-to-end pipeline proof | **IMPLEMENTED** (`tools/portrait-pipeline.ps1`) |
+| Phase 7 xenotype selection | **IMPLEMENTED** (`tools/portrait-xenotypes.ps1`) — Mammalian + Avian file path **CONFIRMED**; in-game **NEEDS VERIFICATION** |
+| Xenotype image-generation prompt library | **DOCUMENTED** ([portrait-generation-prompts.md](portrait-generation-prompts.md)) — Mammalian & Machine prompt bodies **ABSENT** from source export; Toxoid prompt **DOCUMENTED**, selector **NOT YET IMPLEMENTED** |
 | Full UI portrait compatibility | **NEEDS VERIFICATION** |
 | Steam Workshop release | **NOT READY** |
 
-Phase 3.1 + Phase 4 are available. **Portrait registration remains Phase 5** (not implemented).
+Phases 3.1–7 cover intake → DDS → xenotype-aware registration → end-to-end orchestration. The player-facing **prompt library** is documented separately from the software pipeline. Broader UI-context audit, Toxoid selector support, and Workshop packaging remain later.
 
 ---
 
@@ -89,7 +93,7 @@ Only after this audit should importer architecture be finalized.
 
 ## Phase 3 — Portrait Importer Design / Phase 3.1 Intake
 
-**STATUS: Phase 3.1 IMPLEMENTED** (`tools/portrait-intake.ps1`); later Phase 3/4 DDS+registration still PLANNED
+**STATUS: Phase 3.1 IMPLEMENTED** (`tools/portrait-intake.ps1`); Phase 4 DDS + Phase 5 registration also implemented
 
 Before full implementation:
 
@@ -179,7 +183,7 @@ If a file is already named `dog##_<name>_stellaris.png`:
 - Portrait definition → portrait set / category registration
 - In-game testing claims for the new dog
 
-Those remain later phases (Phase 5+ for registration; Phase 4 is DDS only).
+DDS (Phase 4) and registration (Phase 5) are implemented separately; end-to-end automation is Phase 6.
 
 ---
 
@@ -215,35 +219,141 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools\portrait-dds.ps1 -Sour
 
 ## Phase 5 — Portrait Registration
 
-**STATUS: PLANNED**
+**STATUS: IMPLEMENTED** — `tools/portrait-register.ps1`
 
-Wire a generated DDS into Stellaris:
+Wires a Phase 4 DDS into the experiment mod:
 
-1. Create/update portrait definition (`texturefile`)
-2. Add portrait ID to portrait set
-3. Ensure Mammalian category still exposes the set
-4. Protect existing portraits (hash checks)
-5. In-game verification
+```text
+sd_dog_<name>.dds
+  → portrait ID sd_dog_<name>
+  → portraits definition (texturefile + no_texture selectors + mammalian greeting)
+  → sd_static_test set (portraits + non_randomized_portraits)
+  → Mammalian category already exposes sd_static_test (verified, not duplicated)
+  → STOP
+```
 
-Do **not** treat Phase 4 DDS creation as registration success.
+**Command:**
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\portrait-register.ps1 -Source experiment\sd_static_portrait_test\gfx\models\portraits\sd_static_test\sd_dog_bruce.dds
+```
+
+**Safety:** refuses overwrite conflicts; idempotent when already registered identically; protects Piglet/Oakley/Angus DDS hashes; does not touch vanilla Stellaris.
+
+**Does not claim** full in-game UI-context success — that remains the compatibility audit / later phases.
 
 ---
 
-## Phase 6 — End-to-End Automation / Fourth-Dog Proof
+## Phase 6 — End-to-End Automation / Proof
 
-**STATUS: PLANNED**
+**STATUS: IMPLEMENTED** — `tools/portrait-pipeline.ps1`
 
-Do **not** use only Piglet/Oakley/Angus as the full-pipeline proof.
+Thin orchestrator over the existing tools (no new architecture):
 
-- New dog through intake → DDS → registration
-- Verify existing dogs unchanged
-- Verify new dog appears in-game
+```text
+new image in ImgHERE/
+  → interactive portrait name
+  → canonical PNG (Phase 3.1)
+  → DDS (Phase 4)
+  → registration (Phase 5)
+  → STOP
+```
+
+**Command:**
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\portrait-pipeline.ps1
+```
+
+**Phase 6 proof (Cedar):**
+
+| Check | Result |
+|-------|--------|
+| New non-canonical candidate (`mystery_portrait.png`) | **CONFIRMED** |
+| Interactive naming (`Cedar`) → `dog06_cedar_stellaris.png` | **CONFIRMED** |
+| DDS `sd_dog_cedar.dds` (256×256, uncompressed 32-bit RGBA, `pfFlags=0x41`) | **CONFIRMED** |
+| Registration `sd_dog_cedar` in definition + set | **CONFIRMED** |
+| Piglet/Oakley/Angus DDS hashes unchanged | **CONFIRMED** |
+| Idempotency (intake idle / DDS refuse / register already) | **CONFIRMED** |
+| Failure safety (opaque candidate preserved; no partial registration) | **CONFIRMED** |
+| Stellaris species-creation render for Cedar | **NEEDS VERIFICATION** (human in-game check) |
+
+**Does not claim:** leaders/council/diplomacy/other UI contexts, Workshop readiness, or universal portrait compatibility.
+
+### Generic custom-portrait purpose (future product framing)
+
+Stellar Dogos remains the repository/test project name. The pipeline is intended to demonstrate a reusable workflow for adding **custom user-created portrait artwork** to Stellaris.
+
+Final Workshop-facing naming/branding should describe custom portrait/race creation capability rather than implying the tool is limited to dogs. **Do not rename the repository in this phase.**
+
+### Future: portrait variants (NOT IMPLEMENTED)
+
+Eventual support for multiple visual variants of the same custom portrait concept (similar to Stellaris leader portrait variants):
+
+```text
+Species Portrait
+  ├── Variant 1
+  ├── Variant 2
+  ├── Variant 3
+  └── Variant 4
+```
+
+Documented only. Do **not** implement variant IDs or redesign registration around this until a later phase explicitly schedules it.
 
 ---
 
-## Phase 7 — Failure Testing
+## Phase 7 — Xenotype Selection / Generic Portrait Registration
 
-**STATUS: PLANNED**
+**STATUS: IMPLEMENTED** — `tools/portrait-xenotypes.ps1` + xenotype-aware `portrait-register.ps1` / `portrait-pipeline.ps1`
+
+Thin layer over the existing registration path (no new framework):
+
+```text
+Finished portrait / DDS
+  → interactive xenotype menu (validated)
+  → map to species_class + experiment set + category key
+  → shared registration writes definition + set + category exposure
+  → STOP
+```
+
+**Mapping** (from Stellaris 4.4.x `common/portrait_categories`):
+
+| Xenotype | species_class | Set | Category |
+|----------|---------------|-----|----------|
+| Mammalian | MAM | `sd_static_test` (historical) | mammalians |
+| Avian | AVI | `sd_static_test_avi` | avians |
+| Reptilian | REP | `sd_static_test_rep` | reptilians |
+| Aquatic / Amphibian (user-facing label) | AQUATIC | `sd_static_test_aquatic` | aquatics |
+| Arthropoid | ART | `sd_static_test_art` | arthropoids |
+| Molluscoid | MOL | `sd_static_test_mol` | molluscoids |
+| Fungoid | FUN | `sd_static_test_fun` | fungoids |
+| Plantoid | PLANT | `sd_static_test_plant` | plantoids |
+| Lithoid | LITHOID | `sd_static_test_lithoid` | lithoids |
+| Necroid | NECROID | `sd_static_test_necroid` | necroids |
+| Machine | MACHINE | `sd_static_test_machine` | machines |
+
+User-facing species-type menu uses plain names (Mammalian, Avian, …, Amphibian, …). Arrow keys + Enter select the type in a normal console; internal `species_class` / set / category mappings are unchanged.
+
+**Phase 7 proof:**
+
+| Check | Result |
+|-------|--------|
+| Liberty → Mammalian (`sd_static_test`) | **CONFIRMED** (files) |
+| Sparrow → Avian (`sd_static_test_avi` + avians category) | **CONFIRMED** (files) |
+| Invalid selection `0` / `99` / `abc` rejected | **CONFIRMED** |
+| Idempotent re-register | **CONFIRMED** |
+| Cross-xenotype move refused (conflict) | **CONFIRMED** |
+| Piglet/Oakley/Angus/Bruce/Cedar DDS hashes | **CONFIRMED** unchanged |
+| Liberty/Sparrow in-game species creation | **NEEDS VERIFICATION** |
+| Other xenotypes in-game | **NEEDS VERIFICATION** (registration path **IMPLEMENTED**) |
+
+Portrait variants remain **NOT IMPLEMENTED** (documented under Phase 6).
+
+---
+
+## Phase 8 — Failure Testing
+
+**STATUS: PLANNED** (partial coverage already exercised in Phases 3.1–7)
 
 Importer/pipeline must fail safely on:
 
@@ -260,25 +370,33 @@ Importer/pipeline must fail safely on:
 
 ---
 
-## Phase 8 — Documentation / UX
+## Phase 9 — Documentation / UX
 
-**STATUS: PLANNED**
+**STATUS: PARTIAL** — Player README + xenotype **prompt library** documented; some generation prompts still missing from source material
+
+Completed in the documentation pass:
+
+- [portrait-generation-prompts.md](portrait-generation-prompts.md) — xenotype image-generation prompts extracted from ChatGPT export (`Stellaris.html`)
+- README explains: photograph → external prompt → `ImgHERE/` → Portrait Creator
+- Toxoid clearly marked **prompt DOCUMENTED / selector NOT YET IMPLEMENTED**
+- Still absent from source export (not invented): **Mammalian** and **Machine** xenotype generation prompt bodies
 
 README user workflow (TARGET):
 
-1. Generate a portrait
+1. Choose a xenotype and generate a portrait with the matching prompt ([portrait-generation-prompts.md](portrait-generation-prompts.md))
 2. Put it in `ImgHERE`
-3. Run intake
-4. Run DDS generator
-5. (Later) registration → Launch Stellaris
-6. Enable Stellar Dogos
-7. Test the portrait
+3. Run `portrait-pipeline.ps1`
+4. Enter the portrait's name
+5. Select xenotype (Toxoid not yet available in the selector)
+6. DDS + registration (automatic via pipeline)
+7. Launch Stellaris
+8. Enable experiment mod / test the portrait
 
 Developer docs explain architecture.
 
 ---
 
-## Phase 9 — Release Preparation
+## Phase 10 — Release Preparation
 
 **STATUS: PLANNED**
 
@@ -293,7 +411,7 @@ Developer docs explain architecture.
 
 ---
 
-## Phase 10 — Steam Workshop
+## Phase 11 — Steam Workshop
 
 **STATUS: FUTURE**
 
@@ -305,7 +423,7 @@ Only after:
 - Documentation complete
 - Production mod structure finalized
 
-Then publish **Stellar Dogos** to Steam Workshop.
+Then publish to Steam Workshop under branding that communicates **custom Stellaris portraits from your own images** (repository may remain named Stellar Dogos).
 
 ---
 

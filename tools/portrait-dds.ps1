@@ -12,6 +12,7 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+. (Join-Path (Split-Path -Parent $PSCommandPath) "portrait-exit.ps1")
 Add-Type -AssemblyName System.Drawing
 
 $CanonicalSourcePattern = '^dog(\d+)_(.+)_stellaris\.png$'
@@ -347,29 +348,29 @@ $repoRoot = Get-RepoRoot
 $ddsDir = Get-DdsOutputDir -RepoRoot $repoRoot
 $refDds = Join-Path $ddsDir "sd_dog_piglet.dds"
 
-Write-Host "Stellar Dogos DDS Generator"
-Write-Host "Phase 4 - Canonical PNG to DDS (no Stellaris registration)"
-Write-Host ""
+Write-SdHost "Stellar Dogos DDS Generator"
+Write-SdHost "Phase 4 - Canonical PNG to DDS (no Stellaris registration)"
+Write-SdHost ""
 
 $sourcePath = Resolve-SourcePath -RepoRoot $repoRoot -SourceArg $Source
-Write-Host "Source:"
-Write-Host ("  {0}" -f $sourcePath)
-Write-Host ""
+Write-SdHost "Source:"
+Write-SdHost ("  {0}" -f $sourcePath)
+Write-SdHost ""
 
-Write-Host "Validating source..."
+Write-SdHost "Validating source..."
 $srcInfo = Test-SourcePngForDds -Path $sourcePath
-Write-Host ("  dog number : {0}" -f $srcInfo.DogNumber)
-Write-Host ("  dog name   : {0}" -f $srcInfo.DogName)
-Write-Host ("  dimensions : {0}x{1}" -f $srcInfo.Width, $srcInfo.Height)
-Write-Host ("  format     : {0}" -f $srcInfo.PixelFormat)
-Write-Host ("  corner A   : {0}" -f $srcInfo.CornerAlpha)
-Write-Host ""
+Write-SdHost ("  dog number : {0}" -f $srcInfo.DogNumber)
+Write-SdHost ("  dog name   : {0}" -f $srcInfo.DogName)
+Write-SdHost ("  dimensions : {0}x{1}" -f $srcInfo.Width, $srcInfo.Height)
+Write-SdHost ("  format     : {0}" -f $srcInfo.PixelFormat)
+Write-SdHost ("  corner A   : {0}" -f $srcInfo.CornerAlpha)
+Write-SdHost ""
 
 $ddsName = Get-DdsFileName -Slug $srcInfo.DogName
 $outPath = Join-Path $ddsDir $ddsName
-Write-Host "Output:"
-Write-Host ("  {0}" -f $outPath)
-Write-Host ""
+Write-SdHost "Output:"
+Write-SdHost ("  {0}" -f $outPath)
+Write-SdHost ""
 
 if (-not (Test-Path -LiteralPath $ddsDir)) {
     throw ("DDS output directory missing: {0}" -f $ddsDir)
@@ -379,10 +380,11 @@ if (-not (Test-Path -LiteralPath $refDds)) {
 }
 
 if (Test-Path -LiteralPath $outPath) {
-    Write-Host ("CONFLICT: '{0}' already exists." -f $outPath)
-    Write-Host "Phase 4 refuses to overwrite existing DDS files."
-    Write-Host "Remove or rename the existing file explicitly if replacement is intended."
-    exit 2
+    Write-Host ("A game texture already exists for this portrait:")
+    Write-Host ("  {0}" -f $outPath)
+    Write-Host "The tool will not overwrite it."
+    Exit-SdTool 2
+    return
 }
 
 # Regression snapshots (read-only)
@@ -395,7 +397,7 @@ foreach ($f in $protected) {
     }
 }
 
-Write-Host "Converting..."
+Write-SdHost "Converting..."
 $converted = ConvertTo-PortraitDdsPixels -SourcePath $sourcePath -Size $DdsSize
 
 $partial = $outPath + ".partial"
@@ -407,7 +409,7 @@ try {
     throw
 }
 
-Write-Host "Validating DDS..."
+Write-SdHost "Validating DDS..."
 $validation = Test-GeneratedDds -Path $outPath -ReferencePath $refDds
 if ($validation.Issues.Count -gt 0 -or -not $validation.HasGenuineAlpha -or -not $validation.HeaderMatchesRef) {
     Remove-Item -LiteralPath $outPath -Force -ErrorAction SilentlyContinue
@@ -415,21 +417,21 @@ if ($validation.Issues.Count -gt 0 -or -not $validation.HasGenuineAlpha -or -not
     throw ("DDS validation failed ({0}). Output removed." -f $detail)
 }
 
-Write-Host ""
-Write-Host "DDS generation successful."
-Write-Host ("  path        : {0}" -f $outPath)
-Write-Host ("  dimensions  : {0}x{1}" -f $validation.Header.Width, $validation.Header.Height)
-Write-Host ("  pfFlags     : 0x{0:X}" -f $validation.Header.PfFlags)
-Write-Host ("  bpp         : {0}" -f $validation.Header.Bpp)
-Write-Host ("  compression : none (uncompressed RGBA)")
-Write-Host ("  pitch       : {0}" -f $validation.Header.Pitch)
-Write-Host ("  mips        : {0}" -f $validation.Header.Mips)
-Write-Host ("  alpha A0 px : {0}" -f $validation.TransparentPixels)
-Write-Host ("  corner A    : {0}" -f $validation.CornerAlpha)
-Write-Host ("  header==Piglet reference: {0}" -f $validation.HeaderMatchesRef)
-Write-Host ""
+Write-SdHost ""
+Write-SdHost "DDS generation successful."
+Write-SdHost ("  path        : {0}" -f $outPath)
+Write-SdHost ("  dimensions  : {0}x{1}" -f $validation.Header.Width, $validation.Header.Height)
+Write-SdHost ("  pfFlags     : 0x{0:X}" -f $validation.Header.PfFlags)
+Write-SdHost ("  bpp         : {0}" -f $validation.Header.Bpp)
+Write-SdHost ("  compression : none (uncompressed RGBA)")
+Write-SdHost ("  pitch       : {0}" -f $validation.Header.Pitch)
+Write-SdHost ("  mips        : {0}" -f $validation.Header.Mips)
+Write-SdHost ("  alpha A0 px : {0}" -f $validation.TransparentPixels)
+Write-SdHost ("  corner A    : {0}" -f $validation.CornerAlpha)
+Write-SdHost ("  header==Piglet reference: {0}" -f $validation.HeaderMatchesRef)
+Write-SdHost ""
 
-Write-Host "Protected DDS regression:"
+Write-SdHost "Protected DDS regression:"
 $regOk = $true
 foreach ($f in $protected) {
     $p = Join-Path $ddsDir $f
@@ -437,12 +439,13 @@ foreach ($f in $protected) {
     $after = (Get-FileHash -LiteralPath $p -Algorithm SHA256).Hash
     $ok = ($after -eq $hashesBefore[$f])
     if (-not $ok) { $regOk = $false }
-    Write-Host ("  {0}: {1}" -f $f, $(if ($ok) { "unchanged" } else { "CHANGED" }))
+    Write-SdHost ("  {0}: {1}" -f $f, $(if ($ok) { "unchanged" } else { "CHANGED" }))
 }
 if (-not $regOk) {
     throw "Protected DDS assets changed unexpectedly."
 }
 
-Write-Host ""
-Write-Host "Phase 4 STOP - no portrait definition / set / category registration performed."
-exit 0
+Write-SdHost ""
+Write-SdHost "Game texture created."
+Exit-SdTool 0
+return

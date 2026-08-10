@@ -1,8 +1,12 @@
 # Stellar Dogos — Portrait Generation Prompts
 
-Successful image-generation prompts and related refinement instructions developed during the Stellar Dogos session.
+> **Xenotype prompt library (Phase 8):**  
+> For the full set of **xenotype-specific** image-generation prompts extracted from the ChatGPT source export, see **[portrait-generation-prompts.md](portrait-generation-prompts.md)**.  
+> Those prompts are for an external image model (not pipeline commands). Toxoid is documented there as **prompt-only** (not yet in the Portrait Creator selector).
 
-Use these to reproduce the artwork workflow. Technical conversion (PNG → DDS → registration) is documented in [portrait-workflow.md](portrait-workflow.md).
+Successful **dog-development** image-generation prompts and related refinement instructions developed during early Stellar Dogos sessions are preserved below.
+
+Use these to reproduce the early artwork workflow. Technical conversion (PNG → DDS → registration) is documented in [portrait-workflow.md](portrait-workflow.md).
 
 ---
 

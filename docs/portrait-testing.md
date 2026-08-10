@@ -23,8 +23,12 @@ Do **not** assume species-creation success proves all other portrait contexts.
 
 | Game location | Status |
 |---------------|--------|
-| Empire creation | **CONFIRMED** |
-| Species selection | **CONFIRMED** |
+| Empire creation | **CONFIRMED** (Piglet/Oakley/Angus) |
+| Species selection | **CONFIRMED** (Piglet/Oakley/Angus) |
+| Cedar (`sd_dog_cedar`) Mammalian species creation | **NEEDS VERIFICATION** |
+| Liberty (`sd_dog_liberty`) Mammalian species creation | **NEEDS VERIFICATION** (Phase 7 file registration **CONFIRMED**) |
+| Sparrow (`sd_dog_sparrow`) Avian species creation | **NEEDS VERIFICATION** (Phase 7 file registration **CONFIRMED**) |
+| Other xenotype species creation (Rep/Aqu/…) | **NEEDS VERIFICATION** (registration mapping **IMPLEMENTED**) |
 | Species screen | **NEEDS TEST** |
 | Leader selection | **NEEDS TEST** |
 | Leader portrait | **NEEDS TEST** |
@@ -35,6 +39,18 @@ Do **not** assume species-creation success proves all other portrait contexts.
 | Faction / other leader UI | **NEEDS TEST** |
 | Events containing leader portraits | **NEEDS TEST** |
 | Fleet / army interfaces (if applicable) | **NEEDS TEST** |
+
+### Phase 6/7 in-game checklist
+
+After enabling **SD Static Portrait Test**:
+
+- [ ] Cedar / Liberty appear under Mammalian
+- [ ] Sparrow appears under Avian
+- [ ] Correct artwork / transparency / framing
+- [ ] No corruption / missing texture
+- [ ] Piglet / Oakley / Angus still work
+
+Do **not** treat a species-creation pass as proof of leaders, council, diplomacy, or other contexts.
 
 ---
 

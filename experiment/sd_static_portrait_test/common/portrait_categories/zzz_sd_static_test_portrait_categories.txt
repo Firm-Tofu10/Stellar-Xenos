@@ -1,13 +1,9 @@
 ##############################################################
-### SD Static Portrait Test — Mammalian category override
+### SD Static Portrait Test - category overrides (EXPERIMENT)
 ###
-### VANILLA-VERIFIED: category keys/structure from
-### common/portrait_categories/00_portrait_categories.txt
-###
-### This file REPLACES the vanilla `mammalians` category entry
-### (same key) so we can append one extra set with minimal change.
-### Other categories are intentionally not redefined.
-###
+### Each block REPLACES the vanilla category of the same key so
+### we can append one experiment set with minimal change.
+### Vanilla set lists were copied from Stellaris 4.4.x.
 ### Revert method: delete this file from the experiment mod.
 ##############################################################
 
@@ -20,5 +16,30 @@ mammalians = {
 		biogenesis_mammalians
 		psionic_mammalians
 		sd_static_test
+	}
+}
+
+avians = {
+	name = AVI
+
+	sets = {
+		avians
+		cybernetic_avians
+		synthetic_avians
+		biogenesis_avians
+		psionic_avians
+		sd_static_test_avi
+	}
+}
+
+reptilians = {
+	name = REP
+
+	sets = {
+		reptilians
+		cybernetic_reptilians
+		biogenesis_reptilians
+		pdx_signup_reptilian
+		sd_static_test_rep
 	}
 }

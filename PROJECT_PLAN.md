@@ -48,7 +48,7 @@ Designed to support additional dogs later.
 | Goal | Status |
 |------|--------|
 | Users install mod and use included dog portraits (Workshop) | **TARGET** — **NOT READY** |
-| Reusable portrait ingestion workflow/tool (no manual Stellaris file editing per dog) | **TARGET** — importer **NOT BUILT** |
+| Reusable portrait ingestion workflow/tool (no manual Stellaris file editing per dog) | **IMPLEMENTED** for experiment path (player-friendly pipeline); Workshop packaging **NOT READY** |
 
 ---
 
@@ -65,7 +65,10 @@ Designed to support additional dogs later.
 | ImgHERE staging workflow | **CONFIRMED** |
 | Phase 3.1 interactive source intake | **IMPLEMENTED** (`tools/portrait-intake.ps1`) |
 | Phase 4 DDS generation | **IMPLEMENTED** (`tools/portrait-dds.ps1`) |
-| Phase 5 Stellaris registration | **NOT BUILT** |
+| Phase 5 Stellaris registration | **IMPLEMENTED** (`tools/portrait-register.ps1`) |
+| Phase 6 end-to-end pipeline | **IMPLEMENTED** (`tools/portrait-pipeline.ps1`) |
+| Phase 7 xenotype selection | **IMPLEMENTED** (`tools/portrait-xenotypes.ps1`) — Mam/Avi files **CONFIRMED**; in-game **NEEDS VERIFICATION** |
+| Xenotype image-generation prompt library | **DOCUMENTED** ([docs/portrait-generation-prompts.md](docs/portrait-generation-prompts.md)); Mammalian & Machine bodies **ABSENT** from source export; Toxoid prompt **DOCUMENTED**, selector **NOT YET IMPLEMENTED** |
 | Full UI compatibility (leaders, council, diplomacy, …) | **NEEDS VERIFICATION** |
 | Steam Workshop release | **NOT READY** |
 
@@ -118,11 +121,11 @@ Do not invent additional portrait syntax beyond the working pattern. See [docs/p
 
 ## 6. Immediate next engineering task
 
-**Phase 5 — Portrait registration** (wire DDS → portrait definition → set).
+**Phase 2** UI-context compatibility audit (Oakley gold standard), plus human in-game verification of Cedar/Liberty (Mammalian) and Sparrow (Avian) in species creation.
 
-DDS generation (Phase 4) is implemented; registration is not. In-game appearance of new dogs still requires Phase 5.
+Phases 3.1–7 (intake → DDS → xenotype registration → pipeline) are implemented at the file level. In-game renders for new Phase 6/7 portraits remain **NEEDS VERIFICATION**.
 
-Phase 2 compatibility audit (Oakley across UI contexts) remains important before Workshop.
+Workshop packaging and portrait variants are explicitly out of scope until later phases.
 
 ---
 

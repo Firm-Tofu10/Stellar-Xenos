@@ -175,7 +175,7 @@ Do not treat every file in `ImgHERE` as a new dog (ignore unsupported extensions
 - On **failure**, the original input remains untouched in `ImgHERE` for retry
 - The tool does **not** maintain an `_originals` archive
 
-Later phases add DDS + Stellaris registration.
+DDS (`tools/portrait-dds.ps1`) and registration (`tools/portrait-register.ps1`) follow intake.
 
 ---
 
@@ -213,7 +213,12 @@ Stellaris
 in-game test
 ```
 
-Canonical source intake is automated by `tools/portrait-intake.ps1`. DDS and Stellaris registration remain later phases. See [development-roadmap.md](development-roadmap.md).
+Canonical source intake is automated by `tools/portrait-intake.ps1`.  
+DDS conversion is automated by `tools/portrait-dds.ps1`.  
+Stellaris registration is automated by `tools/portrait-register.ps1`.  
+End-to-end chaining is automated by `tools/portrait-pipeline.ps1`.
+
+The pipeline is a **custom portrait workflow** (current fixtures are dogs). Full UI-context compatibility and Workshop packaging remain later. See [development-roadmap.md](development-roadmap.md).
 
 Paths:
 
@@ -289,13 +294,25 @@ Future importer must **validate** alpha, not assume it.
 
 High-resolution canonical PNGs stay in `assets/source/`. DDS is the game texture only.
 
-### Phase 4 tool
+### Phase 4 / Phase 5 / Phase 6 / Phase 7 tools
 
-`tools/portrait-dds.ps1` converts:
+- `tools/portrait-dds.ps1` — canonical PNG → `sd_dog_<name>.dds`
+- `tools/portrait-register.ps1` — DDS → definition + xenotype set/category
+- `tools/portrait-xenotypes.ps1` — isolated xenotype → Stellaris mapping
+- `tools/portrait-pipeline.ps1` — intake → DDS → register (name + xenotype)
 
-`assets/source/dog##_<name>_stellaris.png` → `…/sd_static_test/sd_dog_<name>.dds`
+Registration uses the proven `texturefile` pattern. Players pick a friendly species type (arrow-key menu); the tool maps that to the correct experiment set/category. It does **not** prove every Stellaris UI context.
 
-It validates the source, refuses overwrite conflicts, and compares the DDS header to the Piglet reference. It does **not** register portraits (Phase 5).
+### Phase 7 xenotype proof
+
+| Step | Result |
+|------|--------|
+| Liberty → Mammalian / `sd_static_test` | **CONFIRMED** (files) |
+| Sparrow → Avian / `sd_static_test_avi` | **CONFIRMED** (files) |
+| Invalid xenotype rejected | **CONFIRMED** |
+| Idempotent re-register | **CONFIRMED** |
+| Cross-xenotype move refused | **CONFIRMED** |
+| Species-creation in-game (Liberty/Sparrow) | **NEEDS VERIFICATION** |
 
 ---
 
@@ -305,7 +322,14 @@ See [development-roadmap.md](development-roadmap.md):
 
 - Phase 3.1 — intake / naming / source PNG (**done**)
 - Phase 4 — DDS (**done**)
-- Phase 5 — Stellaris registration (**planned**)
+- Phase 5 — Stellaris registration (**done**)
+- Phase 6 — end-to-end automation / proof (**done** for file pipeline; Cedar in-game **NEEDS VERIFICATION**)
+- Phase 7 — xenotype selection (**done** for file registration; Mam/Avi in-game **NEEDS VERIFICATION**)
+
+### Future scope (documented only)
+
+- **Portrait variants** — multiple visual variants per custom portrait concept (leaders/appearances). Not implemented.
+- **Workshop positioning** — present as a custom-portrait workflow (“create Stellaris portraits from your own images”), even if the repo remains named Stellar Dogos.
 
 Must protect existing portraits and never touch vanilla.
 
