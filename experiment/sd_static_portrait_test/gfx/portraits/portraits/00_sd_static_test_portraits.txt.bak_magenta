@@ -1,0 +1,21 @@
+##############################################################
+### SD Static Portrait Test (EXPERIMENT ONLY)
+###
+### Purpose: verify whether texturefile static species portraits
+### still render in Stellaris 4.4.6.
+###
+### Syntax sources (see PROJECT_PLAN.md):
+### - texturefile ........ EXTERNAL MODDING EXAMPLE (wiki/static portraits)
+### - clothes_selector ... VANILLA key name + "no_texture" selector
+### - attachment_selector  VANILLA key name + "no_texture" selector
+### - greeting_sound ..... VANILLA existing sound id
+##############################################################
+
+portraits = {
+	sd_static_test_01 = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_static_test_01.dds"
+	}
+}

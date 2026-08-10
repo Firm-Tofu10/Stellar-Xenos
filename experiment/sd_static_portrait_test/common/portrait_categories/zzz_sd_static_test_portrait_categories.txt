@@ -1,0 +1,24 @@
+##############################################################
+### SD Static Portrait Test — Mammalian category override
+###
+### VANILLA-VERIFIED: category keys/structure from
+### common/portrait_categories/00_portrait_categories.txt
+###
+### This file REPLACES the vanilla `mammalians` category entry
+### (same key) so we can append one extra set with minimal change.
+### Other categories are intentionally not redefined.
+###
+### Revert method: delete this file from the experiment mod.
+##############################################################
+
+mammalians = {
+	name = MAM
+
+	sets = {
+		mammalians
+		cybernetic_mammalians
+		biogenesis_mammalians
+		psionic_mammalians
+		sd_static_test
+	}
+}

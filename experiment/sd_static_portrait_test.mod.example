@@ -1,0 +1,8 @@
+name="SD Static Portrait Test"
+path="C:/Users/bryso/Documents/GitHub/Stellar Dogos/experiment/sd_static_portrait_test"
+supported_version="v4.4.*"
+tags={
+	"Graphics"
+	"Species"
+}
+version="0.0.1"

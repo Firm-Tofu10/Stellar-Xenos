@@ -1,0 +1,17 @@
+##############################################################
+### SD Static Portrait Test (EXPERIMENT ONLY)
+###
+### Active portrait: sd_dog_piglet (Piglet)
+### Magenta placeholder recoverable via:
+###   - gfx/.../sd_static_test_01.dds (kept on disk)
+###   - *.bak_magenta definition backups
+##############################################################
+
+portraits = {
+	sd_dog_piglet = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_piglet.dds"
+	}
+}
