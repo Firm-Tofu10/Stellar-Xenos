@@ -1,6 +1,6 @@
-# Stellar Dogos
+# Stellar-Xenos
 
-**Stellar Dogos** is a Stellaris **4.4.x** project for turning **your own photographs** into selectable custom species portraits.
+**Stellar-Xenos** is a Stellaris **4.4.x** project for turning **your own photographs** into selectable custom species portraits.
 
 Dogs were the original development and test subjects — that is why the repository is named Stellar Dogos. The real goal is broader: take a photo of a person, animal, or other subject, transform that subject into a believable Stellaris species of a chosen **xenotype**, then place the finished portrait into the game through this project's tools.
 
