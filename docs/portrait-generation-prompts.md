@@ -1,4 +1,4 @@
-# Stellar Xeno — Portrait Generation Prompt Library
+﻿# Stellar Xeno — Portrait Generation Prompt Library
 
 This file is the **authoritative library of xenotype-specific image-generation prompts** for Stellar Xeno.
 
@@ -12,7 +12,7 @@ Workflow:
 
 1. Choose a Stellaris xenotype.
 2. Copy the matching prompt from this library.
-3. Provide a reference photograph to the image model with that prompt.
+3. Provide a reference photograph / creature portrait to the image model with that prompt.
 4. Save the finished square RGBA portrait into `ImgHERE/`.
 5. Run the Stellar Xeno Portrait Creator (`tools\portrait-pipeline.ps1`).
 6. Enter the character's name and select the matching species type in the tool.
@@ -21,19 +21,37 @@ These prompts do **not** create DDS files, portrait IDs, definitions, sets, or c
 
 Related:
 
+- **Universal portrait variety standard:** [portrait-variety-standard.md](portrait-variety-standard.md)
 - Dog-development / framing history: [portrait-prompts.md](portrait-prompts.md)
 - Technical pipeline: [portrait-workflow.md](portrait-workflow.md)
 - Player overview: [../README.md](../README.md)
 
 ---
 
+## Universal rules vs xenotype-specific rules
+
+| Layer | Controls |
+|-------|----------|
+| **Universal rules** | Identity preservation, portrait presentation, transparency, composition, **composition variety**, **individual variation**, overall art direction |
+| **Xenotype-specific rules** | Biological/mechanical transformation, materials, environmental adaptation, mutations, color treatment, species visual language |
+
+**Design principle:**
+
+> **Consistent art direction, variable individual composition.**
+
+> **Same species identity + different individual portrait composition.**
+
+Full project-wide standard: [portrait-variety-standard.md](portrait-variety-standard.md).
+
+Universal rules are embedded in every documented prompt under **UNIVERSAL COMPOSITION VARIETY** (and Machine/Toxoid composition sections). Xenotype transforms remain specific to each prompt body.
+
+---
+
 ## Source of truth for this library
 
-Prompt bodies below were extracted from the attached ChatGPT export:
+Most biological xenotype prompt bodies (Avian–Necroid) were originally extracted from the ChatGPT export `Stellaris.html`, then **updated** for the Universal Portrait Variety Standard (flexible framing, anti-template, individual variety).
 
-`c:\Users\bryso\Downloads\Stellaris.html`
-
-Wording is preserved from that source. Formatting (line breaks / section rules) may reflect Google Docs HTML export structure.
+**Machine** and **Toxoid** Universal prompts were **CREATED** for this project (they are not export recoveries). Do not treat them as pre-existing source-attachment text.
 
 ---
 
@@ -41,46 +59,35 @@ Wording is preserved from that source. Formatting (line breaks / section rules) 
 
 | Label | Meaning |
 |-------|---------|
-| **DOCUMENTED** | Full prompt text present in the source attachment and copied here |
-| **ABSENT FROM SOURCE** | Expected by project plan, but **not present** as a full prompt body in the attachment |
-| **PROMPT ONLY** | Image-generation documentation exists; pipeline selector support may differ |
+| **DOCUMENTED** | Full prompt text present and maintained in this library |
+| **CREATED** | Authored for Stellar Xeno (not recovered from the original export) |
+| **ABSENT** | Still missing a full Universal prompt body |
+| **PROMPT ONLY** | (legacy) generation prompt without pipeline support — no longer used for Toxoid |
 
 ---
 
-## Inventory (expected vs found)
+## Inventory
 
-| # (project order) | Xenotype | In attachment? | Source heading / number | Pipeline selector today |
-|-------------------|----------|----------------|-------------------------|-------------------------|
-| 1 | Mammalian | **ABSENT** (referenced only as `1/11`) | No `MAMMALIAN XENOTYPE` prompt body in the export | **IMPLEMENTED** |
-| 2 | Avian | **DOCUMENTED** | `STELLAR XENO — AVIAN XENOTYPE PORTRAIT GENERATION TEST` (also referenced as `2/11`) | **IMPLEMENTED** |
-| 3 | Reptilian | **DOCUMENTED** | `… REPTILIAN … — 3/11` / footer `3/11 — Reptilian` | **IMPLEMENTED** |
-| 4 | Amphibian | **DOCUMENTED** | `… AMPHIBIAN … — 4/11` / footer `4/11 — Amphibian` | **IMPLEMENTED** (display Amphibian → aquatic) |
-| 5 | Arthropoid | **DOCUMENTED** | `… ARTHROPOID … — 5/11` / footer `5/11 — Arthropoid` | **IMPLEMENTED** |
-| 6 | Molluscoid | **DOCUMENTED** | `… MOLLUSCOID … — 6/11` / footer `6/11 — Molluscoid` | **IMPLEMENTED** |
-| 7 | Fungoid | **DOCUMENTED** | `… FUNGOID … — 7/11` / footer `7/11 — Fungoid` | **IMPLEMENTED** |
-| 8 | Plantoid | **DOCUMENTED** | `… PLANTOID … — 8/11` / footer `8/11 — Plantoid` | **IMPLEMENTED** |
-| 9 | Lithoid | **DOCUMENTED** | `… LITHOID … — 9/11` / footer `9/11 — Lithoid` | **IMPLEMENTED** |
-| 10 | Necroid | **DOCUMENTED** | `… NECROID … — 10/11` / footer `10/11 — Necroid` | **IMPLEMENTED** |
-| 11 | Machine | **ABSENT FROM SOURCE** | No Machine prompt in the export | **IMPLEMENTED** in selector; **no generation prompt in this attachment** |
-| 12 | Toxoid | **DOCUMENTED (PROMPT ONLY)** | `… TOXOID … — 11/12` / footer `11/12 — Toxoid` | **NOT YET IMPLEMENTED** |
+| # | Xenotype | Prompt status | Pipeline selector |
+|---|----------|---------------|-------------------|
+| 1 | Mammalian | **ABSENT** (human→Mammalian body still missing; dog-development history in portrait-prompts.md) | **IMPLEMENTED** |
+| 2 | Avian | **DOCUMENTED** + variety standard | **IMPLEMENTED** |
+| 3 | Reptilian | **DOCUMENTED** + variety standard | **IMPLEMENTED** |
+| 4 | Amphibian | **DOCUMENTED** + variety standard | **IMPLEMENTED** (display Amphibian → aquatic) |
+| 5 | Arthropoid | **DOCUMENTED** + variety standard | **IMPLEMENTED** |
+| 6 | Molluscoid | **DOCUMENTED** + variety standard | **IMPLEMENTED** |
+| 7 | Fungoid | **DOCUMENTED** + variety standard | **IMPLEMENTED** |
+| 8 | Plantoid | **DOCUMENTED** + variety standard | **IMPLEMENTED** |
+| 9 | Lithoid | **DOCUMENTED** + variety standard | **IMPLEMENTED** |
+| 10 | Necroid | **DOCUMENTED** + variety standard | **IMPLEMENTED** |
+| 11 | Machine | **CREATED** — Universal Machine Xenotype | **IMPLEMENTED** |
+| 12 | Toxoid | **CREATED** — Universal Toxoid Xenotype | **IMPLEMENTED** |
 
-### Numbering / naming notes (preserved from source)
+### Notes
 
-1. The export originally numbered species prompts as **`n/11`**. Toxoid was added as **`11/12`**, so the denominator changes mid-library. That inconsistency is preserved; it is not “fixed” here.
-2. Avian’s source title is **`… GENERATION TEST`**, not `2/11` in the title line. ChatGPT narration separately calls Avian **`2/11`**.
-3. After the user wrote `use this as a reference and make Mammalian now`, the export contains a **second Avian** prompt body still titled Avian — **not** a Mammalian prompt. That duplicate is omitted from the library body; only the first complete Avian prompt is included below.
-4. ChatGPT narration states “Mammalian was 1/11”, but the **Mammalian prompt text itself is not in the attachment**.
-5. **Machine** is never present in the attachment (no title, no body).
-
-### Toxoid status (intentional)
-
-| Item | Status |
-|------|--------|
-| Toxoid image-generation prompt | **AVAILABLE** (documented below) |
-| Toxoid in Portrait Creator xenotype selector | **NOT YET IMPLEMENTED** |
-| Toxoid registration / DDS path | **NOT YET IMPLEMENTED** |
-
-Do not treat Toxoid as selectable in the current software pipeline.
+1. Machine and Toxoid prompts are **new** project-standard entries.
+2. Existing Avian–Necroid prompts keep their xenotype transformation rules; rigid ~91–92% framing was replaced with flexible ~80–95% framing and composition variety.
+3. Mammalian remains absent as a Universal human→Mammalian library body; historical dog Mammalian development prompts live in [portrait-prompts.md](portrait-prompts.md).
 
 ---
 
@@ -118,44 +125,45 @@ Do not treat Toxoid as selectable in the current software pipeline.
                                  Stellaris
 ```
 
-Example: photograph of yourself + **Avian** prompt → “this person as an Avian Stellaris species” → drop PNG in `ImgHERE/` → run Portrait Creator → enter name → select Avian.
-
 ---
 
 ## Shared purpose (every xenotype prompt)
 
 Each documented prompt is meant to:
 
-- use the uploaded photograph as the identity reference
+- use the uploaded photograph / creature portrait as the identity reference
 - preserve recognizable characteristics
 - transform the subject into the selected Stellaris xenotype
 - create a believable intelligent alien species
-- avoid simply adding superficial features to a human
+- avoid simply adding superficial features to a human (or armor onto an animal)
 - use realistic Stellaris-style portrait presentation
-- use the established Stellar Xeno portrait framing
+- follow **consistent art direction, variable individual composition**
+- allow natural composition variety and subtle individual variety
 - produce a square portrait
-- target approximately 91–92% vertical subject occupancy
+- generally target approximately **80–95%** vertical subject occupancy with natural variation
 - keep the subject isolated
 - use genuine RGBA transparency
 - avoid backgrounds, UI, frames, watermarks
 - avoid DDS generation and Stellaris file modification
 
-The biological transformation sections differ per xenotype and are kept specific in each prompt body.
+The biological / mechanical transformation sections differ per xenotype and are kept specific in each prompt body.
+
+Universal composition / anti-template / individual-variety language is shared across prompts; see [portrait-variety-standard.md](portrait-variety-standard.md).
 
 ---
-
 ## 1. Mammalian
 
-**Status:** ABSENT FROM SOURCE
+**Status:** ABSENT
 
-The attachment references Mammalian as **`1/11`** in ChatGPT narration (`Since Mammalian was 1/11 and Avian is 2/11…`), and the user asked to “make Mammalian now,” but **no Mammalian xenotype prompt body** appears in `Stellaris.html`.
+A full **Universal Mammalian** xenotype prompt body is not yet present in this library (the original export referenced Mammalian as `1/11` but did not include the prompt text).
 
-Until that prompt is supplied from source material, do not invent a Mammalian xenotype prompt here.
+Until a Universal Mammalian prompt is authored, do not invent one here from incomplete narration.
 
-Historical **dog / Mammalian development** prompts (Piglet, framing, transparency) remain in [portrait-prompts.md](portrait-prompts.md). Those are development artifacts, not a substitute for the missing human→Mammalian xenotype prompt from this export.
+Historical **dog / Mammalian development** prompts (Piglet, framing, transparency) remain in [portrait-prompts.md](portrait-prompts.md). Those development artifacts should follow the same variety standard when reused: **consistent art direction, variable individual composition**.
+
+When Mammalian is added, it must include the same UNIVERSAL COMPOSITION VARIETY / identity / transparency rules as Machine, Toxoid, and the other documented prompts.
 
 ---
-
 ## 2. Avian
 
 **Source heading:** `STELLAR XENO — AVIAN XENOTYPE PORTRAIT GENERATION TEST`  
@@ -284,25 +292,90 @@ Avoid:
 PORTRAIT COMPOSITION
 ==================================================
 
+==================================================
+UNIVERSAL COMPOSITION VARIETY
+==================================================
+
+Consistent art direction, variable individual composition.
+Same species identity + different individual portrait composition.
+
+Allow natural variation in:
+
+- head orientation
+- body orientation
+- head tilt
+- gaze direction
+- facial direction
+- posture
+- camera angle
+- crop distance
+- visible torso amount
+- horizontal position
+- vertical position
+- subject scale
+- asymmetry
+- relationship between head and body orientation
+
+Possible compositions include (possibilities, NOT a fixed rotation schedule):
+
+- mostly frontal
+- subtle 3/4 left
+- subtle 3/4 right
+- stronger 3/4 angle
+- slight side profile
+- body angled left while head faces viewer
+- body angled right while head faces viewer
+- head turned slightly away
+- head turned toward viewer while body is angled
+- subtle head tilt
+- subject slightly left of center
+- subject slightly right of center
+- closer facial composition
+- slightly wider bust composition
+
+Each portrait independently receives a natural composition appropriate
+to its reference. Do not cycle left/right/frontal across a roster.
+
+ANTI-TEMPLATE:
+Do not repeat centered frontal portraits, perfectly symmetrical poses,
+identical head placement, identical camera distance, identical torso
+exposure, identical gaze direction, or identical body orientation.
+Do not stage mugshot / identification-photo compositions.
+
+NATURAL VARIETY ONLY (not random cameras):
+Avoid extreme camera angles, dramatic perspective distortion, cropped
+faces, awkward anatomy, poses that obscure identity, excessive profile
+views, extreme zoom, and excessive negative space.
+
+INDIVIDUAL VARIETY:
+Allow subtle variation in expression, maturity, physical build, natural
+asymmetry, minor markings, scars, coloration, eye coloration/intensity,
+surface characteristics, minor anatomical variation, material wear,
+environmental adaptation, and personality — subordinate to the reference.
+Do not change fundamental anatomy. Do not turn the subject into a
+different species. Target: slightly different individuals of the same
+species.
+
+
 Use the established Stellar Xeno portrait framing.
 
 The final portrait must be:
 
 - square
 - portrait-bust composition
-- subject facing generally toward the viewer
-- head in the upper-middle portion
+- subject generally readable as a Stellaris species portrait (facing may vary naturally; not locked to dead-center frontal)
+- head generally in the upper portion of the frame (exact placement may vary naturally)
 - upper chest visible
 - chest/feathering continuing to the bottom edge
-- small transparent margin above the head
-- approximately 91–92% vertical subject occupancy
+- usually a modest transparent margin above the head (exact margin may vary with composition)
+- subject generally occupies approximately 80–95% of the vertical frame, with natural variation
 
-The subject should occupy approximately the same visual scale as the
-existing Stellar Xeno portraits.
+The subject should remain at a readable Stellaris species-portrait scale.
+Exact crop distance and torso exposure may vary naturally.
 
-Do not leave a large empty area above the head.
+Do not leave a large empty void that makes the subject look tiny.
 
-Do not leave transparent space beneath the chest.
+Do not leave a large unused transparent band beneath the bust when the composition is a standard cropped portrait-bust (exact torso crop may vary).
 
 The lower chest/feathering should naturally continue beyond the bottom edge
 of the portrait.
@@ -462,8 +535,8 @@ Before finishing, verify:
 - The face/identity remains recognizable.
 - The result looks like a Stellaris species portrait.
 - The portrait is square.
-- The subject occupies approximately 91–92% of the vertical canvas.
-- There is only a small margin above the head.
+- The subject generally occupies approximately 80–95% of the vertical frame, with natural variation appropriate to anatomy and composition.
+- Head placement and margin above the head vary naturally within a readable portrait-bust crop (not a fixed template).
 - The chest/feathering reaches the bottom edge.
 - There is no background.
 - The subject is isolated cleanly.
@@ -577,19 +650,83 @@ Avoid:
 
 PORTRAIT COMPOSITION
 
+==================================================
+UNIVERSAL COMPOSITION VARIETY
+==================================================
+
+Consistent art direction, variable individual composition.
+Same species identity + different individual portrait composition.
+
+Allow natural variation in:
+
+- head orientation
+- body orientation
+- head tilt
+- gaze direction
+- facial direction
+- posture
+- camera angle
+- crop distance
+- visible torso amount
+- horizontal position
+- vertical position
+- subject scale
+- asymmetry
+- relationship between head and body orientation
+
+Possible compositions include (possibilities, NOT a fixed rotation schedule):
+
+- mostly frontal
+- subtle 3/4 left
+- subtle 3/4 right
+- stronger 3/4 angle
+- slight side profile
+- body angled left while head faces viewer
+- body angled right while head faces viewer
+- head turned slightly away
+- head turned toward viewer while body is angled
+- subtle head tilt
+- subject slightly left of center
+- subject slightly right of center
+- closer facial composition
+- slightly wider bust composition
+
+Each portrait independently receives a natural composition appropriate
+to its reference. Do not cycle left/right/frontal across a roster.
+
+ANTI-TEMPLATE:
+Do not repeat centered frontal portraits, perfectly symmetrical poses,
+identical head placement, identical camera distance, identical torso
+exposure, identical gaze direction, or identical body orientation.
+Do not stage mugshot / identification-photo compositions.
+
+NATURAL VARIETY ONLY (not random cameras):
+Avoid extreme camera angles, dramatic perspective distortion, cropped
+faces, awkward anatomy, poses that obscure identity, excessive profile
+views, extreme zoom, and excessive negative space.
+
+INDIVIDUAL VARIETY:
+Allow subtle variation in expression, maturity, physical build, natural
+asymmetry, minor markings, scars, coloration, eye coloration/intensity,
+surface characteristics, minor anatomical variation, material wear,
+environmental adaptation, and personality — subordinate to the reference.
+Do not change fundamental anatomy. Do not turn the subject into a
+different species. Target: slightly different individuals of the same
+species.
+
 Use the established Stellar Xeno portrait framing.
 The final portrait must be:
 - square
 - portrait-bust composition
-- subject facing generally toward the viewer
-- head in the upper-middle portion
+- subject generally readable as a Stellaris species portrait (facing may vary naturally; not locked to dead-center frontal)
+- head generally in the upper portion of the frame (exact placement may vary naturally)
 - upper chest visible
 - chest/scaled neck continuing to the bottom edge
-- small transparent margin above the head
-- approximately 91–92% vertical subject occupancy
-The subject should occupy approximately the same visual scale as the existing Stellar Xeno portraits.
-Do not leave a large empty area above the head.
-Do not leave transparent space beneath the chest.
+- usually a modest transparent margin above the head (exact margin may vary with composition)
+- subject generally occupies approximately 80–95% of the vertical frame, with natural variation
+The subject should remain at a readable Stellaris species-portrait scale. Exact crop distance and torso exposure may vary naturally.
+Do not leave a large empty void that makes the subject look tiny.
+Do not leave a large unused transparent band beneath the bust when the composition is a standard cropped portrait-bust (exact torso crop may vary).
 The lower chest/scaled anatomy should naturally continue beyond the bottom edge of the portrait.
 The photograph is the identity reference.
 It is NOT the composition reference.
@@ -716,8 +853,8 @@ Before finishing, verify:
 - The face/identity remains recognizable.
 - The result looks like a Stellaris species portrait.
 - The portrait is square.
-- The subject occupies approximately 91–92% of the vertical canvas.
-- There is only a small margin above the head.
+- The subject generally occupies approximately 80–95% of the vertical frame, with natural variation appropriate to anatomy and composition.
+- Head placement and margin above the head vary naturally within a readable portrait-bust crop (not a fixed template).
 - The chest/scaled anatomy reaches the bottom edge.
 - There is no background.
 - The subject is isolated cleanly.
@@ -826,19 +963,83 @@ Avoid:
 
 PORTRAIT COMPOSITION
 
+==================================================
+UNIVERSAL COMPOSITION VARIETY
+==================================================
+
+Consistent art direction, variable individual composition.
+Same species identity + different individual portrait composition.
+
+Allow natural variation in:
+
+- head orientation
+- body orientation
+- head tilt
+- gaze direction
+- facial direction
+- posture
+- camera angle
+- crop distance
+- visible torso amount
+- horizontal position
+- vertical position
+- subject scale
+- asymmetry
+- relationship between head and body orientation
+
+Possible compositions include (possibilities, NOT a fixed rotation schedule):
+
+- mostly frontal
+- subtle 3/4 left
+- subtle 3/4 right
+- stronger 3/4 angle
+- slight side profile
+- body angled left while head faces viewer
+- body angled right while head faces viewer
+- head turned slightly away
+- head turned toward viewer while body is angled
+- subtle head tilt
+- subject slightly left of center
+- subject slightly right of center
+- closer facial composition
+- slightly wider bust composition
+
+Each portrait independently receives a natural composition appropriate
+to its reference. Do not cycle left/right/frontal across a roster.
+
+ANTI-TEMPLATE:
+Do not repeat centered frontal portraits, perfectly symmetrical poses,
+identical head placement, identical camera distance, identical torso
+exposure, identical gaze direction, or identical body orientation.
+Do not stage mugshot / identification-photo compositions.
+
+NATURAL VARIETY ONLY (not random cameras):
+Avoid extreme camera angles, dramatic perspective distortion, cropped
+faces, awkward anatomy, poses that obscure identity, excessive profile
+views, extreme zoom, and excessive negative space.
+
+INDIVIDUAL VARIETY:
+Allow subtle variation in expression, maturity, physical build, natural
+asymmetry, minor markings, scars, coloration, eye coloration/intensity,
+surface characteristics, minor anatomical variation, material wear,
+environmental adaptation, and personality — subordinate to the reference.
+Do not change fundamental anatomy. Do not turn the subject into a
+different species. Target: slightly different individuals of the same
+species.
+
 Use the established Stellar Xeno portrait framing.
 The final portrait must be:
 - square
 - portrait-bust composition
-- subject facing generally toward the viewer
-- head in the upper-middle portion
+- subject generally readable as a Stellaris species portrait (facing may vary naturally; not locked to dead-center frontal)
+- head generally in the upper portion of the frame (exact placement may vary naturally)
 - upper chest visible
 - chest/skin continuing to the bottom edge
-- small transparent margin above the head
-- approximately 91–92% vertical subject occupancy
-The subject should occupy approximately the same visual scale as the existing Stellar Xeno portraits.
-Do not leave a large empty area above the head.
-Do not leave transparent space beneath the chest.
+- usually a modest transparent margin above the head (exact margin may vary with composition)
+- subject generally occupies approximately 80–95% of the vertical frame, with natural variation
+The subject should remain at a readable Stellaris species-portrait scale. Exact crop distance and torso exposure may vary naturally.
+Do not leave a large empty void that makes the subject look tiny.
+Do not leave a large unused transparent band beneath the bust when the composition is a standard cropped portrait-bust (exact torso crop may vary).
 The lower chest should naturally continue beyond the bottom edge of the portrait.
 The photograph is the identity reference.
 It is NOT the composition reference.
@@ -966,8 +1167,8 @@ Before finishing, verify:
 - The face/identity remains recognizable.
 - The result looks like a Stellaris species portrait.
 - The portrait is square.
-- The subject occupies approximately 91–92% of the vertical canvas.
-- There is only a small margin above the head.
+- The subject generally occupies approximately 80–95% of the vertical frame, with natural variation appropriate to anatomy and composition.
+- Head placement and margin above the head vary naturally within a readable portrait-bust crop (not a fixed template).
 - The chest/skin reaches the bottom edge.
 - There is no background.
 - The subject is isolated cleanly.
@@ -1079,19 +1280,83 @@ Avoid:
 
 PORTRAIT COMPOSITION
 
+==================================================
+UNIVERSAL COMPOSITION VARIETY
+==================================================
+
+Consistent art direction, variable individual composition.
+Same species identity + different individual portrait composition.
+
+Allow natural variation in:
+
+- head orientation
+- body orientation
+- head tilt
+- gaze direction
+- facial direction
+- posture
+- camera angle
+- crop distance
+- visible torso amount
+- horizontal position
+- vertical position
+- subject scale
+- asymmetry
+- relationship between head and body orientation
+
+Possible compositions include (possibilities, NOT a fixed rotation schedule):
+
+- mostly frontal
+- subtle 3/4 left
+- subtle 3/4 right
+- stronger 3/4 angle
+- slight side profile
+- body angled left while head faces viewer
+- body angled right while head faces viewer
+- head turned slightly away
+- head turned toward viewer while body is angled
+- subtle head tilt
+- subject slightly left of center
+- subject slightly right of center
+- closer facial composition
+- slightly wider bust composition
+
+Each portrait independently receives a natural composition appropriate
+to its reference. Do not cycle left/right/frontal across a roster.
+
+ANTI-TEMPLATE:
+Do not repeat centered frontal portraits, perfectly symmetrical poses,
+identical head placement, identical camera distance, identical torso
+exposure, identical gaze direction, or identical body orientation.
+Do not stage mugshot / identification-photo compositions.
+
+NATURAL VARIETY ONLY (not random cameras):
+Avoid extreme camera angles, dramatic perspective distortion, cropped
+faces, awkward anatomy, poses that obscure identity, excessive profile
+views, extreme zoom, and excessive negative space.
+
+INDIVIDUAL VARIETY:
+Allow subtle variation in expression, maturity, physical build, natural
+asymmetry, minor markings, scars, coloration, eye coloration/intensity,
+surface characteristics, minor anatomical variation, material wear,
+environmental adaptation, and personality — subordinate to the reference.
+Do not change fundamental anatomy. Do not turn the subject into a
+different species. Target: slightly different individuals of the same
+species.
+
 Use the established Stellar Xeno portrait framing.
 The final portrait must be:
 - square
 - portrait-bust composition
-- subject facing generally toward the viewer
-- head in the upper-middle portion
+- subject generally readable as a Stellaris species portrait (facing may vary naturally; not locked to dead-center frontal)
+- head generally in the upper portion of the frame (exact placement may vary naturally)
 - upper chest/thorax visible
 - thorax/chest continuing to the bottom edge
-- small transparent margin above the head and antennae
-- approximately 91–92% vertical subject occupancy
-The subject should occupy approximately the same visual scale as the existing Stellar Xeno portraits.
+- usually a modest transparent margin above the head (exact margin may vary with composition) and antennae
+- subject generally occupies approximately 80–95% of the vertical frame, with natural variation
+The subject should remain at a readable Stellaris species-portrait scale. Exact crop distance and torso exposure may vary naturally.
 Account for antennae or other sensory structures when establishing the top margin.
-Do not leave a large empty area above the head.
+Do not leave a large empty void that makes the subject look tiny.
 Do not leave transparent space beneath the chest/thorax.
 The lower thorax should naturally continue beyond the bottom edge of the portrait.
 The photograph is the identity reference.
@@ -1224,8 +1489,8 @@ Before finishing, verify:
 - The face/identity remains recognizable.
 - The result looks like a Stellaris species portrait.
 - The portrait is square.
-- The subject occupies approximately 91–92% of the vertical canvas.
-- There is only a small margin above the head and antennae.
+- The subject generally occupies approximately 80–95% of the vertical frame, with natural variation appropriate to anatomy and composition.
+- Head/antennae placement and top margin vary naturally within a readable portrait-bust crop (not a fixed template).
 - The chest/thorax reaches the bottom edge.
 - There is no background.
 - The subject is isolated cleanly.
@@ -1337,20 +1602,84 @@ Avoid:
 
 PORTRAIT COMPOSITION
 
+==================================================
+UNIVERSAL COMPOSITION VARIETY
+==================================================
+
+Consistent art direction, variable individual composition.
+Same species identity + different individual portrait composition.
+
+Allow natural variation in:
+
+- head orientation
+- body orientation
+- head tilt
+- gaze direction
+- facial direction
+- posture
+- camera angle
+- crop distance
+- visible torso amount
+- horizontal position
+- vertical position
+- subject scale
+- asymmetry
+- relationship between head and body orientation
+
+Possible compositions include (possibilities, NOT a fixed rotation schedule):
+
+- mostly frontal
+- subtle 3/4 left
+- subtle 3/4 right
+- stronger 3/4 angle
+- slight side profile
+- body angled left while head faces viewer
+- body angled right while head faces viewer
+- head turned slightly away
+- head turned toward viewer while body is angled
+- subtle head tilt
+- subject slightly left of center
+- subject slightly right of center
+- closer facial composition
+- slightly wider bust composition
+
+Each portrait independently receives a natural composition appropriate
+to its reference. Do not cycle left/right/frontal across a roster.
+
+ANTI-TEMPLATE:
+Do not repeat centered frontal portraits, perfectly symmetrical poses,
+identical head placement, identical camera distance, identical torso
+exposure, identical gaze direction, or identical body orientation.
+Do not stage mugshot / identification-photo compositions.
+
+NATURAL VARIETY ONLY (not random cameras):
+Avoid extreme camera angles, dramatic perspective distortion, cropped
+faces, awkward anatomy, poses that obscure identity, excessive profile
+views, extreme zoom, and excessive negative space.
+
+INDIVIDUAL VARIETY:
+Allow subtle variation in expression, maturity, physical build, natural
+asymmetry, minor markings, scars, coloration, eye coloration/intensity,
+surface characteristics, minor anatomical variation, material wear,
+environmental adaptation, and personality — subordinate to the reference.
+Do not change fundamental anatomy. Do not turn the subject into a
+different species. Target: slightly different individuals of the same
+species.
+
 Use the established Stellar Xeno portrait framing.
 The final portrait must be:
 - square
 - portrait-bust composition
-- subject facing generally toward the viewer
-- head in the upper-middle portion
+- subject generally readable as a Stellaris species portrait (facing may vary naturally; not locked to dead-center frontal)
+- head generally in the upper portion of the frame (exact placement may vary naturally)
 - upper chest visible
 - upper-body/molluscoid anatomy continuing to the bottom edge
-- small transparent margin above the head and any sensory structures
-- approximately 91–92% vertical subject occupancy
-The subject should occupy approximately the same visual scale as the existing Stellar Xeno portraits.
+- usually a modest transparent margin above the head (exact margin may vary with composition) and any sensory structures
+- subject generally occupies approximately 80–95% of the vertical frame, with natural variation
+The subject should remain at a readable Stellaris species-portrait scale. Exact crop distance and torso exposure may vary naturally.
 Account for tentacles, tendrils, feelers, or other sensory structures when establishing the top margin.
-Do not leave a large empty area above the head.
-Do not leave transparent space beneath the chest.
+Do not leave a large empty void that makes the subject look tiny.
+Do not leave a large unused transparent band beneath the bust when the composition is a standard cropped portrait-bust (exact torso crop may vary).
 The lower body should naturally continue beyond the bottom edge of the portrait.
 The photograph is the identity reference.
 It is NOT the composition reference.
@@ -1481,8 +1810,8 @@ Before finishing, verify:
 - The face/identity remains recognizable.
 - The result looks like a Stellaris species portrait.
 - The portrait is square.
-- The subject occupies approximately 91–92% of the vertical canvas.
-- There is only a small margin above the head and sensory structures.
+- The subject generally occupies approximately 80–95% of the vertical frame, with natural variation appropriate to anatomy and composition.
+- Head/sensory structure placement and top margin vary naturally within a readable portrait-bust crop (not a fixed template).
 - The chest/upper body reaches the bottom edge.
 - There is no background.
 - The subject is isolated cleanly.
@@ -1595,20 +1924,84 @@ Avoid:
 
 PORTRAIT COMPOSITION
 
+==================================================
+UNIVERSAL COMPOSITION VARIETY
+==================================================
+
+Consistent art direction, variable individual composition.
+Same species identity + different individual portrait composition.
+
+Allow natural variation in:
+
+- head orientation
+- body orientation
+- head tilt
+- gaze direction
+- facial direction
+- posture
+- camera angle
+- crop distance
+- visible torso amount
+- horizontal position
+- vertical position
+- subject scale
+- asymmetry
+- relationship between head and body orientation
+
+Possible compositions include (possibilities, NOT a fixed rotation schedule):
+
+- mostly frontal
+- subtle 3/4 left
+- subtle 3/4 right
+- stronger 3/4 angle
+- slight side profile
+- body angled left while head faces viewer
+- body angled right while head faces viewer
+- head turned slightly away
+- head turned toward viewer while body is angled
+- subtle head tilt
+- subject slightly left of center
+- subject slightly right of center
+- closer facial composition
+- slightly wider bust composition
+
+Each portrait independently receives a natural composition appropriate
+to its reference. Do not cycle left/right/frontal across a roster.
+
+ANTI-TEMPLATE:
+Do not repeat centered frontal portraits, perfectly symmetrical poses,
+identical head placement, identical camera distance, identical torso
+exposure, identical gaze direction, or identical body orientation.
+Do not stage mugshot / identification-photo compositions.
+
+NATURAL VARIETY ONLY (not random cameras):
+Avoid extreme camera angles, dramatic perspective distortion, cropped
+faces, awkward anatomy, poses that obscure identity, excessive profile
+views, extreme zoom, and excessive negative space.
+
+INDIVIDUAL VARIETY:
+Allow subtle variation in expression, maturity, physical build, natural
+asymmetry, minor markings, scars, coloration, eye coloration/intensity,
+surface characteristics, minor anatomical variation, material wear,
+environmental adaptation, and personality — subordinate to the reference.
+Do not change fundamental anatomy. Do not turn the subject into a
+different species. Target: slightly different individuals of the same
+species.
+
 Use the established Stellar Xeno portrait framing.
 The final portrait must be:
 - square
 - portrait-bust composition
-- subject facing generally toward the viewer
-- head in the upper-middle portion
+- subject generally readable as a Stellaris species portrait (facing may vary naturally; not locked to dead-center frontal)
+- head generally in the upper portion of the frame (exact placement may vary naturally)
 - upper chest visible
 - fungal chest/body structures continuing to the bottom edge
-- small transparent margin above the head and any fungal growth structures
-- approximately 91–92% vertical subject occupancy
-The subject should occupy approximately the same visual scale as the existing Stellar Xeno portraits.
+- usually a modest transparent margin above the head (exact margin may vary with composition) and any fungal growth structures
+- subject generally occupies approximately 80–95% of the vertical frame, with natural variation
+The subject should remain at a readable Stellaris species-portrait scale. Exact crop distance and torso exposure may vary naturally.
 Account for fungal growths or other biological structures when establishing the top margin.
-Do not leave a large empty area above the head.
-Do not leave transparent space beneath the chest.
+Do not leave a large empty void that makes the subject look tiny.
+Do not leave a large unused transparent band beneath the bust when the composition is a standard cropped portrait-bust (exact torso crop may vary).
 The lower chest/body should naturally continue beyond the bottom edge of the portrait.
 The photograph is the identity reference.
 It is NOT the composition reference.
@@ -1740,8 +2133,8 @@ Before finishing, verify:
 - The face/identity remains recognizable.
 - The result looks like a Stellaris species portrait.
 - The portrait is square.
-- The subject occupies approximately 91–92% of the vertical canvas.
-- There is only a small margin above the head and fungal structures.
+- The subject generally occupies approximately 80–95% of the vertical frame, with natural variation appropriate to anatomy and composition.
+- Head/fungal structure placement and top margin vary naturally within a readable portrait-bust crop (not a fixed template).
 - The chest/body reaches the bottom edge.
 - There is no background.
 - The subject is isolated cleanly.
@@ -1853,20 +2246,84 @@ Avoid:
 
 PORTRAIT COMPOSITION
 
+==================================================
+UNIVERSAL COMPOSITION VARIETY
+==================================================
+
+Consistent art direction, variable individual composition.
+Same species identity + different individual portrait composition.
+
+Allow natural variation in:
+
+- head orientation
+- body orientation
+- head tilt
+- gaze direction
+- facial direction
+- posture
+- camera angle
+- crop distance
+- visible torso amount
+- horizontal position
+- vertical position
+- subject scale
+- asymmetry
+- relationship between head and body orientation
+
+Possible compositions include (possibilities, NOT a fixed rotation schedule):
+
+- mostly frontal
+- subtle 3/4 left
+- subtle 3/4 right
+- stronger 3/4 angle
+- slight side profile
+- body angled left while head faces viewer
+- body angled right while head faces viewer
+- head turned slightly away
+- head turned toward viewer while body is angled
+- subtle head tilt
+- subject slightly left of center
+- subject slightly right of center
+- closer facial composition
+- slightly wider bust composition
+
+Each portrait independently receives a natural composition appropriate
+to its reference. Do not cycle left/right/frontal across a roster.
+
+ANTI-TEMPLATE:
+Do not repeat centered frontal portraits, perfectly symmetrical poses,
+identical head placement, identical camera distance, identical torso
+exposure, identical gaze direction, or identical body orientation.
+Do not stage mugshot / identification-photo compositions.
+
+NATURAL VARIETY ONLY (not random cameras):
+Avoid extreme camera angles, dramatic perspective distortion, cropped
+faces, awkward anatomy, poses that obscure identity, excessive profile
+views, extreme zoom, and excessive negative space.
+
+INDIVIDUAL VARIETY:
+Allow subtle variation in expression, maturity, physical build, natural
+asymmetry, minor markings, scars, coloration, eye coloration/intensity,
+surface characteristics, minor anatomical variation, material wear,
+environmental adaptation, and personality — subordinate to the reference.
+Do not change fundamental anatomy. Do not turn the subject into a
+different species. Target: slightly different individuals of the same
+species.
+
 Use the established Stellar Xeno portrait framing.
 The final portrait must be:
 - square
 - portrait-bust composition
-- subject facing generally toward the viewer
-- head in the upper-middle portion
+- subject generally readable as a Stellaris species portrait (facing may vary naturally; not locked to dead-center frontal)
+- head generally in the upper portion of the frame (exact placement may vary naturally)
 - upper chest visible
 - plant-derived chest/body structures continuing to the bottom edge
-- small transparent margin above the head and any botanical structures
-- approximately 91–92% vertical subject occupancy
-The subject should occupy approximately the same visual scale as the existing Stellar Xeno portraits.
+- usually a modest transparent margin above the head (exact margin may vary with composition) and any botanical structures
+- subject generally occupies approximately 80–95% of the vertical frame, with natural variation
+The subject should remain at a readable Stellaris species-portrait scale. Exact crop distance and torso exposure may vary naturally.
 Account for leaves, branches, petals, vines, or other botanical structures when establishing the top margin.
-Do not leave a large empty area above the head.
-Do not leave transparent space beneath the chest.
+Do not leave a large empty void that makes the subject look tiny.
+Do not leave a large unused transparent band beneath the bust when the composition is a standard cropped portrait-bust (exact torso crop may vary).
 The lower chest/body should naturally continue beyond the bottom edge of the portrait.
 The photograph is the identity reference.
 It is NOT the composition reference.
@@ -2002,8 +2459,8 @@ Before finishing, verify:
 - The face/identity remains recognizable.
 - The result looks like a Stellaris species portrait.
 - The portrait is square.
-- The subject occupies approximately 91–92% of the vertical canvas.
-- There is only a small margin above the head and botanical structures.
+- The subject generally occupies approximately 80–95% of the vertical frame, with natural variation appropriate to anatomy and composition.
+- Head/botanical structure placement and top margin vary naturally within a readable portrait-bust crop (not a fixed template).
 - The chest/body reaches the bottom edge.
 - There is no background.
 - The subject is isolated cleanly.
@@ -2118,20 +2575,84 @@ Avoid:
 
 PORTRAIT COMPOSITION
 
+==================================================
+UNIVERSAL COMPOSITION VARIETY
+==================================================
+
+Consistent art direction, variable individual composition.
+Same species identity + different individual portrait composition.
+
+Allow natural variation in:
+
+- head orientation
+- body orientation
+- head tilt
+- gaze direction
+- facial direction
+- posture
+- camera angle
+- crop distance
+- visible torso amount
+- horizontal position
+- vertical position
+- subject scale
+- asymmetry
+- relationship between head and body orientation
+
+Possible compositions include (possibilities, NOT a fixed rotation schedule):
+
+- mostly frontal
+- subtle 3/4 left
+- subtle 3/4 right
+- stronger 3/4 angle
+- slight side profile
+- body angled left while head faces viewer
+- body angled right while head faces viewer
+- head turned slightly away
+- head turned toward viewer while body is angled
+- subtle head tilt
+- subject slightly left of center
+- subject slightly right of center
+- closer facial composition
+- slightly wider bust composition
+
+Each portrait independently receives a natural composition appropriate
+to its reference. Do not cycle left/right/frontal across a roster.
+
+ANTI-TEMPLATE:
+Do not repeat centered frontal portraits, perfectly symmetrical poses,
+identical head placement, identical camera distance, identical torso
+exposure, identical gaze direction, or identical body orientation.
+Do not stage mugshot / identification-photo compositions.
+
+NATURAL VARIETY ONLY (not random cameras):
+Avoid extreme camera angles, dramatic perspective distortion, cropped
+faces, awkward anatomy, poses that obscure identity, excessive profile
+views, extreme zoom, and excessive negative space.
+
+INDIVIDUAL VARIETY:
+Allow subtle variation in expression, maturity, physical build, natural
+asymmetry, minor markings, scars, coloration, eye coloration/intensity,
+surface characteristics, minor anatomical variation, material wear,
+environmental adaptation, and personality — subordinate to the reference.
+Do not change fundamental anatomy. Do not turn the subject into a
+different species. Target: slightly different individuals of the same
+species.
+
 Use the established Stellar Xeno portrait framing.
 The final portrait must be:
 - square
 - portrait-bust composition
-- subject facing generally toward the viewer
-- head in the upper-middle portion
+- subject generally readable as a Stellaris species portrait (facing may vary naturally; not locked to dead-center frontal)
+- head generally in the upper portion of the frame (exact placement may vary naturally)
 - upper chest visible
 - lithoid chest/body continuing to the bottom edge
-- small transparent margin above the head and any mineral structures
-- approximately 91–92% vertical subject occupancy
-The subject should occupy approximately the same visual scale as the existing Stellar Xeno portraits.
+- usually a modest transparent margin above the head (exact margin may vary with composition) and any mineral structures
+- subject generally occupies approximately 80–95% of the vertical frame, with natural variation
+The subject should remain at a readable Stellaris species-portrait scale. Exact crop distance and torso exposure may vary naturally.
 Account for crystalline formations or other mineral structures when establishing the top margin.
-Do not leave a large empty area above the head.
-Do not leave transparent space beneath the chest.
+Do not leave a large empty void that makes the subject look tiny.
+Do not leave a large unused transparent band beneath the bust when the composition is a standard cropped portrait-bust (exact torso crop may vary).
 The lower lithoid body should naturally continue beyond the bottom edge of the portrait.
 The photograph is the identity reference.
 It is NOT the composition reference.
@@ -2267,8 +2788,8 @@ Before finishing, verify:
 - The face/identity remains recognizable.
 - The result looks like a Stellaris species portrait.
 - The portrait is square.
-- The subject occupies approximately 91–92% of the vertical canvas.
-- There is only a small margin above the head and mineral structures.
+- The subject generally occupies approximately 80–95% of the vertical frame, with natural variation appropriate to anatomy and composition.
+- Head/mineral structure placement and top margin vary naturally within a readable portrait-bust crop (not a fixed template).
 - The chest/body reaches the bottom edge.
 - There is no background.
 - The subject is isolated cleanly.
@@ -2386,19 +2907,83 @@ Avoid:
 
 PORTRAIT COMPOSITION
 
+==================================================
+UNIVERSAL COMPOSITION VARIETY
+==================================================
+
+Consistent art direction, variable individual composition.
+Same species identity + different individual portrait composition.
+
+Allow natural variation in:
+
+- head orientation
+- body orientation
+- head tilt
+- gaze direction
+- facial direction
+- posture
+- camera angle
+- crop distance
+- visible torso amount
+- horizontal position
+- vertical position
+- subject scale
+- asymmetry
+- relationship between head and body orientation
+
+Possible compositions include (possibilities, NOT a fixed rotation schedule):
+
+- mostly frontal
+- subtle 3/4 left
+- subtle 3/4 right
+- stronger 3/4 angle
+- slight side profile
+- body angled left while head faces viewer
+- body angled right while head faces viewer
+- head turned slightly away
+- head turned toward viewer while body is angled
+- subtle head tilt
+- subject slightly left of center
+- subject slightly right of center
+- closer facial composition
+- slightly wider bust composition
+
+Each portrait independently receives a natural composition appropriate
+to its reference. Do not cycle left/right/frontal across a roster.
+
+ANTI-TEMPLATE:
+Do not repeat centered frontal portraits, perfectly symmetrical poses,
+identical head placement, identical camera distance, identical torso
+exposure, identical gaze direction, or identical body orientation.
+Do not stage mugshot / identification-photo compositions.
+
+NATURAL VARIETY ONLY (not random cameras):
+Avoid extreme camera angles, dramatic perspective distortion, cropped
+faces, awkward anatomy, poses that obscure identity, excessive profile
+views, extreme zoom, and excessive negative space.
+
+INDIVIDUAL VARIETY:
+Allow subtle variation in expression, maturity, physical build, natural
+asymmetry, minor markings, scars, coloration, eye coloration/intensity,
+surface characteristics, minor anatomical variation, material wear,
+environmental adaptation, and personality — subordinate to the reference.
+Do not change fundamental anatomy. Do not turn the subject into a
+different species. Target: slightly different individuals of the same
+species.
+
 Use the established Stellar Xeno portrait framing.
 The final portrait must be:
 - square
 - portrait-bust composition
-- subject facing generally toward the viewer
-- head in the upper-middle portion
+- subject generally readable as a Stellaris species portrait (facing may vary naturally; not locked to dead-center frontal)
+- head generally in the upper portion of the frame (exact placement may vary naturally)
 - upper chest visible
 - necroid chest/body continuing to the bottom edge
-- small transparent margin above the head
-- approximately 91–92% vertical subject occupancy
-The subject should occupy approximately the same visual scale as the existing Stellar Xeno portraits.
-Do not leave a large empty area above the head.
-Do not leave transparent space beneath the chest.
+- usually a modest transparent margin above the head (exact margin may vary with composition)
+- subject generally occupies approximately 80–95% of the vertical frame, with natural variation
+The subject should remain at a readable Stellaris species-portrait scale. Exact crop distance and torso exposure may vary naturally.
+Do not leave a large empty void that makes the subject look tiny.
+Do not leave a large unused transparent band beneath the bust when the composition is a standard cropped portrait-bust (exact torso crop may vary).
 The lower chest/body should naturally continue beyond the bottom edge of the portrait.
 The photograph is the identity reference.
 It is NOT the composition reference.
@@ -2532,8 +3117,8 @@ Before finishing, verify:
 - The face/identity remains recognizable.
 - The result looks like a Stellaris species portrait.
 - The portrait is square.
-- The subject occupies approximately 91–92% of the vertical canvas.
-- There is only a small margin above the head.
+- The subject generally occupies approximately 80–95% of the vertical frame, with natural variation appropriate to anatomy and composition.
+- Head placement and margin above the head vary naturally within a readable portrait-bust crop (not a fixed template).
 - The chest/body reaches the bottom edge.
 - There is no background.
 - The subject is isolated cleanly.
@@ -2550,301 +3135,742 @@ The final result should look like:
 
 ## 11. Machine
 
-**Status:** ABSENT FROM SOURCE
+**Status:** CREATED (project standard — Universal Machine Xenotype)  
+**Pipeline selector:** IMPLEMENTED  
+**Note:** This prompt was **created for Stellar Xeno** as part of the prompt-system expansion. It did not exist in the original ChatGPT export attachment.
 
-No Machine xenotype portrait-generation prompt appears in `Stellaris.html` (no title line, no body, no `n/11` Machine footer).
+```text
+STELLAR XENO — UNIVERSAL MACHINE XENOTYPE
 
-The Portrait Creator selector may still list Machine for registration; that is separate from this missing generation prompt.
+Using the provided creature portrait as the exact biological identity
+reference, reinterpret this creature as a sophisticated synthetic Machine
+species from the Stellaris universe.
+
+The reference creature determines the species identity.
+
+Preserve its recognizable:
+
+- anatomy
+- proportions
+- silhouette
+- facial structure
+- distinctive features
+- coloration
+- markings
+- personality
+
+Do not redesign the creature into a generic robot.
+
+Instead, imagine that this exact species has been completely reconstructed
+as an advanced synthetic organism by an alien civilization.
+
+==================================================
+CORE MACHINE TRANSFORMATION
+==================================================
+
+Transform the creature's biological anatomy into purpose-built synthetic
+anatomy.
+
+The underlying body must clearly be mechanical, engineered, and artificial.
+
+Translate biological characteristics into synthetic equivalents:
+
+fur → subtle synthetic surface texture
+feathers → thin integrated synthetic feather-like surface structures
+scales → fine interlocking synthetic surface panels
+skin → engineered synthetic material
+horns → integrated structural or sensory components
+ears → synthetic sensory structures
+claws → precision mechanical digits
+eyes → advanced optical sensors
+nose/beak/muzzle → engineered equivalents preserving the original silhouette
+tails → articulated synthetic structures
+
+Do not simply cover the biological creature with armor.
+
+Rebuild the anatomy as a machine.
+
+==================================================
+CRITICAL MACHINE SURFACE RULE
+==================================================
+
+Organic surface characteristics must remain primarily TEXTURE rather than
+large 3D geometry.
+
+This is especially important for fur.
+
+Fur should NOT become:
+
+- fluffy 3D fur
+- long individual hair
+- flowing locks
+- large synthetic hair masses
+- furry armor
+- sculpted hair volumes
+
+Instead use:
+
+- microtexture
+- shallow surface relief
+- material variation
+- roughness variation
+- subtle directional patterns
+- short integrated synthetic fibers
+- fine embossed texture
+
+The machine's underlying anatomy must remain visually dominant.
+
+The biological identity should survive through:
+
+- shape
+- silhouette
+- proportions
+- coloration
+- surface pattern
+
+rather than excessive physical fur/feather/scale geometry.
+
+==================================================
+MACHINE ANATOMY
+==================================================
+
+Use sophisticated alien synthetic construction:
+
+- engineered structural anatomy
+- segmented composite surfaces
+- articulated joints
+- synthetic musculature
+- recessed seams
+- precision-machined components
+- ceramic composites
+- dark alloys
+- brushed metal
+- synthetic polymers
+- integrated sensors
+- subtle circuitry
+- internal structural elements
+- restrained emissive components
+
+Every mechanical element should appear purposeful.
+
+Avoid decorative mechanical clutter.
+
+Avoid excessive:
+
+- wires
+- gears
+- pistons
+- exposed machinery
+- industrial robotics
+
+The mechanical anatomy must follow the original creature's natural body plan.
+
+A canine remains canine.
+An avian remains avian.
+A reptile remains reptilian.
+An arthropod remains arthropod.
+
+Do not force humanoid anatomy onto the creature.
+
+==================================================
+STELLARIS MACHINE AESTHETIC
+==================================================
+
+The result should feel like a sophisticated alien Machine species from
+Stellaris.
+
+It should feel:
+
+- alien
+- intelligent
+- sophisticated
+- engineered
+- elegant
+- functional
+- technologically advanced
+- species-specific
+- unusual
+- believable
+
+This is an alien Machine species, not an Earth robot.
+
+Avoid:
+
+- humanoid robots
+- androids
+- Transformers
+- cyberpunk robots
+- military robots
+- industrial machinery
+- generic robot animals
+- animals wearing robotic armor
+- fantasy golems
+- exposed mechanical skeletons
+
+The machine should feel like an actual alien species reconstructed into
+synthetic existence.
+
+==================================================
+MACHINE COLOR
+==================================================
+
+Preserve the reference creature's recognizable coloration while translating
+biological colors into synthetic materials.
+
+Examples:
+
+brown → bronze / warm brown composite
+black → graphite / black alloy
+white → ivory ceramic / pale composite
+blue → blue synthetic material / metallic blue
+green → green ceramic / alloy
+red → deep red composite / controlled metallic accents
+golden → warm gold / bronze
+
+Do not make every Machine portrait silver or gray.
+
+Do not cover the creature in neon lighting.
+
+Emissive elements should be small and restrained.
+
+==================================================
+MACHINE FACE
+==================================================
+
+The face is the most important identity feature.
+
+Preserve:
+
+- eye spacing
+- eye placement
+- facial proportions
+- muzzle/beak
+- forehead
+- cheeks
+- ears
+- expression
+
+Convert these into synthetic equivalents without destroying the creature's
+personality.
+
+Do not give every Machine creature an emotionless robotic face.
+
+==================================================
+MACHINE PORTRAIT STYLE
+==================================================
+
+Finished Stellaris species-selection portrait.
+
+Realistic high-detail science-fiction digital artwork.
+
+Sophisticated 3D-rendered materials.
+
+Realistic mechanical shading.
+
+Detailed but controlled surface construction.
+
+Subtle directional lighting.
+
+Subtle rim lighting.
+
+Serious intelligent presence.
+
+Professional game artwork.
+
+==================================================
+MACHINE COMPOSITION
+==================================================
+
+==================================================
+UNIVERSAL COMPOSITION VARIETY
+==================================================
+
+Consistent art direction, variable individual composition.
+Same species identity + different individual portrait composition.
+
+Allow natural variation in head/body orientation, head tilt, gaze,
+posture, camera angle, crop distance, torso exposure, horizontal and
+vertical placement, subject scale, and asymmetry.
+
+Possible compositions include mostly frontal, subtle or stronger 3/4,
+slight side profile, body angled with head toward viewer, subtle head
+tilt, subject slightly off-center, closer facial crop, or slightly
+wider bust. These are possibilities, not a rotation schedule.
+
+ANTI-TEMPLATE:
+Do not force every Machine portrait to be centered, frontal, symmetrical,
+identical in crop, or identical in camera distance.
+Do not repeat mugshot / identification-photo staging.
+
+NATURAL VARIETY ONLY:
+Avoid extreme camera angles, perspective distortion, cropped faces,
+awkward anatomy, identity-obscuring poses, excessive profile, extreme
+zoom, and excessive negative space.
+
+INDIVIDUAL VARIETY:
+Allow subtle variation in expression, maturity, build, asymmetry, minor
+markings, surface wear, coloration intensity, and personality while
+remaining the same synthetic species.
+
+FLEXIBLE FRAMING:
+Square portrait-bust suitable for Stellaris species selection.
+Subject generally occupies approximately 80–95% of the vertical frame
+with natural variation. Exact framing depends on anatomy and composition.
+Do not require perfect centering or identical head placement.
+
+==================================================
+MACHINE TRANSPARENCY
+==================================================
+
+True RGBA transparency.
+
+No background, scenery, environment, frame, border, text, logo,
+watermark, or surrounding glow.
+
+Clean transparent edges with no white, black, or colored halo.
+
+==================================================
+MACHINE FINAL TEST
+==================================================
+
+The viewer should think:
+
+"That is clearly the same creature, but this species is synthetic."
+
+Not:
+
+"That's an animal wearing robot armor."
+
+Not:
+
+"That's a generic robot shaped like an animal."
+
+Do NOT create a DDS.
+Do NOT modify Stellaris files.
+```
 
 ---
 
 ## 12. Toxoid
 
-**Source heading:** `STELLAR XENO — TOXOID XENOTYPE PORTRAIT GENERATION — 11/12`  
-**Source footer:** `11/12 — Toxoid`  
-**Status:** DOCUMENTED — image-generation prompt only  
-
-**Pipeline:** Toxoid is **not** in the interactive Portrait Creator selector and is **not** registered by the current pipeline. Future implementation task.
+**Status:** CREATED (project standard — Universal Toxoid Xenotype)  
+**Pipeline selector:** IMPLEMENTED (Stellaris 4.4.x `toxoids` / `TOX`)  
+**Note:** This prompt was **created for Stellar Xeno** as part of the prompt-system expansion to match the Universal Machine / variety standard. It replaces the earlier export-derived Toxoid body so Machine and Toxoid share one coherent prompt system.
 
 ```text
-STELLAR XENO — TOXOID XENOTYPE PORTRAIT GENERATION — 11/12
+STELLAR XENO — UNIVERSAL TOXOID XENOTYPE
 
-Using the provided photograph as the EXACT identity reference, transform the subject into a finished Stellaris-style TOXOID species portrait.
-This is an artwork-generation task.
-The photograph is the authoritative reference for the subject's identity, recognizable characteristics, expression, and overall visual identity.
-The goal is NOT to simply place the human subject into a Toxoid category.
-The goal is to reinterpret the subject as a believable Stellaris Toxoid species while preserving enough recognizable characteristics that the result clearly originates from the supplied person.
+Using the provided creature portrait as the exact biological identity
+reference, reinterpret this creature as a sophisticated Toxoid species
+from the Stellaris universe.
 
-==================================================
+The reference creature determines the species identity and anatomy.
 
-IDENTITY PRESERVATION
+Preserve:
 
-Preserve the recognizable identity of the reference subject wherever compatible with a Toxoid species.
-Preserve important characteristics such as:
-- overall facial identity
-- recognizable eye characteristics
-- approximate face shape and silhouette
-- distinctive expression
-- recognizable coloration
-- hairstyle/color where it can naturally translate into toxic biological coloration, tissue, or surface structures
-- distinctive markings or visual features where appropriate
-- overall personality and presence
-The result should feel like:
-"This person as a Toxoid Stellaris species."
-It should NOT feel like:
-"A random toxic alien."
-Do not create a generic Toxoid character unrelated to the reference.
+- head shape
+- facial proportions
+- eye placement
+- muzzle/beak/mouth
+- ears/horns/antennae
+- body plan
+- silhouette
+- distinctive markings
+- coloration
+- personality
+
+Do not turn the creature into a generic monster.
+
+The result should look like the same species evolved to survive an
+extremely toxic, chemically hostile alien environment.
 
 ==================================================
-
-TOXOID TRANSFORMATION
-
-Transform the subject's physical characteristics so the result is unmistakably a Toxoid Stellaris species.
-The transformation should affect the appropriate biological characteristics, including:
-- unusual mutated or chemically adapted head structure
-- distinctive alien facial anatomy
-- unusual but biologically coherent eyes
-- toxic-adapted skin or outer biological surfaces
-- chemically altered or mutated tissue structures
-- unusual organic growths or biological adaptations where appropriate
-- toxic coloration and patterning
-- appropriate neck and chest anatomy
-- coherent Toxoid proportions
-The design should communicate that this species has evolved or adapted to a hostile, chemically dangerous environment.
-Possible visual characteristics may include:
-- corrosive-looking biological textures
-- unusual skin or tissue coloration
-- asymmetrical biological structures
-- specialized breathing or sensory structures
-- protective biological surfaces
-- subtle mutation-like features
-- toxic glands or organic structures where appropriate
-These characteristics must remain biologically coherent and integrated into the creature.
-Do not simply cover a human in green slime.
-Do not simply add mutations to a human face.
-Do not create a human wearing a hazardous-material suit.
-Do not create a costume.
-Do not create a mascot.
-Do not create a cartoon monster.
-Do not create a generic radioactive alien unrelated to the reference.
-The subject should appear to naturally belong to an intelligent, spacefaring Toxoid species.
-The exact toxic and mutated characteristics should be artistically interpreted while remaining grounded in the reference subject.
-The result should feel like a species that has genuinely adapted to toxic or chemically hostile environments rather than a healthy species that has merely been painted green.
-
+CORE TOXOID TRANSFORMATION
 ==================================================
 
-STELLARIS ART STYLE
+Reinterpret the creature as an organism adapted to:
 
-Render the result as a realistic Stellaris species portrait.
-Target:
-- realistic sci-fi digital painting
-- detailed organic surface rendering
-- believable mutated biology
-- naturalistic alien anatomy
-- strong three-dimensional form
-- realistic eyes
-- detailed facial structure
-- subtle toxic biological details
-- soft directional lighting
-- subtle rim lighting
-- slightly desaturated but rich colors
-- serious/intelligent expression
-- polished Paradox-style species portrait presentation
-The result should look like an official Stellaris species portrait rather than fan-art pasted into the game.
-Avoid:
-- anime
-- cartoon
-- cel shading
-- exaggerated fantasy art
-- mascot design
-- comedic expression
-- plastic-looking biological surfaces
-- photographic cutout appearance
-- visible costume elements
-- human body with superficial toxic features
-- excessive glowing effects
-- generic radioactive monster appearance
+- toxic atmospheres
+- corrosive environments
+- chemical contamination
+- mutagenic substances
+- industrial pollution
+- poisonous ecosystems
+- hazardous biological environments
 
-==================================================
+The creature should appear biologically altered and environmentally
+adapted rather than simply covered in slime.
 
-PORTRAIT COMPOSITION
+Its anatomy should feel like the result of generations of survival in a
+hostile toxic ecosystem.
 
-Use the established Stellar Xeno portrait framing.
-The final portrait must be:
-- square
-- portrait-bust composition
-- subject facing generally toward the viewer
-- head in the upper-middle portion
-- upper chest visible
-- Toxoid chest/body continuing to the bottom edge
-- small transparent margin above the head
-- approximately 91–92% vertical subject occupancy
-The subject should occupy approximately the same visual scale as the existing Stellar Xeno portraits.
-Do not leave a large empty area above the head.
-Do not leave transparent space beneath the chest.
-The lower chest/body should naturally continue beyond the bottom edge of the portrait.
-The photograph is the identity reference.
-It is NOT the composition reference.
+Introduce appropriate signs of:
+
+- mutation
+- abnormal growth
+- hardened tissue
+- chemical-resistant skin
+- exposed biological structures
+- unusual coloration
+- asymmetry
+- protective membranes
+- toxic glands
+- specialized breathing organs
+- chemical filtration structures
+- corrosive secretions
+- biological containment adaptations
+
+Do not use all of these simultaneously.
+
+Choose adaptations that make anatomical sense for the reference creature.
 
 ==================================================
-
-TRANSPARENCY
-
-The final image must have genuine RGBA transparency.
-The subject must remain opaque.
-Everything outside the subject must be transparent.
-Do NOT include:
-- photographic background
-- room
-- landscape
-- furniture
-- people
-- objects
-- sky
-- scenery
-- space
-- stars
-- planets
-- toxic clouds
-- smoke
-- floating particles
-- environmental chemicals
-- UI
-- frame
-- border
-Do not replace the background with white, black, gray, or another color.
-The surrounding pixels must contain real transparency.
-Toxic characteristics must be part of the subject itself, not environmental effects surrounding the subject.
-
+TOXOID VISUAL LANGUAGE
 ==================================================
 
-TOXIC BIOLOGICAL EDGE QUALITY
+The design should fit the visual language of Stellaris Toxoids:
 
-Preserve natural biological detail around:
-- head
-- cheeks
-- unusual growths
-- sensory structures
-- neck
-- shoulders
-- chest
-Fine biological structures should transition naturally into transparency.
-Avoid:
-- white halos
-- black halos
-- green halos
-- colored fringes
-- artificial glow
-- hard cutout edges
-- background contamination
-- clipped biological structures
-The silhouette should look naturally integrated rather than digitally clipped.
-Do not aggressively erase fine biological detail simply to create a perfectly hard silhouette.
+grotesque but intelligent
+strange but believable
+mutated but functional
+industrial but biological
+hazardous but sophisticated
+
+The creature should feel like an organism adapted to an environment that
+would be inhospitable to normal life.
+
+Possible visual elements include:
+
+- toxic membranes
+- translucent tissue
+- chemical sacs
+- swollen biological structures
+- hardened plates
+- abnormal glands
+- exposed veins or tubes
+- respirator structures
+- filtration organs
+- breathing apparatus
+- protective masks
+- containment collars
+- hoses and tubes
+- salvaged industrial components
+- crude functional protective equipment
+- worn environmental gear
+
+Do not use all of them.
+
+Select only elements that make biological and anatomical sense.
 
 ==================================================
+BIOLOGY FIRST
+==================================================
 
-LIGHTING
+The creature remains an organism.
 
-Use lighting appropriate for a Stellaris portrait displayed directly over the game's interface.
+Do not turn it into a robot.
+Do not turn it into a cyborg by default.
+Do not cover the entire body in armor.
+Do not replace the anatomy with machinery.
+
+Biology must remain visually dominant.
+
+Equipment, when appropriate, should support, contain, filter, protect,
+or exploit the creature's biology.
+
+==================================================
+TOXOID SURFACE DETAIL
+==================================================
+
+Keep biological surface characteristics primarily as TEXTURE rather than
+excessive 3D geometry.
+
 Use:
-- soft directional lighting
-- realistic facial shading
-- natural highlights
-- subtle rim lighting
-- realistic eye reflections
-- dimensional biological-surface shading
-- subtle variation across mutated and toxic-adapted tissues
-The rim lighting should separate the subject from the transparent background without becoming a visible glow.
-Any unusual coloration or biological luminescence should remain subtle and integrated into the organism rather than becoming an environmental effect.
+
+- subtle surface texture
+- shallow relief
+- material variation
+- pores
+- scales
+- wrinkles
+- scars
+- chemical staining
+- discoloration
+- wetness
+- restrained biological patterning
+
+Avoid:
+
+- giant fur masses
+- long individual hairs
+- excessive tentacles
+- huge slime strands
+- excessive dripping goo
+- giant biological growths
+- exaggerated spikes
+- cartoon mutations
+
+The silhouette should remain clean enough for a Stellaris species portrait.
 
 ==================================================
-
-COLOR
-
-Preserve recognizable colors from the reference photograph where they can naturally translate into Toxoid coloration.
-Translate human characteristics into biologically appropriate toxic-adapted features rather than simply copying them literally.
-For example:
-- hair color may influence biological surface coloration
-- eye color should remain recognizable where appropriate
-- distinctive facial coloration may become toxic-adapted skin coloration
-- recognizable markings may become biological pigmentation patterns
-- natural skin tones may influence the species' base coloration where appropriate
-Toxoid coloration may include unusual biological colors such as muted greens, yellows, purples, blues, browns, or other chemically adapted tones where appropriate.
-Do not arbitrarily replace the subject's recognizable colors with unrelated colors.
-Avoid making the entire subject uniformly neon green.
-The result should feel like a naturally evolved toxic organism rather than a glowing radioactive character.
-
+TOXOID COLOR
 ==================================================
 
-IMPORTANT IDENTITY / TRANSFORMATION BALANCE
+Preserve the reference creature's recognizable coloration.
 
-This is the most important part of the test.
-The result must be BOTH:
-- recognizably derived from the supplied person
-- unmistakably a Toxoid Stellaris species
-Do not sacrifice the Toxoid transformation just to preserve a human face.
-Do not sacrifice the subject's identity just to create a generic toxic alien.
-The target is a believable evolutionary/species reinterpretation of the specific reference subject.
-The subject should look like the same individual translated into a believable intelligent Toxoid species.
+Possible toxic accents include:
+
+- sickly yellow
+- chemical green
+- poisonous teal
+- cyan
+- toxic turquoise
+- acidic orange
+- rust
+- bruised purple
+- diseased blue
+- deep brown
+- industrial gray
+- dirty ivory
+
+Toxic colors should remain secondary accents.
+
+Do not make every Toxoid neon green.
 
 ==================================================
+TOXOID BIOLOGY
+==================================================
 
-TECHNICAL TARGET
+Where appropriate introduce:
 
-Generate the artwork at high resolution for later Stellar Xeno processing.
-Output should be:
-- square
-- high resolution
-- suitable for genuine RGBA transparency
-- isolated subject
-- no background
-- no text
-- no logo
-- no watermark
-- no border
-- no frame
-- no UI
+- specialized eyes
+- secondary eyelids
+- protective membranes
+- filtration organs
+- chemical-resistant skin
+- toxic glands
+- venom sacs
+- modified respiratory structures
+- unusual mouths
+- reinforced teeth
+- hardened claws
+- corrosive secretions
+- glowing chemical organs
+- translucent tissues
+- asymmetrical mutations
+
+These adaptations must appear functional rather than decorative.
+
+Ask visually:
+
+"Why would this organism need this structure to survive?"
+
+==================================================
+TOXOID EQUIPMENT
+==================================================
+
+If equipment is appropriate, use improvised alien industrial equipment:
+
+- battered respirators
+- sealed collars
+- pressure hoses
+- chemical tanks
+- filtration systems
+- protective masks
+- environmental suits
+- crude containment systems
+- scavenged machinery
+- industrial plating
+- worn metal
+- rubberized components
+- dirty tubing
+- small warning lights
+
+Equipment should appear:
+
+- used
+- functional
+- industrial
+- patched together
+- purpose-built
+
+Avoid sleek futuristic armor.
+Avoid excessive machinery.
+
+==================================================
+STELLARIS TOXOID AESTHETIC
+==================================================
+
+The finished creature should communicate:
+
+"This creature lives somewhere that would kill you."
+
+It should feel:
+
+- alien
+- mutated
+- toxic
+- resilient
+- strange
+- slightly grotesque
+- intelligent
+- functional
+- environmentally adapted
+- industrial
+- darkly whimsical
+
+Avoid:
+
+- generic horror
+- fantasy monsters
+- zombies
+- demons
+- generic aliens
+- humanoid mutants unless the reference is humanoid
+- cartoon gross-out design
+
+==================================================
+TOXOID FACE
+==================================================
+
+The face is the most important identity feature.
+
+Preserve:
+
+- eye position
+- eye spacing
+- muzzle/beak
+- mouth
+- cheeks
+- forehead
+- ears
+- horns
+- facial proportions
+- expression
+
+Mutate these features without destroying their identity.
+
+Do not make every Toxoid angry or monstrous.
+
+==================================================
+TOXOID PORTRAIT STYLE
+==================================================
+
+Finished Stellaris species-selection portrait.
+
+Realistic high-detail science-fiction digital artwork.
+
+Sophisticated creature design.
+
+Detailed biological materials.
+
+Controlled surface detail.
+
+Realistic lighting.
+
+Subtle rim lighting.
+
+Strong facial readability.
+
+Professional strategy-game concept art.
+
+Alien but believable.
+
+Not photorealistic wildlife photography.
+Not generic fantasy concept art.
+Not a generic AI monster.
+
+==================================================
+TOXOID COMPOSITION
+==================================================
+
+==================================================
+UNIVERSAL COMPOSITION VARIETY
+==================================================
+
+Consistent art direction, variable individual composition.
+Same species identity + different individual portrait composition.
+
+Allow natural variation in head/body orientation, head tilt, gaze,
+posture, camera angle, crop distance, torso exposure, horizontal and
+vertical placement, subject scale, and asymmetry.
+
+Possible compositions include mostly frontal, subtle or stronger 3/4,
+slight side profile, body angled with head toward viewer, subtle head
+tilt, subject slightly off-center, closer facial crop, or slightly
+wider bust. These are possibilities, not a rotation schedule.
+
+ANTI-TEMPLATE:
+Do not force every Toxoid portrait into the same centered frontal
+composition. Do not stage mugshot / identification-photo compositions.
+
+NATURAL VARIETY ONLY:
+Avoid extreme camera angles, perspective distortion, cropped faces,
+awkward anatomy, identity-obscuring poses, excessive profile, extreme
+zoom, and excessive negative space.
+
+INDIVIDUAL VARIETY:
+Allow subtle variation in expression, maturity, build, asymmetry, minor
+markings, scars, toxic accent intensity, and personality while remaining
+the same species.
+
+FLEXIBLE FRAMING:
+Square portrait-bust suitable for Stellaris species selection.
+Subject generally occupies approximately 80–95% of the vertical frame
+with natural variation. Exact framing depends on anatomy and composition.
+Do not require perfect centering or identical head placement.
+
+==================================================
+TOXOID TRANSPARENCY
+==================================================
+
+True RGBA transparency.
+
+No scenery, toxic planet, laboratory, space, stars, floor, environmental
+background, border, frame, text, logo, watermark, or surrounding glow.
+
+Clean transparent edges with no white, black, or colored halo.
+
+==================================================
+TOXOID FINAL TEST
+==================================================
+
+The result should make the viewer think:
+
+"That's clearly the same creature, but it evolved on a toxic world."
+
+Not:
+
+"That's just a gross monster."
+
+Not:
+
+"That's a normal animal covered in slime."
+
+Not:
+
+"That's a generic alien."
+
+Make the toxicity feel like evolutionary history rather than a visual
+effect.
+
 Do NOT create a DDS.
 Do NOT modify Stellaris files.
-This image will later be placed into the Stellar Xeno ImgHERE/ intake workflow.
-
-==================================================
-
-FINAL VALIDATION
-
-Before finishing, verify:
-- The subject is clearly derived from the reference photograph.
-- The subject is unmistakably Toxoid.
-- The Toxoid biology is coherent.
-- Toxic/adaptive characteristics appear biologically integrated.
-- The subject does not simply look like a human covered in toxic effects.
-- The face/identity remains recognizable.
-- The result looks like a Stellaris species portrait.
-- The portrait is square.
-- The subject occupies approximately 91–92% of the vertical canvas.
-- There is only a small margin above the head.
-- The chest/body reaches the bottom edge.
-- There is no background.
-- The subject is isolated cleanly.
-- Fine biological structures are preserved.
-- The edges contain natural biological detail.
-- There are no halos or environmental fringes.
-- There are no environmental toxic clouds or particles.
-- There is no text, UI, frame, or watermark.
-The final result should look like:
-"The exact person from the supplied photograph, evolutionarily and artistically reimagined as a believable intelligent Toxoid species from Stellaris, professionally painted as a finished species portrait and framed for the existing Stellar Xeno portrait pipeline."
-11/12 — Toxoid
 ```
 
 ---
-
 ## Future work (documentation only)
 
-1. Obtain and document the missing **Mammalian** and **Machine** xenotype generation prompts from authoritative source material (do not invent).
-2. Add **Toxoid** to the interactive xenotype selector and registration path.
-3. Leader portrait variants.
-4. Changing xenotype on an existing registered portrait.
-5. Broader Stellaris UI-context verification.
-6. Workshop packaging.
-7. Multiple xenotype versions of the same reference subject.
+1. Obtain and document the missing **Mammalian** human→xenotype generation prompt from authoritative source material (or author a Universal Mammalian prompt in the same style as Machine/Toxoid).
+2. Keep prompt library and [portrait-variety-standard.md](portrait-variety-standard.md) aligned when xenotype transforms change.
+3. Dog-development framing history in [portrait-prompts.md](portrait-prompts.md) remains historical; prefer this library + variety standard for new generation work.
 
+---
+
+## Validation checklist (prompt system)
+
+- [x] Machine prompt **CREATED** (did not exist previously in this library as a full body)
+- [x] Toxoid prompt **CREATED** to Universal Toxoid standard (coherent with Machine + variety system)
+- [x] Universal composition variety applied to documented xenotype prompts
+- [x] Rigid ~91–92% occupancy guidance replaced with flexible ~80–95% framing
+- [x] Universal vs xenotype-specific rules documented in [portrait-variety-standard.md](portrait-variety-standard.md)

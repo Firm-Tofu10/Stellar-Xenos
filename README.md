@@ -63,7 +63,9 @@ Stellaris (mod/stellar_dogos)
 | Image-generation prompt library (xenotype prompts) | **DOCUMENTED** — see [docs/portrait-generation-prompts.md](docs/portrait-generation-prompts.md) |
 | Technical pipeline (intake → DDS → register) | **IMPLEMENTED** / working |
 | Interactive species-type selector | **IMPLEMENTED** (12 types, including Toxoid) |
-| Toxoid generation prompt | **DOCUMENTED** |
+| Machine generation prompt | **CREATED** — Universal Machine Xenotype in prompt library |
+| Toxoid generation prompt | **CREATED** — Universal Toxoid Xenotype in prompt library |
+| Universal portrait variety standard | **DOCUMENTED** — [docs/portrait-variety-standard.md](docs/portrait-variety-standard.md) |
 | Toxoid in Portrait Creator selector / registration | **IMPLEMENTED** (Stellaris 4.4.x `toxoids` / `TOX`) |
 | Canonical PNG naming (`dogNN_<name>_<xeno>_stellaris.png`) | **IMPLEMENTED** |
 | Species creation (Piglet / Oakley / Angus) | **CONFIRMED** on Stellaris **v4.4.6** |
@@ -79,9 +81,9 @@ Full xenotype prompts live here:
 
 **[docs/portrait-generation-prompts.md](docs/portrait-generation-prompts.md)**
 
-Each documented prompt is meant to preserve the reference subject's identity while transforming biology to that Stellaris xenotype (not a generic alien, and not a human with a costume).
+Each documented prompt preserves reference identity, applies a xenotype-specific transform, and follows **consistent art direction, variable individual composition** ([docs/portrait-variety-standard.md](docs/portrait-variety-standard.md)).
 
-**Note:** In the current source export, **Mammalian** and **Machine** generation prompts were **not present** as full prompt bodies. **Toxoid** has a documented generation prompt and is also available in the Portrait Creator selector. See the inventory table in that file.
+**Machine** and **Toxoid** Universal prompts were **created** for this project. **Mammalian** still lacks a Universal human→Mammalian body (dog-development history remains in [docs/portrait-prompts.md](docs/portrait-prompts.md)). See the inventory table in the prompt library.
 
 Older dog-development framing prompts remain in [docs/portrait-prompts.md](docs/portrait-prompts.md).
 

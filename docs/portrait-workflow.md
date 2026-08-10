@@ -262,25 +262,28 @@ Keep source PNGs and game DDS separate.
 
 ## 7. Image composition rules
 
-Based on Piglet and Oakley.
+Based on Piglet and Oakley **in-game species UI** checks, plus the project-wide generation standard.
 
 | Rule | Label |
 |------|--------|
 | Bottom-edge crop works | **CONFIRMED** |
-| ~91–92% vertical fill looks correct in species UI | **CONFIRMED** (empirical) |
+| ~91–92% vertical fill looks correct in species UI | **CONFIRMED** (empirical for early dog portraits) |
 | Small top margin works | **CONFIRMED** |
-| Future portraits should initially target the same proportions | **ASSUMPTION / TARGET** |
+| Generation prompts allow natural composition variety (~80–95% fill) | **DOCUMENTED** — [portrait-variety-standard.md](portrait-variety-standard.md) |
+| Future portraits should remain readable Stellaris busts without a fixed mugshot template | **TARGET** |
 | Whether values should be fully automated | **NEEDS VERIFICATION** |
 | Whether all Stellaris portrait contexts need identical framing | **NEEDS VERIFICATION** |
 
-Target composition:
+**Generation vs game UI:** Image-generation prompts use **flexible framing** (~80–95% vertical occupancy with natural variation) and **anti-template** composition variety. Early empirical UI preference (~91–92%) remains a useful in-game readability reference, not a rigid generation lock.
 
-- ~91–92% vertical subject fill
-- Small transparent margin above ears
+Target composition (readable bust; not a fixed template):
+
+- Generally ~80–95% vertical subject fill with natural variation
+- Modest transparent margin above ears (exact margin may vary)
 - Large dominant head / bust
-- Chest/body reaches bottom edge
-- Little/no transparent space under the dog
-- Subject must not float mid-canvas
+- For a standard bust crop, chest/body often reaches bottom edge (torso exposure may vary)
+- Avoid large unused transparent bands / floating mid-canvas emptiness
+- Natural composition variety: see [portrait-variety-standard.md](portrait-variety-standard.md)
 
 ---
 

@@ -13,7 +13,9 @@ This document is the overall goals + current-state record. Detailed pipelines li
 |-----|-----------|
 | [README.md](README.md) | User-facing install / usage |
 | [docs/portrait-workflow.md](docs/portrait-workflow.md) | Image → DDS → Stellaris |
-| [docs/portrait-prompts.md](docs/portrait-prompts.md) | AI image-generation prompts |
+| [docs/portrait-prompts.md](docs/portrait-prompts.md) | Dog-development AI image-generation prompts (historical) |
+| [docs/portrait-generation-prompts.md](docs/portrait-generation-prompts.md) | Authoritative xenotype prompt library |
+| [docs/portrait-variety-standard.md](docs/portrait-variety-standard.md) | Universal composition / identity / transparency variety standard |
 | [docs/portrait-testing.md](docs/portrait-testing.md) | In-game compatibility matrix |
 | [docs/development-roadmap.md](docs/development-roadmap.md) | Phases and next tasks |
 | [docs/ai-development-workflow.md](docs/ai-development-workflow.md) | Repomix → ChatGPT → Cursor process |
@@ -73,7 +75,7 @@ These (and later dog fixtures) remain important regression/development portraits
 | Phase 6 end-to-end pipeline | **IMPLEMENTED** (`tools/portrait-pipeline.ps1`) |
 | Phase 7 xenotype selection | **IMPLEMENTED** (`tools/portrait-xenotypes.ps1`) — 12 types including Toxoid; Mam/Avi/Rep/Fun file paths **CONFIRMED**; in-game **NEEDS VERIFICATION** |
 | Canonical PNG naming (`dogNN_<name>_<xeno>_stellaris.png`) | **IMPLEMENTED** — xenotype abbreviation in source filename only; DDS/ID unchanged |
-| Xenotype image-generation prompt library | **DOCUMENTED** ([docs/portrait-generation-prompts.md](docs/portrait-generation-prompts.md)); Mammalian & Machine bodies **ABSENT** from source export; Toxoid prompt **DOCUMENTED**; Toxoid selector/registration **IMPLEMENTED** |
+| Xenotype image-generation prompt library | **DOCUMENTED** ([docs/portrait-generation-prompts.md](docs/portrait-generation-prompts.md)); Machine & Toxoid Universal prompts **CREATED**; variety standard [docs/portrait-variety-standard.md](docs/portrait-variety-standard.md); Mammalian Universal body still **ABSENT**; Toxoid selector/registration **IMPLEMENTED** |
 | Full UI compatibility (leaders, council, diplomacy, …) | **NEEDS VERIFICATION** |
 | Steam Workshop release | **PACKAGE READY** — structural prep done; human in-game test + Steam upload remain ([docs/workshop-release.md](docs/workshop-release.md)) |
 

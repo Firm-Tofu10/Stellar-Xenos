@@ -1,8 +1,9 @@
 # Stellar Xeno — Portrait Generation Prompts
 
-> **Xenotype prompt library (Phase 8):**  
-> For the full set of **xenotype-specific** image-generation prompts extracted from the ChatGPT source export, see **[portrait-generation-prompts.md](portrait-generation-prompts.md)**.  
-> Those prompts are for an external image model (not pipeline commands). **Toxoid** is implemented in the Portrait Creator selector and registration path (same as the other xenotypes).
+> **Xenotype prompt library:**  
+> For the authoritative **xenotype-specific** image-generation prompts (including **CREATED** Universal Machine and Toxoid), see **[portrait-generation-prompts.md](portrait-generation-prompts.md)**.  
+> Project-wide composition / identity rules: **[portrait-variety-standard.md](portrait-variety-standard.md)** — *consistent art direction, variable individual composition*.  
+> Those prompts are for an external image model (not pipeline commands).
 
 Successful **dog-development** image-generation prompts and related refinement instructions developed during early Stellar Xeno sessions are preserved below.
 
@@ -30,6 +31,9 @@ The generated image should transform the dog into a realistic Stellaris-style ma
 - Detailed fur
 - Natural anatomy
 - Stellaris-compatible visual style
+- **Consistent art direction, variable individual composition** (see [portrait-variety-standard.md](portrait-variety-standard.md))
+- Natural composition variety (not a fixed centered-frontal template; not extreme random cameras)
+- Subtle individual variety subordinate to the reference dog
 - No cartoon / anime styling
 - No text, logos, UI, watermark, or decorative frame
 
@@ -65,21 +69,19 @@ STYLE:
 - No cartoon styling.
 - No outlines.
 
-CRITICAL COMPOSITION REQUIREMENT:
+COMPOSITION (flexible framing + natural variety):
 
-Match the vertical framing of the existing vanilla Stellaris mammalian portraits.
+Use a Stellaris mammalian species portrait-bust crop with natural individual variation.
 
-- Piglet should fill substantially more of the portrait vertically.
-- The head should occupy the upper-middle portion of the image.
-- The chest and body fur should continue all the way to the BOTTOM EDGE of the image.
-- The lower chest/body should be intentionally cropped by the bottom edge.
-- There should be LITTLE TO NO TRANSPARENT SPACE underneath Piglet.
-- Do NOT leave a large transparent margin beneath the chest.
-- The bottom of Piglet's fur should extend beyond the image boundary, exactly as a portrait subject would be cropped by the portrait frame.
-- Keep the ears and top of the head comfortably inside the image.
-- Keep a small amount of breathing room above the ears.
-- Do not make the dog appear to be floating in the center of a square.
-- The subject should occupy approximately 85–95% of the available vertical portrait area.
+- Piglet should generally fill most of the portrait vertically (~80–95% with natural variation).
+- Head placement may vary naturally in the upper portion of the frame (not a fixed template lock).
+- Facing may be mostly frontal, subtle 3/4, slight head tilt, or body angled with head toward viewer — appropriate to the reference, not a roster rotation schedule.
+- Avoid repeating identical centered-frontal mugshot compositions across dogs.
+- Avoid extreme cameras, cropped faces, and identity-obscuring poses.
+- For a standard bust crop, chest/body fur may continue to the BOTTOM EDGE; exact torso exposure may vary.
+- Do not leave a large empty void that makes the subject look tiny.
+- Keep ears/head readable inside the frame with a modest margin that may vary with composition.
+- Do not make the dog appear to float in excessive negative space.
 
 The important visual relationship is:
 
@@ -158,22 +160,26 @@ TRANSPARENCY REQUIREMENTS:
 
 ## 3. Stellaris portrait framing requirements
 
+Historical dog-development framing (updated for the Universal Portrait Variety Standard):
+
 ```text
-FRAMING REQUIREMENTS:
-- Small transparent margin above the ears
-- Head in the upper-middle of the canvas
+FRAMING REQUIREMENTS (flexible):
+- Modest transparent margin above the ears (exact margin may vary)
+- Head generally in the upper portion of the canvas (placement may vary naturally)
 - Large dominant head / portrait bust
-- Subject fills approximately 85–95% of vertical space (empirical target ~91–92% for Piglet/Oakley)
-- Chest/body/fur reaches the BOTTOM EDGE
-- Bottom fur is intentionally cropped by the frame
-- Little or no transparent space beneath the dog
-- Dog must not appear to float in the center of the square
+- Subject generally fills approximately 80–95% of vertical space with natural variation
+- For a standard bust crop, chest/body/fur may reach the BOTTOM EDGE (torso exposure may vary)
+- Avoid large unused transparent bands under a bust crop
+- Dog must not appear tiny in excessive negative space
+- Allow natural composition variety (subtle 3/4, head tilt, slight off-center, etc.)
+- Anti-template: do not repeat identical centered-frontal mugshot compositions
+- See portrait-variety-standard.md
 ```
 
-Visual stack:
+Visual stack (typical bust crop — not a rigid lock for every portrait):
 
 ```text
-TOP: small transparent space
+TOP: modest transparent space
   ↓
 ears / head
   ↓
@@ -183,10 +189,10 @@ neck / chest
   ↓
 fur continues
   ↓
-BOTTOM EDGE — fur cropped by the frame
+BOTTOM EDGE — fur often cropped by the frame
 ```
 
-See also certainty labels in [portrait-workflow.md](portrait-workflow.md) § composition rules.
+See also [portrait-variety-standard.md](portrait-variety-standard.md) and certainty labels in [portrait-workflow.md](portrait-workflow.md) § composition rules.
 
 ---
 
@@ -301,13 +307,15 @@ STYLE:
 - No cartoon styling.
 - No outlines.
 
-CRITICAL COMPOSITION REQUIREMENT:
-- Head in the upper-middle.
-- Subject occupies approximately 85–95% of vertical portrait area (target ~91–92% like Oakley/Piglet).
-- Chest and body fur continue to the BOTTOM EDGE and are cropped by the frame.
-- LITTLE TO NO transparent space underneath.
-- Small breathing room above the ears.
-- Do not float the dog in the center of the square.
+COMPOSITION (flexible framing + natural variety):
+- Head generally in the upper portion (placement may vary naturally).
+- Subject generally occupies approximately 80–95% of vertical portrait area with natural variation.
+- Facing/crop may vary naturally (not locked to centered frontal).
+- For a standard bust crop, chest and body fur may continue to the BOTTOM EDGE; torso exposure may vary.
+- Avoid large unused transparent bands under a bust crop.
+- Modest breathing room above the ears (exact margin may vary).
+- Do not float the dog in excessive negative space.
+- Anti-template: do not repeat identical mugshot compositions across individuals.
 
 TRANSPARENCY:
 - Angus remains completely opaque.
@@ -354,14 +362,16 @@ STYLE:
 - No cartoon styling.
 - No outlines.
 
-CRITICAL COMPOSITION REQUIREMENT:
-- Match vertical framing of successful Stellar Xeno portraits (Oakley/Piglet).
-- Head in the upper-middle.
-- Fill approximately 85–95% of vertical space (aim ~91–92%).
-- Chest/body fur to the BOTTOM EDGE — intentionally cropped.
-- LITTLE TO NO transparent space underneath.
-- Small space above the ears.
-- Do not float the subject in the center of the square.
+COMPOSITION (flexible framing + natural variety):
+- Readable Stellaris mammalian portrait-bust scale (~80–95% vertical occupancy with natural variation).
+- Head generally in the upper portion (exact placement may vary).
+- Allow natural composition variety (subtle 3/4, head tilt, slight off-center, etc.) — not a roster rotation schedule.
+- For a standard bust crop, chest/body fur may reach the BOTTOM EDGE; torso exposure may vary.
+- Avoid large unused transparent bands under a bust crop.
+- Modest space above the ears (exact margin may vary).
+- Do not float the subject in excessive negative space.
+- Anti-template: do not repeat identical centered-frontal mugshot compositions.
+- See portrait-variety-standard.md.
 
 TRANSPARENCY:
 - [DOG_NAME] completely opaque.

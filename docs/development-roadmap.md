@@ -55,7 +55,7 @@ Done:
 - Oakley working (`sd_dog_02`) — gold-standard visual reference
 - Angus working (`sd_dog_angus`) — regenerated ImgHERE art wired; framing accepted for now
 - Transparency / alpha rules established
-- Scale / framing empirical targets established (~91–92% vertical fill)
+- Scale / framing: generation prompts use flexible ~80–95% occupancy + natural composition variety ([portrait-variety-standard.md](portrait-variety-standard.md)); early empirical species-UI preference ~91–92% remains a readability reference, not a rigid generation lock
 - Image-generation prompts preserved ([portrait-prompts.md](portrait-prompts.md))
 - Manual DDS pipeline established
 - ImgHERE staging convention established
