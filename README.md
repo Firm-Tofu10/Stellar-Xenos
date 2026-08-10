@@ -2,7 +2,7 @@
 
 Stellaris **4.4.x** mod that adds real-world dogs as selectable **Mammalian** species portraits.
 
-Current dogs: **Piglet**, **Oakley**, **Angus**.
+Current in-game dogs: **Piglet**, **Oakley**, **Angus**.
 
 ---
 
@@ -11,7 +11,9 @@ Current dogs: **Piglet**, **Oakley**, **Angus**.
 | Item | State |
 |------|--------|
 | Species creation portraits | Working (static `texturefile` path confirmed on Pegasus **v4.4.6**) |
-| Automated portrait importer | Not built yet |
+| Phase 3.1 portrait intake | Implemented (`tools/portrait-intake.ps1`) |
+| Phase 4 DDS generation | Implemented (`tools/portrait-dds.ps1`) |
+| Phase 5 Stellaris registration | Not implemented |
 | Full UI compatibility (leaders, diplomacy, …) | Not fully verified — see [docs/portrait-testing.md](docs/portrait-testing.md) |
 | Steam Workshop | Not ready |
 
@@ -39,21 +41,45 @@ Do **not** modify the vanilla Stellaris installation.
 
 ---
 
-## Adding a new dog today (manual)
+## Adding a Dog Portrait
 
-Until intake tooling exists, developers may still prepare assets by hand using the pipeline in [docs/portrait-workflow.md](docs/portrait-workflow.md). You do **not** need to invent numbers yourself once Phase 3.1 exists — see below.
+1. Place the new dog image into `ImgHERE/`.
+2. Open PowerShell in the Stellar Dogos repository.
+3. Run:
 
-`ImgHERE/` is the intake folder for finished portraits (and future candidate drops). Raw reference photos that are not finished portraits should not be treated as intake.
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\portrait-intake.ps1
+```
 
----
+4. The tool will detect the new image and ask:
 
-## Future user workflow (target)
+```text
+What is this dog's name?
+```
 
-**Phase 3.1 intake (designed, not built):** Drop a dog image into `ImgHERE` → enter the dog's name when prompted → the tool handles naming and numbering (`dog##_<name>_stellaris.png`) and prepares `assets/source/`.
+5. Enter the dog's name.
 
-**Later (full importer):** DDS generation, Stellaris registration, then launch Stellaris and test.
+6. The tool automatically:
 
-Details: [docs/development-roadmap.md](docs/development-roadmap.md) Phase 3.1, [docs/portrait-workflow.md](docs/portrait-workflow.md).
+- assigns the next dog number
+- creates the canonical filename
+- prepares the portrait source PNG
+- copies the prepared source to `assets/source/`
+- removes the temporary input image after successful processing
+
+7. The tool stops.
+
+### DDS generation (Phase 4)
+
+After intake, convert the canonical source PNG to a game DDS:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\portrait-dds.ps1 -Source assets\source\dog05_bruce_stellaris.png
+```
+
+This writes `sd_dog_<name>.dds` under the experiment portrait models folder. It does **not** register the portrait in Stellaris.
+
+Stellaris registration is handled by a later stage of the project (Phase 5).
 
 ---
 

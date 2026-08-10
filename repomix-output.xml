@@ -96,6 +96,7 @@ experiment/
     README.md
   sd_static_portrait_test.mod.example
 ImgHERE/
+  ChatGPT Image Aug 9, 2026, 08_00_43 PM.png
   dog01_piglet_stellaris.png
   dog02_oakley_stellaris.png
   dog03_angus_stellaris.png
@@ -237,12 +238,13 @@ Certainty labels: **CONFIRMED** / **ASSUMPTION** / **TARGET** / **NEEDS VERIFICA
 | Static `texturefile` portraits in 4.4.6 | **CONFIRMED** (species creation) |
 | Three dogs (Piglet, Oakley, Angus) | Working in species creation |
 | Automated portrait importer | **NOT BUILT** |
+| Phase 3.1 source intake (interactive naming) | **DESIGNED** — not implemented |
 | Full UI portrait compatibility | **NEEDS VERIFICATION** |
 | Steam Workshop release | **NOT READY** |
 
-**Immediate next task:** Phase 2 — Portrait Context Compatibility Audit (Oakley).
+**Immediate next task (game):** Phase 2 — Portrait Context Compatibility Audit (Oakley).
 
-Do **not** start the importer until Phase 2 results are documented.
+**Design status:** Phase 3.1 interactive naming + source preparation is documented; do **not** implement until explicitly tasked. Full importer (DDS/registration) remains later.
 
 ---
 
@@ -308,17 +310,93 @@ Only after this audit should importer architecture be finalized.
 
 ## Phase 3 — Portrait Importer Design
 
-**STATUS: PLANNED**
+**STATUS: IN PROGRESS (design)**
 
-Before coding:
+Before full implementation:
 
-- Fresh Repomix snapshot
+- Fresh Repomix snapshot when coding begins
 - ChatGPT reconstructs repository
 - Determine exact implementation files
-- Define importer architecture
+- Define importer architecture (phased: 3.1 source prep → later DDS/registration)
 - Define validation contracts
 - Define failure behavior
-- Define naming rules (`dogNN_<name>_stellaris.png`, portrait IDs, DDS names)
+- Define naming rules (canonical `dogNN_<name>_stellaris.png` is **internal**; users are not required to type it)
+
+### Phase 3.1 — Source intake & preparation (design)
+
+**STATUS: DESIGNED — not implemented yet**
+
+**Intended user workflow:**
+
+```text
+Drop a dog image into ImgHERE
+  → enter the dog's name when prompted
+  → tool assigns the next available dog number
+  → tool prepares the canonical source image
+```
+
+Phase 3.1 ends at prepared canonical PNG sources. It does **not** create DDS, portrait IDs, or registration edits.
+
+#### Interactive naming
+
+Users must **not** be required to manually invent `dog04_…` filenames.
+
+1. User places a supported image in `ImgHERE/` (any reasonable name; PNG/JPG/JPEG/WEBP at minimum).
+2. Tool detects a new supported candidate (not already a canonical asset).
+3. Tool asks in the console: `What is this dog's name?`
+4. User enters the authoritative display name (e.g. `Liberty`).
+5. Tool normalizes the name **only** as needed for a safe filename (`Liberty` → `liberty`).
+6. Empty/invalid names: ask again — do not invent a name.
+7. Tool chooses the next free dog number from existing canonical sources (see below).
+8. Tool generates canonical filename: `dog##_<name>_stellaris.png`.
+9. Interactive naming completes **before** any irreversible file write that could overwrite assets.
+10. Tool validates/prepares the image (PNG, square, RGBA, real alpha, framing checks — no artistic regen).
+11. Canonical prepared source is written to:
+    - `ImgHERE/dog##_<name>_stellaris.png`
+    - `assets/source/dog##_<name>_stellaris.png`
+12. **Stop.** No DDS / portrait ID / set / category / vanilla changes.
+
+Example:
+
+```text
+ImgHERE/my_dog.png
+  → user enters "Liberty"
+  → ImgHERE/dog04_liberty_stellaris.png
+  → assets/source/dog04_liberty_stellaris.png
+```
+
+#### Automatic dog numbering
+
+- Scan existing canonical Stellar Dogos source assets (e.g. `assets/source/dog##_…_stellaris.png` and matching ImgHERE canons).
+- Next number = lowest unused integer after the highest present (today: dog01–dog03 → next is **dog04**).
+- Do **not** reuse numbers, renumber existing dogs, or touch Piglet / Oakley / Angus.
+
+#### Already-canonical files
+
+If a file is already named `dog##_<name>_stellaris.png`:
+
+- Do **not** ask for the name again
+- Treat as an explicitly named canonical asset
+- Validate/prepare normally
+- Do **not** assign another number or create duplicate canons
+
+#### Conflicts & safety
+
+- If the normalized canonical filename already exists → **stop and explain**; never silently overwrite
+- Do not overwrite existing prepared sources, DDS, definitions, or sets
+- Existing working dogs are regression fixtures and must remain untouched
+- Distinguish: canonical assets / new candidates / unsupported files / raw-reference images to ignore
+- If unsure whether a file is a new portrait → **ask the user**; do not guess
+- Do not process unrelated files
+
+#### Explicitly outside Phase 3.1
+
+- PNG → DDS conversion
+- DDS → portrait definition
+- Portrait definition → portrait set / category registration
+- In-game testing claims for the new dog
+
+Those remain later phases (Phase 4+).
 
 ---
 
@@ -326,10 +404,10 @@ Before coding:
 
 **STATUS: PLANNED**
 
-Implement:
+Implement the full pipeline **after** Phase 3.1 design/tooling is proven. Phase 4 builds on Phase 3.1 intake and then:
 
-1. Detect new files in `ImgHERE/`
-2. Identify the portrait / assign stable internal ID
+1. Detect new files in `ImgHERE/` (with interactive naming from 3.1)
+2. Identify the portrait / assign stable internal portrait ID
 3. Preserve existing portraits (no silent rebuilds)
 4. Validate source image
 5. Validate / produce alpha transparency
@@ -337,7 +415,7 @@ Implement:
 7. Apply established framing/scale rules (**TARGET** — after Phase 2)
 8. Generate 256×256 RGBA DDS
 9. Create/update portrait definition
-10. Add portrait to portrait set
+10. Add portrait to the portrait set
 11. Validate registration
 12. Verify existing portraits unchanged (hashes)
 13. Produce a clear completion report
@@ -346,7 +424,7 @@ Must **not**:
 
 - Automatically modify unrelated portraits
 - Modify vanilla Stellaris
-- Delete originals in `ImgHERE`
+- Delete originals in `ImgHERE` without a defined safe policy
 
 Use backups or safe transactional behavior.
 
@@ -947,6 +1025,33 @@ Also note `error.log` / `game.log` lines mentioning the portrait ID or DDS path 
 These confirmations do **not** close Phase 2.
 </file>
 
+<file path="experiment/sd_static_portrait_test/common/portrait_categories/zzz_sd_static_test_portrait_categories.txt">
+##############################################################
+### SD Static Portrait Test — Mammalian category override
+###
+### VANILLA-VERIFIED: category keys/structure from
+### common/portrait_categories/00_portrait_categories.txt
+###
+### This file REPLACES the vanilla `mammalians` category entry
+### (same key) so we can append one extra set with minimal change.
+### Other categories are intentionally not redefined.
+###
+### Revert method: delete this file from the experiment mod.
+##############################################################
+
+mammalians = {
+	name = MAM
+
+	sets = {
+		mammalians
+		cybernetic_mammalians
+		biogenesis_mammalians
+		psionic_mammalians
+		sd_static_test
+	}
+}
+</file>
+
 <file path="experiment/sd_static_portrait_test/common/portrait_sets/00_sd_static_test_portrait_sets.txt.bak_before_angus">
 ##############################################################
 ### SD Static Portrait Test - portrait set (EXPERIMENT ONLY)
@@ -995,6 +1100,29 @@ sd_static_test = {
 	non_randomized_portraits = {
 		"sd_dog_piglet"
 		"sd_dog_02"
+	}
+}
+</file>
+
+<file path="experiment/sd_static_portrait_test/common/portrait_sets/00_sd_static_test_portrait_sets.txt.bak_magenta">
+##############################################################
+### SD Static Portrait Test — portrait set (EXPERIMENT ONLY)
+###
+### VANILLA-VERIFIED pattern from common/portrait_sets/00_portrait_sets.txt:
+### - species_class = MAM
+### - portraits = { "id" }
+### - non_randomized_portraits so random AI empires avoid this test art
+##############################################################
+
+sd_static_test = {
+	species_class = MAM
+
+	portraits = {
+		"sd_static_test_01"
+	}
+
+	non_randomized_portraits = {
+		"sd_static_test_01"
 	}
 }
 </file>
@@ -1076,6 +1204,56 @@ portraits = {
 		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_02.dds"
 	}
 }
+</file>
+
+<file path="experiment/sd_static_portrait_test/gfx/portraits/portraits/00_sd_static_test_portraits.txt.bak_magenta">
+##############################################################
+### SD Static Portrait Test (EXPERIMENT ONLY)
+###
+### Purpose: verify whether texturefile static species portraits
+### still render in Stellaris 4.4.6.
+###
+### Syntax sources (see PROJECT_PLAN.md):
+### - texturefile ........ EXTERNAL MODDING EXAMPLE (wiki/static portraits)
+### - clothes_selector ... VANILLA key name + "no_texture" selector
+### - attachment_selector  VANILLA key name + "no_texture" selector
+### - greeting_sound ..... VANILLA existing sound id
+##############################################################
+
+portraits = {
+	sd_static_test_01 = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_static_test_01.dds"
+	}
+}
+</file>
+
+<file path="experiment/sd_static_portrait_test/descriptor.mod">
+version="0.0.1"
+tags={
+	"Graphics"
+	"Species"
+}
+name="SD Static Portrait Test"
+supported_version="v4.4.*"
+</file>
+
+<file path="experiment/sd_static_portrait_test.mod.example">
+name="SD Static Portrait Test"
+path="C:/Users/bryso/Documents/GitHub/Stellar Dogos/experiment/sd_static_portrait_test"
+supported_version="v4.4.*"
+tags={
+	"Graphics"
+	"Species"
+}
+version="0.0.1"
+</file>
+
+<file path=".gitattributes">
+# Auto detect text files and perform LF normalization
+* text=auto
 </file>
 
 <file path="docs/portrait-workflow.md">
@@ -1202,43 +1380,74 @@ Initial implementation used a raw photo cutout. Regenerated Stellaris-style art 
 
 ## 5. ImgHERE staging
 
-`ImgHERE/` is the human-facing **intake/staging** folder for **finished/generated** portrait artwork.
+`ImgHERE/` is the human-facing **intake/staging** folder for finished/generated portrait artwork (and, for Phase 3.1 tooling, newly dropped candidate images).
 
-Current finished names:
+### Canonical internal filename (pipeline format)
+
+The pipeline’s stable internal name remains:
+
+`dog##_<name>_stellaris.png`
+
+Examples already in use:
 
 - `dog01_piglet_stellaris.png`
 - `dog02_oakley_stellaris.png`
 - `dog03_angus_stellaris.png`
 
+Users are **not** required to invent or type this format. Numbering and canonical renaming are tool responsibilities (Phase 3.1 design).
+
+### Intended Phase 3.1 user flow (**TARGET** — not implemented yet)
+
+```text
+Drop a dog image into ImgHERE
+  → enter the dog's name when prompted
+  → tool assigns the next available dog number
+  → tool prepares the canonical source image
+```
+
+Supported drop formats (minimum design): PNG, JPG/JPEG, WEBP. Preparation converts to canonical PNG source.
+
+```text
+ImgHERE/<any supported image>
+  → console: "What is this dog's name?"
+  → e.g. Liberty → dog04_liberty_stellaris.png
+  → ImgHERE/dog04_liberty_stellaris.png
+  → assets/source/dog04_liberty_stellaris.png
+  → STOP (Phase 3.1)
+```
+
+If a file is **already** named `dog##_<name>_stellaris.png`, do not ask again — validate/prepare that canon only.
+
+Conflicts: if the target canonical name already exists, stop and explain; never overwrite Piglet/Oakley/Angus or other existing canons.
+
+Do not treat every file in `ImgHERE` as a new dog (ignore unsupported / raw-reference files; ask when unsure). Full design: [development-roadmap.md](development-roadmap.md) Phase 3.1.
+
 **Rules:**
 
-- Finished portraits go here for import
-- Original reference photographs belong elsewhere (or are clearly not finished art)
-- Raw Angus JPG `20260418_090607.jpg` is **not** part of portrait ingestion
+- Finished portraits and new candidates go here for intake
+- Raw reference photographs that are not finished portraits should not be auto-ingested (e.g. historical Angus JPG)
 - Do **not** automatically delete originals in `ImgHERE`
 
-Target user flow (**TARGET** — importer not built yet):
-
-1. Generate finished portrait
-2. Drop into `ImgHERE`
-3. Run portrait importer (future)
-4. Tool processes + registers
-5. Launch Stellaris and test
+Later phases (after 3.1) add DDS + Stellaris registration. Full importer UX remains future work.
 
 ---
 
 ## 6. Current manual pipeline (**CONFIRMED** working)
 
+Still valid for developers who prepare canons by hand. Preferred future intake is interactive naming (Section 5).
+
 ```text
 Generated portrait
   ↓
-ImgHERE/
+ImgHERE/   (drop any supported image; tool will name — or use existing canon)
   ↓
-copy to assets/source/  (same stable filename)
+copy / write prepared canon to assets/source/dog##_<name>_stellaris.png
   ↓
 validate alpha
   ↓
 background → alpha only if needed (no art regen)
+  ↓
+── Phase 3.1 ends above; below is later ──
   ↓
 256×256 (preserve alpha; fit without inventing opaque plate)
   ↓
@@ -1257,7 +1466,7 @@ Stellaris
 in-game test
 ```
 
-This is currently **MANUAL**. Next engineering automation is the importer — **after** the compatibility audit ([development-roadmap.md](development-roadmap.md)).
+Asset prep through `assets/source/` is still largely **MANUAL** until Phase 3.1 is implemented. See [development-roadmap.md](development-roadmap.md).
 
 Paths:
 
@@ -1365,33 +1574,6 @@ Full UI matrix: [portrait-testing.md](portrait-testing.md).
 - Document before automating
 </file>
 
-<file path="experiment/sd_static_portrait_test/common/portrait_categories/zzz_sd_static_test_portrait_categories.txt">
-##############################################################
-### SD Static Portrait Test — Mammalian category override
-###
-### VANILLA-VERIFIED: category keys/structure from
-### common/portrait_categories/00_portrait_categories.txt
-###
-### This file REPLACES the vanilla `mammalians` category entry
-### (same key) so we can append one extra set with minimal change.
-### Other categories are intentionally not redefined.
-###
-### Revert method: delete this file from the experiment mod.
-##############################################################
-
-mammalians = {
-	name = MAM
-
-	sets = {
-		mammalians
-		cybernetic_mammalians
-		biogenesis_mammalians
-		psionic_mammalians
-		sd_static_test
-	}
-}
-</file>
-
 <file path="experiment/sd_static_portrait_test/common/portrait_sets/00_sd_static_test_portrait_sets.txt">
 ##############################################################
 ### SD Static Portrait Test - portrait set (EXPERIMENT ONLY)
@@ -1415,29 +1597,6 @@ sd_static_test = {
 		"sd_dog_piglet"
 		"sd_dog_02"
 		"sd_dog_angus"
-	}
-}
-</file>
-
-<file path="experiment/sd_static_portrait_test/common/portrait_sets/00_sd_static_test_portrait_sets.txt.bak_magenta">
-##############################################################
-### SD Static Portrait Test — portrait set (EXPERIMENT ONLY)
-###
-### VANILLA-VERIFIED pattern from common/portrait_sets/00_portrait_sets.txt:
-### - species_class = MAM
-### - portraits = { "id" }
-### - non_randomized_portraits so random AI empires avoid this test art
-##############################################################
-
-sd_static_test = {
-	species_class = MAM
-
-	portraits = {
-		"sd_static_test_01"
-	}
-
-	non_randomized_portraits = {
-		"sd_static_test_01"
 	}
 }
 </file>
@@ -1476,40 +1635,6 @@ portraits = {
 }
 </file>
 
-<file path="experiment/sd_static_portrait_test/gfx/portraits/portraits/00_sd_static_test_portraits.txt.bak_magenta">
-##############################################################
-### SD Static Portrait Test (EXPERIMENT ONLY)
-###
-### Purpose: verify whether texturefile static species portraits
-### still render in Stellaris 4.4.6.
-###
-### Syntax sources (see PROJECT_PLAN.md):
-### - texturefile ........ EXTERNAL MODDING EXAMPLE (wiki/static portraits)
-### - clothes_selector ... VANILLA key name + "no_texture" selector
-### - attachment_selector  VANILLA key name + "no_texture" selector
-### - greeting_sound ..... VANILLA existing sound id
-##############################################################
-
-portraits = {
-	sd_static_test_01 = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_static_test_01.dds"
-	}
-}
-</file>
-
-<file path="experiment/sd_static_portrait_test/descriptor.mod">
-version="0.0.1"
-tags={
-	"Graphics"
-	"Species"
-}
-name="SD Static Portrait Test"
-supported_version="v4.4.*"
-</file>
-
 <file path="experiment/sd_static_portrait_test/README.md">
 # SD Static Portrait Test (experiment)
 
@@ -1542,22 +1667,6 @@ Project docs (authoritative):
 ## Revert
 
 Disable/delete the launcher `.mod` descriptor and/or this folder. No vanilla files need restoring.
-</file>
-
-<file path="experiment/sd_static_portrait_test.mod.example">
-name="SD Static Portrait Test"
-path="C:/Users/bryso/Documents/GitHub/Stellar Dogos/experiment/sd_static_portrait_test"
-supported_version="v4.4.*"
-tags={
-	"Graphics"
-	"Species"
-}
-version="0.0.1"
-</file>
-
-<file path=".gitattributes">
-# Auto detect text files and perform LF normalization
-* text=auto
 </file>
 
 <file path="PROJECT_PLAN.md">
@@ -1758,28 +1867,19 @@ Do **not** modify the vanilla Stellaris installation.
 
 ## Adding a new dog today (manual)
 
-Until the importer exists:
+Until intake tooling exists, developers may still prepare assets by hand using the pipeline in [docs/portrait-workflow.md](docs/portrait-workflow.md). You do **not** need to invent numbers yourself once Phase 3.1 exists — see below.
 
-1. Generate a Stellaris-style portrait from a reference photo using [docs/portrait-prompts.md](docs/portrait-prompts.md).
-2. Place the finished PNG in `ImgHERE/` as `dogNN_<name>_stellaris.png`.
-3. Copy to `assets/source/` with the same name.
-4. Follow the manual pipeline in [docs/portrait-workflow.md](docs/portrait-workflow.md) (alpha → 256×256 RGBA DDS → portrait definition → set).
-5. Test in Stellaris (species creation first; full matrix in [docs/portrait-testing.md](docs/portrait-testing.md)).
-
-`ImgHERE/` is for **finished** portraits only — not raw reference photos.
+`ImgHERE/` is the intake folder for finished portraits (and future candidate drops). Raw reference photos that are not finished portraits should not be treated as intake.
 
 ---
 
 ## Future user workflow (target)
 
-1. Generate a portrait  
-2. Put it in `ImgHERE`  
-3. Run the portrait importer  
-4. Launch Stellaris  
-5. Enable Stellar Dogos  
-6. Test the portrait  
+**Phase 3.1 intake (designed, not built):** Drop a dog image into `ImgHERE` → enter the dog's name when prompted → the tool handles naming and numbering (`dog##_<name>_stellaris.png`) and prepares `assets/source/`.
 
-This importer is **planned**, not implemented. Next engineering priority is the in-game compatibility audit, not automation.
+**Later (full importer):** DDS generation, Stellaris registration, then launch Stellaris and test.
+
+Details: [docs/development-roadmap.md](docs/development-roadmap.md) Phase 3.1, [docs/portrait-workflow.md](docs/portrait-workflow.md).
 
 ---
 

@@ -17,14 +17,13 @@ Certainty labels: **CONFIRMED** / **ASSUMPTION** / **TARGET** / **NEEDS VERIFICA
 |------|--------|
 | Static `texturefile` portraits in 4.4.6 | **CONFIRMED** (species creation) |
 | Three dogs (Piglet, Oakley, Angus) | Working in species creation |
-| Automated portrait importer | **NOT BUILT** |
-| Phase 3.1 source intake (interactive naming) | **DESIGNED** — not implemented |
+| Automated portrait importer | Partial: 3.1 intake + 4 DDS; registration = Phase 5 |
+| Phase 3.1 source intake (interactive naming) | **IMPLEMENTED** (`tools/portrait-intake.ps1`) |
+| Phase 4 DDS generation | **IMPLEMENTED** (`tools/portrait-dds.ps1`) |
 | Full UI portrait compatibility | **NEEDS VERIFICATION** |
 | Steam Workshop release | **NOT READY** |
 
-**Immediate next task (game):** Phase 2 — Portrait Context Compatibility Audit (Oakley).
-
-**Design status:** Phase 3.1 interactive naming + source preparation is documented; do **not** implement until explicitly tasked. Full importer (DDS/registration) remains later.
+Phase 3.1 + Phase 4 are available. **Portrait registration remains Phase 5** (not implemented).
 
 ---
 
@@ -88,9 +87,9 @@ Only after this audit should importer architecture be finalized.
 
 ---
 
-## Phase 3 — Portrait Importer Design
+## Phase 3 — Portrait Importer Design / Phase 3.1 Intake
 
-**STATUS: IN PROGRESS (design)**
+**STATUS: Phase 3.1 IMPLEMENTED** (`tools/portrait-intake.ps1`); later Phase 3/4 DDS+registration still PLANNED
 
 Before full implementation:
 
@@ -102,17 +101,21 @@ Before full implementation:
 - Define failure behavior
 - Define naming rules (canonical `dogNN_<name>_stellaris.png` is **internal**; users are not required to type it)
 
-### Phase 3.1 — Source intake & preparation (design)
+### Phase 3.1 — Source intake & preparation
 
-**STATUS: DESIGNED — not implemented yet**
+**STATUS: IMPLEMENTED** — `tools/portrait-intake.ps1`
 
-**Intended user workflow:**
+**User workflow:**
 
 ```text
 Drop a dog image into ImgHERE
-  → enter the dog's name when prompted
+  → run tools/portrait-intake.ps1
+  → enter the dog's name when prompted (mandatory; no bypass)
   → tool assigns the next available dog number
   → tool prepares the canonical source image
+  → writes ImgHERE/dog##_<name>_stellaris.png and assets/source/...
+  → deletes the temporary input from ImgHERE (success only)
+  → STOP
 ```
 
 Phase 3.1 ends at prepared canonical PNG sources. It does **not** create DDS, portrait IDs, or registration edits.
@@ -126,15 +129,15 @@ Users must **not** be required to manually invent `dog04_…` filenames.
 3. Tool asks in the console: `What is this dog's name?`
 4. User enters the authoritative display name (e.g. `Liberty`).
 5. Tool normalizes the name **only** as needed for a safe filename (`Liberty` → `liberty`).
-6. Empty/invalid names: ask again — do not invent a name.
-7. Tool chooses the next free dog number from existing canonical sources (see below).
+6. Empty/invalid names: keep asking — do not invent a name. No `-DogName` bypass.
+7. **After** a valid name, tool chooses the next free dog number from existing canonical sources.
 8. Tool generates canonical filename: `dog##_<name>_stellaris.png`.
-9. Interactive naming completes **before** any irreversible file write that could overwrite assets.
-10. Tool validates/prepares the image (PNG, square, RGBA, real alpha, framing checks — no artistic regen).
-11. Canonical prepared source is written to:
+9. Tool validates/prepares the image (PNG, square, RGBA, real alpha — no artistic regen).
+10. Canonical prepared source is written to:
     - `ImgHERE/dog##_<name>_stellaris.png`
     - `assets/source/dog##_<name>_stellaris.png`
-12. **Stop.** No DDS / portrait ID / set / category / vanilla changes.
+11. On **success**, delete the temporary input from `ImgHERE`. On **failure**, leave it untouched.
+12. **Stop.** No DDS / portrait ID / set / category / vanilla changes. No `_originals` archive.
 
 Example:
 
@@ -176,58 +179,73 @@ If a file is already named `dog##_<name>_stellaris.png`:
 - Portrait definition → portrait set / category registration
 - In-game testing claims for the new dog
 
-Those remain later phases (Phase 4+).
+Those remain later phases (Phase 5+ for registration; Phase 4 is DDS only).
 
 ---
 
-## Phase 4 — Portrait Importer Implementation
+## Phase 4 — DDS Generation / Technical Asset Pipeline
 
-**STATUS: PLANNED**
+**STATUS: IMPLEMENTED** — `tools/portrait-dds.ps1`
 
-Implement the full pipeline **after** Phase 3.1 design/tooling is proven. Phase 4 builds on Phase 3.1 intake and then:
+Converts a validated Phase 3.1 canonical PNG into a game DDS matching the known-good working portraits.
 
-1. Detect new files in `ImgHERE/` (with interactive naming from 3.1)
-2. Identify the portrait / assign stable internal portrait ID
-3. Preserve existing portraits (no silent rebuilds)
-4. Validate source image
-5. Validate / produce alpha transparency
-6. Normalize dimensions
-7. Apply established framing/scale rules (**TARGET** — after Phase 2)
-8. Generate 256×256 RGBA DDS
-9. Create/update portrait definition
-10. Add portrait to the portrait set
-11. Validate registration
-12. Verify existing portraits unchanged (hashes)
-13. Produce a clear completion report
+```text
+assets/source/dog##_<name>_stellaris.png
+  → validate square RGBA + alpha
+  → downscale to 256×256 (preserve alpha; do not alter source PNG)
+  → write uncompressed 32-bit RGBA DDS (pfFlags=0x41, no mips)
+  → validate header vs Piglet reference + alpha
+  → STOP
+```
 
-Must **not**:
+**Output location:**  
+`experiment/sd_static_portrait_test/gfx/models/portraits/sd_static_test/sd_dog_<name>.dds`
 
-- Automatically modify unrelated portraits
-- Modify vanilla Stellaris
-- Delete originals in `ImgHERE` without a defined safe policy
+**Command:**
 
-Use backups or safe transactional behavior.
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\portrait-dds.ps1 -Source assets\source\dog05_bruce_stellaris.png
+```
 
----
+**Safety:** refuses to overwrite an existing DDS; does not modify Piglet/Oakley/Angus; does not touch portrait defs/sets/categories or vanilla Stellaris.
 
-## Phase 5 — Fourth-Dog Test
-
-**STATUS: PLANNED**
-
-Do **not** use only Piglet/Oakley/Angus as the importer proof.
-
-- Create a brand-new fourth dog
-- Put only the finished portrait into `ImgHERE`
-- Run importer
-- Verify fourth dog created, existing three unchanged, fourth appears in-game
+**Explicitly outside Phase 4:** portrait IDs, definition/set/category registration, in-game claims.
 
 ---
 
-## Phase 6 — Failure Testing
+## Phase 5 — Portrait Registration
 
 **STATUS: PLANNED**
 
-Importer must fail safely on:
+Wire a generated DDS into Stellaris:
+
+1. Create/update portrait definition (`texturefile`)
+2. Add portrait ID to portrait set
+3. Ensure Mammalian category still exposes the set
+4. Protect existing portraits (hash checks)
+5. In-game verification
+
+Do **not** treat Phase 4 DDS creation as registration success.
+
+---
+
+## Phase 6 — End-to-End Automation / Fourth-Dog Proof
+
+**STATUS: PLANNED**
+
+Do **not** use only Piglet/Oakley/Angus as the full-pipeline proof.
+
+- New dog through intake → DDS → registration
+- Verify existing dogs unchanged
+- Verify new dog appears in-game
+
+---
+
+## Phase 7 — Failure Testing
+
+**STATUS: PLANNED**
+
+Importer/pipeline must fail safely on:
 
 - Invalid image
 - Unsupported extension
@@ -242,7 +260,7 @@ Importer must fail safely on:
 
 ---
 
-## Phase 7 — Documentation / UX
+## Phase 8 — Documentation / UX
 
 **STATUS: PLANNED**
 
@@ -250,16 +268,17 @@ README user workflow (TARGET):
 
 1. Generate a portrait
 2. Put it in `ImgHERE`
-3. Run importer
-4. Launch Stellaris
-5. Enable Stellar Dogos
-6. Test the portrait
+3. Run intake
+4. Run DDS generator
+5. (Later) registration → Launch Stellaris
+6. Enable Stellar Dogos
+7. Test the portrait
 
 Developer docs explain architecture.
 
 ---
 
-## Phase 8 — Release Preparation
+## Phase 9 — Release Preparation
 
 **STATUS: PLANNED**
 
@@ -274,13 +293,13 @@ Developer docs explain architecture.
 
 ---
 
-## Phase 9 — Steam Workshop
+## Phase 10 — Steam Workshop
 
 **STATUS: FUTURE**
 
 Only after:
 
-- Importer works
+- Full pipeline works
 - Compatibility audit complete
 - Fresh-install test passes
 - Documentation complete

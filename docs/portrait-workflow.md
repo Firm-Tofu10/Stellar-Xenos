@@ -137,39 +137,45 @@ Examples already in use:
 
 Users are **not** required to invent or type this format. Numbering and canonical renaming are tool responsibilities (Phase 3.1 design).
 
-### Intended Phase 3.1 user flow (**TARGET** — not implemented yet)
+### Phase 3.1 user flow (**IMPLEMENTED** — `tools/portrait-intake.ps1`)
 
 ```text
 Drop a dog image into ImgHERE
+  → run tools/portrait-intake.ps1
   → enter the dog's name when prompted
   → tool assigns the next available dog number
   → tool prepares the canonical source image
 ```
 
-Supported drop formats (minimum design): PNG, JPG/JPEG, WEBP. Preparation converts to canonical PNG source.
+Supported drop formats: PNG, JPG/JPEG, WEBP (System.Drawing must be able to load the file). Preparation converts to a square RGBA PNG source.
 
 ```text
 ImgHERE/<any supported image>
-  → console: "What is this dog's name?"
+  → console: "What is this dog's name?" / "> "
   → e.g. Liberty → dog04_liberty_stellaris.png
   → ImgHERE/dog04_liberty_stellaris.png
   → assets/source/dog04_liberty_stellaris.png
+  → temporary input deleted from ImgHERE after successful validation
   → STOP (Phase 3.1)
 ```
 
-If a file is **already** named `dog##_<name>_stellaris.png`, do not ask again — validate/prepare that canon only.
+If a file is **already** named `dog##_<name>_stellaris.png`, do not ask again — it is reported as canonical.
 
-Conflicts: if the target canonical name already exists, stop and explain; never overwrite Piglet/Oakley/Angus or other existing canons.
+Conflicts: if the target canonical name already exists, stop and explain; never overwrite existing canons.
 
-Do not treat every file in `ImgHERE` as a new dog (ignore unsupported / raw-reference files; ask when unsure). Full design: [development-roadmap.md](development-roadmap.md) Phase 3.1.
+Empty names are rejected and the tool keeps asking. Naming is always interactive for new candidates (no `-DogName` bypass).
+
+Do not treat every file in `ImgHERE` as a new dog (ignore unsupported extensions). See [development-roadmap.md](development-roadmap.md) Phase 3.1.
 
 **Rules:**
 
-- Finished portraits and new candidates go here for intake
-- Raw reference photographs that are not finished portraits should not be auto-ingested (e.g. historical Angus JPG)
-- Do **not** automatically delete originals in `ImgHERE`
+- Finished portraits and new candidates go in the ImgHERE root for intake
+- Raw reference photographs that are not finished portraits should not be auto-ingested
+- On **success**, the temporary input image is removed from `ImgHERE`
+- On **failure**, the original input remains untouched in `ImgHERE` for retry
+- The tool does **not** maintain an `_originals` archive
 
-Later phases (after 3.1) add DDS + Stellaris registration. Full importer UX remains future work.
+Later phases add DDS + Stellaris registration.
 
 ---
 
@@ -207,7 +213,7 @@ Stellaris
 in-game test
 ```
 
-Asset prep through `assets/source/` is still largely **MANUAL** until Phase 3.1 is implemented. See [development-roadmap.md](development-roadmap.md).
+Canonical source intake is automated by `tools/portrait-intake.ps1`. DDS and Stellaris registration remain later phases. See [development-roadmap.md](development-roadmap.md).
 
 Paths:
 
@@ -268,25 +274,40 @@ Future importer must **validate** alpha, not assume it.
 
 ## 9. DDS requirements
 
-**CONFIRMED** empirical game format for this project:
+**CONFIRMED** empirical game format for this project (matches Piglet/Oakley/Angus):
 
 | Property | Value |
 |----------|--------|
 | Size | **256×256** |
-| Compression | **Uncompressed** |
+| Compression | **Uncompressed** (no FourCC / DXT) |
 | Channels | **32-bit RGBA** |
 | `pfFlags` | **0x41** |
+| Pitch | **1024** |
+| Mipmaps | **0** |
+| Caps | **0x1000** |
 | Alpha | Preserved; transparent outside dog |
 
-Do not introduce compression unless later testing proves another format works.
+High-resolution canonical PNGs stay in `assets/source/`. DDS is the game texture only.
+
+### Phase 4 tool
+
+`tools/portrait-dds.ps1` converts:
+
+`assets/source/dog##_<name>_stellaris.png` → `…/sd_static_test/sd_dog_<name>.dds`
+
+It validates the source, refuses overwrite conflicts, and compares the DDS header to the Piglet reference. It does **not** register portraits (Phase 5).
 
 ---
 
 ## 10. Future portrait importer (summary)
 
-See [development-roadmap.md](development-roadmap.md) Phases 3–6.
+See [development-roadmap.md](development-roadmap.md):
 
-Must detect `ImgHERE` drops, validate, process, register, protect existing portraits, and report clearly. Must not touch vanilla or unrelated dogs.
+- Phase 3.1 — intake / naming / source PNG (**done**)
+- Phase 4 — DDS (**done**)
+- Phase 5 — Stellaris registration (**planned**)
+
+Must protect existing portraits and never touch vanilla.
 
 **Do not automate too early** — manual portraits taught the real constraints.
 

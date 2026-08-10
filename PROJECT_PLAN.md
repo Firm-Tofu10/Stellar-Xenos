@@ -63,7 +63,9 @@ Designed to support additional dogs later.
 | DDS format (256×256 uncompressed 32-bit RGBA, `pfFlags=0x41`) | **CONFIRMED** |
 | Transparency / alpha requirements | **CONFIRMED** |
 | ImgHERE staging workflow | **CONFIRMED** |
-| Automated importer | **NOT BUILT** |
+| Phase 3.1 interactive source intake | **IMPLEMENTED** (`tools/portrait-intake.ps1`) |
+| Phase 4 DDS generation | **IMPLEMENTED** (`tools/portrait-dds.ps1`) |
+| Phase 5 Stellaris registration | **NOT BUILT** |
 | Full UI compatibility (leaders, council, diplomacy, …) | **NEEDS VERIFICATION** |
 | Steam Workshop release | **NOT READY** |
 
@@ -114,15 +116,13 @@ Do not invent additional portrait syntax beyond the working pattern. See [docs/p
 
 ---
 
-## 6. Immediate next task
+## 6. Immediate next engineering task
 
-**Not** the importer.
+**Phase 5 — Portrait registration** (wire DDS → portrait definition → set).
 
-**Portrait Context Compatibility Audit** — use **Oakley** as the primary test portrait across species / leader / council / government / diplomacy / contacts / factions / events / other UI.
+DDS generation (Phase 4) is implemented; registration is not. In-game appearance of new dogs still requires Phase 5.
 
-Document results in [docs/portrait-testing.md](docs/portrait-testing.md).
-
-Only after that audit should importer architecture be finalized ([docs/development-roadmap.md](docs/development-roadmap.md) Phase 2 → 3).
+Phase 2 compatibility audit (Oakley across UI contexts) remains important before Workshop.
 
 ---
 
