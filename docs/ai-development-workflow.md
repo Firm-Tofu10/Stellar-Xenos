@@ -1,4 +1,4 @@
-# Stellar Dogos — AI Development Workflow
+# Stellar Xeno — AI Development Workflow
 
 This is the project's **standard development process**. Future ChatGPT + Cursor sessions should follow it instead of inventing ad-hoc collaboration patterns.
 
@@ -87,7 +87,7 @@ Repomix snapshot
 
 ---
 
-## How this applies to Stellar Dogos
+## How this applies to Stellar Xeno
 
 | Concern | Owner |
 |---------|--------|

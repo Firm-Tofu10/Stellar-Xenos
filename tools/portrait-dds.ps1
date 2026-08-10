@@ -1,4 +1,4 @@
-# Stellar Dogos — Phase 4: Canonical PNG → DDS
+# Stellar Xeno — Phase 4: Canonical PNG → DDS
 # Converts a validated Phase 3.1 source PNG into a 256x256 uncompressed
 # 32-bit RGBA DDS matching the known-good working dog portraits.
 #
@@ -363,7 +363,7 @@ $repoRoot = Get-RepoRoot
 $ddsDir = Get-DdsOutputDir -RepoRoot $repoRoot
 $refDds = Join-Path $ddsDir "sd_dog_piglet.dds"
 
-Write-SdHost "Stellar Dogos DDS Generator"
+Write-SdHost "Stellar Xeno DDS Generator"
 Write-SdHost "Phase 4 - Canonical PNG to DDS (no Stellaris registration)"
 Write-SdHost ""
 

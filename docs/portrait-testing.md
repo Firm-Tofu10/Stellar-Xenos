@@ -1,4 +1,4 @@
-# Stellar Dogos — Portrait Testing
+# Stellar Xeno — Portrait Testing
 
 In-game compatibility matrix for static dog portraits.
 

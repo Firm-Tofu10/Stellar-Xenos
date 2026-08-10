@@ -1,4 +1,4 @@
-# Shared exit helper for Stellar Dogos tools.
+# Shared exit helper for Stellar Xeno tools.
 # portrait-pipeline.ps1 sets STELLAR_DOGOS_INPROCESS=1 and invokes tools with & so
 # name + xenotype prompts share the same console. In that mode, bare `exit` would
 # kill the whole pipeline — use Exit-SdTool then `return` instead.

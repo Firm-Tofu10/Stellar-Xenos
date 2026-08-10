@@ -1,6 +1,6 @@
 # SD Static Portrait Test (experiment)
 
-Working proof-of-concept for **Stellar Dogos** static species portraits on Stellaris **Pegasus v4.4.6**.
+Working proof-of-concept for **Stellar Xeno** static species portraits on Stellaris **Pegasus v4.4.6**.
 
 **CONFIRMED:** `texturefile` static portraits appear in Mammalian species creation.
 

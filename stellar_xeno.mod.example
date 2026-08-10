@@ -1,0 +1,12 @@
+name="Stellar Xeno"
+path="C:/Users/YOU/Documents/GitHub/Stellar Dogos/mod/stellar_dogos"
+supported_version="v4.4.*"
+tags={
+	"Graphics"
+	"Species"
+}
+picture="thumbnail.png"
+# Local launcher descriptor TEMPLATE only.
+# Copy to Documents/Paradox Interactive/Stellaris/mod/ and fix path=.
+# Do NOT put a developer absolute path into mod/stellar_dogos/descriptor.mod.
+# Do NOT invent remote_file_id — Steam assigns it on first Workshop upload.

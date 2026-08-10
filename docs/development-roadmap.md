@@ -1,4 +1,4 @@
-# Stellar Dogos — Development Roadmap
+# Stellar Xeno — Development Roadmap
 
 Authoritative phase status for future sessions. Cross-references:
 
@@ -27,9 +27,9 @@ Certainty labels: **CONFIRMED** / **ASSUMPTION** / **TARGET** / **NEEDS VERIFICA
 | Canonical PNG naming (`dogNN_<name>_<xeno>_stellaris.png`) | **IMPLEMENTED** |
 | Xenotype image-generation prompt library | **DOCUMENTED** ([portrait-generation-prompts.md](portrait-generation-prompts.md)) — Mammalian & Machine prompt bodies **ABSENT** from source export; Toxoid prompt **DOCUMENTED**; Toxoid selector/registration **IMPLEMENTED** |
 | Full UI portrait compatibility | **NEEDS VERIFICATION** |
-| Steam Workshop release | **NOT READY** |
+| Steam Workshop release | **PACKAGE READY** — structurally prepared (`mod/stellar_dogos/`); human in-game test + Steam upload remain ([docs/workshop-release.md](docs/workshop-release.md)) |
 
-Phases 3.1–7 cover intake → DDS → xenotype-aware registration → end-to-end orchestration. The player-facing **prompt library** is documented separately from the software pipeline. Broader UI-context audit and Workshop packaging remain later.
+Phases 3.1–7 cover intake → DDS → xenotype-aware registration → end-to-end orchestration. The player-facing **prompt library** is documented separately from the software pipeline. Workshop package structural prep is documented in [workshop-release.md](workshop-release.md); broader UI-context audit remains later.
 
 ---
 
@@ -176,7 +176,7 @@ ImgHERE/my_dog.png
 
 #### Automatic dog numbering
 
-- Scan existing canonical Stellar Dogos source assets (e.g. `assets/source/dog##_…_stellaris.png` and matching ImgHERE canons).
+- Scan existing canonical Stellar Xeno source assets (e.g. `assets/source/dog##_…_stellaris.png` and matching ImgHERE canons).
 - Next number = lowest unused integer after the highest present (today: dog01–dog03 → next is **dog04**).
 - Do **not** reuse numbers, renumber existing dogs, or touch Piglet / Oakley / Angus.
 
@@ -303,11 +303,11 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools\portrait-pipeline.ps1
 
 **Does not claim:** leaders/council/diplomacy/other UI contexts, Workshop readiness, or universal portrait compatibility.
 
-### Generic custom-portrait purpose (future product framing)
+### Generic custom-portrait purpose (product framing)
 
-Stellar Dogos remains the repository/test project name. The pipeline is intended to demonstrate a reusable workflow for adding **custom user-created portrait artwork** to Stellaris.
+**Stellar Xeno** is the current project/repository name. Dogs were the original development and regression subjects, but the workflow is intended for arbitrary custom portrait subjects and multiple Stellaris xenotypes.
 
-Final Workshop-facing naming/branding should describe custom portrait/race creation capability rather than implying the tool is limited to dogs. **Do not rename the repository in this phase.**
+Workshop-facing branding should communicate custom portrait/race creation from your own images—not a dog-only tool.
 
 ### Future: portrait variants (NOT IMPLEMENTED)
 
@@ -413,7 +413,7 @@ README user workflow:
 5. Select xenotype (including Toxoid)
 6. Pipeline creates `dogNN_<name>_<xeno>_stellaris.png`, then DDS + registration under `mod/stellar_dogos/`
 7. Launch Stellaris
-8. Enable **Stellar Dogos** / test the portrait
+8. Enable **Stellar Xeno** / test the portrait
 
 Developer docs explain architecture.
 
@@ -421,33 +421,33 @@ Developer docs explain architecture.
 
 ## Phase 10 — Release Preparation
 
-**STATUS: PLANNED**
+**STATUS: PACKAGE READY** (structural) — human Stellaris verification + Steam upload remain
 
-- Remove experimental/development-only artifacts where appropriate
-- Rename experiment paths into production structure
-- Clean repository
-- Update README / version
-- Test from a fresh clone
-- Test packaged mod
-- Verify no vanilla files are required
-- Verify Workshop package contents
+Completed for Workshop packaging:
 
----
+- Production mod is self-contained under `mod/stellar_dogos/`
+- Package `descriptor.mod` has no developer absolute `path=`
+- Workshop thumbnail (`thumbnail.png`) + `picture="thumbnail.png"`
+- Paste-ready description: `mod/stellar_dogos/workshop_description.txt`
+- Author steps: [workshop-release.md](workshop-release.md)
+
+Still required before calling the release “verified”:
+
+- Human in-game smoke test of shipped portraits
+- Paradox Launcher → Upload Mod → Steam Workshop
+- Confirm Steam-assigned `remote_file_id` after first upload
 
 ## Phase 11 — Steam Workshop
 
-**STATUS: FUTURE**
+**STATUS: READY TO UPLOAD** (pending human test)
 
 Only after:
 
-- Full pipeline works
-- Compatibility audit complete
-- Fresh-install test passes
-- Documentation complete
-- Production mod structure finalized
+- Fresh structural validation of `mod/stellar_dogos/` (done in release prep)
+- Human in-game smoke test passes
+- Workshop description/thumbnail acceptable
 
-Then publish to Steam Workshop under branding that communicates **custom Stellaris portraits from your own images** (repository may remain named Stellar Dogos).
-
+Then publish to Steam Workshop under **Stellar Xeno** branding that communicates **custom Stellaris portraits from your own images**.
 ---
 
 ## Engineering lesson — do not automate too early

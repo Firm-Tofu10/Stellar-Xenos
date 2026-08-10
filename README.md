@@ -1,8 +1,8 @@
-# Stellar Dogos
+# Stellar Xeno
 
-**Stellar Dogos** is a Stellaris **4.4.x** project for turning **your own photographs** into selectable custom species portraits.
+**Stellar Xeno** is a Stellaris **4.4.x** project for turning **your own photographs** into selectable custom species portraits.
 
-Dogs were the original development and test subjects — that is why the repository is named Stellar Dogos. The real goal is broader: take a photo of a person, animal, or other subject, transform that subject into a believable Stellaris species of a chosen **xenotype**, then place the finished portrait into the game through this project's tools.
+Dogs were the original development and regression subjects (Piglet, Oakley, Angus, and later fixtures), but **Stellar Xeno** is not limited to dogs. The workflow is intended for arbitrary custom portrait subjects—people, animals, or other references—transformed into a believable Stellaris species of a chosen **xenotype**, then registered into the game through this project's tools.
 
 You do **not** need to know PowerShell, DDS files, portrait definitions, or mod scripting to use the normal workflow.
 
@@ -18,7 +18,7 @@ You do **not** need to know PowerShell, DDS files, portrait definitions, or mod 
 4. Paste that prompt into an **image-generation model** (for example ChatGPT) **with your photograph**.
 5. Generate a square, transparent Stellaris-style portrait that still looks like *your* subject as that species.
 
-These prompts are **not** Stellar Dogos software commands. They do **not** create DDS files and do **not** modify Stellaris.
+These prompts are **not** Stellar Xeno software commands. They do **not** create DDS files and do **not** modify Stellaris.
 
 ### Stage B — Portrait Creator (this repository)
 
@@ -26,7 +26,7 @@ These prompts are **not** Stellar Dogos software commands. They do **not** creat
 7. Run the Portrait Creator (command below).
 8. Enter the **character's name**.
 9. Select the **Stellaris species type** (should match the prompt you used).
-10. Stellar Dogos prepares the technical game files and registers the portrait in the production mod.
+10. Stellar Xeno prepares the technical game files and registers the portrait in the production mod.
 11. Enable the mod in Stellaris and create a species of that type to find your portrait.
 
 ```text
@@ -62,7 +62,7 @@ Stellaris (mod/stellar_dogos)
 | Canonical PNG naming (`dogNN_<name>_<xeno>_stellaris.png`) | **IMPLEMENTED** |
 | Species creation (Piglet / Oakley / Angus) | **CONFIRMED** on Stellaris **v4.4.6** |
 | Full UI compatibility (leaders, diplomacy, …) | **NEEDS VERIFICATION** |
-| Steam Workshop | **FUTURE** / not ready |
+| Steam Workshop | **PACKAGE READY** for human in-game test + launcher upload (`mod/stellar_dogos/`; see [docs/workshop-release.md](docs/workshop-release.md)) |
 | Leader portrait variants | **FUTURE** |
 
 ---
@@ -96,14 +96,14 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools\portrait-pipeline.ps1
 4. The tool shows which image it found.
 5. Enter the character's name.
 6. Select the Stellaris species type with **↑ / ↓**, then **Enter** (includes **Toxoid**).
-7. Wait for success, then enable the **Stellar Dogos** production mod in Stellaris.
+7. Wait for success, then enable the **Stellar Xeno** production mod in Stellaris.
 
 You do **not** need to manually create DDS files, portrait IDs, definitions, sets, categories, or dog numbers. The tool handles those. Candidate filenames in `ImgHERE/` are never interpreted as the character name, xenotype, or sequence number.
 
 ### What you will see (summary)
 
 ```text
-Stellar Dogos - Portrait Creator
+Stellar Xeno - Portrait Creator
 
 New portrait found:
   your_image.png
@@ -157,7 +157,7 @@ Working mod folder: `mod/stellar_dogos/`
 (`experiment/sd_static_portrait_test/` remains as a temporary regression/reference copy until a later cleanup task.)
 
 1. Point a `.mod` descriptor at `mod/stellar_dogos/` if needed (forward slashes; no developer-only absolute path required inside the package `descriptor.mod`).
-2. In the launcher, enable **Stellar Dogos**.
+2. In the launcher, enable **Stellar Xeno**.
 3. Create an empire → pick the species type you chose → select your portrait.
 
 Do **not** edit the vanilla Stellaris installation.
@@ -172,7 +172,7 @@ Do **not** edit the vanilla Stellaris installation.
 4. Save into `ImgHERE/` (any temporary filename is fine).
 5. Run `tools\portrait-pipeline.ps1`.
 6. Enter a name; select **Avian**.
-7. Play Stellaris with the **Stellar Dogos** production mod enabled.
+7. Play Stellaris with the **Stellar Xeno** production mod enabled.
 
 ---
 
@@ -181,7 +181,7 @@ Do **not** edit the vanilla Stellaris installation.
 - Leader portrait variants  
 - Changing xenotype on an existing portrait  
 - Broader verification across Stellaris UI contexts  
-- Workshop packaging  
+- Workshop packaging / upload (package prepared; human Stellaris test + Steam upload remain)  
 - Multiple xenotype versions of the same person/character  
 
 ---
@@ -196,4 +196,4 @@ Phases (internal):
 - **Phase 6** — end-to-end Portrait Creator  
 - **Phase 8** — documentation of the generation prompt library and player workflow (**this pass**)
 
-Planning docs: [PROJECT_PLAN.md](PROJECT_PLAN.md), [docs/development-roadmap.md](docs/development-roadmap.md), [docs/portrait-workflow.md](docs/portrait-workflow.md).
+Technical path identifiers such as `mod/stellar_dogos/` and `sd_dog_*` are internal implementation names and are intentionally unchanged.

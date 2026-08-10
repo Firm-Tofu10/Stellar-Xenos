@@ -1,6 +1,6 @@
-# Stellar Dogos — Portrait Generation Prompt Library
+# Stellar Xeno — Portrait Generation Prompt Library
 
-This file is the **authoritative library of xenotype-specific image-generation prompts** for Stellar Dogos.
+This file is the **authoritative library of xenotype-specific image-generation prompts** for Stellar Xeno.
 
 ## Important distinction
 
@@ -14,7 +14,7 @@ Workflow:
 2. Copy the matching prompt from this library.
 3. Provide a reference photograph to the image model with that prompt.
 4. Save the finished square RGBA portrait into `ImgHERE/`.
-5. Run the Stellar Dogos Portrait Creator (`tools\portrait-pipeline.ps1`).
+5. Run the Stellar Xeno Portrait Creator (`tools\portrait-pipeline.ps1`).
 6. Enter the character's name and select the matching species type in the tool.
 
 These prompts do **not** create DDS files, portrait IDs, definitions, sets, or categories, and they do **not** modify Stellaris.
@@ -52,7 +52,7 @@ Wording is preserved from that source. Formatting (line breaks / section rules) 
 | # (project order) | Xenotype | In attachment? | Source heading / number | Pipeline selector today |
 |-------------------|----------|----------------|-------------------------|-------------------------|
 | 1 | Mammalian | **ABSENT** (referenced only as `1/11`) | No `MAMMALIAN XENOTYPE` prompt body in the export | **IMPLEMENTED** |
-| 2 | Avian | **DOCUMENTED** | `STELLAR DOGOS — AVIAN XENOTYPE PORTRAIT GENERATION TEST` (also referenced as `2/11`) | **IMPLEMENTED** |
+| 2 | Avian | **DOCUMENTED** | `STELLAR XENO — AVIAN XENOTYPE PORTRAIT GENERATION TEST` (also referenced as `2/11`) | **IMPLEMENTED** |
 | 3 | Reptilian | **DOCUMENTED** | `… REPTILIAN … — 3/11` / footer `3/11 — Reptilian` | **IMPLEMENTED** |
 | 4 | Amphibian | **DOCUMENTED** | `… AMPHIBIAN … — 4/11` / footer `4/11 — Amphibian` | **IMPLEMENTED** (display Amphibian → aquatic) |
 | 5 | Arthropoid | **DOCUMENTED** | `… ARTHROPOID … — 5/11` / footer `5/11 — Arthropoid` | **IMPLEMENTED** |
@@ -104,7 +104,7 @@ Do not treat Toxoid as selectable in the current software pipeline.
                      ImgHERE/
                          │
                          ↓
-                Stellar Dogos
+                Stellar Xeno
                 Portrait Creator
                          │
               ┌──────────┴──────────┐
@@ -132,7 +132,7 @@ Each documented prompt is meant to:
 - create a believable intelligent alien species
 - avoid simply adding superficial features to a human
 - use realistic Stellaris-style portrait presentation
-- use the established Stellar Dogos portrait framing
+- use the established Stellar Xeno portrait framing
 - produce a square portrait
 - target approximately 91–92% vertical subject occupancy
 - keep the subject isolated
@@ -158,12 +158,12 @@ Historical **dog / Mammalian development** prompts (Piglet, framing, transparenc
 
 ## 2. Avian
 
-**Source heading:** `STELLAR DOGOS — AVIAN XENOTYPE PORTRAIT GENERATION TEST`  
+**Source heading:** `STELLAR XENO — AVIAN XENOTYPE PORTRAIT GENERATION TEST`  
 **Source number (narration):** `2/11`  
 **Status:** DOCUMENTED
 
 ```text
-STELLAR DOGOS — AVIAN XENOTYPE PORTRAIT GENERATION TEST
+STELLAR XENO — AVIAN XENOTYPE PORTRAIT GENERATION TEST
 
 Using the provided photograph as the EXACT identity reference, transform the
 subject into a finished Stellaris-style AVIAN species portrait.
@@ -284,7 +284,7 @@ Avoid:
 PORTRAIT COMPOSITION
 ==================================================
 
-Use the established Stellar Dogos portrait framing.
+Use the established Stellar Xeno portrait framing.
 
 The final portrait must be:
 
@@ -298,7 +298,7 @@ The final portrait must be:
 - approximately 91–92% vertical subject occupancy
 
 The subject should occupy approximately the same visual scale as the
-existing Stellar Dogos portraits.
+existing Stellar Xeno portraits.
 
 Do not leave a large empty area above the head.
 
@@ -428,7 +428,7 @@ specific reference subject.
 TECHNICAL TARGET
 ==================================================
 
-Generate the artwork at high resolution for later Stellar Dogos processing.
+Generate the artwork at high resolution for later Stellar Xeno processing.
 
 Output should be:
 
@@ -448,7 +448,7 @@ Do NOT create a DDS.
 
 Do NOT modify Stellaris files.
 
-This image will later be placed into the Stellar Dogos ImgHERE intake workflow.
+This image will later be placed into the Stellar Xeno ImgHERE intake workflow.
 
 ==================================================
 FINAL VALIDATION
@@ -476,19 +476,19 @@ The final result should look like:
 "The exact person from the supplied photograph, evolutionarily and
 artistically reimagined as a believable intelligent Avian species from
 Stellaris, professionally painted as a finished species portrait and
-framed for the existing Stellar Dogos portrait pipeline."
+framed for the existing Stellar Xeno portrait pipeline."
 ```
 
 ---
 
 ## 3. Reptilian
 
-**Source heading:** `STELLAR DOGOS — REPTILIAN XENOTYPE PORTRAIT GENERATION — 3/11`  
+**Source heading:** `STELLAR XENO — REPTILIAN XENOTYPE PORTRAIT GENERATION — 3/11`  
 **Source footer:** `3/11 — Reptilian`  
 **Status:** DOCUMENTED
 
 ```text
-STELLAR DOGOS — REPTILIAN XENOTYPE PORTRAIT GENERATION — 3/11
+STELLAR XENO — REPTILIAN XENOTYPE PORTRAIT GENERATION — 3/11
 
 Using the provided photograph as the EXACT identity reference, transform the subject into a finished Stellaris-style REPTILIAN species portrait.
 This is an artwork-generation task.
@@ -577,7 +577,7 @@ Avoid:
 
 PORTRAIT COMPOSITION
 
-Use the established Stellar Dogos portrait framing.
+Use the established Stellar Xeno portrait framing.
 The final portrait must be:
 - square
 - portrait-bust composition
@@ -587,7 +587,7 @@ The final portrait must be:
 - chest/scaled neck continuing to the bottom edge
 - small transparent margin above the head
 - approximately 91–92% vertical subject occupancy
-The subject should occupy approximately the same visual scale as the existing Stellar Dogos portraits.
+The subject should occupy approximately the same visual scale as the existing Stellar Xeno portraits.
 Do not leave a large empty area above the head.
 Do not leave transparent space beneath the chest.
 The lower chest/scaled anatomy should naturally continue beyond the bottom edge of the portrait.
@@ -688,7 +688,7 @@ The subject should look like the same individual translated into a believable in
 
 TECHNICAL TARGET
 
-Generate the artwork at high resolution for later Stellar Dogos processing.
+Generate the artwork at high resolution for later Stellar Xeno processing.
 Output should be:
 - square
 - high resolution
@@ -703,7 +703,7 @@ Output should be:
 - no UI
 Do NOT create a DDS.
 Do NOT modify Stellaris files.
-This image will later be placed into the Stellar Dogos ImgHERE/ intake workflow.
+This image will later be placed into the Stellar Xeno ImgHERE/ intake workflow.
 
 ==================================================
 
@@ -725,7 +725,7 @@ Before finishing, verify:
 - There are no halos or environmental fringes.
 - There is no text, UI, frame, or watermark.
 The final result should look like:
-"The exact person from the supplied photograph, evolutionarily and artistically reimagined as a believable intelligent Reptilian species from Stellaris, professionally painted as a finished species portrait and framed for the existing Stellar Dogos portrait pipeline."
+"The exact person from the supplied photograph, evolutionarily and artistically reimagined as a believable intelligent Reptilian species from Stellaris, professionally painted as a finished species portrait and framed for the existing Stellar Xeno portrait pipeline."
 3/11 — Reptilian
 ```
 
@@ -733,12 +733,12 @@ The final result should look like:
 
 ## 4. Amphibian
 
-**Source heading:** `STELLAR DOGOS — AMPHIBIAN XENOTYPE PORTRAIT GENERATION — 4/11`  
+**Source heading:** `STELLAR XENO — AMPHIBIAN XENOTYPE PORTRAIT GENERATION — 4/11`  
 **Source footer:** `4/11 — Amphibian`  
 **Status:** DOCUMENTED
 
 ```text
-STELLAR DOGOS — AMPHIBIAN XENOTYPE PORTRAIT GENERATION — 4/11
+STELLAR XENO — AMPHIBIAN XENOTYPE PORTRAIT GENERATION — 4/11
 
 Using the provided photograph as the EXACT identity reference, transform the subject into a finished Stellaris-style AMPHIBIAN species portrait.
 This is an artwork-generation task.
@@ -826,7 +826,7 @@ Avoid:
 
 PORTRAIT COMPOSITION
 
-Use the established Stellar Dogos portrait framing.
+Use the established Stellar Xeno portrait framing.
 The final portrait must be:
 - square
 - portrait-bust composition
@@ -836,7 +836,7 @@ The final portrait must be:
 - chest/skin continuing to the bottom edge
 - small transparent margin above the head
 - approximately 91–92% vertical subject occupancy
-The subject should occupy approximately the same visual scale as the existing Stellar Dogos portraits.
+The subject should occupy approximately the same visual scale as the existing Stellar Xeno portraits.
 Do not leave a large empty area above the head.
 Do not leave transparent space beneath the chest.
 The lower chest should naturally continue beyond the bottom edge of the portrait.
@@ -938,7 +938,7 @@ The subject should look like the same individual translated into a believable in
 
 TECHNICAL TARGET
 
-Generate the artwork at high resolution for later Stellar Dogos processing.
+Generate the artwork at high resolution for later Stellar Xeno processing.
 Output should be:
 - square
 - high resolution
@@ -953,7 +953,7 @@ Output should be:
 - no UI
 Do NOT create a DDS.
 Do NOT modify Stellaris files.
-This image will later be placed into the Stellar Dogos ImgHERE/ intake workflow.
+This image will later be placed into the Stellar Xeno ImgHERE/ intake workflow.
 
 ==================================================
 
@@ -975,7 +975,7 @@ Before finishing, verify:
 - There are no halos or environmental fringes.
 - There is no text, UI, frame, or watermark.
 The final result should look like:
-"The exact person from the supplied photograph, evolutionarily and artistically reimagined as a believable intelligent Amphibian species from Stellaris, professionally painted as a finished species portrait and framed for the existing Stellar Dogos portrait pipeline."
+"The exact person from the supplied photograph, evolutionarily and artistically reimagined as a believable intelligent Amphibian species from Stellaris, professionally painted as a finished species portrait and framed for the existing Stellar Xeno portrait pipeline."
 4/11 — Amphibian
 ```
 
@@ -983,12 +983,12 @@ The final result should look like:
 
 ## 5. Arthropoid
 
-**Source heading:** `STELLAR DOGOS — ARTHROPOID XENOTYPE PORTRAIT GENERATION — 5/11`  
+**Source heading:** `STELLAR XENO — ARTHROPOID XENOTYPE PORTRAIT GENERATION — 5/11`  
 **Source footer:** `5/11 — Arthropoid`  
 **Status:** DOCUMENTED
 
 ```text
-STELLAR DOGOS — ARTHROPOID XENOTYPE PORTRAIT GENERATION — 5/11
+STELLAR XENO — ARTHROPOID XENOTYPE PORTRAIT GENERATION — 5/11
 
 Using the provided photograph as the EXACT identity reference, transform the subject into a finished Stellaris-style ARTHROPOID species portrait.
 This is an artwork-generation task.
@@ -1079,7 +1079,7 @@ Avoid:
 
 PORTRAIT COMPOSITION
 
-Use the established Stellar Dogos portrait framing.
+Use the established Stellar Xeno portrait framing.
 The final portrait must be:
 - square
 - portrait-bust composition
@@ -1089,7 +1089,7 @@ The final portrait must be:
 - thorax/chest continuing to the bottom edge
 - small transparent margin above the head and antennae
 - approximately 91–92% vertical subject occupancy
-The subject should occupy approximately the same visual scale as the existing Stellar Dogos portraits.
+The subject should occupy approximately the same visual scale as the existing Stellar Xeno portraits.
 Account for antennae or other sensory structures when establishing the top margin.
 Do not leave a large empty area above the head.
 Do not leave transparent space beneath the chest/thorax.
@@ -1195,7 +1195,7 @@ The subject should look like the same individual translated into a believable in
 
 TECHNICAL TARGET
 
-Generate the artwork at high resolution for later Stellar Dogos processing.
+Generate the artwork at high resolution for later Stellar Xeno processing.
 Output should be:
 - square
 - high resolution
@@ -1210,7 +1210,7 @@ Output should be:
 - no UI
 Do NOT create a DDS.
 Do NOT modify Stellaris files.
-This image will later be placed into the Stellar Dogos ImgHERE/ intake workflow.
+This image will later be placed into the Stellar Xeno ImgHERE/ intake workflow.
 
 ==================================================
 
@@ -1234,7 +1234,7 @@ Before finishing, verify:
 - There are no halos or environmental fringes.
 - There is no text, UI, frame, or watermark.
 The final result should look like:
-"The exact person from the supplied photograph, evolutionarily and artistically reimagined as a believable intelligent Arthropoid species from Stellaris, professionally painted as a finished species portrait and framed for the existing Stellar Dogos portrait pipeline."
+"The exact person from the supplied photograph, evolutionarily and artistically reimagined as a believable intelligent Arthropoid species from Stellaris, professionally painted as a finished species portrait and framed for the existing Stellar Xeno portrait pipeline."
 5/11 — Arthropoid
 ```
 
@@ -1242,12 +1242,12 @@ The final result should look like:
 
 ## 6. Molluscoid
 
-**Source heading:** `STELLAR DOGOS — MOLLUSCOID XENOTYPE PORTRAIT GENERATION — 6/11`  
+**Source heading:** `STELLAR XENO — MOLLUSCOID XENOTYPE PORTRAIT GENERATION — 6/11`  
 **Source footer:** `6/11 — Molluscoid`  
 **Status:** DOCUMENTED
 
 ```text
-STELLAR DOGOS — MOLLUSCOID XENOTYPE PORTRAIT GENERATION — 6/11
+STELLAR XENO — MOLLUSCOID XENOTYPE PORTRAIT GENERATION — 6/11
 
 Using the provided photograph as the EXACT identity reference, transform the subject into a finished Stellaris-style MOLLUSCOID species portrait.
 This is an artwork-generation task.
@@ -1337,7 +1337,7 @@ Avoid:
 
 PORTRAIT COMPOSITION
 
-Use the established Stellar Dogos portrait framing.
+Use the established Stellar Xeno portrait framing.
 The final portrait must be:
 - square
 - portrait-bust composition
@@ -1347,7 +1347,7 @@ The final portrait must be:
 - upper-body/molluscoid anatomy continuing to the bottom edge
 - small transparent margin above the head and any sensory structures
 - approximately 91–92% vertical subject occupancy
-The subject should occupy approximately the same visual scale as the existing Stellar Dogos portraits.
+The subject should occupy approximately the same visual scale as the existing Stellar Xeno portraits.
 Account for tentacles, tendrils, feelers, or other sensory structures when establishing the top margin.
 Do not leave a large empty area above the head.
 Do not leave transparent space beneath the chest.
@@ -1452,7 +1452,7 @@ The subject should look like the same individual translated into a believable in
 
 TECHNICAL TARGET
 
-Generate the artwork at high resolution for later Stellar Dogos processing.
+Generate the artwork at high resolution for later Stellar Xeno processing.
 Output should be:
 - square
 - high resolution
@@ -1467,7 +1467,7 @@ Output should be:
 - no UI
 Do NOT create a DDS.
 Do NOT modify Stellaris files.
-This image will later be placed into the Stellar Dogos ImgHERE/ intake workflow.
+This image will later be placed into the Stellar Xeno ImgHERE/ intake workflow.
 
 ==================================================
 
@@ -1491,7 +1491,7 @@ Before finishing, verify:
 - There are no halos or environmental fringes.
 - There is no text, UI, frame, or watermark.
 The final result should look like:
-"The exact person from the supplied photograph, evolutionarily and artistically reimagined as a believable intelligent Molluscoid species from Stellaris, professionally painted as a finished species portrait and framed for the existing Stellar Dogos portrait pipeline."
+"The exact person from the supplied photograph, evolutionarily and artistically reimagined as a believable intelligent Molluscoid species from Stellaris, professionally painted as a finished species portrait and framed for the existing Stellar Xeno portrait pipeline."
 6/11 — Molluscoid
 ```
 
@@ -1499,12 +1499,12 @@ The final result should look like:
 
 ## 7. Fungoid
 
-**Source heading:** `STELLAR DOGOS — FUNGOID XENOTYPE PORTRAIT GENERATION — 7/11`  
+**Source heading:** `STELLAR XENO — FUNGOID XENOTYPE PORTRAIT GENERATION — 7/11`  
 **Source footer:** `7/11 — Fungoid`  
 **Status:** DOCUMENTED
 
 ```text
-STELLAR DOGOS — FUNGOID XENOTYPE PORTRAIT GENERATION — 7/11
+STELLAR XENO — FUNGOID XENOTYPE PORTRAIT GENERATION — 7/11
 
 Using the provided photograph as the EXACT identity reference, transform the subject into a finished Stellaris-style FUNGOID species portrait.
 This is an artwork-generation task.
@@ -1595,7 +1595,7 @@ Avoid:
 
 PORTRAIT COMPOSITION
 
-Use the established Stellar Dogos portrait framing.
+Use the established Stellar Xeno portrait framing.
 The final portrait must be:
 - square
 - portrait-bust composition
@@ -1605,7 +1605,7 @@ The final portrait must be:
 - fungal chest/body structures continuing to the bottom edge
 - small transparent margin above the head and any fungal growth structures
 - approximately 91–92% vertical subject occupancy
-The subject should occupy approximately the same visual scale as the existing Stellar Dogos portraits.
+The subject should occupy approximately the same visual scale as the existing Stellar Xeno portraits.
 Account for fungal growths or other biological structures when establishing the top margin.
 Do not leave a large empty area above the head.
 Do not leave transparent space beneath the chest.
@@ -1711,7 +1711,7 @@ The subject should look like the same individual translated into a believable in
 
 TECHNICAL TARGET
 
-Generate the artwork at high resolution for later Stellar Dogos processing.
+Generate the artwork at high resolution for later Stellar Xeno processing.
 Output should be:
 - square
 - high resolution
@@ -1726,7 +1726,7 @@ Output should be:
 - no UI
 Do NOT create a DDS.
 Do NOT modify Stellaris files.
-This image will later be placed into the Stellar Dogos ImgHERE/ intake workflow.
+This image will later be placed into the Stellar Xeno ImgHERE/ intake workflow.
 
 ==================================================
 
@@ -1750,7 +1750,7 @@ Before finishing, verify:
 - There are no halos or environmental fringes.
 - There is no text, UI, frame, or watermark.
 The final result should look like:
-"The exact person from the supplied photograph, evolutionarily and artistically reimagined as a believable intelligent Fungoid species from Stellaris, professionally painted as a finished species portrait and framed for the existing Stellar Dogos portrait pipeline."
+"The exact person from the supplied photograph, evolutionarily and artistically reimagined as a believable intelligent Fungoid species from Stellaris, professionally painted as a finished species portrait and framed for the existing Stellar Xeno portrait pipeline."
 7/11 — Fungoid
 ```
 
@@ -1758,12 +1758,12 @@ The final result should look like:
 
 ## 8. Plantoid
 
-**Source heading:** `STELLAR DOGOS — PLANTOID XENOTYPE PORTRAIT GENERATION — 8/11`  
+**Source heading:** `STELLAR XENO — PLANTOID XENOTYPE PORTRAIT GENERATION — 8/11`  
 **Source footer:** `8/11 — Plantoid`  
 **Status:** DOCUMENTED
 
 ```text
-STELLAR DOGOS — PLANTOID XENOTYPE PORTRAIT GENERATION — 8/11
+STELLAR XENO — PLANTOID XENOTYPE PORTRAIT GENERATION — 8/11
 
 Using the provided photograph as the EXACT identity reference, transform the subject into a finished Stellaris-style PLANTOID species portrait.
 This is an artwork-generation task.
@@ -1853,7 +1853,7 @@ Avoid:
 
 PORTRAIT COMPOSITION
 
-Use the established Stellar Dogos portrait framing.
+Use the established Stellar Xeno portrait framing.
 The final portrait must be:
 - square
 - portrait-bust composition
@@ -1863,7 +1863,7 @@ The final portrait must be:
 - plant-derived chest/body structures continuing to the bottom edge
 - small transparent margin above the head and any botanical structures
 - approximately 91–92% vertical subject occupancy
-The subject should occupy approximately the same visual scale as the existing Stellar Dogos portraits.
+The subject should occupy approximately the same visual scale as the existing Stellar Xeno portraits.
 Account for leaves, branches, petals, vines, or other botanical structures when establishing the top margin.
 Do not leave a large empty area above the head.
 Do not leave transparent space beneath the chest.
@@ -1973,7 +1973,7 @@ The subject should look like the same individual translated into a believable in
 
 TECHNICAL TARGET
 
-Generate the artwork at high resolution for later Stellar Dogos processing.
+Generate the artwork at high resolution for later Stellar Xeno processing.
 Output should be:
 - square
 - high resolution
@@ -1988,7 +1988,7 @@ Output should be:
 - no UI
 Do NOT create a DDS.
 Do NOT modify Stellaris files.
-This image will later be placed into the Stellar Dogos ImgHERE/ intake workflow.
+This image will later be placed into the Stellar Xeno ImgHERE/ intake workflow.
 
 ==================================================
 
@@ -2012,7 +2012,7 @@ Before finishing, verify:
 - There are no halos or environmental fringes.
 - There is no text, UI, frame, or watermark.
 The final result should look like:
-"The exact person from the supplied photograph, evolutionarily and artistically reimagined as a believable intelligent Plantoid species from Stellaris, professionally painted as a finished species portrait and framed for the existing Stellar Dogos portrait pipeline."
+"The exact person from the supplied photograph, evolutionarily and artistically reimagined as a believable intelligent Plantoid species from Stellaris, professionally painted as a finished species portrait and framed for the existing Stellar Xeno portrait pipeline."
 8/11 — Plantoid
 ```
 
@@ -2020,12 +2020,12 @@ The final result should look like:
 
 ## 9. Lithoid
 
-**Source heading:** `STELLAR DOGOS — LITHOID XENOTYPE PORTRAIT GENERATION — 9/11`  
+**Source heading:** `STELLAR XENO — LITHOID XENOTYPE PORTRAIT GENERATION — 9/11`  
 **Source footer:** `9/11 — Lithoid`  
 **Status:** DOCUMENTED
 
 ```text
-STELLAR DOGOS — LITHOID XENOTYPE PORTRAIT GENERATION — 9/11
+STELLAR XENO — LITHOID XENOTYPE PORTRAIT GENERATION — 9/11
 
 Using the provided photograph as the EXACT identity reference, transform the subject into a finished Stellaris-style LITHOID species portrait.
 This is an artwork-generation task.
@@ -2118,7 +2118,7 @@ Avoid:
 
 PORTRAIT COMPOSITION
 
-Use the established Stellar Dogos portrait framing.
+Use the established Stellar Xeno portrait framing.
 The final portrait must be:
 - square
 - portrait-bust composition
@@ -2128,7 +2128,7 @@ The final portrait must be:
 - lithoid chest/body continuing to the bottom edge
 - small transparent margin above the head and any mineral structures
 - approximately 91–92% vertical subject occupancy
-The subject should occupy approximately the same visual scale as the existing Stellar Dogos portraits.
+The subject should occupy approximately the same visual scale as the existing Stellar Xeno portraits.
 Account for crystalline formations or other mineral structures when establishing the top margin.
 Do not leave a large empty area above the head.
 Do not leave transparent space beneath the chest.
@@ -2238,7 +2238,7 @@ The subject should look like the same individual translated into a believable in
 
 TECHNICAL TARGET
 
-Generate the artwork at high resolution for later Stellar Dogos processing.
+Generate the artwork at high resolution for later Stellar Xeno processing.
 Output should be:
 - square
 - high resolution
@@ -2253,7 +2253,7 @@ Output should be:
 - no UI
 Do NOT create a DDS.
 Do NOT modify Stellaris files.
-This image will later be placed into the Stellar Dogos ImgHERE/ intake workflow.
+This image will later be placed into the Stellar Xeno ImgHERE/ intake workflow.
 
 ==================================================
 
@@ -2277,7 +2277,7 @@ Before finishing, verify:
 - There are no halos or environmental fringes.
 - There is no text, UI, frame, or watermark.
 The final result should look like:
-"The exact person from the supplied photograph, evolutionarily and artistically reimagined as a believable intelligent Lithoid species from Stellaris, professionally painted as a finished species portrait and framed for the existing Stellar Dogos portrait pipeline."
+"The exact person from the supplied photograph, evolutionarily and artistically reimagined as a believable intelligent Lithoid species from Stellaris, professionally painted as a finished species portrait and framed for the existing Stellar Xeno portrait pipeline."
 9/11 — Lithoid
 ```
 
@@ -2285,12 +2285,12 @@ The final result should look like:
 
 ## 10. Necroid
 
-**Source heading:** `STELLAR DOGOS — NECROID XENOTYPE PORTRAIT GENERATION — 10/11`  
+**Source heading:** `STELLAR XENO — NECROID XENOTYPE PORTRAIT GENERATION — 10/11`  
 **Source footer:** `10/11 — Necroid`  
 **Status:** DOCUMENTED
 
 ```text
-STELLAR DOGOS — NECROID XENOTYPE PORTRAIT GENERATION — 10/11
+STELLAR XENO — NECROID XENOTYPE PORTRAIT GENERATION — 10/11
 
 Using the provided photograph as the EXACT identity reference, transform the subject into a finished Stellaris-style NECROID species portrait.
 This is an artwork-generation task.
@@ -2386,7 +2386,7 @@ Avoid:
 
 PORTRAIT COMPOSITION
 
-Use the established Stellar Dogos portrait framing.
+Use the established Stellar Xeno portrait framing.
 The final portrait must be:
 - square
 - portrait-bust composition
@@ -2396,7 +2396,7 @@ The final portrait must be:
 - necroid chest/body continuing to the bottom edge
 - small transparent margin above the head
 - approximately 91–92% vertical subject occupancy
-The subject should occupy approximately the same visual scale as the existing Stellar Dogos portraits.
+The subject should occupy approximately the same visual scale as the existing Stellar Xeno portraits.
 Do not leave a large empty area above the head.
 Do not leave transparent space beneath the chest.
 The lower chest/body should naturally continue beyond the bottom edge of the portrait.
@@ -2503,7 +2503,7 @@ The subject should look like the same individual translated into a believable in
 
 TECHNICAL TARGET
 
-Generate the artwork at high resolution for later Stellar Dogos processing.
+Generate the artwork at high resolution for later Stellar Xeno processing.
 Output should be:
 - square
 - high resolution
@@ -2518,7 +2518,7 @@ Output should be:
 - no UI
 Do NOT create a DDS.
 Do NOT modify Stellaris files.
-This image will later be placed into the Stellar Dogos ImgHERE/ intake workflow.
+This image will later be placed into the Stellar Xeno ImgHERE/ intake workflow.
 
 ==================================================
 
@@ -2542,7 +2542,7 @@ Before finishing, verify:
 - There is no blood, gore, exposed organs, or graphic decomposition.
 - There is no text, UI, frame, or watermark.
 The final result should look like:
-"The exact person from the supplied photograph, evolutionarily and artistically reimagined as a believable intelligent Necroid species from Stellaris, professionally painted as a finished species portrait and framed for the existing Stellar Dogos portrait pipeline."
+"The exact person from the supplied photograph, evolutionarily and artistically reimagined as a believable intelligent Necroid species from Stellaris, professionally painted as a finished species portrait and framed for the existing Stellar Xeno portrait pipeline."
 10/11 — Necroid
 ```
 
@@ -2560,14 +2560,14 @@ The Portrait Creator selector may still list Machine for registration; that is s
 
 ## 12. Toxoid
 
-**Source heading:** `STELLAR DOGOS — TOXOID XENOTYPE PORTRAIT GENERATION — 11/12`  
+**Source heading:** `STELLAR XENO — TOXOID XENOTYPE PORTRAIT GENERATION — 11/12`  
 **Source footer:** `11/12 — Toxoid`  
 **Status:** DOCUMENTED — image-generation prompt only  
 
 **Pipeline:** Toxoid is **not** in the interactive Portrait Creator selector and is **not** registered by the current pipeline. Future implementation task.
 
 ```text
-STELLAR DOGOS — TOXOID XENOTYPE PORTRAIT GENERATION — 11/12
+STELLAR XENO — TOXOID XENOTYPE PORTRAIT GENERATION — 11/12
 
 Using the provided photograph as the EXACT identity reference, transform the subject into a finished Stellaris-style TOXOID species portrait.
 This is an artwork-generation task.
@@ -2669,7 +2669,7 @@ Avoid:
 
 PORTRAIT COMPOSITION
 
-Use the established Stellar Dogos portrait framing.
+Use the established Stellar Xeno portrait framing.
 The final portrait must be:
 - square
 - portrait-bust composition
@@ -2679,7 +2679,7 @@ The final portrait must be:
 - Toxoid chest/body continuing to the bottom edge
 - small transparent margin above the head
 - approximately 91–92% vertical subject occupancy
-The subject should occupy approximately the same visual scale as the existing Stellar Dogos portraits.
+The subject should occupy approximately the same visual scale as the existing Stellar Xeno portraits.
 Do not leave a large empty area above the head.
 Do not leave transparent space beneath the chest.
 The lower chest/body should naturally continue beyond the bottom edge of the portrait.
@@ -2791,7 +2791,7 @@ The subject should look like the same individual translated into a believable in
 
 TECHNICAL TARGET
 
-Generate the artwork at high resolution for later Stellar Dogos processing.
+Generate the artwork at high resolution for later Stellar Xeno processing.
 Output should be:
 - square
 - high resolution
@@ -2806,7 +2806,7 @@ Output should be:
 - no UI
 Do NOT create a DDS.
 Do NOT modify Stellaris files.
-This image will later be placed into the Stellar Dogos ImgHERE/ intake workflow.
+This image will later be placed into the Stellar Xeno ImgHERE/ intake workflow.
 
 ==================================================
 
@@ -2832,7 +2832,7 @@ Before finishing, verify:
 - There are no environmental toxic clouds or particles.
 - There is no text, UI, frame, or watermark.
 The final result should look like:
-"The exact person from the supplied photograph, evolutionarily and artistically reimagined as a believable intelligent Toxoid species from Stellaris, professionally painted as a finished species portrait and framed for the existing Stellar Dogos portrait pipeline."
+"The exact person from the supplied photograph, evolutionarily and artistically reimagined as a believable intelligent Toxoid species from Stellaris, professionally painted as a finished species portrait and framed for the existing Stellar Xeno portrait pipeline."
 11/12 — Toxoid
 ```
 

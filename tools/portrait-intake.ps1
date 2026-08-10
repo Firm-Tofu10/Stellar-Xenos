@@ -1,4 +1,4 @@
-# Stellar Dogos — Phase 3.1 Portrait Intake / Source Preparation
+# Stellar Xeno — Phase 3.1 Portrait Intake / Source Preparation
 # Discover → classify → interactive name → number → prepare → validate → cleanup
 #
 # Does NOT: create DDS, portrait IDs, or Stellaris registration.
@@ -641,7 +641,7 @@ $imgHere = Get-ImgHerePath -RepoRoot $repoRoot
 $assetsSource = Get-AssetsSourcePath -RepoRoot $repoRoot
 
 if (-not (Test-SdPipelineMode)) {
-    Write-Host "Stellar Dogos - Portrait Creator"
+    Write-Host "Stellar Xeno - Portrait Creator"
     Write-Host ""
 }
 

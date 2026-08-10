@@ -1,5 +1,5 @@
-﻿##############################################################
-### Stellar Dogos - portrait category overrides
+##############################################################
+### Stellar Xeno - portrait category overrides
 ###
 ### Each block REPLACES the vanilla category of the same key so
 ### we can append one mod set with minimal change.

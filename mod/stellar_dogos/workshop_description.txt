@@ -1,0 +1,11 @@
+Stellar Xeno
+
+Custom Stellaris species portraits from your own images.
+
+Stellar Xeno adds selectable static species portraits for Stellaris 4.4.x (Pegasus). Subscribe, enable the mod in the launcher, then pick a portrait when creating a species of the matching type.
+
+Included portraits (examples): Mammalian (Piglet, Oakley, Angus, and more), Avian, Reptilian, and Fungoid registrations shipped in this package.
+
+This Workshop item is the game mod only. It does not include the local Portrait Creator tools used to generate and register new portraits on a developer machine.
+
+Compatibility: Stellaris v4.4.*

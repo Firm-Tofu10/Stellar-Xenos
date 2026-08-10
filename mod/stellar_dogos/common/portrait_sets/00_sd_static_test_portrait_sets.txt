@@ -1,5 +1,5 @@
-﻿##############################################################
-### Stellar Dogos - portrait sets
+##############################################################
+### Stellar Xeno - portrait sets
 ###
 ### Pattern from vanilla common/portrait_sets/00_portrait_sets.txt:
 ### - species_class = CLASS

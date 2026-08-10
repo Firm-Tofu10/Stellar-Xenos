@@ -1,4 +1,4 @@
-# Stellar Dogos — Phase 6: End-to-End Portrait Pipeline
+# Stellar Xeno — Phase 6: End-to-End Portrait Pipeline
 # Chains existing tools: intake → species-type selection → DDS → registration.
 # Does NOT redesign architecture, accept a name CLI bypass, or touch vanilla Stellaris.
 #
@@ -144,7 +144,7 @@ $registerScript = Join-Path $toolsDir "portrait-register.ps1"
 $xenotypesScript = Join-Path $toolsDir "portrait-xenotypes.ps1"
 $pathsHelper = Join-Path $toolsDir "portrait-paths.ps1"
 
-Write-Host "Stellar Dogos - Portrait Creator"
+Write-Host "Stellar Xeno - Portrait Creator"
 Write-Host ""
 
 foreach ($required in @($imgHere, $assetsSource, $ddsDir, $modPaths.PortraitsTxt, $modPaths.SetTxt, $modPaths.CategoryTxt, $intakeScript, $ddsScript, $registerScript, $xenotypesScript, $pathsHelper)) {

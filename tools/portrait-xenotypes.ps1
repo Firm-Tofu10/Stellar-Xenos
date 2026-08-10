@@ -1,4 +1,4 @@
-# Stellar Dogos — Phase 7: Xenotype catalog (isolated mapping)
+# Stellar Xeno — Phase 7: Xenotype catalog (isolated mapping)
 # Dot-source from portrait-register.ps1 / portrait-pipeline.ps1 / portrait-intake.ps1.
 # Vanilla category keys / species_class / set lists inspected from Stellaris 4.4.x
 # common/portrait_categories/00_portrait_categories.txt (read-only).

@@ -1,5 +1,5 @@
-﻿##############################################################
-### Stellar Dogos - static portrait definitions
+##############################################################
+### Stellar Xeno - static portrait definitions
 ###
 ### Portraits:
 ###   sd_dog_piglet - Piglet

@@ -1,4 +1,4 @@
-# Shared path ownership for Stellar Dogos tools.
+# Shared path ownership for Stellar Xeno tools.
 # Canonical production Stellaris mod output: mod/stellar_dogos/
 # Experiment copy remains at experiment/sd_static_portrait_test/ as regression/reference.
 

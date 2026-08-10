@@ -3,5 +3,6 @@ tags={
 	"Graphics"
 	"Species"
 }
-name="Stellar Dogos"
+name="Stellar Xeno"
+picture="thumbnail.png"
 supported_version="v4.4.*"

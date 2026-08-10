@@ -1,10 +1,10 @@
-# Stellar Dogos — Portrait Generation Prompts
+# Stellar Xeno — Portrait Generation Prompts
 
 > **Xenotype prompt library (Phase 8):**  
 > For the full set of **xenotype-specific** image-generation prompts extracted from the ChatGPT source export, see **[portrait-generation-prompts.md](portrait-generation-prompts.md)**.  
-> Those prompts are for an external image model (not pipeline commands). Toxoid is documented there as **prompt-only** (not yet in the Portrait Creator selector).
+> Those prompts are for an external image model (not pipeline commands). **Toxoid** is implemented in the Portrait Creator selector and registration path (same as the other xenotypes).
 
-Successful **dog-development** image-generation prompts and related refinement instructions developed during early Stellar Dogos sessions are preserved below.
+Successful **dog-development** image-generation prompts and related refinement instructions developed during early Stellar Xeno sessions are preserved below.
 
 Use these to reproduce the early artwork workflow. Technical conversion (PNG → DDS → registration) is documented in [portrait-workflow.md](portrait-workflow.md).
 
@@ -282,7 +282,7 @@ Use this regeneration prompt when regenerating Angus (attach the **SOURCE PHOTO*
 ```text
 Create a Stellaris-style mammalian species portrait using the provided Angus photograph as the exact subject reference.
 
-The goal is to create a final portrait that matches the framing and subject placement of vanilla Stellaris mammalian species portraits, and matches the successful Piglet/Oakley portrait pipeline for Stellar Dogos.
+The goal is to create a final portrait that matches the framing and subject placement of vanilla Stellaris mammalian species portraits, and matches the successful Piglet/Oakley portrait pipeline for Stellar Xeno.
 
 SUBJECT:
 - Preserve Angus's exact recognizable appearance from the reference photo.
@@ -336,7 +336,7 @@ Template for Dog N. Replace bracketed fields; attach the dog’s SOURCE PHOTO.
 ```text
 Create a Stellaris-style mammalian species portrait using the provided [DOG_NAME] photograph as the exact subject reference.
 
-The goal is to create a final portrait that matches the framing and subject placement of vanilla Stellaris mammalian species portraits used by the Stellar Dogos mod.
+The goal is to create a final portrait that matches the framing and subject placement of vanilla Stellaris mammalian species portraits used by the Stellar Xeno mod.
 
 SUBJECT:
 - Preserve [DOG_NAME]'s exact recognizable appearance.
@@ -355,7 +355,7 @@ STYLE:
 - No outlines.
 
 CRITICAL COMPOSITION REQUIREMENT:
-- Match vertical framing of successful Stellar Dogos portraits (Oakley/Piglet).
+- Match vertical framing of successful Stellar Xeno portraits (Oakley/Piglet).
 - Head in the upper-middle.
 - Fill approximately 85–95% of vertical space (aim ~91–92%).
 - Chest/body fur to the BOTTOM EDGE — intentionally cropped.

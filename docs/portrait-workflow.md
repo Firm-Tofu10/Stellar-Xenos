@@ -1,4 +1,4 @@
-# Stellar Dogos — Portrait Workflow
+# Stellar Xeno — Portrait Workflow
 
 Authoritative **image → DDS → Stellaris** pipeline for static dog portraits.
 
@@ -357,7 +357,7 @@ See [development-roadmap.md](development-roadmap.md):
 ### Future scope (documented only)
 
 - **Portrait variants** — multiple visual variants per custom portrait concept (leaders/appearances). Not implemented.
-- **Workshop positioning** — present as a custom-portrait workflow (“create Stellaris portraits from your own images”), even if the repo remains named Stellar Dogos.
+- **Workshop positioning** — present **Stellar Xeno** as a custom-portrait workflow (“create Stellaris portraits from your own images”); dogs remain historical/regression fixtures, not the product limit.
 
 Must protect existing portraits and never touch vanilla.
 

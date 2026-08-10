@@ -1,4 +1,4 @@
-# Stellar Dogos — Phase 5/7: Portrait Registration
+# Stellar Xeno — Phase 5/7: Portrait Registration
 # Registers an existing Phase 4 DDS into the production mod (mod/stellar_dogos):
 #   portrait definition + xenotype portrait set + category exposure.
 # Does not convert images or touch vanilla Stellaris.
@@ -308,7 +308,7 @@ function Build-PortraitsFile {
 
     $sb = New-Object System.Text.StringBuilder
     [void]$sb.AppendLine("##############################################################")
-    [void]$sb.AppendLine("### Stellar Dogos - static portrait definitions")
+    [void]$sb.AppendLine("### Stellar Xeno - static portrait definitions")
     [void]$sb.AppendLine("###")
     [void]$sb.AppendLine("### Portraits:")
     foreach ($id in $OrderedIds) {
@@ -342,7 +342,7 @@ function Build-SetsFile {
 
     $sb = New-Object System.Text.StringBuilder
     [void]$sb.AppendLine("##############################################################")
-    [void]$sb.AppendLine("### Stellar Dogos - portrait sets")
+    [void]$sb.AppendLine("### Stellar Xeno - portrait sets")
     [void]$sb.AppendLine("###")
     [void]$sb.AppendLine("### Pattern from vanilla common/portrait_sets/00_portrait_sets.txt:")
     [void]$sb.AppendLine("### - species_class = CLASS")
@@ -376,7 +376,7 @@ function Build-CategoriesFile {
 
     $sb = New-Object System.Text.StringBuilder
     [void]$sb.AppendLine("##############################################################")
-    [void]$sb.AppendLine("### Stellar Dogos - portrait category overrides")
+    [void]$sb.AppendLine("### Stellar Xeno - portrait category overrides")
     [void]$sb.AppendLine("###")
     [void]$sb.AppendLine("### Each block REPLACES the vanilla category of the same key so")
     [void]$sb.AppendLine("### we can append one mod set with minimal change.")
@@ -421,7 +421,7 @@ function Write-TextAtomic {
 $repoRoot = Get-RepoRoot
 $paths = Get-ExperimentPaths -RepoRoot $repoRoot
 
-Write-SdHost "Stellar Dogos - Portrait Registration"
+Write-SdHost "Stellar Xeno - Portrait Registration"
 Write-SdHost ""
 
 foreach ($required in @($paths.PortraitsTxt, $paths.SetTxt, $paths.CategoryTxt, $paths.DdsDir)) {

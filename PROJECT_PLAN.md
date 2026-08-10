@@ -1,6 +1,8 @@
-# Stellar Dogos — Project Plan
+# Stellar Xeno — Project Plan
 
-**Mod name:** Stellar Dogos  
+**Mod name:** Stellar Xeno  
+**Repository / project name:** Stellar Xeno  
+
 **Target game:** Stellaris 4.4.x (Pegasus)  
 **Installed research/test build:** **Pegasus v4.4.6** (`modsCompatibilityVersion = 4.4`)  
 **Vanilla install (read-only):** `C:\Program Files (x86)\Steam\steamapps\common\Stellaris`
@@ -33,22 +35,24 @@ Do not convert assumptions into confirmed facts.
 
 ## 1. Project goal
 
-**Stellar Dogos** is a Stellaris 4.4.x mod that adds **real-world dogs** as selectable **Mammalian** species portraits.
+**Stellar Xeno** is a Stellaris 4.4.x project for turning custom reference photographs into selectable species portraits across multiple Stellaris xenotypes.
 
-### Initial scope
+Dogs were the original development and regression subjects. The current workflow is intended for arbitrary custom portrait subjects and is not limited to dogs.
+
+### Initial development fixtures
 
 - Piglet
 - Oakley
 - Angus
 
-Designed to support additional dogs later.
+These (and later dog fixtures) remain important regression/development portraits. The pipeline also supports additional custom subjects and xenotypes.
 
 ### Release goals
 
 | Goal | Status |
 |------|--------|
-| Users install mod and use included dog portraits (Workshop) | **TARGET** — **NOT READY** |
-| Reusable portrait ingestion workflow/tool (no manual Stellaris file editing per dog) | **IMPLEMENTED** for experiment path (player-friendly pipeline); Workshop packaging **NOT READY** |
+| Users install mod and use included / created portraits (Workshop) | **TARGET** — package ready; human upload pending |
+| Reusable portrait ingestion workflow/tool (no manual Stellaris file editing per portrait) | **IMPLEMENTED** for production path (`mod/stellar_dogos/`); Workshop package structurally prepared |
 
 ---
 
@@ -71,7 +75,7 @@ Designed to support additional dogs later.
 | Canonical PNG naming (`dogNN_<name>_<xeno>_stellaris.png`) | **IMPLEMENTED** — xenotype abbreviation in source filename only; DDS/ID unchanged |
 | Xenotype image-generation prompt library | **DOCUMENTED** ([docs/portrait-generation-prompts.md](docs/portrait-generation-prompts.md)); Mammalian & Machine bodies **ABSENT** from source export; Toxoid prompt **DOCUMENTED**; Toxoid selector/registration **IMPLEMENTED** |
 | Full UI compatibility (leaders, council, diplomacy, …) | **NEEDS VERIFICATION** |
-| Steam Workshop release | **NOT READY** |
+| Steam Workshop release | **PACKAGE READY** — structural prep done; human in-game test + Steam upload remain ([docs/workshop-release.md](docs/workshop-release.md)) |
 
 Working implementation lives in:
 
