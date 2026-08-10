@@ -1,5 +1,5 @@
 ##############################################################
-### SD Static Portrait Test - portrait set (EXPERIMENT ONLY)
+### SD Static Portrait Test — portrait set (EXPERIMENT ONLY)
 ###
 ### VANILLA-VERIFIED pattern from common/portrait_sets/00_portrait_sets.txt:
 ### - species_class = MAM
@@ -13,12 +13,10 @@ sd_static_test = {
 	portraits = {
 		"sd_dog_piglet"
 		"sd_dog_02"
-		"sd_dog_angus"
 	}
 
 	non_randomized_portraits = {
 		"sd_dog_piglet"
 		"sd_dog_02"
-		"sd_dog_angus"
 	}
 }

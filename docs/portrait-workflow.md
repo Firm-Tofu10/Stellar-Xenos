@@ -1,387 +1,315 @@
 # Stellar Dogos — Portrait Workflow
 
-This document preserves the complete process for turning a real dog photograph into a Stellaris-compatible static species portrait for the **Stellar Dogos** mod.
+Authoritative **image → DDS → Stellaris** pipeline for static dog portraits.
 
-Use this when adding additional dogs later. Do not redesign the mod architecture for each new dog.
+Related:
+
+- [portrait-prompts.md](portrait-prompts.md) — generation prompts
+- [portrait-testing.md](portrait-testing.md) — in-game matrix
+- [development-roadmap.md](development-roadmap.md) — phases
+- [PROJECT_PLAN.md](../PROJECT_PLAN.md) — goals / current state
+
+---
+
+## Certainty labels
+
+| Label | Meaning |
+|-------|---------|
+| **CONFIRMED** | Observed in Stellaris 4.4.6 or verified on disk |
+| **ASSUMPTION** | Reasonable design choice, not independently proven |
+| **TARGET** | Desired behavior we are designing toward |
+| **NEEDS VERIFICATION** | Requires more game testing or inspection |
 
 ---
 
 ## 1. Goal
 
-Take a real dog photograph and produce a Stellaris species portrait that:
+Turn a real dog photograph into a selectable Mammalian species portrait that:
 
-- Looks visually appropriate for Stellaris mammalian species portraits.
-- Preserves the real dog’s recognizable appearance.
-- Has a **transparent** background (true alpha — not black/white fill).
-- Uses composition appropriate for Stellaris species portraits.
-- Converts cleanly into the DDS format required by the working implementation.
-- Can be registered as another portrait without redesigning the mod.
+- Preserves the dog’s recognizable identity
+- Uses Stellaris-compatible static `texturefile` art
+- Has genuine alpha transparency
+- Uses established framing
+- Registers without redesigning the mod each time
 
----
-
-## 2. Technical Modding Discovery
-
-### Game version
-
-The installation used for this work is **Stellaris Pegasus v4.4.6** (`modsCompatibilityVersion`: `4.4`).
-
-### What vanilla does
-
-- Live vanilla species portraits primarily use **3D `entity`** portraits (mesh + animation + `character_textures`).
-- Vanilla portrait definition comments in `gfx/portraits/portraits/00_portraits_main.txt` still document alternate bindings, including **`texturefile`** (and `spriteType`), but **no live vanilla species portrait uses `texturefile`**.
-
-### What we verified experimentally
-
-The `texturefile` static-portrait mechanism was **not assumed** from vanilla usage. It was **confirmed experimentally** in Stellaris 4.4.6 with a minimal one-portrait test mod, then reused for Piglet.
-
-Proof-of-concept / known-good technical details:
-
-| Item | Working value |
-|------|----------------|
-| Portrait binding | `texturefile = "….dds"` |
-| DDS size | **256×256** |
-| DDS format | Uncompressed **32-bit RGBA** (`pfFlags = 0x41`) |
-| Alpha | **Must be preserved** (transparent outside the dog) |
-| Clothes | `clothes_selector = "no_texture"` |
-| Attachments | `attachment_selector = "no_texture"` |
-| Greeting | `greeting_sound = "mammalian_01_greetings"` |
-| Species class | Portrait set uses `species_class = MAM` |
-| UI exposure | Portrait set appended under the **Mammalian** category |
-
-Registration flow:
-
-1. Portrait definition (`portraits = { <id> = { … texturefile = … } }`)
-2. Portrait set listing that ID (`species_class = MAM`)
-3. Mammalian category including that set
+Current dogs: **Piglet**, **Oakley**, **Angus** (more later).
 
 ---
 
-## 3. Working Mod Pipeline
+## 2. Stellaris environment & vanilla research
+
+**CONFIRMED** — Installed game: **Pegasus v4.4.6**; `modsCompatibilityVersion = 4.4`.
+
+Inspected (read-only) among others:
+
+- `common/portrait_categories`
+- `common/portrait_sets`
+- `common/species_classes`
+- `gfx/portraits/portraits`
+- `gfx/models/portraits`
+- `gfx/portraits/asset_selectors`
+- sprite configuration / leader backgrounds
+- relevant localisation / configuration
+
+**CONFIRMED** — Live vanilla species portraits primarily use `entity = …` (3D).
+
+**CONFIRMED** — Vanilla comments still document alternate bindings including `spriteType` and `texturefile`. Those were **not** treated as automatically valid.
+
+**CONFIRMED (experimental)** — Static 2D species portraits using `texturefile` **work in Stellaris 4.4.6**. Proven by the experiment mod, not by a live vanilla static species portrait.
+
+Do not describe `texturefile` as merely theoretical. Do not claim vanilla currently ships species portraits this way.
+
+---
+
+## 3. Proof-of-concept path
+
+Working experiment:
+
+`experiment/sd_static_portrait_test/`
+
+Established chain:
 
 ```text
-Real dog photograph
-  → generate Stellaris-style portrait (with reference photo)
-  → ensure transparent background
-  → ensure correct portrait composition
-  → save high-resolution RGBA PNG
-  → downscale to 256×256
-  → convert to uncompressed 32-bit RGBA DDS
-  → preserve alpha
-  → place DDS under the mod's gfx portrait directory
-  → point the portrait definition's texturefile at the DDS
-  → launch Stellaris
-  → verify in the species creation screen
+portrait definition
+  → texturefile
+  → 256×256 RGBA DDS
+  → portrait set (species_class = MAM)
+  → Mammalian category (set appended)
+  → Stellaris species creation screen
 ```
 
-### Current working paths (examples)
+Working portrait fields (**do not invent extra syntax**):
+
+```text
+clothes_selector = "no_texture"
+attachment_selector = "no_texture"
+greeting_sound = "mammalian_01_greetings"
+texturefile = "gfx/models/portraits/sd_static_test/<file>.dds"
+```
+
+---
+
+## 4. Current dogs
+
+| Dog | Portrait ID | DDS | Status |
+|-----|-------------|-----|--------|
+| Piglet | `sd_dog_piglet` | `sd_dog_piglet.dds` | **WORKING IN-GAME** (species creation) — **protected** |
+| Oakley | `sd_dog_02` | `sd_dog_02.dds` | **WORKING IN-GAME** — **gold standard / protected** |
+| Angus | `sd_dog_angus` | `sd_dog_angus.dds` | **FUNCTIONALLY WORKING IN-GAME** — regenerated ImgHERE art |
+
+### Piglet notes
+
+Iterations:
+
+1. Sci-fi opaque background → rectangular plate (bad)
+2. Transparent but floating (too much empty space under chest)
+3. Transparent + bottom-edge crop
+4. Halo cleanup (~1488 → ~29 light-fringe pixels) + uniform scale ~**+8%**
+5. Final ~**92%** vertical fill, ~**20px** top margin at 256×256, bottom flush
+
+Do **not** casually regenerate Piglet.
+
+### Oakley notes
+
+Strongest visual reference. ~**91%** vertical fill, ~**23px** top margin, bottom flush. Do not modify unless a task explicitly requires it.
+
+### Angus notes
+
+Initial implementation used a raw photo cutout. Regenerated Stellaris-style art from `ImgHERE/dog03_angus_stellaris.png` was wired to the same ID and displays in-game. Current scale/framing was accepted; further normalization deferred until side-by-side review.
+
+---
+
+## 5. ImgHERE staging
+
+`ImgHERE/` is the human-facing **intake/staging** folder for finished/generated portrait artwork (and, for Phase 3.1 tooling, newly dropped candidate images).
+
+### Canonical internal filename (pipeline format)
+
+The pipeline’s stable internal name remains:
+
+`dog##_<name>_stellaris.png`
+
+Examples already in use:
+
+- `dog01_piglet_stellaris.png`
+- `dog02_oakley_stellaris.png`
+- `dog03_angus_stellaris.png`
+
+Users are **not** required to invent or type this format. Numbering and canonical renaming are tool responsibilities (Phase 3.1 design).
+
+### Intended Phase 3.1 user flow (**TARGET** — not implemented yet)
+
+```text
+Drop a dog image into ImgHERE
+  → enter the dog's name when prompted
+  → tool assigns the next available dog number
+  → tool prepares the canonical source image
+```
+
+Supported drop formats (minimum design): PNG, JPG/JPEG, WEBP. Preparation converts to canonical PNG source.
+
+```text
+ImgHERE/<any supported image>
+  → console: "What is this dog's name?"
+  → e.g. Liberty → dog04_liberty_stellaris.png
+  → ImgHERE/dog04_liberty_stellaris.png
+  → assets/source/dog04_liberty_stellaris.png
+  → STOP (Phase 3.1)
+```
+
+If a file is **already** named `dog##_<name>_stellaris.png`, do not ask again — validate/prepare that canon only.
+
+Conflicts: if the target canonical name already exists, stop and explain; never overwrite Piglet/Oakley/Angus or other existing canons.
+
+Do not treat every file in `ImgHERE` as a new dog (ignore unsupported / raw-reference files; ask when unsure). Full design: [development-roadmap.md](development-roadmap.md) Phase 3.1.
+
+**Rules:**
+
+- Finished portraits and new candidates go here for intake
+- Raw reference photographs that are not finished portraits should not be auto-ingested (e.g. historical Angus JPG)
+- Do **not** automatically delete originals in `ImgHERE`
+
+Later phases (after 3.1) add DDS + Stellaris registration. Full importer UX remains future work.
+
+---
+
+## 6. Current manual pipeline (**CONFIRMED** working)
+
+Still valid for developers who prepare canons by hand. Preferred future intake is interactive naming (Section 5).
+
+```text
+Generated portrait
+  ↓
+ImgHERE/   (drop any supported image; tool will name — or use existing canon)
+  ↓
+copy / write prepared canon to assets/source/dog##_<name>_stellaris.png
+  ↓
+validate alpha
+  ↓
+background → alpha only if needed (no art regen)
+  ↓
+── Phase 3.1 ends above; below is later ──
+  ↓
+256×256 (preserve alpha; fit without inventing opaque plate)
+  ↓
+uncompressed 32-bit RGBA DDS (pfFlags=0x41)
+  ↓
+gfx/models/portraits/sd_static_test/<id>.dds
+  ↓
+portrait definition (texturefile)
+  ↓
+portrait set sd_static_test
+  ↓
+Mammalian category
+  ↓
+Stellaris
+  ↓
+in-game test
+```
+
+Asset prep through `assets/source/` is still largely **MANUAL** until Phase 3.1 is implemented. See [development-roadmap.md](development-roadmap.md).
+
+Paths:
 
 | Role | Path |
 |------|------|
-| Source art / references | `assets/source/` |
-| Game-ready DDS (experiment) | `experiment/sd_static_portrait_test/gfx/models/portraits/sd_static_test/` |
-| Portrait definitions | `experiment/sd_static_portrait_test/gfx/portraits/portraits/` |
+| Staging | `ImgHERE/` |
+| Source archive | `assets/source/` |
+| Game DDS | `experiment/sd_static_portrait_test/gfx/models/portraits/sd_static_test/` |
+| Portrait defs | `experiment/sd_static_portrait_test/gfx/portraits/portraits/` |
 | Portrait sets | `experiment/sd_static_portrait_test/common/portrait_sets/` |
-| Mammalian category override | `experiment/sd_static_portrait_test/common/portrait_categories/` |
+| Category override | `experiment/sd_static_portrait_test/common/portrait_categories/` |
 
-Keep **source PNGs** and **game-ready DDS** separate. Do not treat the DDS as the archival master.
-
----
-
-## 4. Image Generation Process
-
-### Sci-fi background version (rejected for final look)
-
-The first generated portrait included a complete sci-fi background (space, planet, hex overlays, etc.).
-
-- It **technically loaded** in Stellaris via `texturefile`.
-- It **failed visually**: the entire square was opaque, so the dog sat inside an obvious rectangular plate.
-
-### Transparency requirements (required going forward)
-
-Image generation must require:
-
-- Genuine transparency
-- No background
-- No scenery
-- No planet
-- No stars
-- No hexagonal background
-- No frame / border / UI / text / watermark
-- Clean fur edges
-- Dog completely opaque
-- Everything outside the dog transparent
-
-This solved the rectangular-background problem.
-
-**Note:** Generators may still output an opaque near-white plate. If so, convert the plate to alpha (e.g. border flood-fill of near-white) **without** flattening onto black or white, then save as RGBA PNG before DDS conversion.
+Keep source PNGs and game DDS separate.
 
 ---
 
-## 5. Portrait Composition Problem
+## 7. Image composition rules
 
-### Transparent but floating (rejected)
+Based on Piglet and Oakley.
 
-The first transparent version still had **incorrect vertical framing**: too much empty transparent space under the chest compared with vanilla mammalian portraits. The dog looked like it was floating in the square.
+| Rule | Label |
+|------|--------|
+| Bottom-edge crop works | **CONFIRMED** |
+| ~91–92% vertical fill looks correct in species UI | **CONFIRMED** (empirical) |
+| Small top margin works | **CONFIRMED** |
+| Future portraits should initially target the same proportions | **ASSUMPTION / TARGET** |
+| Whether values should be fully automated | **NEEDS VERIFICATION** |
+| Whether all Stellaris portrait contexts need identical framing | **NEEDS VERIFICATION** |
 
-### Corrected framing (preferred)
+Target composition:
 
-Regenerate with explicit composition requirements:
-
-- Small amount of space above the ears
-- Head in the upper-middle
-- Subject occupies approximately **85–95%** of vertical space
-- Chest/body fur extends to the **bottom edge**
-- Bottom fur is **intentionally cropped** by the image boundary
-- Little or no transparent space below the dog
-- Dog appears **anchored** in the portrait, not floating
-
-Visual relationship:
-
-```text
-TOP: small transparent space
-  ↓
-ears / head
-  ↓
-face
-  ↓
-neck / chest
-  ↓
-fur continues
-  ↓
-BOTTOM EDGE — fur cropped by the frame
-```
-
-This became the current Piglet portrait composition.
+- ~91–92% vertical subject fill
+- Small transparent margin above ears
+- Large dominant head / bust
+- Chest/body reaches bottom edge
+- Little/no transparent space under the dog
+- Subject must not float mid-canvas
 
 ---
 
-## 6. Image Generation Prompt
+## 8. Transparency / alpha rules
 
-Reusable prompt for future dogs. Replace the dog’s name and subject-specific appearance lines; keep composition and transparency requirements intact.
+**CONFIRMED** requirements for game assets:
 
-```text
-Create a Stellaris-style mammalian species portrait using the provided Piglet image as the exact subject reference.
+- Genuine alpha channel
+- Dog opaque / near-opaque
+- Outside silhouette transparent
+- No rectangular background
+- No halo / colored fringe (minimize; fine fur may retain tiny residual)
+- Preserve fine fur edges
+- Never flatten transparency onto white/black/gray
 
-The goal is to create a final portrait that matches the framing and subject placement of vanilla Stellaris mammalian species portraits.
+**Piglet halo lesson:** Cutting out against a light background can leave a white/light fringe. Cleanup reduced fringe pixels ~1488 → ~29. Oakley showed a cleaner edge.
 
-SUBJECT:
-- Preserve Piglet's exact recognizable appearance.
-- Preserve the black, white, and tan tri-color coat.
-- Preserve the white facial blaze.
-- Preserve the tan markings above the eyes and on the cheeks.
-- Preserve the fluffy chest and neck fur.
-- Preserve the semi-floppy ears.
-- Preserve the natural amber/brown eyes and facial structure.
-- Do not turn Piglet into a generic Australian Shepherd.
-
-STYLE:
-- Realistic, detailed digital painting.
-- Stellaris-style mammalian species portrait.
-- Detailed individual fur.
-- Naturalistic anatomy.
-- Soft directional lighting.
-- Subtle rim lighting.
-- Slightly desaturated but rich colors.
-- No cartoon styling.
-- No outlines.
-
-CRITICAL COMPOSITION REQUIREMENT:
-
-Match the vertical framing of the existing vanilla Stellaris mammalian portraits.
-
-- Piglet should fill substantially more of the portrait vertically.
-- The head should occupy the upper-middle portion of the image.
-- The chest and body fur should continue all the way to the BOTTOM EDGE of the image.
-- The lower chest/body should be intentionally cropped by the bottom edge.
-- There should be LITTLE TO NO TRANSPARENT SPACE underneath Piglet.
-- Do NOT leave a large transparent margin beneath the chest.
-- The bottom of Piglet's fur should extend beyond the image boundary, exactly as a portrait subject would be cropped by the portrait frame.
-- Keep the ears and top of the head comfortably inside the image.
-- Keep a small amount of breathing room above the ears.
-- Do not make the dog appear to be floating in the center of a square.
-- The subject should occupy approximately 85–95% of the available vertical portrait area.
-
-The important visual relationship is:
-
-TOP:
-small amount of transparent space
-↓
-Piglet's ears/head
-↓
-face
-↓
-neck/chest
-↓
-fur continues
-↓
-BOTTOM EDGE — fur is cropped by the image boundary
-
-TRANSPARENCY:
-- Piglet must remain completely opaque.
-- Everything outside the Piglet silhouette must be genuinely transparent.
-- No background.
-- No stars.
-- No planet.
-- No hexagons.
-- No scenery.
-- No frame.
-- No border.
-- No rectangular background.
-- Preserve individual fur wisps around the silhouette.
-- No halo or colored fringe.
-
-LIGHTING:
-- Lighting should remain natural and dimensional even without a background.
-- Use subtle rim lighting to separate the dog from a transparent background.
-- Do not create a visible artificial glow around the silhouette.
-
-TECHNICAL:
-- Square image.
-- High resolution.
-- Genuine RGBA alpha channel.
-- Designed specifically to be downscaled to 256×256.
-- No text.
-- No logos.
-- No UI.
-- No watermark.
-
-The final result should look like Piglet is occupying the same amount of vertical space as a normal vanilla Stellaris mammalian portrait, with his chest/body continuing beyond the bottom edge rather than ending with a large transparent area underneath.
-```
-
-When generating for another dog:
-
-1. Attach a clear reference photo of that dog.
-2. Replace every “Piglet” / breed-specific line with that dog’s name and true markings.
-3. Keep the composition, transparency, lighting, and technical sections unchanged.
+Future importer must **validate** alpha, not assume it.
 
 ---
 
-## 7. Asset Preparation
+## 9. DDS requirements
 
-### Successful source
-
-- High-resolution square **RGBA PNG** (Piglet framed master: **1024×1024**).
-- Real transparency outside the silhouette.
-- Dog opaque / near-opaque.
-- Composition already correct **before** DDS conversion.
-
-### Successful DDS
+**CONFIRMED** empirical game format for this project:
 
 | Property | Value |
 |----------|--------|
 | Size | **256×256** |
 | Compression | **Uncompressed** |
 | Channels | **32-bit RGBA** |
-| Header flag | `pfFlags = 0x41` (RGB + alpha) |
-| Outside dog | Transparent (`A = 0`) |
-| Dog body | Opaque / near-opaque |
+| `pfFlags` | **0x41** |
+| Alpha | Preserved; transparent outside dog |
 
-### Critical rule
-
-**Do not flatten** the image onto black, white, or any other color before DDS conversion.
-
-The **alpha channel is critical**. Flattening destroys the cutout and recreates the rectangular-plate problem (or a hard silhouette on a solid plate).
-
-Pipeline reminder:
-
-1. Finalize art as RGBA PNG (composition + transparency done).
-2. Downscale to 256×256 **while preserving alpha**.
-3. Write uncompressed 32-bit RGBA DDS.
-4. Spot-check corners (`A = 0`) and bottom-center (fur / opaque).
+Do not introduce compression unless later testing proves another format works.
 
 ---
 
-## 8. Verification Process
+## 10. Future portrait importer (summary)
 
-In-game testing procedure:
+See [development-roadmap.md](development-roadmap.md) Phases 3–6.
 
-1. Enable the test mod in the Stellaris launcher.
-2. Start Stellaris.
-3. Create an empire.
-4. Select **Mammalian**.
-5. Locate the custom dog portrait.
-6. Verify the portrait appears.
-7. Check transparency (no rectangular plate).
-8. Check vertical framing (chest cropped at bottom; not floating).
-9. Confirm the dog looks anchored in the portrait frame.
-10. Only after successful testing treat the portrait as complete.
+Must detect `ImgHERE` drops, validate, process, register, protect existing portraits, and report clearly. Must not touch vanilla or unrelated dogs.
 
-Until step 10 passes, keep the previous working DDS as a backup.
+**Do not automate too early** — manual portraits taught the real constraints.
 
 ---
 
-## 9. Iteration History
+## 11. Verification (species creation)
 
-### Iteration 1 — Sci-fi background
+1. Enable experiment mod in launcher
+2. Empire creation → Mammalian
+3. Select dog portrait
+4. Check appearance, transparency, framing
+5. Keep previous DDS backup until verified
 
-- Dog with full sci-fi background.
-- Technically loaded via `texturefile`.
-- Failed visually: entire square opaque → obvious rectangular image.
-
-### Iteration 2 — Transparent, wrong framing
-
-- Transparent background.
-- Rectangular plate problem solved.
-- Failed visually: too much transparent space beneath the chest → floating look.
-
-### Iteration 3 — Transparent + corrected framing (preferred)
-
-- Transparent background.
-- Corrected vertical framing.
-- Chest/body reaches the bottom edge and is cropped by the frame.
-- Current preferred composition (Piglet).
+Full UI matrix: [portrait-testing.md](portrait-testing.md).
 
 ---
 
-## 10. Reusable Workflow for Future Dogs
+## 12. Important lessons
 
-Checklist for adding another dog:
-
-1. Obtain a clear reference photo.
-2. Generate the portrait using the reusable prompt (Section 6), with that dog’s details.
-3. Verify the dog is recognizable as that individual.
-4. Verify transparent background (true alpha).
-5. Verify correct vertical composition (Section 5).
-6. Save as high-resolution RGBA PNG.
-7. Add the source PNG to `assets/source/`.
-8. Convert to **256×256** uncompressed **32-bit RGBA** DDS.
-9. Preserve alpha throughout.
-10. Choose a unique portrait ID (e.g. `sd_dog_<name>`).
-11. Add the DDS under the mod gfx portrait directory (same pattern as the experiment).
-12. Add the portrait ID to the portrait definition and the Mammalian portrait set.
-13. Test in Stellaris (Section 8).
-14. Keep a backup of the previous working asset until the new one is verified.
-
----
-
-## 11. Important Lessons
-
-- Do **not** assume vanilla’s current 3D/`entity` portraits mean static portraits are impossible.
-- Verify questionable modding behavior **experimentally** (placeholder first).
-- Test with a placeholder before committing real artwork.
-- Keep source images separate from game-ready assets.
-- Preserve alpha all the way through the pipeline.
-- **Composition matters as much as technical compatibility.**
-- A transparent image can still look wrong if the subject is positioned incorrectly.
-- Generate the portrait specifically for the game’s framing; do not rely on DDS conversion to “fix” framing.
-- Keep backups during asset iteration.
-
----
-
-## Current Known-Good Configuration
-
-| Item | Status / value |
-|------|----------------|
-| Game | Stellaris **Pegasus 4.4.6** |
-| Static portraits via `texturefile` | **Experimentally confirmed** in-game |
-| Working experiment mod | `experiment/sd_static_portrait_test/` |
-| Current dog | **Piglet** |
-| Portrait ID | `sd_dog_piglet` |
-| Source master | `assets/source/piglet_stellaris_portrait_framed.png` (1024×1024 RGBA) |
-| Active DDS | `experiment/sd_static_portrait_test/gfx/models/portraits/sd_static_test/sd_dog_piglet.dds` |
-| DDS specs | 256×256, uncompressed 32-bit RGBA, alpha preserved |
-| Species class | `MAM` (Mammalian) |
-| Selectors | `no_texture` / `no_texture` |
-| Greeting | `mammalian_01_greetings` |
-
-This configuration is the reference for expanding from one dog to many without redesigning the mod.
+- Do not assume vanilla `entity` portraits mean static portraits are impossible
+- Verify questionable modding experimentally
+- Composition matters as much as technical compatibility
+- Transparent art can still look wrong if framing is wrong
+- Generate for framing; do not expect DDS conversion to fix composition
+- Protect Piglet/Oakley as regression fixtures
+- Document before automating

@@ -2,9 +2,8 @@
 ### SD Static Portrait Test (EXPERIMENT ONLY)
 ###
 ### Portraits:
-###   sd_dog_piglet - Piglet
-###   sd_dog_02    - Oakley
-###   sd_dog_angus - Angus
+###   sd_dog_piglet — Piglet (reference / working)
+###   sd_dog_02    — second dog (ImgHERE test)
 ##############################################################
 
 portraits = {
@@ -20,12 +19,5 @@ portraits = {
 		attachment_selector = "no_texture"
 		greeting_sound = "mammalian_01_greetings"
 		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_02.dds"
-	}
-
-	sd_dog_angus = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_angus.dds"
 	}
 }

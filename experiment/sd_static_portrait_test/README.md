@@ -1,21 +1,31 @@
 # SD Static Portrait Test (experiment)
 
-Temporary one-portrait mod to verify whether `texturefile` static species portraits still appear in Stellaris **4.4.6**.
+Working proof-of-concept for **Stellar Dogos** static species portraits on Stellaris **Pegasus v4.4.6**.
+
+**CONFIRMED:** `texturefile` static portraits appear in Mammalian species creation.
+
+Current portraits: `sd_dog_piglet` (Piglet), `sd_dog_02` (Oakley), `sd_dog_angus` (Angus).
+
+Project docs (authoritative):
+
+- `../../PROJECT_PLAN.md`
+- `../../docs/portrait-workflow.md`
+- `../../docs/development-roadmap.md`
+- `../../docs/portrait-testing.md`
 
 ## Enable in the launcher
 
-1. Ensure this folder exists:
-   `Documents\Paradox Interactive\Stellaris\mod\`
-2. Copy `sd_static_portrait_test.mod.example` from the repo `experiment/` folder to:
-   `Documents\Paradox Interactive\Stellaris\mod\sd_static_portrait_test.mod`
-3. Confirm the `path=` line points at this experiment folder (forward slashes).
-4. In the Stellaris launcher, enable **SD Static Portrait Test**.
-5. Start the game → create empire → open species / portraits → **Mammalian**.
+1. Ensure `Documents\Paradox Interactive\Stellaris\mod\` exists.
+2. Point a `.mod` descriptor `path=` at this folder (forward slashes).
+3. Enable the mod in the Stellaris launcher.
+4. Empire creation → **Mammalian** → select a dog portrait.
 
-## What success looks like
+## Important
 
-A bright **magenta** square with **cyan X** stripes among Mammalian portraits.
+- Do not modify the vanilla Stellaris installation.
+- Piglet and Oakley are protected regression fixtures unless a task explicitly changes them.
+- Full UI compatibility beyond species creation is **not** fully verified yet.
 
 ## Revert
 
-Disable/delete the `.mod` descriptor and/or this experiment folder. No vanilla files are modified.
+Disable/delete the launcher `.mod` descriptor and/or this folder. No vanilla files need restoring.
