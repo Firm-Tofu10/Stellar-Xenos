@@ -109,3 +109,54 @@ function Get-SdProtectedDdsFileNames {
     )
     return @(Get-SdProtectedPortraitIds -PortraitsTxt $PortraitsTxt | ForEach-Object { "$_.dds" })
 }
+
+function Resolve-SdPortraitIdFromSlug {
+    param([string]$Slug)
+
+    if ([string]::IsNullOrWhiteSpace($Slug)) { return $null }
+    $lower = $Slug.Trim().ToLowerInvariant()
+    # Historical Oakley portrait ID / DDS is sd_dog_02 (not sd_dog_oakley).
+    if ($lower -eq "oakley") { return "sd_dog_02" }
+    return ("sd_dog_{0}" -f $lower)
+}
+
+function Get-SdPortraitIdentityStatus {
+    <#
+      Returns whether a character slug already has a registered definition and/or DDS.
+      Case-insensitive slug. Does not modify anything.
+    #>
+    param(
+        [string]$Slug,
+        [string]$RepoRoot = ""
+    )
+
+    if ([string]::IsNullOrWhiteSpace($RepoRoot)) {
+        $RepoRoot = Get-SdRepoRoot
+    }
+
+    $paths = Get-SdModPaths -RepoRoot $RepoRoot -Which Production
+    $portraitId = Resolve-SdPortraitIdFromSlug -Slug $Slug
+    if ([string]::IsNullOrWhiteSpace($portraitId)) {
+        return [PSCustomObject]@{
+            Slug         = $Slug
+            PortraitId   = $null
+            Registered   = $false
+            DdsExists    = $false
+            DdsPath      = $null
+            AlreadyExists = $false
+        }
+    }
+
+    $registered = (@(Get-SdRegisteredPortraitIds -PortraitsTxt $paths.PortraitsTxt) -contains $portraitId)
+    $ddsPath = Join-Path $paths.DdsDir ($portraitId + ".dds")
+    $ddsExists = Test-Path -LiteralPath $ddsPath
+
+    return [PSCustomObject]@{
+        Slug          = $Slug.ToLowerInvariant()
+        PortraitId    = $portraitId
+        Registered    = $registered
+        DdsExists     = $ddsExists
+        DdsPath       = $ddsPath
+        AlreadyExists = ($registered -or $ddsExists)
+    }
+}

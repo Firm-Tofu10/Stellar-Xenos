@@ -73,6 +73,7 @@ docs/
   portrait-prompts.md
   portrait-testing.md
   portrait-workflow.md
+  workshop-release.md
 experiment/
   sd_static_portrait_test/
     common/
@@ -123,10 +124,7 @@ ImgHERE/
   dog03_angus_mam_stellaris.png
   dog04_liberty_mam_stellaris.png
   dog05_bruce_mam_stellaris.png
-  dog06_lemon_rep_stellaris.png
-  dog07_nova_rep_stellaris.png
   dog08_zaldrin_avi_stellaris.png
-  dog09_blitz_fun_stellaris.png
 mod/
   stellar_dogos/
     common/
@@ -156,6 +154,9 @@ mod/
           00_sd_static_test_portraits.txt
     descriptor.mod
     README.md
+    thumbnail.png
+    workshop_description.txt
+  stellar_dogos.zip
 tools/
   portrait-dds.ps1
   portrait-exit.ps1
@@ -167,10 +168,316 @@ tools/
 .gitattributes
 PROJECT_PLAN.md
 README.md
+stellar_xeno.mod.example
 </directory_structure>
 
 <files>
 This section contains the contents of the repository's files.
+
+<file path="docs/workshop-release.md">
+# Stellar Xeno — Steam Workshop Release Notes
+
+This document describes how to publish the **game mod package** only.
+
+## Package root
+
+```text
+mod/stellar_dogos/
+```
+
+That folder is the Stellaris mod. Do **not** upload the full Git repository (`tools/`, `ImgHERE/`, `assets/source/`, docs, Repomix, etc.).
+
+## Package contents (required for Stellaris)
+
+| Path | Role |
+|------|------|
+| `descriptor.mod` | Mod metadata (`name`, `tags`, `supported_version`, `picture`) — **no** developer absolute `path=` |
+| `thumbnail.png` | Workshop/launcher thumbnail (`picture="thumbnail.png"`) |
+| `gfx/portraits/portraits/00_sd_static_test_portraits.txt` | Portrait definitions |
+| `gfx/models/portraits/sd_static_test/*.dds` | Portrait textures |
+| `common/portrait_sets/00_sd_static_test_portrait_sets.txt` | Portrait sets |
+| `common/portrait_categories/zzz_sd_static_test_portrait_categories.txt` | Category exposure |
+
+Optional (not required by the game engine, safe to ship):
+
+- `README.md` — player/author notes  
+- `workshop_description.txt` — paste-ready Steam description  
+
+## Workshop ID
+
+Do **not** invent `remote_file_id`.
+
+Steam/Paradox Launcher assigns the Workshop ID on **first successful upload** and writes `remote_file_id="…"` into the descriptor afterward. Leave it unset until then.
+
+## Local launcher descriptor (outside the package)
+
+For local play/upload, the Paradox Launcher uses a **separate** `.mod` file under:
+
+`Documents/Paradox Interactive/Stellaris/mod/`
+
+That external file is allowed to contain a `path=` to your copy of `mod/stellar_dogos/`.
+
+The **package** `descriptor.mod` must remain path-free for Workshop distribution.
+
+Example external launcher file (adjust the path to your machine):
+
+```text
+name="Stellar Xeno"
+path="C:/Users/YOU/Documents/GitHub/Stellar Dogos/mod/stellar_dogos"
+supported_version="v4.4.*"
+tags={
+	"Graphics"
+	"Species"
+}
+picture="thumbnail.png"
+```
+
+See also: `stellar_xeno.mod.example` at the repository root (template only).
+
+## Human publish checklist
+
+1. Confirm `mod/stellar_dogos/` validates (all DDS present; no absolute paths).
+2. Copy or point the launcher at this folder (external `.mod` with `path=`).
+3. Enable **Stellar Xeno** in the Stellaris launcher.
+4. **In-game smoke test** (required before public release):
+   - Mammalian → Piglet / Oakley / Angus  
+   - Avian → Sparrow or Zaldrin  
+   - Reptilian → Lemon  
+   - Fungoid → Blitz  
+5. In the launcher: **Upload Mod** → Steam Workshop.
+6. Leave Mod ID blank on first upload.
+7. Paste text from `workshop_description.txt` into the Workshop description.
+8. Set visibility to **Public** when ready.
+9. After upload, confirm `remote_file_id` appeared (launcher may update descriptors).
+
+## Portrait Creator (not in Workshop)
+
+Creating new portraits uses repository tooling (`tools/portrait-pipeline.ps1`). That workflow is **not** inside the Workshop package.
+
+Repo: https://github.com/Firm-Tofu10/Stellar-Dogos
+</file>
+
+<file path="experiment/sd_static_portrait_test/common/portrait_sets/00_sd_static_test_portrait_sets.txt.bak_before_angus">
+##############################################################
+### SD Static Portrait Test - portrait set (EXPERIMENT ONLY)
+###
+### VANILLA-VERIFIED pattern from common/portrait_sets/00_portrait_sets.txt:
+### - species_class = MAM
+### - portraits = { "id" }
+### - non_randomized_portraits so random AI empires avoid this test art
+##############################################################
+
+sd_static_test = {
+	species_class = MAM
+
+	portraits = {
+		"sd_dog_piglet"
+		"sd_dog_02"
+		"sd_dog_angus"
+	}
+
+	non_randomized_portraits = {
+		"sd_dog_piglet"
+		"sd_dog_02"
+		"sd_dog_angus"
+	}
+}
+</file>
+
+<file path="experiment/sd_static_portrait_test/common/portrait_sets/00_sd_static_test_portrait_sets.txt.bak_before_dog02">
+##############################################################
+### SD Static Portrait Test — portrait set (EXPERIMENT ONLY)
+###
+### VANILLA-VERIFIED pattern from common/portrait_sets/00_portrait_sets.txt:
+### - species_class = MAM
+### - portraits = { "id" }
+### - non_randomized_portraits so random AI empires avoid this test art
+##############################################################
+
+sd_static_test = {
+	species_class = MAM
+
+	portraits = {
+		"sd_dog_piglet"
+		"sd_dog_02"
+	}
+
+	non_randomized_portraits = {
+		"sd_dog_piglet"
+		"sd_dog_02"
+	}
+}
+</file>
+
+<file path="experiment/sd_static_portrait_test/common/portrait_sets/00_sd_static_test_portrait_sets.txt.bak_magenta">
+##############################################################
+### SD Static Portrait Test — portrait set (EXPERIMENT ONLY)
+###
+### VANILLA-VERIFIED pattern from common/portrait_sets/00_portrait_sets.txt:
+### - species_class = MAM
+### - portraits = { "id" }
+### - non_randomized_portraits so random AI empires avoid this test art
+##############################################################
+
+sd_static_test = {
+	species_class = MAM
+
+	portraits = {
+		"sd_static_test_01"
+	}
+
+	non_randomized_portraits = {
+		"sd_static_test_01"
+	}
+}
+</file>
+
+<file path="experiment/sd_static_portrait_test/gfx/models/portraits/sd_static_test/hashes_before_angus.txt">
+FEF699BAEA24785D6A08AAC4AD401647CAEC0E68C9DCA0EF4B5937F23B2F772A sd_dog_piglet.dds
+C0DB450FF4C49E81CB0C8E9926BE68D7E53FD8D9976267D7F1D19F756B10B27D sd_dog_02.dds
+</file>
+
+<file path="experiment/sd_static_portrait_test/gfx/models/portraits/sd_static_test/hashes_before_imghere_organize.txt">
+piglet=FEF699BAEA24785D6A08AAC4AD401647CAEC0E68C9DCA0EF4B5937F23B2F772A
+oakley=C0DB450FF4C49E81CB0C8E9926BE68D7E53FD8D9976267D7F1D19F756B10B27D
+angus=588DF90318CC17441F359F48F159471E194855544B2FA6C86F67CFBFB20112BE
+</file>
+
+<file path="experiment/sd_static_portrait_test/gfx/models/portraits/sd_static_test/sd_dog_02.dds.sha256_before_piglet_refine">
+C0DB450FF4C49E81CB0C8E9926BE68D7E53FD8D9976267D7F1D19F756B10B27D
+</file>
+
+<file path="experiment/sd_static_portrait_test/gfx/models/portraits/sd_static_test/sd_dog_piglet.dds.sha256_before_second_dog">
+20302D08536276282426CD4753D0CBD2A305491D4CC9BDCF36B2F01909FD36ED
+</file>
+
+<file path="experiment/sd_static_portrait_test/gfx/portraits/portraits/00_sd_static_test_portraits.txt.bak_before_angus">
+##############################################################
+### SD Static Portrait Test (EXPERIMENT ONLY)
+###
+### Portraits:
+###   sd_dog_piglet - Piglet
+###   sd_dog_02    - Oakley
+###   sd_dog_angus - Angus
+##############################################################
+
+portraits = {
+	sd_dog_piglet = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_piglet.dds"
+	}
+
+	sd_dog_02 = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_02.dds"
+	}
+
+	sd_dog_angus = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_angus.dds"
+	}
+}
+</file>
+
+<file path="experiment/sd_static_portrait_test/gfx/portraits/portraits/00_sd_static_test_portraits.txt.bak_before_dog02">
+##############################################################
+### SD Static Portrait Test (EXPERIMENT ONLY)
+###
+### Portraits:
+###   sd_dog_piglet — Piglet (reference / working)
+###   sd_dog_02    — second dog (ImgHERE test)
+##############################################################
+
+portraits = {
+	sd_dog_piglet = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_piglet.dds"
+	}
+
+	sd_dog_02 = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_02.dds"
+	}
+}
+</file>
+
+<file path="experiment/sd_static_portrait_test/gfx/portraits/portraits/00_sd_static_test_portraits.txt.bak_magenta">
+##############################################################
+### SD Static Portrait Test (EXPERIMENT ONLY)
+###
+### Purpose: verify whether texturefile static species portraits
+### still render in Stellaris 4.4.6.
+###
+### Syntax sources (see PROJECT_PLAN.md):
+### - texturefile ........ EXTERNAL MODDING EXAMPLE (wiki/static portraits)
+### - clothes_selector ... VANILLA key name + "no_texture" selector
+### - attachment_selector  VANILLA key name + "no_texture" selector
+### - greeting_sound ..... VANILLA existing sound id
+##############################################################
+
+portraits = {
+	sd_static_test_01 = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_static_test_01.dds"
+	}
+}
+</file>
+
+<file path="experiment/sd_static_portrait_test/descriptor.mod">
+version="0.0.1"
+tags={
+	"Graphics"
+	"Species"
+}
+name="SD Static Portrait Test"
+supported_version="v4.4.*"
+</file>
+
+<file path="mod/stellar_dogos/workshop_description.txt">
+Stellar Xeno
+
+Custom Stellaris species portraits from your own images.
+
+Stellar Xeno adds selectable static species portraits for Stellaris 4.4.x (Pegasus). Subscribe, enable the mod in the launcher, then pick a portrait when creating a species of the matching type.
+
+Included portraits (examples): Mammalian (Piglet, Oakley, Angus, and more), Avian, Reptilian, and Fungoid registrations shipped in this package.
+
+This Workshop item is the game mod only. It does not include the local Portrait Creator tools used to generate and register new portraits on a developer machine.
+
+Compatibility: Stellaris v4.4.*
+</file>
+
+<file path=".gitattributes">
+# Auto detect text files and perform LF normalization
+* text=auto
+</file>
+
+<file path="stellar_xeno.mod.example">
+name="Stellar Xeno"
+path="C:/Users/YOU/Documents/GitHub/Stellar Dogos/mod/stellar_dogos"
+supported_version="v4.4.*"
+tags={
+	"Graphics"
+	"Species"
+}
+picture="thumbnail.png"
+# Local launcher descriptor TEMPLATE only.
+# Copy to Documents/Paradox Interactive/Stellaris/mod/ and fix path=.
+# Do NOT put a developer absolute path into mod/stellar_dogos/descriptor.mod.
+# Do NOT invent remote_file_id — Steam assigns it on first Workshop upload.
+</file>
 
 <file path="docs/ai-development-workflow.md">
 # Stellar Xeno — AI Development Workflow
@@ -3133,192 +3440,52 @@ The final result should look like:
 7. Multiple xenotype versions of the same reference subject.
 </file>
 
-<file path="experiment/sd_static_portrait_test/common/portrait_sets/00_sd_static_test_portrait_sets.txt.bak_before_angus">
+<file path="experiment/sd_static_portrait_test/common/portrait_categories/zzz_sd_static_test_portrait_categories.txt">
 ##############################################################
-### SD Static Portrait Test - portrait set (EXPERIMENT ONLY)
+### SD Static Portrait Test - category overrides (EXPERIMENT)
 ###
-### VANILLA-VERIFIED pattern from common/portrait_sets/00_portrait_sets.txt:
-### - species_class = MAM
-### - portraits = { "id" }
-### - non_randomized_portraits so random AI empires avoid this test art
+### Each block REPLACES the vanilla category of the same key so
+### we can append one experiment set with minimal change.
+### Vanilla set lists were copied from Stellaris 4.4.x.
+### Revert method: delete this file from the experiment mod.
 ##############################################################
 
-sd_static_test = {
-	species_class = MAM
+mammalians = {
+	name = MAM
 
-	portraits = {
-		"sd_dog_piglet"
-		"sd_dog_02"
-		"sd_dog_angus"
-	}
-
-	non_randomized_portraits = {
-		"sd_dog_piglet"
-		"sd_dog_02"
-		"sd_dog_angus"
+	sets = {
+		mammalians
+		cybernetic_mammalians
+		biogenesis_mammalians
+		psionic_mammalians
+		sd_static_test
 	}
 }
-</file>
 
-<file path="experiment/sd_static_portrait_test/common/portrait_sets/00_sd_static_test_portrait_sets.txt.bak_before_dog02">
-##############################################################
-### SD Static Portrait Test — portrait set (EXPERIMENT ONLY)
-###
-### VANILLA-VERIFIED pattern from common/portrait_sets/00_portrait_sets.txt:
-### - species_class = MAM
-### - portraits = { "id" }
-### - non_randomized_portraits so random AI empires avoid this test art
-##############################################################
+avians = {
+	name = AVI
 
-sd_static_test = {
-	species_class = MAM
-
-	portraits = {
-		"sd_dog_piglet"
-		"sd_dog_02"
-	}
-
-	non_randomized_portraits = {
-		"sd_dog_piglet"
-		"sd_dog_02"
+	sets = {
+		avians
+		cybernetic_avians
+		synthetic_avians
+		biogenesis_avians
+		psionic_avians
+		sd_static_test_avi
 	}
 }
-</file>
 
-<file path="experiment/sd_static_portrait_test/common/portrait_sets/00_sd_static_test_portrait_sets.txt.bak_magenta">
-##############################################################
-### SD Static Portrait Test — portrait set (EXPERIMENT ONLY)
-###
-### VANILLA-VERIFIED pattern from common/portrait_sets/00_portrait_sets.txt:
-### - species_class = MAM
-### - portraits = { "id" }
-### - non_randomized_portraits so random AI empires avoid this test art
-##############################################################
+reptilians = {
+	name = REP
 
-sd_static_test = {
-	species_class = MAM
-
-	portraits = {
-		"sd_static_test_01"
-	}
-
-	non_randomized_portraits = {
-		"sd_static_test_01"
+	sets = {
+		reptilians
+		cybernetic_reptilians
+		biogenesis_reptilians
+		pdx_signup_reptilian
+		sd_static_test_rep
 	}
 }
-</file>
-
-<file path="experiment/sd_static_portrait_test/gfx/models/portraits/sd_static_test/hashes_before_angus.txt">
-FEF699BAEA24785D6A08AAC4AD401647CAEC0E68C9DCA0EF4B5937F23B2F772A sd_dog_piglet.dds
-C0DB450FF4C49E81CB0C8E9926BE68D7E53FD8D9976267D7F1D19F756B10B27D sd_dog_02.dds
-</file>
-
-<file path="experiment/sd_static_portrait_test/gfx/models/portraits/sd_static_test/hashes_before_imghere_organize.txt">
-piglet=FEF699BAEA24785D6A08AAC4AD401647CAEC0E68C9DCA0EF4B5937F23B2F772A
-oakley=C0DB450FF4C49E81CB0C8E9926BE68D7E53FD8D9976267D7F1D19F756B10B27D
-angus=588DF90318CC17441F359F48F159471E194855544B2FA6C86F67CFBFB20112BE
-</file>
-
-<file path="experiment/sd_static_portrait_test/gfx/models/portraits/sd_static_test/sd_dog_02.dds.sha256_before_piglet_refine">
-C0DB450FF4C49E81CB0C8E9926BE68D7E53FD8D9976267D7F1D19F756B10B27D
-</file>
-
-<file path="experiment/sd_static_portrait_test/gfx/models/portraits/sd_static_test/sd_dog_piglet.dds.sha256_before_second_dog">
-20302D08536276282426CD4753D0CBD2A305491D4CC9BDCF36B2F01909FD36ED
-</file>
-
-<file path="experiment/sd_static_portrait_test/gfx/portraits/portraits/00_sd_static_test_portraits.txt.bak_before_angus">
-##############################################################
-### SD Static Portrait Test (EXPERIMENT ONLY)
-###
-### Portraits:
-###   sd_dog_piglet - Piglet
-###   sd_dog_02    - Oakley
-###   sd_dog_angus - Angus
-##############################################################
-
-portraits = {
-	sd_dog_piglet = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_piglet.dds"
-	}
-
-	sd_dog_02 = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_02.dds"
-	}
-
-	sd_dog_angus = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_angus.dds"
-	}
-}
-</file>
-
-<file path="experiment/sd_static_portrait_test/gfx/portraits/portraits/00_sd_static_test_portraits.txt.bak_before_dog02">
-##############################################################
-### SD Static Portrait Test (EXPERIMENT ONLY)
-###
-### Portraits:
-###   sd_dog_piglet — Piglet (reference / working)
-###   sd_dog_02    — second dog (ImgHERE test)
-##############################################################
-
-portraits = {
-	sd_dog_piglet = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_piglet.dds"
-	}
-
-	sd_dog_02 = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_02.dds"
-	}
-}
-</file>
-
-<file path="experiment/sd_static_portrait_test/gfx/portraits/portraits/00_sd_static_test_portraits.txt.bak_magenta">
-##############################################################
-### SD Static Portrait Test (EXPERIMENT ONLY)
-###
-### Purpose: verify whether texturefile static species portraits
-### still render in Stellaris 4.4.6.
-###
-### Syntax sources (see PROJECT_PLAN.md):
-### - texturefile ........ EXTERNAL MODDING EXAMPLE (wiki/static portraits)
-### - clothes_selector ... VANILLA key name + "no_texture" selector
-### - attachment_selector  VANILLA key name + "no_texture" selector
-### - greeting_sound ..... VANILLA existing sound id
-##############################################################
-
-portraits = {
-	sd_static_test_01 = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_static_test_01.dds"
-	}
-}
-</file>
-
-<file path="experiment/sd_static_portrait_test/descriptor.mod">
-version="0.0.1"
-tags={
-	"Graphics"
-	"Species"
-}
-name="SD Static Portrait Test"
-supported_version="v4.4.*"
 </file>
 
 <file path="experiment/sd_static_portrait_test.mod.example">
@@ -3582,43 +3749,62 @@ portraits = {
 }
 </file>
 
-<file path="mod/stellar_dogos/descriptor.mod">
-version="0.1.0"
-tags={
-	"Graphics"
-	"Species"
-}
-name="Stellar Xeno"
-supported_version="v4.4.*"
-</file>
-
 <file path="mod/stellar_dogos/README.md">
-# Stellar Xeno (Stellaris mod)
+# Stellar Xeno
 
-Custom **static** species portraits for Stellaris **Pegasus / v4.4.x**.
+**Custom Stellaris species portraits from your own images.**
 
-This folder is the **production Stellaris mod package**. It contains portrait definitions, sets, category exposure, and DDS textures.
+**Stellar Xeno** is a Stellaris **4.4.x** (Pegasus) mod that adds selectable **static species portraits** across multiple Stellaris species types (xenotypes).
 
-It does **not** contain the Portrait Creator tools, `ImgHERE/` source workflow, or repository development scripts. Those live at the repository root (`tools/`, `ImgHERE/`, docs).
+This Workshop package is the **game mod only**. It contains portrait definitions, portrait sets, category exposure, and DDS textures so Stellaris can load the included portraits.
 
-## Install for local testing
+## What this mod includes
 
-1. Ensure `Documents\Paradox Interactive\Stellaris\mod\` exists.
-2. Create a launcher `.mod` descriptor whose `path=` points at **this folder** (use forward slashes).
-3. Enable **Stellar Xeno** in the Stellaris launcher.
-4. Create an empire, pick the species type that matches your portrait, and select it.
+Registered portraits appear under their species type in empire/species creation, including:
 
-Do **not** copy files into the vanilla Stellaris install.
+- **Mammalian** — Piglet, Oakley, Angus, Bruce, Cedar, Liberty, Maple  
+- **Avian** — Sparrow, Zaldrin  
+- **Reptilian** — Lemon, Pepper, Nova  
+- **Fungoid** — Blitz  
+
+Additional xenotypes are supported by the **local Portrait Creator** tooling in the project repository (Amphibian, Arthropoid, Molluscoid, Plantoid, Lithoid, Necroid, Machine, Toxoid, and more). Those tools are **not** shipped inside this Workshop package.
+
+## What this mod does NOT include
+
+- The local **Portrait Creator** (PowerShell intake → DDS → registration)
+- `ImgHERE/` staging, source PNGs, or developer scripts
+- A claim of full verification in every Stellaris UI context (leaders, council, diplomacy, …)
+
+To create and register **new** portraits on your own PC, use the project repository (local tooling), then update/republish this mod package if you are the author.
+
+Repository (Portrait Creator / development):  
+https://github.com/Firm-Tofu10/Stellar-Dogos
+
+## How to use (players)
+
+1. Subscribe to **Stellar Xeno** on Steam Workshop (or install this folder as a local mod).
+2. Enable **Stellar Xeno** in the Stellaris launcher.
+3. Create an empire → choose the matching species type → select a Stellar Xeno portrait.
+
+Do **not** copy files into the vanilla Stellaris installation.
+
+## Local install (authors / testers)
+
+For local testing without Workshop:
+
+1. Place this folder under `Documents/Paradox Interactive/Stellaris/mod/` (folder name may remain the internal `stellar_dogos` path).
+2. Ensure a launcher `.mod` descriptor exists with a `path=` pointing at **this folder** (forward slashes). The package `descriptor.mod` itself must **not** contain a developer-machine absolute path.
+3. Enable **Stellar Xeno** in the launcher.
 
 ## Status
 
-- Species-creation portraits: working for the currently registered dogs (see definitions in this package).
+- Species-creation portraits: working for the currently registered portraits in this package.
 - Full UI contexts (leaders, council, diplomacy, …): **not fully verified**.
-- Steam Workshop: **not packaged / not published** yet.
+- Steam Workshop ID: assigned by Steam on first upload (`remote_file_id` — do not invent).
 
 ## Revert
 
-Disable or remove the launcher `.mod` descriptor. No vanilla files need restoring.
+Disable or unsubscribe the mod. No vanilla files need restoring.
 </file>
 
 <file path="tools/portrait-exit.ps1">
@@ -3786,17 +3972,12 @@ function Get-SdProtectedDdsFileNames {
 }
 </file>
 
-<file path=".gitattributes">
-# Auto detect text files and perform LF normalization
-* text=auto
-</file>
-
 <file path="docs/portrait-prompts.md">
 # Stellar Xeno — Portrait Generation Prompts
 
 > **Xenotype prompt library (Phase 8):**  
 > For the full set of **xenotype-specific** image-generation prompts extracted from the ChatGPT source export, see **[portrait-generation-prompts.md](portrait-generation-prompts.md)**.  
-> Those prompts are for an external image model (not pipeline commands). Toxoid is documented there as **prompt-only** (not yet in the Portrait Creator selector).
+> Those prompts are for an external image model (not pipeline commands). **Toxoid** is implemented in the Portrait Creator selector and registration path (same as the other xenotypes).
 
 Successful **dog-development** image-generation prompts and related refinement instructions developed during early Stellar Xeno sessions are preserved below.
 
@@ -4179,50 +4360,173 @@ Output naming (when finished):
 After generation: follow the manual pipeline in [portrait-workflow.md](portrait-workflow.md) (or the future importer once built).
 </file>
 
-<file path="experiment/sd_static_portrait_test/common/portrait_categories/zzz_sd_static_test_portrait_categories.txt">
+<file path="experiment/sd_static_portrait_test/common/portrait_sets/00_sd_static_test_portrait_sets.txt">
 ##############################################################
-### SD Static Portrait Test - category overrides (EXPERIMENT)
+### SD Static Portrait Test - portrait sets (EXPERIMENT ONLY)
 ###
-### Each block REPLACES the vanilla category of the same key so
-### we can append one experiment set with minimal change.
-### Vanilla set lists were copied from Stellaris 4.4.x.
-### Revert method: delete this file from the experiment mod.
+### Pattern from vanilla common/portrait_sets/00_portrait_sets.txt:
+### - species_class = <CLASS>
+### - portraits = { "id" }
+### - non_randomized_portraits so random AI empires avoid this test art
 ##############################################################
 
-mammalians = {
-	name = MAM
+sd_static_test = {
+	species_class = MAM
 
-	sets = {
-		mammalians
-		cybernetic_mammalians
-		biogenesis_mammalians
-		psionic_mammalians
-		sd_static_test
+	portraits = {
+		"sd_dog_piglet"
+		"sd_dog_02"
+		"sd_dog_angus"
+		"sd_dog_bruce"
+		"sd_dog_cedar"
+		"sd_dog_liberty"
+		"sd_dog_maple"
+	}
+
+	non_randomized_portraits = {
+		"sd_dog_piglet"
+		"sd_dog_02"
+		"sd_dog_angus"
+		"sd_dog_bruce"
+		"sd_dog_cedar"
+		"sd_dog_liberty"
+		"sd_dog_maple"
 	}
 }
 
-avians = {
-	name = AVI
+sd_static_test_avi = {
+	species_class = AVI
 
-	sets = {
-		avians
-		cybernetic_avians
-		synthetic_avians
-		biogenesis_avians
-		psionic_avians
-		sd_static_test_avi
+	portraits = {
+		"sd_dog_sparrow"
+		"sd_dog_zaldrin"
+	}
+
+	non_randomized_portraits = {
+		"sd_dog_sparrow"
+		"sd_dog_zaldrin"
 	}
 }
 
-reptilians = {
-	name = REP
+sd_static_test_rep = {
+	species_class = REP
 
-	sets = {
-		reptilians
-		cybernetic_reptilians
-		biogenesis_reptilians
-		pdx_signup_reptilian
-		sd_static_test_rep
+	portraits = {
+		"sd_dog_lemon"
+		"sd_dog_pepper"
+		"sd_dog_nova"
+	}
+
+	non_randomized_portraits = {
+		"sd_dog_lemon"
+		"sd_dog_pepper"
+		"sd_dog_nova"
+	}
+}
+</file>
+
+<file path="experiment/sd_static_portrait_test/gfx/portraits/portraits/00_sd_static_test_portraits.txt">
+##############################################################
+### SD Static Portrait Test (EXPERIMENT ONLY)
+###
+### Portraits:
+###   sd_dog_piglet - Piglet
+###   sd_dog_02 - Oakley
+###   sd_dog_angus - Angus
+###   sd_dog_bruce - Bruce
+###   sd_dog_cedar - Cedar
+###   sd_dog_liberty - Liberty
+###   sd_dog_sparrow - Sparrow
+###   sd_dog_maple - Maple
+###   sd_dog_lemon - Lemon
+###   sd_dog_pepper - Pepper
+###   sd_dog_nova - Nova
+###   sd_dog_zaldrin - Zaldrin
+##############################################################
+
+portraits = {
+	sd_dog_piglet = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_piglet.dds"
+	}
+
+	sd_dog_02 = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_02.dds"
+	}
+
+	sd_dog_angus = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_angus.dds"
+	}
+
+	sd_dog_bruce = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_bruce.dds"
+	}
+
+	sd_dog_cedar = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_cedar.dds"
+	}
+
+	sd_dog_liberty = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_liberty.dds"
+	}
+
+	sd_dog_sparrow = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "avian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_sparrow.dds"
+	}
+
+	sd_dog_maple = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_maple.dds"
+	}
+
+	sd_dog_lemon = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "reptilian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_lemon.dds"
+	}
+
+	sd_dog_pepper = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "reptilian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_pepper.dds"
+	}
+
+	sd_dog_nova = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "reptilian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_nova.dds"
+	}
+
+	sd_dog_zaldrin = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "avian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_zaldrin.dds"
 	}
 }
 </file>
@@ -4259,6 +4563,18 @@ Project docs (authoritative):
 ## Revert
 
 Disable/delete the launcher `.mod` descriptor and/or this folder. No vanilla files need restoring.
+</file>
+
+<file path="mod/stellar_dogos/descriptor.mod">
+version="0.1.0"
+tags={
+	"Graphics"
+	"Species"
+}
+name="Stellar Xeno"
+picture="thumbnail.png"
+supported_version="v4.4.*"
+remote_file_id="3780940726"
 </file>
 
 <file path="tools/portrait-pipeline.ps1">
@@ -5714,177 +6030,6 @@ Also note `error.log` / `game.log` lines mentioning the portrait ID or DDS path 
 These confirmations do **not** close Phase 2.
 </file>
 
-<file path="experiment/sd_static_portrait_test/common/portrait_sets/00_sd_static_test_portrait_sets.txt">
-##############################################################
-### SD Static Portrait Test - portrait sets (EXPERIMENT ONLY)
-###
-### Pattern from vanilla common/portrait_sets/00_portrait_sets.txt:
-### - species_class = <CLASS>
-### - portraits = { "id" }
-### - non_randomized_portraits so random AI empires avoid this test art
-##############################################################
-
-sd_static_test = {
-	species_class = MAM
-
-	portraits = {
-		"sd_dog_piglet"
-		"sd_dog_02"
-		"sd_dog_angus"
-		"sd_dog_bruce"
-		"sd_dog_cedar"
-		"sd_dog_liberty"
-		"sd_dog_maple"
-	}
-
-	non_randomized_portraits = {
-		"sd_dog_piglet"
-		"sd_dog_02"
-		"sd_dog_angus"
-		"sd_dog_bruce"
-		"sd_dog_cedar"
-		"sd_dog_liberty"
-		"sd_dog_maple"
-	}
-}
-
-sd_static_test_avi = {
-	species_class = AVI
-
-	portraits = {
-		"sd_dog_sparrow"
-		"sd_dog_zaldrin"
-	}
-
-	non_randomized_portraits = {
-		"sd_dog_sparrow"
-		"sd_dog_zaldrin"
-	}
-}
-
-sd_static_test_rep = {
-	species_class = REP
-
-	portraits = {
-		"sd_dog_lemon"
-		"sd_dog_pepper"
-		"sd_dog_nova"
-	}
-
-	non_randomized_portraits = {
-		"sd_dog_lemon"
-		"sd_dog_pepper"
-		"sd_dog_nova"
-	}
-}
-</file>
-
-<file path="experiment/sd_static_portrait_test/gfx/portraits/portraits/00_sd_static_test_portraits.txt">
-##############################################################
-### SD Static Portrait Test (EXPERIMENT ONLY)
-###
-### Portraits:
-###   sd_dog_piglet - Piglet
-###   sd_dog_02 - Oakley
-###   sd_dog_angus - Angus
-###   sd_dog_bruce - Bruce
-###   sd_dog_cedar - Cedar
-###   sd_dog_liberty - Liberty
-###   sd_dog_sparrow - Sparrow
-###   sd_dog_maple - Maple
-###   sd_dog_lemon - Lemon
-###   sd_dog_pepper - Pepper
-###   sd_dog_nova - Nova
-###   sd_dog_zaldrin - Zaldrin
-##############################################################
-
-portraits = {
-	sd_dog_piglet = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_piglet.dds"
-	}
-
-	sd_dog_02 = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_02.dds"
-	}
-
-	sd_dog_angus = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_angus.dds"
-	}
-
-	sd_dog_bruce = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_bruce.dds"
-	}
-
-	sd_dog_cedar = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_cedar.dds"
-	}
-
-	sd_dog_liberty = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_liberty.dds"
-	}
-
-	sd_dog_sparrow = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "avian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_sparrow.dds"
-	}
-
-	sd_dog_maple = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_maple.dds"
-	}
-
-	sd_dog_lemon = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "reptilian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_lemon.dds"
-	}
-
-	sd_dog_pepper = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "reptilian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_pepper.dds"
-	}
-
-	sd_dog_nova = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "reptilian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_nova.dds"
-	}
-
-	sd_dog_zaldrin = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "avian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_zaldrin.dds"
-	}
-}
-</file>
-
 <file path="tools/portrait-dds.ps1">
 # Stellar Xeno — Phase 4: Canonical PNG → DDS
 # Converts a validated Phase 3.1 source PNG into a 256x256 uncompressed
@@ -7086,9 +7231,9 @@ Certainty labels: **CONFIRMED** / **ASSUMPTION** / **TARGET** / **NEEDS VERIFICA
 | Canonical PNG naming (`dogNN_<name>_<xeno>_stellaris.png`) | **IMPLEMENTED** |
 | Xenotype image-generation prompt library | **DOCUMENTED** ([portrait-generation-prompts.md](portrait-generation-prompts.md)) — Mammalian & Machine prompt bodies **ABSENT** from source export; Toxoid prompt **DOCUMENTED**; Toxoid selector/registration **IMPLEMENTED** |
 | Full UI portrait compatibility | **NEEDS VERIFICATION** |
-| Steam Workshop release | **NOT READY** |
+| Steam Workshop release | **PACKAGE READY** — structurally prepared (`mod/stellar_dogos/`); human in-game test + Steam upload remain ([docs/workshop-release.md](docs/workshop-release.md)) |
 
-Phases 3.1–7 cover intake → DDS → xenotype-aware registration → end-to-end orchestration. The player-facing **prompt library** is documented separately from the software pipeline. Broader UI-context audit and Workshop packaging remain later.
+Phases 3.1–7 cover intake → DDS → xenotype-aware registration → end-to-end orchestration. The player-facing **prompt library** is documented separately from the software pipeline. Workshop package structural prep is documented in [workshop-release.md](workshop-release.md); broader UI-context audit remains later.
 
 ---
 
@@ -7480,33 +7625,33 @@ Developer docs explain architecture.
 
 ## Phase 10 — Release Preparation
 
-**STATUS: PLANNED**
+**STATUS: PACKAGE READY** (structural) — human Stellaris verification + Steam upload remain
 
-- Remove experimental/development-only artifacts where appropriate
-- Rename experiment paths into production structure
-- Clean repository
-- Update README / version
-- Test from a fresh clone
-- Test packaged mod
-- Verify no vanilla files are required
-- Verify Workshop package contents
+Completed for Workshop packaging:
 
----
+- Production mod is self-contained under `mod/stellar_dogos/`
+- Package `descriptor.mod` has no developer absolute `path=`
+- Workshop thumbnail (`thumbnail.png`) + `picture="thumbnail.png"`
+- Paste-ready description: `mod/stellar_dogos/workshop_description.txt`
+- Author steps: [workshop-release.md](workshop-release.md)
+
+Still required before calling the release “verified”:
+
+- Human in-game smoke test of shipped portraits
+- Paradox Launcher → Upload Mod → Steam Workshop
+- Confirm Steam-assigned `remote_file_id` after first upload
 
 ## Phase 11 — Steam Workshop
 
-**STATUS: FUTURE**
+**STATUS: READY TO UPLOAD** (pending human test)
 
 Only after:
 
-- Full pipeline works
-- Compatibility audit complete
-- Fresh-install test passes
-- Documentation complete
-- Production mod structure finalized
+- Fresh structural validation of `mod/stellar_dogos/` (done in release prep)
+- Human in-game smoke test passes
+- Workshop description/thumbnail acceptable
 
 Then publish to Steam Workshop under **Stellar Xeno** branding that communicates **custom Stellaris portraits from your own images**.
-
 ---
 
 ## Engineering lesson — do not automate too early
@@ -7981,8 +8126,8 @@ These (and later dog fixtures) remain important regression/development portraits
 
 | Goal | Status |
 |------|--------|
-| Users install mod and use included / created portraits (Workshop) | **TARGET** — **NOT READY** |
-| Reusable portrait ingestion workflow/tool (no manual Stellaris file editing per portrait) | **IMPLEMENTED** for production path (`mod/stellar_dogos/`); Workshop packaging **NOT READY** |
+| Users install mod and use included / created portraits (Workshop) | **TARGET** — package ready; human upload pending |
+| Reusable portrait ingestion workflow/tool (no manual Stellaris file editing per portrait) | **IMPLEMENTED** for production path (`mod/stellar_dogos/`); Workshop package structurally prepared |
 
 ---
 
@@ -8005,7 +8150,7 @@ These (and later dog fixtures) remain important regression/development portraits
 | Canonical PNG naming (`dogNN_<name>_<xeno>_stellaris.png`) | **IMPLEMENTED** — xenotype abbreviation in source filename only; DDS/ID unchanged |
 | Xenotype image-generation prompt library | **DOCUMENTED** ([docs/portrait-generation-prompts.md](docs/portrait-generation-prompts.md)); Mammalian & Machine bodies **ABSENT** from source export; Toxoid prompt **DOCUMENTED**; Toxoid selector/registration **IMPLEMENTED** |
 | Full UI compatibility (leaders, council, diplomacy, …) | **NEEDS VERIFICATION** |
-| Steam Workshop release | **NOT READY** |
+| Steam Workshop release | **PACKAGE READY** — structural prep done; human in-game test + Steam upload remain ([docs/workshop-release.md](docs/workshop-release.md)) |
 
 Working implementation lives in:
 
@@ -8092,9 +8237,15 @@ Phases 0–9 (discovery → calibration → compatibility audit → importer →
 </file>
 
 <file path="README.md">
+<<<<<<< HEAD
 # Stellar Xeno
 
 **Stellar Xeno** is a Stellaris **4.4.x** project for turning **your own photographs** into selectable custom species portraits.
+=======
+# Stellar-Xenos
+
+**Stellar-Xenos** is a Stellaris **4.4.x** project for turning **your own photographs** into selectable custom species portraits.
+>>>>>>> d211941543db12f146c56ee810c93f7eb04e14d2
 
 Dogs were the original development and regression subjects (Piglet, Oakley, Angus, and later fixtures), but **Stellar Xeno** is not limited to dogs. The workflow is intended for arbitrary custom portrait subjects—people, animals, or other references—transformed into a believable Stellaris species of a chosen **xenotype**, then registered into the game through this project's tools.
 
@@ -8156,7 +8307,7 @@ Stellaris (mod/stellar_dogos)
 | Canonical PNG naming (`dogNN_<name>_<xeno>_stellaris.png`) | **IMPLEMENTED** |
 | Species creation (Piglet / Oakley / Angus) | **CONFIRMED** on Stellaris **v4.4.6** |
 | Full UI compatibility (leaders, diplomacy, …) | **NEEDS VERIFICATION** |
-| Steam Workshop | **FUTURE** / not ready |
+| Steam Workshop | **PACKAGE READY** for human in-game test + launcher upload (`mod/stellar_dogos/`; see [docs/workshop-release.md](docs/workshop-release.md)) |
 | Leader portrait variants | **FUTURE** |
 
 ---
@@ -8275,7 +8426,7 @@ Do **not** edit the vanilla Stellaris installation.
 - Leader portrait variants  
 - Changing xenotype on an existing portrait  
 - Broader verification across Stellaris UI contexts  
-- Workshop packaging  
+- Workshop packaging / upload (package prepared; human Stellaris test + Steam upload remain)  
 - Multiple xenotype versions of the same person/character  
 
 ---

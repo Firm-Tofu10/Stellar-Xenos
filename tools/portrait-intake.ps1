@@ -10,6 +10,7 @@ param()
 $ErrorActionPreference = "Stop"
 
 . (Join-Path (Split-Path -Parent $PSCommandPath) "portrait-exit.ps1")
+. (Join-Path (Split-Path -Parent $PSCommandPath) "portrait-paths.ps1")
 . (Join-Path (Split-Path -Parent $PSCommandPath) "portrait-xenotypes.ps1")
 
 Add-Type -AssemblyName System.Drawing
@@ -538,8 +539,38 @@ function Invoke-CandidateIntake {
         [string]$AssetsSource
     )
 
-    # Name first, then xenotype — filename is never used for either.
+    $repoRoot = Get-RepoRoot
+
+    # Pre-check: basename often matches the character slug (e.g. galian.png).
+    $stem = [IO.Path]::GetFileNameWithoutExtension($Candidate.Name).Trim().ToLowerInvariant()
+    $stemStatus = Get-SdPortraitIdentityStatus -Slug $stem -RepoRoot $repoRoot
+    if ($stemStatus.AlreadyExists) {
+        Write-Host ""
+        Write-Host "This image appears to match an existing portrait - it will not be re-created."
+        Write-Host ("  Candidate file : {0}" -f $Candidate.Name)
+        Write-Host ("  Portrait ID    : {0}" -f $stemStatus.PortraitId)
+        if ($stemStatus.Registered) { Write-Host "  Status         : already registered" }
+        if ($stemStatus.DdsExists) { Write-Host ("  Existing DDS   : {0}" -f $stemStatus.DdsPath) }
+        Write-Host "Your file was left in ImgHERE. Remove or rename it if it is leftover."
+        throw ("ALREADY_EXISTS:{0}" -f $stemStatus.PortraitId)
+    }
+
+    # Name first, then xenotype - filename is never used as the authoritative name
+    # unless the pre-check above matched an existing identity.
     $nameInfo = Read-DogNameInteractive -CandidateFileName $Candidate.Name
+
+    $nameStatus = Get-SdPortraitIdentityStatus -Slug $nameInfo.Slug -RepoRoot $repoRoot
+    if ($nameStatus.AlreadyExists) {
+        Write-Host ""
+        Write-Host "That character name already has a portrait - it will not be re-created."
+        Write-Host ("  Name         : {0}" -f $nameInfo.Display)
+        Write-Host ("  Portrait ID  : {0}" -f $nameStatus.PortraitId)
+        if ($nameStatus.Registered) { Write-Host "  Status       : already registered" }
+        if ($nameStatus.DdsExists) { Write-Host ("  Existing DDS : {0}" -f $nameStatus.DdsPath) }
+        Write-Host "Existing DDS files are never overwritten."
+        throw ("ALREADY_EXISTS:{0}" -f $nameStatus.PortraitId)
+    }
+
     $xeno = Read-PortraitXenotypeInteractive -PortraitDisplayName $nameInfo.Display
 
     $live = Scan-ImgHere -ImgHere $ImgHere
@@ -665,30 +696,43 @@ if ($scan.Conflicts.Count -gt 0) {
 }
 
 if ($scan.Candidates.Count -eq 0) {
-    Write-Host ""
-    Write-Host "No new portrait image was found in ImgHERE."
-    Write-Host "Place a finished portrait image there, then run the tool again."
+    if (-not (Test-SdPipelineMode)) {
+        Write-Host ""
+        Write-Host "No new portrait image was found in ImgHERE."
+        Write-Host "Place a finished portrait image there, then run the tool again."
+    }
     Exit-SdTool 0
     return
 }
 
-# Process candidates sequentially. Naming is always interactive (no -DogName bypass).
-$processed = 0
+# ONE invocation = ONE candidate. Candidates are already Name-sorted in Scan-ImgHere.
+$candidate = $scan.Candidates[0]
+if ($scan.Candidates.Count -gt 1) {
+    Write-Host ""
+    Write-Host ("Multiple new images found in ImgHERE ({0})." -f $scan.Candidates.Count)
+    Write-Host ("Processing this one now: {0}" -f $candidate.Name)
+    Write-Host "Run the tool again to process the next image."
+}
 
-foreach ($candidate in $scan.Candidates) {
-    try {
-        Invoke-CandidateIntake `
-            -Candidate $candidate `
-            -ImgHere $imgHere `
-            -AssetsSource $assetsSource | Out-Null
-        $processed++
-    } catch {
-        Write-Host ""
-        Write-Host ("Could not prepare '{0}': {1}" -f $candidate.Name, $_.Exception.Message)
-        Write-Host "Your original image was left in ImgHERE so you can try again."
-        Exit-SdTool 1
+try {
+    $result = Invoke-CandidateIntake `
+        -Candidate $candidate `
+        -ImgHere $imgHere `
+        -AssetsSource $assetsSource
+
+    $global:STELLAR_DOGOS_LAST_CANONICAL_NAME = $result.CanonicalName
+    $global:STELLAR_DOGOS_LAST_DISPLAY_NAME = $result.DisplayName
+    $global:STELLAR_DOGOS_LAST_XENOTYPE_ID = $result.XenotypeId
+} catch {
+    if ($_.Exception.Message -like "ALREADY_EXISTS:*") {
+        Exit-SdTool 0
         return
     }
+    Write-Host ""
+    Write-Host ("Could not prepare '{0}': {1}" -f $candidate.Name, $_.Exception.Message)
+    Write-Host "Your original image was left in ImgHERE so you can try again."
+    Exit-SdTool 1
+    return
 }
 
 if (-not (Test-SdPipelineMode)) {

@@ -18,6 +18,7 @@ sd_static_test = {
 		"sd_dog_cedar"
 		"sd_dog_liberty"
 		"sd_dog_maple"
+		"sd_dog_galian"
 	}
 
 	non_randomized_portraits = {
@@ -28,6 +29,7 @@ sd_static_test = {
 		"sd_dog_cedar"
 		"sd_dog_liberty"
 		"sd_dog_maple"
+		"sd_dog_galian"
 	}
 }
 
@@ -73,3 +75,14 @@ sd_static_test_fun = {
 	}
 }
 
+sd_static_test_aquatic = {
+	species_class = AQUATIC
+
+	portraits = {
+		"sd_dog_slosh"
+	}
+
+	non_randomized_portraits = {
+		"sd_dog_slosh"
+	}
+}

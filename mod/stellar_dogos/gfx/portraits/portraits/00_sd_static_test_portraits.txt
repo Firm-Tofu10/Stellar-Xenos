@@ -15,6 +15,8 @@
 ###   sd_dog_nova - Nova
 ###   sd_dog_zaldrin - Zaldrin
 ###   sd_dog_blitz - Blitz
+###   sd_dog_galian - Galian
+###   sd_dog_slosh - Slosh
 ##############################################################
 
 portraits = {
@@ -109,5 +111,19 @@ portraits = {
 		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_blitz.dds"
 	}
 
-}
+	sd_dog_galian = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_galian.dds"
+	}
 
+	sd_dog_slosh = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "aqu_portrait_01"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_slosh.dds"
+	}
+
+
+}

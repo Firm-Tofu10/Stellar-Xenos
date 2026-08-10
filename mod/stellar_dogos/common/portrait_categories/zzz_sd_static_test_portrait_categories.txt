@@ -54,3 +54,14 @@ fungoids = {
 	}
 }
 
+aquatics = {
+	name = AQUATIC
+
+	sets = {
+		aquatics
+		synthetic_aquatics
+		biogenesis_aquatic
+		psionic_aquatics
+		sd_static_test_aquatic
+	}
+}
