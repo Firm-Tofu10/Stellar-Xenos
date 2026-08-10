@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 # Stellar Xeno
 
 **Stellar Xeno** is a Stellaris **4.4.x** project for turning **your own photographs** into selectable custom species portraits.
+=======
+# Stellar-Xenos
+
+**Stellar-Xenos** is a Stellaris **4.4.x** project for turning **your own photographs** into selectable custom species portraits.
+>>>>>>> d211941543db12f146c56ee810c93f7eb04e14d2
 
 Dogs were the original development and regression subjects (Piglet, Oakley, Angus, and later fixtures), but **Stellar Xeno** is not limited to dogs. The workflow is intended for arbitrary custom portrait subjects—people, animals, or other references—transformed into a believable Stellaris species of a chosen **xenotype**, then registered into the game through this project's tools.
 
