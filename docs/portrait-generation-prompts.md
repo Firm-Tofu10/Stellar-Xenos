@@ -43,7 +43,7 @@ Related:
 
 Full project-wide standard: [portrait-variety-standard.md](portrait-variety-standard.md).
 
-Universal rules are embedded in every documented prompt under **UNIVERSAL COMPOSITION VARIETY** (and Machine/Toxoid composition sections). Xenotype transforms remain specific to each prompt body.
+Universal rules are embedded in every documented prompt under **UNIVERSAL COMPOSITION VARIETY** (and Mammalian/Machine/Toxoid composition sections). Xenotype transforms remain specific to each prompt body.
 
 ---
 
@@ -51,7 +51,7 @@ Universal rules are embedded in every documented prompt under **UNIVERSAL COMPOS
 
 Most biological xenotype prompt bodies (Avian–Necroid) were originally extracted from the ChatGPT export `Stellaris.html`, then **updated** for the Universal Portrait Variety Standard (flexible framing, anti-template, individual variety).
 
-**Machine** and **Toxoid** Universal prompts were **CREATED** for this project (they are not export recoveries). Do not treat them as pre-existing source-attachment text.
+**Mammalian**, **Machine**, and **Toxoid** Universal prompts were **CREATED** for this project (they are not export recoveries). Do not treat them as pre-existing source-attachment text.
 
 ---
 
@@ -70,7 +70,7 @@ Most biological xenotype prompt bodies (Avian–Necroid) were originally extract
 
 | # | Xenotype | Prompt status | Pipeline selector |
 |---|----------|---------------|-------------------|
-| 1 | Mammalian | **ABSENT** (human→Mammalian body still missing; dog-development history in portrait-prompts.md) | **IMPLEMENTED** |
+| 1 | Mammalian | **CREATED** — Universal Mammalian Xenotype (anti-humanoid morphology override) | **IMPLEMENTED** |
 | 2 | Avian | **DOCUMENTED** + variety standard | **IMPLEMENTED** |
 | 3 | Reptilian | **DOCUMENTED** + variety standard | **IMPLEMENTED** |
 | 4 | Amphibian | **DOCUMENTED** + variety standard | **IMPLEMENTED** (display Amphibian → aquatic) |
@@ -85,9 +85,9 @@ Most biological xenotype prompt bodies (Avian–Necroid) were originally extract
 
 ### Notes
 
-1. Machine and Toxoid prompts are **new** project-standard entries.
+1. Mammalian, Machine, and Toxoid prompts are **new** project-standard entries.
 2. Existing Avian–Necroid prompts keep their xenotype transformation rules; rigid ~91–92% framing was replaced with flexible ~80–95% framing and composition variety.
-3. Mammalian remains absent as a Universal human→Mammalian library body; historical dog Mammalian development prompts live in [portrait-prompts.md](portrait-prompts.md).
+3. Historical dog Mammalian development prompts remain in [portrait-prompts.md](portrait-prompts.md); prefer the Universal Mammalian prompt in this library for new generation work.
 
 ---
 
@@ -153,15 +153,518 @@ Universal composition / anti-template / individual-variety language is shared ac
 ---
 ## 1. Mammalian
 
-**Status:** ABSENT
+**Status:** CREATED (project standard — Universal Mammalian Xenotype)  
+**Pipeline selector:** IMPLEMENTED  
+**Note:** This prompt was **created for Stellar Xeno**. It did not exist as a full body in the original ChatGPT export. It explicitly prioritizes mammalian biological transformation over human anatomy so human/humanoid references cannot survive as “human + fur.”
 
-A full **Universal Mammalian** xenotype prompt body is not yet present in this library (the original export referenced Mammalian as `1/11` but did not include the prompt text).
+```text
+STELLAR XENO — UNIVERSAL MAMMALIAN XENOTYPE
 
-Until a Universal Mammalian prompt is authored, do not invent one here from incomplete narration.
+Using the provided photograph or creature portrait as the exact identity
+reference, reinterpret this subject as a finished Stellaris-style
+MAMMALIAN species portrait.
 
-Historical **dog / Mammalian development** prompts (Piglet, framing, transparency) remain in [portrait-prompts.md](portrait-prompts.md). Those development artifacts should follow the same variety standard when reused: **consistent art direction, variable individual composition**.
+This is an artwork-generation task.
 
-When Mammalian is added, it must include the same UNIVERSAL COMPOSITION VARIETY / identity / transparency rules as Machine, Toxoid, and the other documented prompts.
+The reference determines individual identity and recognizable character.
+The Mammalian xenotype determines biology and anatomy.
+
+==================================================
+PRIORITY ORDER
+==================================================
+
+Follow this priority order strictly:
+
+1. Mammalian biological identity
+2. Reference species identity (if the reference is already a mammal/creature)
+3. Individual recognizability (personality, expression, character)
+4. Stellaris art direction
+5. Natural composition variety
+6. Individual variation
+7. Surface / material detail
+
+Do NOT allow identity preservation to override mammalian biology.
+Do NOT allow composition, clothing, hairstyle, or human facial features
+to override mammalian anatomy.
+
+The biological xenotype transformation has priority over human morphology.
+
+==================================================
+PRESERVE THE PERSON WITHOUT PRESERVING THE HUMAN
+==================================================
+
+"Preserve the identity of the reference" does NOT mean:
+"preserve the human face and put fur, animal ears, or a muzzle onto it."
+
+It means:
+Preserve the individual identity and recognizable characteristics while
+fundamentally remapping the subject's anatomy into a mammalian species.
+
+Preserve:
+
+- recognizable personality
+- expression
+- coloration
+- distinctive markings (where they can translate naturally)
+- general visual character
+- age / maturity
+- apparent build
+- emotional presence
+- gaze character
+- overall presence
+- recognizable individual traits
+
+Do NOT preserve human anatomy when that anatomy conflicts with Mammalian
+identity.
+
+Think:
+
+"the same individual as an alien mammal"
+
+NOT:
+
+"the same human wearing mammalian features."
+
+The viewer should recognize the reference's personality while being
+unable to mistake the final anatomy for a human.
+
+==================================================
+MAMMALIAN MORPHOLOGY OVERRIDE
+==================================================
+
+The Mammalian transformation MUST override humanoid anatomy.
+
+If the supplied reference is a human or humanoid person, do NOT preserve
+the human facial anatomy simply because it is recognizable.
+
+The reference person's identity must be translated INTO a mammalian
+species.
+
+Do NOT create:
+
+- a human face covered in fur
+- a human with animal ears
+- a human with a painted-on muzzle
+- a human with a black animal nose but human lips
+- a human skull with a fur texture
+- a human jaw with animal teeth
+- a human face with cosmetic animal features
+- a furry human
+- an anthropomorphic human wearing an animal mask
+- a human-shaped creature with superficial mammalian traits
+
+The result must NOT read as:
+
+"human + mammal features."
+
+It must read as:
+
+"mammalian alien species."
+
+==================================================
+FACE-FIRST TRANSFORMATION
+==================================================
+
+The face is the highest-priority area for Mammalian transformation.
+
+The generated head must be anatomically mammalian rather than human.
+
+Transform the reference into a believable animal-derived head structure
+including, where appropriate:
+
+- species-appropriate skull shape
+- animal forehead structure
+- animal brow structure
+- species-appropriate eye placement
+- animal eye shape
+- pronounced muzzle / snout where appropriate
+- species-appropriate nose
+- animal mouth structure
+- animal jaw structure
+- animal cheek structure
+- species-appropriate ears
+- species-appropriate neck anatomy
+- species-appropriate facial musculature
+- mammalian fur covering the appropriate facial regions
+
+The exact anatomy must depend on the chosen mammalian species.
+
+Do NOT force every Mammalian into a dog, wolf, fox, cat, or generic
+furry humanoid.
+
+==================================================
+HUMAN ANATOMY THAT MUST NOT SURVIVE
+==================================================
+
+When the reference is human or strongly humanoid, actively replace the
+following rather than preserving them literally:
+
+- human nose bridge
+- human nose shape
+- human lips
+- human mouth proportions
+- human jaw proportions
+- human chin
+- human cheekbones
+- human forehead
+- human ear shape
+- human facial skin distribution
+- human hairline
+- human scalp / hair structure
+- human neck proportions
+- human facial symmetry
+- human head proportions
+
+These characteristics may influence the resulting individual design only
+indirectly. They must not remain recognizably human.
+
+Examples:
+
+- A human nose becomes a species-appropriate mammalian nose or muzzle.
+- Human lips become an animal mouth structure.
+- Human ears become species-appropriate mammalian ears.
+- Human hair becomes biologically integrated fur, mane, crest, or coat.
+
+This is a biological transformation, not cosmetic modification.
+
+==================================================
+MAMMALIAN SPECIES IDENTITY
+==================================================
+
+The output must visibly communicate mammalian biology before any
+secondary artistic details.
+
+Use recognizable mammalian characteristics appropriate to the reference:
+
+- fur
+- mammalian skin / fur transitions
+- animal eyes
+- animal ears
+- muzzle / snout
+- mammalian nose
+- mammalian jaw
+- animal facial musculature
+- species-appropriate teeth
+- species-appropriate neck and torso structure
+- species-appropriate body proportions
+
+The exact combination should depend on the reference.
+
+Examples:
+
+- A canine reference remains recognizably canine.
+- A feline reference remains recognizably feline.
+- A primate reference may retain primate-like anatomy, but must still be
+  unmistakably an alien mammalian species rather than a human.
+- An ungulate reference retains appropriate ungulate morphology.
+- A rodent reference retains appropriate rodent morphology.
+
+Do not collapse every mammalian reference into the same generic
+"furry alien."
+
+==================================================
+BODY MORPHOLOGY
+==================================================
+
+Do not limit the transformation to the head.
+
+When appropriate, transform:
+
+- neck
+- shoulders
+- torso
+- chest
+- arms
+- hands / paws
+- posture
+- body proportions
+- visible anatomy
+
+The result should have a coherent mammalian body plan.
+
+Do not create a human body with an animal head unless the reference
+species genuinely calls for a strongly humanoid mammalian morphology.
+Even then, the head and visible anatomy must remain clearly mammalian.
+
+==================================================
+FUR
+==================================================
+
+Fur should be biologically integrated into the mammalian anatomy.
+
+Prefer:
+
+- realistic fur direction
+- species-appropriate coat density
+- layered fur
+- natural coat patterns
+- believable fur around muzzle and ears
+- realistic material response
+- readable anatomy beneath the coat
+
+Avoid:
+
+- furry costume appearance
+- giant artificial fur masses
+- hair behaving like clothing
+- human hairstyles pasted onto an animal
+- plastic-looking fur
+- exaggerated 3D hair clumps
+
+If the reference has human hair, reinterpret its visual character as an
+appropriate mammalian coat, mane, crest, or fur pattern rather than
+preserving human hair literally.
+
+==================================================
+CLOTHING / ACCESSORIES
+==================================================
+
+If clothing or accessories are appropriate for the Stellaris portrait
+style, they are secondary.
+
+They must never become the primary identity of the portrait.
+
+Do not allow:
+
+- human clothing
+- hats
+- hairstyles
+- armor
+- accessories
+- makeup
+
+to preserve a human silhouette after the biological transformation.
+
+The viewer must recognize the species before recognizing clothing.
+
+==================================================
+STELLARIS MAMMALIAN VISUAL TARGET
+==================================================
+
+Use the visual language of Stellaris Mammalian species portraits.
+
+Target:
+
+- strongly animal-derived heads
+- recognizable mammalian anatomy
+- distinct muzzle / snout structures where appropriate
+- species-specific ears
+- animal eyes
+- fur as a biological surface
+- varied mammalian body proportions
+- intelligent alien presence
+- sophisticated sci-fi portrait rendering
+- believable species individuality
+
+The final design should feel like it belongs in the Stellaris Mammalian
+portrait roster.
+
+It should NOT look like:
+
+- a human fantasy character
+- a furry human
+- a cosplay character
+- a person wearing an animal mask
+- a human with cosmetic animal modifications
+
+==================================================
+HUMAN REFERENCE FAILURE TEST
+==================================================
+
+If the supplied reference is a photograph of a human, temporarily ignore
+the fact that the subject is human.
+
+Ask:
+
+"If I removed the reference photograph and only saw the generated
+portrait, would I immediately classify this as a mammalian alien species
+rather than a human?"
+
+If the answer is no, the transformation has failed.
+
+A successful result must pass all of these:
+
+1. The head is anatomically mammalian.
+2. The face is not human with fur.
+3. The eyes, nose, mouth, jaw, and ears are species-appropriate.
+4. The silhouette reads as an animal-derived species.
+5. The subject remains recognizable as the same individual in personality
+   and visual character.
+6. The final portrait belongs naturally in the Stellaris Mammalian
+   category.
+
+==================================================
+MAMMALIAN PORTRAIT STYLE
+==================================================
+
+Finished Stellaris species-selection portrait.
+
+Realistic high-detail science-fiction digital artwork.
+
+Sophisticated creature design.
+
+Detailed biological fur and materials.
+
+Controlled surface detail.
+
+Realistic lighting.
+
+Subtle rim lighting.
+
+Strong facial readability.
+
+Serious intelligent presence.
+
+Professional strategy-game concept art.
+
+Alien but believable.
+
+Not photorealistic wildlife photography.
+Not generic fantasy concept art.
+Not a furry cosplay portrait.
+Not a human with animal makeup.
+
+==================================================
+MAMMALIAN COMPOSITION
+==================================================
+
+==================================================
+UNIVERSAL COMPOSITION VARIETY
+==================================================
+
+Consistent art direction, variable individual composition.
+Same species identity + different individual portrait composition.
+
+Allow natural variation in:
+
+- head orientation
+- body orientation
+- head tilt
+- gaze direction
+- facial direction
+- posture
+- camera angle
+- crop distance
+- visible torso amount
+- horizontal position
+- vertical position
+- subject scale
+- asymmetry
+- relationship between head and body orientation
+
+Possible compositions include (possibilities, NOT a fixed rotation
+schedule):
+
+- mostly frontal
+- subtle 3/4 left
+- subtle 3/4 right
+- stronger 3/4 angle
+- slight side profile
+- body angled left while head faces viewer
+- body angled right while head faces viewer
+- head turned slightly away
+- head turned toward viewer while body is angled
+- subtle head tilt
+- subject slightly left of center
+- subject slightly right of center
+- closer facial composition
+- slightly wider bust composition
+
+Each portrait independently receives a natural composition appropriate
+to its reference. Do not cycle left/right/frontal across a roster.
+
+ANTI-TEMPLATE:
+Do not repeat centered frontal portraits, perfectly symmetrical poses,
+identical head placement, identical camera distance, identical torso
+exposure, identical gaze direction, or identical body orientation.
+Do not stage mugshot / identification-photo compositions.
+
+NATURAL VARIETY ONLY (not random cameras):
+Avoid extreme camera angles, dramatic perspective distortion, cropped
+faces, awkward anatomy, poses that obscure identity, excessive profile
+views, extreme zoom, and excessive negative space.
+
+INDIVIDUAL VARIETY:
+Allow subtle variation in expression, maturity, physical build, natural
+asymmetry, minor markings, scars, coloration, eye coloration/intensity,
+coat characteristics, and personality — subordinate to the reference
+species. Do not change fundamental anatomy into a different species.
+Target: slightly different individuals of the same mammalian species.
+
+Biological transformation rules above take priority over composition
+variety.
+
+FLEXIBLE FRAMING:
+Square portrait-bust suitable for Stellaris species selection.
+Subject generally occupies approximately 80–95% of the vertical frame
+with natural variation. Exact framing depends on anatomy and composition.
+Do not require perfect centering or identical head placement.
+
+==================================================
+MAMMALIAN TRANSPARENCY
+==================================================
+
+True RGBA transparency.
+
+The subject must remain opaque.
+
+Everything outside the subject must be transparent.
+
+Do NOT include:
+
+- scenery
+- environment
+- planet
+- stars
+- laboratory
+- floor
+- room
+- landscape
+- border
+- frame
+- text
+- logo
+- watermark
+- surrounding glow
+
+Clean transparent edges with no white, black, or colored halo.
+
+Do not replace the background with white, black, gray, or another color.
+The surrounding pixels must contain real transparency.
+
+==================================================
+FINAL MAMMALIAN VALIDATION
+==================================================
+
+The final result must satisfy all of the following:
+
+1. It is unmistakably mammalian.
+2. Its facial anatomy is non-human.
+3. It does NOT look like a human with fur or animal features added.
+4. The reference person's recognizable personality and individual
+   character survive the transformation.
+5. The resulting anatomy is biologically coherent.
+6. The portrait feels like a legitimate Stellaris Mammalian species
+   portrait.
+7. Another generation can produce a different individual of the same
+   mammalian species without reverting to humanoid anatomy.
+
+The desired reaction is:
+
+"That is clearly a mammalian alien."
+
+Not:
+
+"That is a human with animal features."
+
+And when comparing multiple generations:
+
+"Those are clearly the same mammalian species, but different
+individuals."
+
+Do NOT create a DDS.
+Do NOT modify Stellaris files.
+```
 
 ---
 ## 2. Avian
@@ -3861,14 +4364,14 @@ Do NOT modify Stellaris files.
 ---
 ## Future work (documentation only)
 
-1. Obtain and document the missing **Mammalian** human→xenotype generation prompt from authoritative source material (or author a Universal Mammalian prompt in the same style as Machine/Toxoid).
-2. Keep prompt library and [portrait-variety-standard.md](portrait-variety-standard.md) aligned when xenotype transforms change.
-3. Dog-development framing history in [portrait-prompts.md](portrait-prompts.md) remains historical; prefer this library + variety standard for new generation work.
+1. Keep prompt library and [portrait-variety-standard.md](portrait-variety-standard.md) aligned when xenotype transforms change.
+2. Dog-development framing history in [portrait-prompts.md](portrait-prompts.md) remains historical; prefer this library + variety standard for new generation work.
 
 ---
 
 ## Validation checklist (prompt system)
 
+- [x] Mammalian prompt **CREATED** — Universal Mammalian with morphology override / anti-“human + fur”
 - [x] Machine prompt **CREATED** (did not exist previously in this library as a full body)
 - [x] Toxoid prompt **CREATED** to Universal Toxoid standard (coherent with Machine + variety system)
 - [x] Universal composition variety applied to documented xenotype prompts

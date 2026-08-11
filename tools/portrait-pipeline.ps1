@@ -2,9 +2,15 @@
 # Chains existing tools: intake → species-type selection → DDS → registration.
 # Does NOT redesign architecture, accept a name CLI bypass, or touch vanilla Stellaris.
 #
-# Interactive naming is mandatory. Species type is chosen with the arrow-key menu
-# (or numbered fallback when stdin is redirected). The pipeline never derives the
-# portrait name or species type from the candidate filename.
+# Orchestration priority (one portrait per invocation):
+#   1. Pending canonical PNG missing DDS and/or registration → finish DDS + register
+#      (no name/xenotype prompts; raw candidates in ImgHERE do not block this)
+#   2. Else new raw ImgHERE candidate → interactive intake → DDS → register
+#   3. Else nothing to do → exit 0
+#
+# Interactive naming is mandatory for raw candidates only. Species type is chosen
+# with the arrow-key menu (or numbered fallback when stdin is redirected). The
+# pipeline never derives the portrait name or species type from a raw filename.
 #
 # Normal UX: run without piping; answer the on-screen prompts.
 # Scripted proof (optional): pipe answers that go THROUGH the visible prompts, e.g.:
@@ -221,46 +227,28 @@ try {
     $displayName = $null
     $xeno = $null
     $fromPendingCanon = $false
+    $needsDds = $true
+    $needsReg = $true
 
-    $intakeResult = Invoke-ChildScript -ScriptPath $intakeScript -PhaseName "portrait preparation"
-
-    if ($intakeResult.ExitCode -ne 0) {
-        Write-Host ""
-        Write-Host "Could not prepare the portrait. Your original image was left in ImgHERE so you can try again."
-        if ($intakeResult.Error) {
-            Write-Host ("Details: {0}" -f $intakeResult.Error)
-        }
-        exit $intakeResult.ExitCode
-    }
-
-    if (-not [string]::IsNullOrWhiteSpace($global:STELLAR_DOGOS_LAST_CANONICAL_NAME)) {
-        $canonicalName = $global:STELLAR_DOGOS_LAST_CANONICAL_NAME
-        $displayName = $global:STELLAR_DOGOS_LAST_DISPLAY_NAME
-        $xenoId = $global:STELLAR_DOGOS_LAST_XENOTYPE_ID
-        $xeno = Resolve-PortraitXenotype -Selection $xenoId
-        if ($null -eq $xeno) {
-            throw ("Could not resolve species type from intake selection '{0}'." -f $xenoId)
-        }
-    } else {
-        # No raw new candidate this run — finish ONE already-named pending canon if any.
-        $pending = @(Get-PendingCanonicalPortraits -ImgHere $imgHere -AssetsSource $assetsSource -DdsDir $ddsDir -PortraitsTxt $modPaths.PortraitsTxt)
-        if ($pending.Count -eq 0) {
-            # Intake already printed the friendly "no new portrait" message when applicable.
-            exit 0
-        }
-
+    # Priority 1: finish ONE already-named canonical portrait missing DDS and/or registration.
+    # Raw ImgHERE candidates (including failed ones like Oakadile) must not block this.
+    $pending = @(Get-PendingCanonicalPortraits -ImgHere $imgHere -AssetsSource $assetsSource -DdsDir $ddsDir -PortraitsTxt $modPaths.PortraitsTxt)
+    if ($pending.Count -gt 0) {
         $chosen = $pending[0]
         $fromPendingCanon = $true
-        if ($pending.Count -gt 1) {
-            Write-Host ""
-            Write-Host ("Multiple portraits are waiting ({0})." -f $pending.Count)
-            Write-Host ("Processing this one now: {0}" -f $chosen.FileName)
-            Write-Host "Run the tool again to process the next portrait."
-        }
+        $needsDds = [bool]$chosen.NeedsDds
+        $needsReg = [bool]$chosen.NeedsReg
 
-        Write-Host ""
-        Write-Host "New portrait found:"
-        Write-Host ("  {0}" -f $chosen.FileName)
+        Write-Host "Pending canonical portraits found."
+        if ($pending.Count -gt 1) {
+            Write-Host ("  Waiting: {0}" -f $pending.Count)
+            Write-Host ("Processing this one now:")
+            Write-Host ("  {0}" -f $chosen.FileName)
+            Write-Host "Run the tool again to process the next portrait."
+        } else {
+            Write-Host "Processing:"
+            Write-Host ("  {0}" -f $chosen.FileName)
+        }
 
         $canonicalName = $chosen.FileName
         $displayName = (Get-Culture).TextInfo.ToTitleCase($chosen.Slug.Replace('_', ' '))
@@ -294,6 +282,36 @@ try {
         $global:STELLAR_DOGOS_LAST_CANONICAL_NAME = $canonicalName
         $global:STELLAR_DOGOS_LAST_DISPLAY_NAME = $displayName
         $global:STELLAR_DOGOS_LAST_XENOTYPE_ID = $xeno.Id
+    } else {
+        # Priority 2: interactive intake for a new raw candidate (only when nothing pending).
+        $intakeResult = Invoke-ChildScript -ScriptPath $intakeScript -PhaseName "portrait preparation"
+
+        if ($intakeResult.ExitCode -ne 0) {
+            Write-Host ""
+            Write-Host "Could not prepare the portrait. Your original image was left in ImgHERE so you can try again."
+            if ($intakeResult.Error) {
+                Write-Host ("Details: {0}" -f $intakeResult.Error)
+            }
+            exit $intakeResult.ExitCode
+        }
+
+        if ([string]::IsNullOrWhiteSpace($global:STELLAR_DOGOS_LAST_CANONICAL_NAME)) {
+            # Priority 3: nothing pending and no new candidate prepared.
+            Write-Host ""
+            Write-Host "Portrait pipeline is up to date."
+            Write-Host "No pending canonical portraits and no new ImgHERE candidates to process."
+            exit 0
+        }
+
+        $canonicalName = $global:STELLAR_DOGOS_LAST_CANONICAL_NAME
+        $displayName = $global:STELLAR_DOGOS_LAST_DISPLAY_NAME
+        $xenoId = $global:STELLAR_DOGOS_LAST_XENOTYPE_ID
+        $xeno = Resolve-PortraitXenotype -Selection $xenoId
+        if ($null -eq $xeno) {
+            throw ("Could not resolve species type from intake selection '{0}'." -f $xenoId)
+        }
+        $needsDds = $true
+        $needsReg = $true
     }
 
     $canonicalRel = Join-Path "assets\source" $canonicalName
@@ -339,40 +357,52 @@ try {
     Write-Host ""
     Write-Host "Preparing your portrait..."
 
-    $ddsResult = Invoke-ChildScript -ScriptPath $ddsScript -Arguments @{ Source = $canonicalRel } -PhaseName "game texture"
-    if ($ddsResult.ExitCode -ne 0) {
-        Write-Host ""
-        Write-Host "Could not finish preparing your portrait."
-        if ($ddsResult.Error) {
-            Write-Host ("Details: {0}" -f $ddsResult.Error)
+    if ($needsDds) {
+        if (Test-Path -LiteralPath $ddsPath) {
+            Write-Host ("Game texture already exists (will not overwrite): {0}" -f $ddsPath)
+        } else {
+            $ddsResult = Invoke-ChildScript -ScriptPath $ddsScript -Arguments @{ Source = $canonicalRel } -PhaseName "game texture"
+            if ($ddsResult.ExitCode -ne 0) {
+                Write-Host ""
+                Write-Host "Could not finish preparing your portrait."
+                if ($ddsResult.Error) {
+                    Write-Host ("Details: {0}" -f $ddsResult.Error)
+                }
+                Write-Host ("Exit code: {0}" -f $ddsResult.ExitCode)
+                exit $ddsResult.ExitCode
+            }
         }
-        Write-Host ("Exit code: {0}" -f $ddsResult.ExitCode)
-        exit $ddsResult.ExitCode
+    } else {
+        Write-Host ("Game texture already present; skipping DDS generation.")
     }
 
     if (-not (Test-Path -LiteralPath $ddsPath)) {
-        throw ("Expected game texture was not created: {0}" -f $ddsPath)
+        throw ("Expected game texture missing: {0}" -f $ddsPath)
     }
 
     if ($lockedCanonicalName -ne $global:STELLAR_DOGOS_LAST_CANONICAL_NAME) {
         throw ("Candidate switched before registration (expected {0}). Aborting." -f $lockedCanonicalName)
     }
 
-    $regRel = Join-Path $modPaths.DdsRelPrefix $ddsName
-    $regResult = Invoke-ChildScript -ScriptPath $registerScript -Arguments @{
-        Source   = $regRel
-        Xenotype = $xeno.Id
-    } -PhaseName "registration"
-    if ($regResult.ExitCode -ne 0) {
-        Write-Host ""
-        Write-Host "Could not finish preparing your portrait."
-        Write-Host ("Exit code: {0}" -f $regResult.ExitCode)
-        if ($regResult.Error) {
-            Write-Host ("Details: {0}" -f $regResult.Error)
-        } else {
-            Write-Host "See the messages above for the exact reason."
+    if ($needsReg) {
+        $regRel = Join-Path $modPaths.DdsRelPrefix $ddsName
+        $regResult = Invoke-ChildScript -ScriptPath $registerScript -Arguments @{
+            Source   = $regRel
+            Xenotype = $xeno.Id
+        } -PhaseName "registration"
+        if ($regResult.ExitCode -ne 0) {
+            Write-Host ""
+            Write-Host "Could not finish preparing your portrait."
+            Write-Host ("Exit code: {0}" -f $regResult.ExitCode)
+            if ($regResult.Error) {
+                Write-Host ("Details: {0}" -f $regResult.Error)
+            } else {
+                Write-Host "See the messages above for the exact reason."
+            }
+            exit $regResult.ExitCode
         }
-        exit $regResult.ExitCode
+    } else {
+        Write-Host "Portrait already registered; skipping registration."
     }
 
     $hashesAfter = Get-Sha256Map -Directory $ddsDir -FileNames $ProtectedDds

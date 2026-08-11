@@ -17,6 +17,10 @@
 ###   sd_dog_blitz - Blitz
 ###   sd_dog_galian - Galian
 ###   sd_dog_slosh - Slosh
+###   sd_dog_ranger - Ranger
+###   sd_dog_davy - Davy
+###   sd_dog_cree - Cree
+###   sd_dog_vex - Vex
 ##############################################################
 
 portraits = {
@@ -125,5 +129,31 @@ portraits = {
 		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_slosh.dds"
 	}
 
+	sd_dog_ranger = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_ranger.dds"
+	}
 
+	sd_dog_davy = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "tox_portrait_01"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_davy.dds"
+	}
+
+	sd_dog_cree = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "tox_portrait_01"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_cree.dds"
+	}
+
+	sd_dog_vex = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "tox_portrait_01"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_vex.dds"
+	}
 }

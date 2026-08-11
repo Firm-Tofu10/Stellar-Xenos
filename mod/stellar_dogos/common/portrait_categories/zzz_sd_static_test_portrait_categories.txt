@@ -65,3 +65,12 @@ aquatics = {
 		sd_static_test_aquatic
 	}
 }
+
+toxoids = {
+	name = TOX
+
+	sets = {
+		toxoids
+		sd_static_test_tox
+	}
+}

@@ -1103,6 +1103,174 @@ The next engineering task is **not** the importer.
 It is the **Portrait Context Compatibility Audit** (Oakley gold-standard). See [portrait-testing.md](portrait-testing.md) and [development-roadmap.md](development-roadmap.md) Phase 2.
 </file>
 
+<file path="experiment/sd_static_portrait_test/common/portrait_categories/zzz_sd_static_test_portrait_categories.txt">
+##############################################################
+### SD Static Portrait Test - category overrides (EXPERIMENT)
+###
+### Each block REPLACES the vanilla category of the same key so
+### we can append one experiment set with minimal change.
+### Vanilla set lists were copied from Stellaris 4.4.x.
+### Revert method: delete this file from the experiment mod.
+##############################################################
+
+mammalians = {
+	name = MAM
+
+	sets = {
+		mammalians
+		cybernetic_mammalians
+		biogenesis_mammalians
+		psionic_mammalians
+		sd_static_test
+	}
+}
+
+avians = {
+	name = AVI
+
+	sets = {
+		avians
+		cybernetic_avians
+		synthetic_avians
+		biogenesis_avians
+		psionic_avians
+		sd_static_test_avi
+	}
+}
+
+reptilians = {
+	name = REP
+
+	sets = {
+		reptilians
+		cybernetic_reptilians
+		biogenesis_reptilians
+		pdx_signup_reptilian
+		sd_static_test_rep
+	}
+}
+</file>
+
+<file path="experiment/sd_static_portrait_test.mod.example">
+name="SD Static Portrait Test"
+path="C:/Users/bryso/Documents/GitHub/Stellar Xeno/experiment/sd_static_portrait_test"
+supported_version="v4.4.*"
+tags={
+	"Graphics"
+	"Species"
+}
+version="0.0.1"
+</file>
+
+<file path="mod/stellar_dogos/README.md">
+# Stellar Xeno
+
+**Custom Stellaris species portraits from your own images.**
+
+**Stellar Xeno** is a Stellaris **4.4.x** (Pegasus) mod that adds selectable **static species portraits** across multiple Stellaris species types (xenotypes).
+
+This Workshop package is the **game mod only**. It contains portrait definitions, portrait sets, category exposure, and DDS textures so Stellaris can load the included portraits.
+
+## What this mod includes
+
+Registered portraits appear under their species type in empire/species creation, including:
+
+- **Mammalian** — Piglet, Oakley, Angus, Bruce, Cedar, Liberty, Maple  
+- **Avian** — Sparrow, Zaldrin  
+- **Reptilian** — Lemon, Pepper, Nova  
+- **Fungoid** — Blitz  
+
+Additional xenotypes are supported by the **local Portrait Creator** tooling in the project repository (Amphibian, Arthropoid, Molluscoid, Plantoid, Lithoid, Necroid, Machine, Toxoid, and more). Those tools are **not** shipped inside this Workshop package.
+
+## What this mod does NOT include
+
+- The local **Portrait Creator** (PowerShell intake → DDS → registration)
+- `ImgHERE/` staging, source PNGs, or developer scripts
+- A claim of full verification in every Stellaris UI context (leaders, council, diplomacy, …)
+
+To create and register **new** portraits on your own PC, use the project repository (local tooling), then update/republish this mod package if you are the author.
+
+Repository (Portrait Creator / development):  
+https://github.com/Firm-Tofu10/Stellar-Dogos
+
+## How to use (players)
+
+1. Subscribe to **Stellar Xeno** on Steam Workshop (or install this folder as a local mod).
+2. Enable **Stellar Xeno** in the Stellaris launcher.
+3. Create an empire → choose the matching species type → select a Stellar Xeno portrait.
+
+Do **not** copy files into the vanilla Stellaris installation.
+
+## Local install (authors / testers)
+
+For local testing without Workshop:
+
+1. Place this folder under `Documents/Paradox Interactive/Stellaris/mod/` (folder name may remain the internal `stellar_dogos` path).
+2. Ensure a launcher `.mod` descriptor exists with a `path=` pointing at **this folder** (forward slashes). The package `descriptor.mod` itself must **not** contain a developer-machine absolute path.
+3. Enable **Stellar Xeno** in the launcher.
+
+## Status
+
+- Species-creation portraits: working for the currently registered portraits in this package.
+- Full UI contexts (leaders, council, diplomacy, …): **not fully verified**.
+- Steam Workshop ID: assigned by Steam on first upload (`remote_file_id` — do not invent).
+
+## Revert
+
+Disable or unsubscribe the mod. No vanilla files need restoring.
+</file>
+
+<file path="tools/portrait-exit.ps1">
+# Shared exit helper for Stellar Xeno tools.
+# portrait-pipeline.ps1 sets STELLAR_DOGOS_INPROCESS=1 and invokes tools with & so
+# name + xenotype prompts share the same console. In that mode, bare `exit` would
+# kill the whole pipeline — use Exit-SdTool then `return` instead.
+#
+# STELLAR_DOGOS_PIPELINE=1 means the end-to-end creator owns player-facing messages;
+# child tools stay quiet except for prompts/errors.
+
+function Test-SdPipelineMode {
+    return ($env:STELLAR_DOGOS_PIPELINE -eq "1")
+}
+
+function Exit-SdTool {
+    param(
+        [int]$Code = 0
+    )
+
+    $global:STELLAR_DOGOS_EXITCODE = $Code
+    if ($env:STELLAR_DOGOS_INPROCESS -ne "1") {
+        exit $Code
+    }
+}
+
+function Write-SdHost {
+    [CmdletBinding()]
+    param(
+        [Parameter(Position = 0)]
+        [object]$Object = "",
+        [switch]$NoNewline,
+        [ConsoleColor]$ForegroundColor
+    )
+
+    if (Test-SdPipelineMode) { return }
+
+    if ($PSBoundParameters.ContainsKey("ForegroundColor")) {
+        if ($NoNewline) {
+            Write-Host -Object $Object -NoNewline -ForegroundColor $ForegroundColor
+        } else {
+            Write-Host -Object $Object -ForegroundColor $ForegroundColor
+        }
+    } else {
+        if ($NoNewline) {
+            Write-Host -Object $Object -NoNewline
+        } else {
+            Write-Host -Object $Object
+        }
+    }
+}
+</file>
+
 <file path="docs/portrait-generation-prompts.md">
 # Stellar Xeno — Portrait Generation Prompt Library
 
@@ -4982,572 +5150,6 @@ Do NOT modify Stellaris files.
 - [x] Universal vs xenotype-specific rules documented in [portrait-variety-standard.md](portrait-variety-standard.md)
 </file>
 
-<file path="experiment/sd_static_portrait_test/common/portrait_categories/zzz_sd_static_test_portrait_categories.txt">
-##############################################################
-### SD Static Portrait Test - category overrides (EXPERIMENT)
-###
-### Each block REPLACES the vanilla category of the same key so
-### we can append one experiment set with minimal change.
-### Vanilla set lists were copied from Stellaris 4.4.x.
-### Revert method: delete this file from the experiment mod.
-##############################################################
-
-mammalians = {
-	name = MAM
-
-	sets = {
-		mammalians
-		cybernetic_mammalians
-		biogenesis_mammalians
-		psionic_mammalians
-		sd_static_test
-	}
-}
-
-avians = {
-	name = AVI
-
-	sets = {
-		avians
-		cybernetic_avians
-		synthetic_avians
-		biogenesis_avians
-		psionic_avians
-		sd_static_test_avi
-	}
-}
-
-reptilians = {
-	name = REP
-
-	sets = {
-		reptilians
-		cybernetic_reptilians
-		biogenesis_reptilians
-		pdx_signup_reptilian
-		sd_static_test_rep
-	}
-}
-</file>
-
-<file path="experiment/sd_static_portrait_test.mod.example">
-name="SD Static Portrait Test"
-path="C:/Users/bryso/Documents/GitHub/Stellar Xeno/experiment/sd_static_portrait_test"
-supported_version="v4.4.*"
-tags={
-	"Graphics"
-	"Species"
-}
-version="0.0.1"
-</file>
-
-<file path="mod/stellar_dogos/README.md">
-# Stellar Xeno
-
-**Custom Stellaris species portraits from your own images.**
-
-**Stellar Xeno** is a Stellaris **4.4.x** (Pegasus) mod that adds selectable **static species portraits** across multiple Stellaris species types (xenotypes).
-
-This Workshop package is the **game mod only**. It contains portrait definitions, portrait sets, category exposure, and DDS textures so Stellaris can load the included portraits.
-
-## What this mod includes
-
-Registered portraits appear under their species type in empire/species creation, including:
-
-- **Mammalian** — Piglet, Oakley, Angus, Bruce, Cedar, Liberty, Maple  
-- **Avian** — Sparrow, Zaldrin  
-- **Reptilian** — Lemon, Pepper, Nova  
-- **Fungoid** — Blitz  
-
-Additional xenotypes are supported by the **local Portrait Creator** tooling in the project repository (Amphibian, Arthropoid, Molluscoid, Plantoid, Lithoid, Necroid, Machine, Toxoid, and more). Those tools are **not** shipped inside this Workshop package.
-
-## What this mod does NOT include
-
-- The local **Portrait Creator** (PowerShell intake → DDS → registration)
-- `ImgHERE/` staging, source PNGs, or developer scripts
-- A claim of full verification in every Stellaris UI context (leaders, council, diplomacy, …)
-
-To create and register **new** portraits on your own PC, use the project repository (local tooling), then update/republish this mod package if you are the author.
-
-Repository (Portrait Creator / development):  
-https://github.com/Firm-Tofu10/Stellar-Dogos
-
-## How to use (players)
-
-1. Subscribe to **Stellar Xeno** on Steam Workshop (or install this folder as a local mod).
-2. Enable **Stellar Xeno** in the Stellaris launcher.
-3. Create an empire → choose the matching species type → select a Stellar Xeno portrait.
-
-Do **not** copy files into the vanilla Stellaris installation.
-
-## Local install (authors / testers)
-
-For local testing without Workshop:
-
-1. Place this folder under `Documents/Paradox Interactive/Stellaris/mod/` (folder name may remain the internal `stellar_dogos` path).
-2. Ensure a launcher `.mod` descriptor exists with a `path=` pointing at **this folder** (forward slashes). The package `descriptor.mod` itself must **not** contain a developer-machine absolute path.
-3. Enable **Stellar Xeno** in the launcher.
-
-## Status
-
-- Species-creation portraits: working for the currently registered portraits in this package.
-- Full UI contexts (leaders, council, diplomacy, …): **not fully verified**.
-- Steam Workshop ID: assigned by Steam on first upload (`remote_file_id` — do not invent).
-
-## Revert
-
-Disable or unsubscribe the mod. No vanilla files need restoring.
-</file>
-
-<file path="tools/portrait-exit.ps1">
-# Shared exit helper for Stellar Xeno tools.
-# portrait-pipeline.ps1 sets STELLAR_DOGOS_INPROCESS=1 and invokes tools with & so
-# name + xenotype prompts share the same console. In that mode, bare `exit` would
-# kill the whole pipeline — use Exit-SdTool then `return` instead.
-#
-# STELLAR_DOGOS_PIPELINE=1 means the end-to-end creator owns player-facing messages;
-# child tools stay quiet except for prompts/errors.
-
-function Test-SdPipelineMode {
-    return ($env:STELLAR_DOGOS_PIPELINE -eq "1")
-}
-
-function Exit-SdTool {
-    param(
-        [int]$Code = 0
-    )
-
-    $global:STELLAR_DOGOS_EXITCODE = $Code
-    if ($env:STELLAR_DOGOS_INPROCESS -ne "1") {
-        exit $Code
-    }
-}
-
-function Write-SdHost {
-    [CmdletBinding()]
-    param(
-        [Parameter(Position = 0)]
-        [object]$Object = "",
-        [switch]$NoNewline,
-        [ConsoleColor]$ForegroundColor
-    )
-
-    if (Test-SdPipelineMode) { return }
-
-    if ($PSBoundParameters.ContainsKey("ForegroundColor")) {
-        if ($NoNewline) {
-            Write-Host -Object $Object -NoNewline -ForegroundColor $ForegroundColor
-        } else {
-            Write-Host -Object $Object -ForegroundColor $ForegroundColor
-        }
-    } else {
-        if ($NoNewline) {
-            Write-Host -Object $Object -NoNewline
-        } else {
-            Write-Host -Object $Object
-        }
-    }
-}
-</file>
-
-<file path="docs/portrait-prompts.md">
-# Stellar Xeno — Portrait Generation Prompts
-
-> **Xenotype prompt library:**  
-> For the authoritative **xenotype-specific** image-generation prompts (including **CREATED** Universal Machine and Toxoid), see **[portrait-generation-prompts.md](portrait-generation-prompts.md)**.  
-> Project-wide composition / identity rules: **[portrait-variety-standard.md](portrait-variety-standard.md)** — *consistent art direction, variable individual composition*.  
-> Those prompts are for an external image model (not pipeline commands).
-
-Successful **dog-development** image-generation prompts and related refinement instructions developed during early Stellar Xeno sessions are preserved below.
-
-Use these to reproduce the early artwork workflow. Technical conversion (PNG → DDS → registration) is documented in [portrait-workflow.md](portrait-workflow.md).
-
----
-
-## Asset stages (do not confuse)
-
-| Stage | Role |
-|-------|------|
-| **SOURCE PHOTO** | Authoritative reference for identity, coat, markings, face, ears, eyes, muzzle, proportions |
-| **GENERATED PORTRAIT** | Stellaris-style artwork produced from the photo (finished PNG for `ImgHERE/`) |
-| **GAME ASSET** | Converted **256×256** uncompressed **32-bit RGBA** DDS used by Stellaris |
-
-The photo preserves who the dog is. The generated portrait is the game art. The DDS is the shipped texture.
-
----
-
-## Style goals (all generation prompts)
-
-The generated image should transform the dog into a realistic Stellaris-style mammalian portrait:
-
-- Realistic painterly rendering
-- Detailed fur
-- Natural anatomy
-- Stellaris-compatible visual style
-- **Consistent art direction, variable individual composition** (see [portrait-variety-standard.md](portrait-variety-standard.md))
-- Natural composition variety (not a fixed centered-frontal template; not extreme random cameras)
-- Subtle individual variety subordinate to the reference dog
-- No cartoon / anime styling
-- No text, logos, UI, watermark, or decorative frame
-
----
-
-## 1. Base Stellaris dog portrait prompt
-
-Successful framing + transparency prompt (originally used for Piglet). For other dogs, replace subject-specific lines and attach that dog’s reference photo; keep STYLE / COMPOSITION / TRANSPARENCY / TECHNICAL sections intact.
-
-```text
-Create a Stellaris-style mammalian species portrait using the provided Piglet image as the exact subject reference.
-
-The goal is to create a final portrait that matches the framing and subject placement of vanilla Stellaris mammalian species portraits.
-
-SUBJECT:
-- Preserve Piglet's exact recognizable appearance.
-- Preserve the black, white, and tan tri-color coat.
-- Preserve the white facial blaze.
-- Preserve the tan markings above the eyes and on the cheeks.
-- Preserve the fluffy chest and neck fur.
-- Preserve the semi-floppy ears.
-- Preserve the natural amber/brown eyes and facial structure.
-- Do not turn Piglet into a generic Australian Shepherd.
-
-STYLE:
-- Realistic, detailed digital painting.
-- Stellaris-style mammalian species portrait.
-- Detailed individual fur.
-- Naturalistic anatomy.
-- Soft directional lighting.
-- Subtle rim lighting.
-- Slightly desaturated but rich colors.
-- No cartoon styling.
-- No outlines.
-
-COMPOSITION (flexible framing + natural variety):
-
-Use a Stellaris mammalian species portrait-bust crop with natural individual variation.
-
-- Piglet should generally fill most of the portrait vertically (~80–95% with natural variation).
-- Head placement may vary naturally in the upper portion of the frame (not a fixed template lock).
-- Facing may be mostly frontal, subtle 3/4, slight head tilt, or body angled with head toward viewer — appropriate to the reference, not a roster rotation schedule.
-- Avoid repeating identical centered-frontal mugshot compositions across dogs.
-- Avoid extreme cameras, cropped faces, and identity-obscuring poses.
-- For a standard bust crop, chest/body fur may continue to the BOTTOM EDGE; exact torso exposure may vary.
-- Do not leave a large empty void that makes the subject look tiny.
-- Keep ears/head readable inside the frame with a modest margin that may vary with composition.
-- Do not make the dog appear to float in excessive negative space.
-
-The important visual relationship is:
-
-TOP:
-small amount of transparent space
-↓
-Piglet's ears/head
-↓
-face
-↓
-neck/chest
-↓
-fur continues
-↓
-BOTTOM EDGE — fur is cropped by the image boundary
-
-TRANSPARENCY:
-- Piglet must remain completely opaque.
-- Everything outside the Piglet silhouette must be genuinely transparent.
-- No background.
-- No stars.
-- No planet.
-- No hexagons.
-- No scenery.
-- No frame.
-- No border.
-- No rectangular background.
-- Preserve individual fur wisps around the silhouette.
-- No halo or colored fringe.
-
-LIGHTING:
-- Lighting should remain natural and dimensional even without a background.
-- Use subtle rim lighting to separate the dog from a transparent background.
-- Do not create a visible artificial glow around the silhouette.
-
-TECHNICAL:
-- Square image.
-- High resolution.
-- Genuine RGBA alpha channel.
-- Designed specifically to be downscaled to 256×256.
-- No text.
-- No logos.
-- No UI.
-- No watermark.
-
-The final result should look like Piglet is occupying the same amount of vertical space as a normal vanilla Stellaris mammalian portrait, with his chest/body continuing beyond the bottom edge rather than ending with a large transparent area underneath.
-```
-
----
-
-## 2. Transparent-background requirements
-
-Always include (or enforce) these when generating or accepting a finished portrait:
-
-```text
-TRANSPARENCY REQUIREMENTS:
-- Genuine transparency (real alpha channel) — not a fake checkerboard baked into RGB
-- No background
-- No scenery
-- No planet
-- No stars
-- No hexagonal / sci-fi plate background
-- No frame / border / UI / text / watermark
-- Clean fur edges
-- Dog completely opaque (or near-opaque)
-- Everything outside the dog silhouette transparent
-- No halo or colored fringe
-- Do not flatten transparency onto white, black, or gray
-```
-
-**Lesson:** An opaque sci-fi background can load in Stellaris but produces an obvious rectangular plate. Transparency fixed that.
-
-**Lesson:** Generators may still emit an opaque near-white plate. If so, convert only that plate to alpha (e.g. border flood-fill of near-white) **without** regenerating art and **without** flattening onto a solid color — then save RGBA PNG before DDS conversion.
-
----
-
-## 3. Stellaris portrait framing requirements
-
-Historical dog-development framing (updated for the Universal Portrait Variety Standard):
-
-```text
-FRAMING REQUIREMENTS (flexible):
-- Modest transparent margin above the ears (exact margin may vary)
-- Head generally in the upper portion of the canvas (placement may vary naturally)
-- Large dominant head / portrait bust
-- Subject generally fills approximately 80–95% of vertical space with natural variation
-- For a standard bust crop, chest/body/fur may reach the BOTTOM EDGE (torso exposure may vary)
-- Avoid large unused transparent bands under a bust crop
-- Dog must not appear tiny in excessive negative space
-- Allow natural composition variety (subtle 3/4, head tilt, slight off-center, etc.)
-- Anti-template: do not repeat identical centered-frontal mugshot compositions
-- See portrait-variety-standard.md
-```
-
-Visual stack (typical bust crop — not a rigid lock for every portrait):
-
-```text
-TOP: modest transparent space
-  ↓
-ears / head
-  ↓
-face
-  ↓
-neck / chest
-  ↓
-fur continues
-  ↓
-BOTTOM EDGE — fur often cropped by the frame
-```
-
-See also [portrait-variety-standard.md](portrait-variety-standard.md) and certainty labels in [portrait-workflow.md](portrait-workflow.md) § composition rules.
-
----
-
-## 4. Scale-normalization prompt / instructions
-
-Used when one dog looks smaller than another **after** both already have correct bottom-edge framing. Do **not** regenerate artwork; scale uniformly.
-
-Reference dog for scale: **Oakley** (`sd_dog_02`) — gold standard (~91% vertical fill, ~23px top margin at 256×256).
-
-```text
-SCALE NORMALIZATION (do not regenerate art):
-
-The reference portrait (Oakley / Chocolate Lab) currently looks correctly sized.
-Bring the target dog to approximately the same visual size when both are shown at the same Stellaris portrait size.
-
-- Increase or decrease overall subject scale only slightly (approximately 5–10% as a starting point)
-- Adjust based on measured fill of the existing assets
-- Scale/reframe the existing artwork uniformly
-
-Do NOT:
-- stretch the dog
-- change proportions
-- enlarge the head independently
-- alter anatomy
-- regenerate the artwork
-
-Maintain:
-- small transparent margin above the ears
-- similar head-to-canvas ratio to the reference
-- chest/body reaching the bottom edge
-- intentional bottom-edge crop
-- little/no transparent space beneath the dog
-- square 256×256 game output with preserved alpha
-```
-
-**CONFIRMED example:** Piglet was uniformly scaled approximately **+8%** after halo cleanup; final vertical fill ~**92%**, top margin ~**20px** at 256×256, bottom flush/cropped.
-
----
-
-## 5. Piglet refinement / halo cleanup prompt
-
-Used after in-game observation of a thin white/light halo around Piglet’s fur. Dog #2 (Oakley) was the scale reference and was **not** modified.
-
-```text
-PIGLET ALPHA EDGE CLEANUP (do not regenerate art):
-
-Piglet has a visible thin white/light halo around parts of his fur silhouette.
-
-Clean the alpha edge:
-- Piglet's fur remains intact
-- Fine fur detail should be preserved
-- No white/gray halo should remain around the silhouette
-- Background pixels immediately outside the fur should be fully transparent
-- Do not use aggressive edge erosion that removes legitimate fur
-- Preserve natural fur wisps where possible
-
-Then apply slight uniform scale-up to match Oakley's visual size (see Scale-normalization).
-
-Preserve:
-- portrait ID sd_dog_piglet
-- registration / set / category
-- Oakley DDS and definition untouched
-- vanilla Stellaris untouched
-
-Rebuild DDS with the established pipeline:
-- 256×256
-- uncompressed 32-bit RGBA
-- genuine alpha
-- bottom-edge crop preserved
-```
-
-**CONFIRMED result metrics:**
-
-| Metric | Before | After |
-|--------|--------|-------|
-| Light fringe pixels (DDS) | ~1488 | ~29 |
-| Vertical fill | smaller than Oakley | ~92% |
-| Top margin (256×256) | — | ~20px |
-| Bottom | cropped | still flush/cropped |
-
-Tiny residual fringe may remain on very fine fur; do **not** casually regenerate Piglet. Treat as a **protected** reference asset.
-
-**Lesson:** Background removal against a light backdrop can create light halos. Oakley demonstrated a cleaner edge result.
-
----
-
-## 6. Angus regeneration prompt
-
-Angus’s finished Stellaris-style portrait was produced for `ImgHERE/dog03_angus_stellaris.png` and wired to `sd_dog_angus` without further artistic processing in the importer path.
-
-Use this regeneration prompt when regenerating Angus (attach the **SOURCE PHOTO** as reference). Keep framing/transparency identical to the successful Piglet base prompt.
-
-```text
-Create a Stellaris-style mammalian species portrait using the provided Angus photograph as the exact subject reference.
-
-The goal is to create a final portrait that matches the framing and subject placement of vanilla Stellaris mammalian species portraits, and matches the successful Piglet/Oakley portrait pipeline for Stellar Xeno.
-
-SUBJECT:
-- Preserve Angus's exact recognizable appearance from the reference photo.
-- Preserve coat color, markings, face shape, ears, eyes, muzzle, and proportions.
-- Do not turn Angus into a generic breed stereotype.
-- Do not invent markings that are not in the photo.
-
-STYLE:
-- Realistic, detailed digital painting.
-- Stellaris-style mammalian species portrait.
-- Detailed individual fur.
-- Naturalistic anatomy.
-- Soft directional lighting.
-- Subtle rim lighting.
-- Slightly desaturated but rich colors.
-- No cartoon styling.
-- No outlines.
-
-COMPOSITION (flexible framing + natural variety):
-- Head generally in the upper portion (placement may vary naturally).
-- Subject generally occupies approximately 80–95% of vertical portrait area with natural variation.
-- Facing/crop may vary naturally (not locked to centered frontal).
-- For a standard bust crop, chest and body fur may continue to the BOTTOM EDGE; torso exposure may vary.
-- Avoid large unused transparent bands under a bust crop.
-- Modest breathing room above the ears (exact margin may vary).
-- Do not float the dog in excessive negative space.
-- Anti-template: do not repeat identical mugshot compositions across individuals.
-
-TRANSPARENCY:
-- Angus remains completely opaque.
-- Everything outside the silhouette is genuinely transparent.
-- No background, stars, planet, hexagons, scenery, frame, border, or rectangular plate.
-- Preserve fur wisps; no halo or colored fringe.
-
-TECHNICAL:
-- Square, high resolution, genuine RGBA alpha.
-- Designed to downscale to 256×256.
-- No text, logos, UI, watermark.
-
-Place the finished PNG in ImgHERE as dog03_angus_stellaris.png for intake.
-```
-
-**Note:** Current in-game Angus uses the regenerated ImgHERE art. Scale/framing was accepted visually; further side-by-side normalization was **intentionally deferred**.
-
-Do **not** use the raw reference JPG (`20260418_090607.jpg`) as the finished portrait asset.
-
----
-
-## 7. Reusable future-dog prompt
-
-Template for Dog N. Replace bracketed fields; attach the dog’s SOURCE PHOTO.
-
-```text
-Create a Stellaris-style mammalian species portrait using the provided [DOG_NAME] photograph as the exact subject reference.
-
-The goal is to create a final portrait that matches the framing and subject placement of vanilla Stellaris mammalian species portraits used by the Stellar Xeno mod.
-
-SUBJECT:
-- Preserve [DOG_NAME]'s exact recognizable appearance.
-- Preserve: [coat / markings / ears / eyes / muzzle / distinctive features from the photo].
-- Do not turn [DOG_NAME] into a generic [breed] or invent features absent from the photo.
-
-STYLE:
-- Realistic, detailed digital painting.
-- Stellaris-style mammalian species portrait.
-- Detailed individual fur.
-- Naturalistic anatomy.
-- Soft directional lighting.
-- Subtle rim lighting.
-- Slightly desaturated but rich colors.
-- No cartoon styling.
-- No outlines.
-
-COMPOSITION (flexible framing + natural variety):
-- Readable Stellaris mammalian portrait-bust scale (~80–95% vertical occupancy with natural variation).
-- Head generally in the upper portion (exact placement may vary).
-- Allow natural composition variety (subtle 3/4, head tilt, slight off-center, etc.) — not a roster rotation schedule.
-- For a standard bust crop, chest/body fur may reach the BOTTOM EDGE; torso exposure may vary.
-- Avoid large unused transparent bands under a bust crop.
-- Modest space above the ears (exact margin may vary).
-- Do not float the subject in excessive negative space.
-- Anti-template: do not repeat identical centered-frontal mugshot compositions.
-- See portrait-variety-standard.md.
-
-TRANSPARENCY:
-- [DOG_NAME] completely opaque.
-- Outside silhouette genuinely transparent.
-- No background / scenery / planet / stars / hexagons / frame / border / rectangular plate.
-- Preserve fur wisps; no halo or colored fringe.
-
-LIGHTING:
-- Natural dimensional lighting without a background.
-- Subtle rim light only — no artificial glow halo.
-
-TECHNICAL:
-- Square, high resolution, genuine RGBA alpha channel.
-- Designed specifically to be downscaled to 256×256.
-- No text, logos, UI, watermark.
-
-Output naming (when finished):
-- ImgHERE/dogNN_[name]_stellaris.png
-```
-
-After generation: follow the manual pipeline in [portrait-workflow.md](portrait-workflow.md) (or the future importer once built).
-</file>
-
 <file path="experiment/sd_static_portrait_test/common/portrait_sets/00_sd_static_test_portrait_sets.txt">
 ##############################################################
 ### SD Static Portrait Test - portrait sets (EXPERIMENT ONLY)
@@ -7275,6 +6877,404 @@ function Read-PortraitXenotypeInteractive {
 }
 </file>
 
+<file path="docs/portrait-prompts.md">
+# Stellar Xeno — Portrait Generation Prompts
+
+> **Xenotype prompt library:**  
+> For the authoritative **xenotype-specific** image-generation prompts (including **CREATED** Universal Machine and Toxoid), see **[portrait-generation-prompts.md](portrait-generation-prompts.md)**.  
+> Project-wide composition / identity rules: **[portrait-variety-standard.md](portrait-variety-standard.md)** — *consistent art direction, variable individual composition*.  
+> Those prompts are for an external image model (not pipeline commands).
+
+Successful **dog-development** image-generation prompts and related refinement instructions developed during early Stellar Xeno sessions are preserved below.
+
+Use these to reproduce the early artwork workflow. Technical conversion (PNG → DDS → registration) is documented in [portrait-workflow.md](portrait-workflow.md).
+
+---
+
+## Asset stages (do not confuse)
+
+| Stage | Role |
+|-------|------|
+| **SOURCE PHOTO** | Authoritative reference for identity, coat, markings, face, ears, eyes, muzzle, proportions |
+| **GENERATED PORTRAIT** | Stellaris-style artwork produced from the photo (finished PNG for `ImgHERE/`) |
+| **GAME ASSET** | Converted **256×256** uncompressed **32-bit RGBA** DDS used by Stellaris |
+
+The photo preserves who the dog is. The generated portrait is the game art. The DDS is the shipped texture.
+
+---
+
+## Style goals (all generation prompts)
+
+The generated image should transform the dog into a realistic Stellaris-style mammalian portrait:
+
+- Realistic painterly rendering
+- Detailed fur
+- Natural anatomy
+- Stellaris-compatible visual style
+- **Consistent art direction, variable individual composition** (see [portrait-variety-standard.md](portrait-variety-standard.md))
+- Natural composition variety (not a fixed centered-frontal template; not extreme random cameras)
+- Subtle individual variety subordinate to the reference dog
+- No cartoon / anime styling
+- No text, logos, UI, watermark, or decorative frame
+
+---
+
+## 1. Base Stellaris dog portrait prompt
+
+Successful framing + transparency prompt (originally used for Piglet). For other dogs, replace subject-specific lines and attach that dog’s reference photo; keep STYLE / COMPOSITION / TRANSPARENCY / TECHNICAL sections intact.
+
+```text
+Create a Stellaris-style mammalian species portrait using the provided Piglet image as the exact subject reference.
+
+The goal is to create a final portrait that matches the framing and subject placement of vanilla Stellaris mammalian species portraits.
+
+SUBJECT:
+- Preserve Piglet's exact recognizable appearance.
+- Preserve the black, white, and tan tri-color coat.
+- Preserve the white facial blaze.
+- Preserve the tan markings above the eyes and on the cheeks.
+- Preserve the fluffy chest and neck fur.
+- Preserve the semi-floppy ears.
+- Preserve the natural amber/brown eyes and facial structure.
+- Do not turn Piglet into a generic Australian Shepherd.
+
+STYLE:
+- Realistic, detailed digital painting.
+- Stellaris-style mammalian species portrait.
+- Detailed individual fur.
+- Naturalistic anatomy.
+- Soft directional lighting.
+- Subtle rim lighting.
+- Slightly desaturated but rich colors.
+- No cartoon styling.
+- No outlines.
+
+COMPOSITION (flexible framing + natural variety):
+
+Use a Stellaris mammalian species portrait-bust crop with natural individual variation.
+
+- Piglet should generally fill most of the portrait vertically (~80–95% with natural variation).
+- Head placement may vary naturally in the upper portion of the frame (not a fixed template lock).
+- Facing may be mostly frontal, subtle 3/4, slight head tilt, or body angled with head toward viewer — appropriate to the reference, not a roster rotation schedule.
+- Avoid repeating identical centered-frontal mugshot compositions across dogs.
+- Avoid extreme cameras, cropped faces, and identity-obscuring poses.
+- For a standard bust crop, chest/body fur may continue to the BOTTOM EDGE; exact torso exposure may vary.
+- Do not leave a large empty void that makes the subject look tiny.
+- Keep ears/head readable inside the frame with a modest margin that may vary with composition.
+- Do not make the dog appear to float in excessive negative space.
+
+The important visual relationship is:
+
+TOP:
+small amount of transparent space
+↓
+Piglet's ears/head
+↓
+face
+↓
+neck/chest
+↓
+fur continues
+↓
+BOTTOM EDGE — fur is cropped by the image boundary
+
+TRANSPARENCY:
+- Piglet must remain completely opaque.
+- Everything outside the Piglet silhouette must be genuinely transparent.
+- No background.
+- No stars.
+- No planet.
+- No hexagons.
+- No scenery.
+- No frame.
+- No border.
+- No rectangular background.
+- Preserve individual fur wisps around the silhouette.
+- No halo or colored fringe.
+
+LIGHTING:
+- Lighting should remain natural and dimensional even without a background.
+- Use subtle rim lighting to separate the dog from a transparent background.
+- Do not create a visible artificial glow around the silhouette.
+
+TECHNICAL:
+- Square image.
+- High resolution.
+- Genuine RGBA alpha channel.
+- Designed specifically to be downscaled to 256×256.
+- No text.
+- No logos.
+- No UI.
+- No watermark.
+
+The final result should look like Piglet is occupying the same amount of vertical space as a normal vanilla Stellaris mammalian portrait, with his chest/body continuing beyond the bottom edge rather than ending with a large transparent area underneath.
+```
+
+---
+
+## 2. Transparent-background requirements
+
+Always include (or enforce) these when generating or accepting a finished portrait:
+
+```text
+TRANSPARENCY REQUIREMENTS:
+- Genuine transparency (real alpha channel) — not a fake checkerboard baked into RGB
+- No background
+- No scenery
+- No planet
+- No stars
+- No hexagonal / sci-fi plate background
+- No frame / border / UI / text / watermark
+- Clean fur edges
+- Dog completely opaque (or near-opaque)
+- Everything outside the dog silhouette transparent
+- No halo or colored fringe
+- Do not flatten transparency onto white, black, or gray
+```
+
+**Lesson:** An opaque sci-fi background can load in Stellaris but produces an obvious rectangular plate. Transparency fixed that.
+
+**Lesson:** Generators may still emit an opaque near-white plate. If so, convert only that plate to alpha (e.g. border flood-fill of near-white) **without** regenerating art and **without** flattening onto a solid color — then save RGBA PNG before DDS conversion.
+
+---
+
+## 3. Stellaris portrait framing requirements
+
+Historical dog-development framing (updated for the Universal Portrait Variety Standard):
+
+```text
+FRAMING REQUIREMENTS (flexible):
+- Modest transparent margin above the ears (exact margin may vary)
+- Head generally in the upper portion of the canvas (placement may vary naturally)
+- Large dominant head / portrait bust
+- Subject generally fills approximately 80–95% of vertical space with natural variation
+- For a standard bust crop, chest/body/fur may reach the BOTTOM EDGE (torso exposure may vary)
+- Avoid large unused transparent bands under a bust crop
+- Dog must not appear tiny in excessive negative space
+- Allow natural composition variety (subtle 3/4, head tilt, slight off-center, etc.)
+- Anti-template: do not repeat identical centered-frontal mugshot compositions
+- See portrait-variety-standard.md
+```
+
+Visual stack (typical bust crop — not a rigid lock for every portrait):
+
+```text
+TOP: modest transparent space
+  ↓
+ears / head
+  ↓
+face
+  ↓
+neck / chest
+  ↓
+fur continues
+  ↓
+BOTTOM EDGE — fur often cropped by the frame
+```
+
+See also [portrait-variety-standard.md](portrait-variety-standard.md) and certainty labels in [portrait-workflow.md](portrait-workflow.md) § composition rules.
+
+---
+
+## 4. Scale-normalization prompt / instructions
+
+Used when one dog looks smaller than another **after** both already have correct bottom-edge framing. Do **not** regenerate artwork; scale uniformly.
+
+Reference dog for scale: **Oakley** (`sd_dog_02`) — gold standard (~91% vertical fill, ~23px top margin at 256×256).
+
+```text
+SCALE NORMALIZATION (do not regenerate art):
+
+The reference portrait (Oakley / Chocolate Lab) currently looks correctly sized.
+Bring the target dog to approximately the same visual size when both are shown at the same Stellaris portrait size.
+
+- Increase or decrease overall subject scale only slightly (approximately 5–10% as a starting point)
+- Adjust based on measured fill of the existing assets
+- Scale/reframe the existing artwork uniformly
+
+Do NOT:
+- stretch the dog
+- change proportions
+- enlarge the head independently
+- alter anatomy
+- regenerate the artwork
+
+Maintain:
+- small transparent margin above the ears
+- similar head-to-canvas ratio to the reference
+- chest/body reaching the bottom edge
+- intentional bottom-edge crop
+- little/no transparent space beneath the dog
+- square 256×256 game output with preserved alpha
+```
+
+**CONFIRMED example:** Piglet was uniformly scaled approximately **+8%** after halo cleanup; final vertical fill ~**92%**, top margin ~**20px** at 256×256, bottom flush/cropped.
+
+---
+
+## 5. Piglet refinement / halo cleanup prompt
+
+Used after in-game observation of a thin white/light halo around Piglet’s fur. Dog #2 (Oakley) was the scale reference and was **not** modified.
+
+```text
+PIGLET ALPHA EDGE CLEANUP (do not regenerate art):
+
+Piglet has a visible thin white/light halo around parts of his fur silhouette.
+
+Clean the alpha edge:
+- Piglet's fur remains intact
+- Fine fur detail should be preserved
+- No white/gray halo should remain around the silhouette
+- Background pixels immediately outside the fur should be fully transparent
+- Do not use aggressive edge erosion that removes legitimate fur
+- Preserve natural fur wisps where possible
+
+Then apply slight uniform scale-up to match Oakley's visual size (see Scale-normalization).
+
+Preserve:
+- portrait ID sd_dog_piglet
+- registration / set / category
+- Oakley DDS and definition untouched
+- vanilla Stellaris untouched
+
+Rebuild DDS with the established pipeline:
+- 256×256
+- uncompressed 32-bit RGBA
+- genuine alpha
+- bottom-edge crop preserved
+```
+
+**CONFIRMED result metrics:**
+
+| Metric | Before | After |
+|--------|--------|-------|
+| Light fringe pixels (DDS) | ~1488 | ~29 |
+| Vertical fill | smaller than Oakley | ~92% |
+| Top margin (256×256) | — | ~20px |
+| Bottom | cropped | still flush/cropped |
+
+Tiny residual fringe may remain on very fine fur; do **not** casually regenerate Piglet. Treat as a **protected** reference asset.
+
+**Lesson:** Background removal against a light backdrop can create light halos. Oakley demonstrated a cleaner edge result.
+
+---
+
+## 6. Angus regeneration prompt
+
+Angus’s finished Stellaris-style portrait was produced for `ImgHERE/dog03_angus_stellaris.png` and wired to `sd_dog_angus` without further artistic processing in the importer path.
+
+Use this regeneration prompt when regenerating Angus (attach the **SOURCE PHOTO** as reference). Keep framing/transparency identical to the successful Piglet base prompt.
+
+```text
+Create a Stellaris-style mammalian species portrait using the provided Angus photograph as the exact subject reference.
+
+The goal is to create a final portrait that matches the framing and subject placement of vanilla Stellaris mammalian species portraits, and matches the successful Piglet/Oakley portrait pipeline for Stellar Xeno.
+
+SUBJECT:
+- Preserve Angus's exact recognizable appearance from the reference photo.
+- Preserve coat color, markings, face shape, ears, eyes, muzzle, and proportions.
+- Do not turn Angus into a generic breed stereotype.
+- Do not invent markings that are not in the photo.
+
+STYLE:
+- Realistic, detailed digital painting.
+- Stellaris-style mammalian species portrait.
+- Detailed individual fur.
+- Naturalistic anatomy.
+- Soft directional lighting.
+- Subtle rim lighting.
+- Slightly desaturated but rich colors.
+- No cartoon styling.
+- No outlines.
+
+COMPOSITION (flexible framing + natural variety):
+- Head generally in the upper portion (placement may vary naturally).
+- Subject generally occupies approximately 80–95% of vertical portrait area with natural variation.
+- Facing/crop may vary naturally (not locked to centered frontal).
+- For a standard bust crop, chest and body fur may continue to the BOTTOM EDGE; torso exposure may vary.
+- Avoid large unused transparent bands under a bust crop.
+- Modest breathing room above the ears (exact margin may vary).
+- Do not float the dog in excessive negative space.
+- Anti-template: do not repeat identical mugshot compositions across individuals.
+
+TRANSPARENCY:
+- Angus remains completely opaque.
+- Everything outside the silhouette is genuinely transparent.
+- No background, stars, planet, hexagons, scenery, frame, border, or rectangular plate.
+- Preserve fur wisps; no halo or colored fringe.
+
+TECHNICAL:
+- Square, high resolution, genuine RGBA alpha.
+- Designed to downscale to 256×256.
+- No text, logos, UI, watermark.
+
+Place the finished PNG in ImgHERE as dog03_angus_stellaris.png for intake.
+```
+
+**Note:** Current in-game Angus uses the regenerated ImgHERE art. Scale/framing was accepted visually; further side-by-side normalization was **intentionally deferred**.
+
+Do **not** use the raw reference JPG (`20260418_090607.jpg`) as the finished portrait asset.
+
+---
+
+## 7. Reusable future-dog prompt
+
+Template for Dog N. Replace bracketed fields; attach the dog’s SOURCE PHOTO.
+
+```text
+Create a Stellaris-style mammalian species portrait using the provided [DOG_NAME] photograph as the exact subject reference.
+
+The goal is to create a final portrait that matches the framing and subject placement of vanilla Stellaris mammalian species portraits used by the Stellar Xeno mod.
+
+SUBJECT:
+- Preserve [DOG_NAME]'s exact recognizable appearance.
+- Preserve: [coat / markings / ears / eyes / muzzle / distinctive features from the photo].
+- Do not turn [DOG_NAME] into a generic [breed] or invent features absent from the photo.
+
+STYLE:
+- Realistic, detailed digital painting.
+- Stellaris-style mammalian species portrait.
+- Detailed individual fur.
+- Naturalistic anatomy.
+- Soft directional lighting.
+- Subtle rim lighting.
+- Slightly desaturated but rich colors.
+- No cartoon styling.
+- No outlines.
+
+COMPOSITION (flexible framing + natural variety):
+- Readable Stellaris mammalian portrait-bust scale (~80–95% vertical occupancy with natural variation).
+- Head generally in the upper portion (exact placement may vary).
+- Allow natural composition variety (subtle 3/4, head tilt, slight off-center, etc.) — not a roster rotation schedule.
+- For a standard bust crop, chest/body fur may reach the BOTTOM EDGE; torso exposure may vary.
+- Avoid large unused transparent bands under a bust crop.
+- Modest space above the ears (exact margin may vary).
+- Do not float the subject in excessive negative space.
+- Anti-template: do not repeat identical centered-frontal mugshot compositions.
+- See portrait-variety-standard.md.
+
+TRANSPARENCY:
+- [DOG_NAME] completely opaque.
+- Outside silhouette genuinely transparent.
+- No background / scenery / planet / stars / hexagons / frame / border / rectangular plate.
+- Preserve fur wisps; no halo or colored fringe.
+
+LIGHTING:
+- Natural dimensional lighting without a background.
+- Subtle rim light only — no artificial glow halo.
+
+TECHNICAL:
+- Square, high resolution, genuine RGBA alpha channel.
+- Designed specifically to be downscaled to 256×256.
+- No text, logos, UI, watermark.
+
+Output naming (when finished):
+- ImgHERE/dogNN_[name]_stellaris.png
+```
+
+After generation: follow the manual pipeline in [portrait-workflow.md](portrait-workflow.md) (or the future importer once built).
+</file>
+
 <file path="docs/portrait-testing.md">
 # Stellar Xeno — Portrait Testing
 
@@ -8274,486 +8274,6 @@ try {
 }
 </file>
 
-<file path="docs/development-roadmap.md">
-# Stellar Xeno — Development Roadmap
-
-Authoritative phase status for future sessions. Cross-references:
-
-- [AI development workflow](ai-development-workflow.md)
-- [Portrait workflow](portrait-workflow.md)
-- [Portrait testing](portrait-testing.md)
-- [Project plan](../PROJECT_PLAN.md)
-
-Certainty labels: **CONFIRMED** / **ASSUMPTION** / **TARGET** / **NEEDS VERIFICATION** — see [PROJECT_PLAN.md](../PROJECT_PLAN.md).
-
----
-
-## Current position
-
-| Item | Status |
-|------|--------|
-| Static `texturefile` portraits in 4.4.6 | **CONFIRMED** (species creation) |
-| Three dogs (Piglet, Oakley, Angus) | Working in species creation |
-| Automated portrait importer | **IMPLEMENTED** through Phase 7 (intake → DDS → xenotype register → pipeline) |
-| Production mod path | **IMPLEMENTED** — canonical output `mod/stellar_dogos/` (`tools/portrait-paths.ps1`); experiment copy retained as reference |
-| Phase 3.1 source intake (interactive naming) | **IMPLEMENTED** (`tools/portrait-intake.ps1`) |
-| Phase 4 DDS generation | **IMPLEMENTED** (`tools/portrait-dds.ps1`) |
-| Phase 5 Stellaris registration | **IMPLEMENTED** (`tools/portrait-register.ps1`) |
-| Phase 6 end-to-end pipeline proof | **IMPLEMENTED** (`tools/portrait-pipeline.ps1`) |
-| Phase 7 xenotype selection | **IMPLEMENTED** (`tools/portrait-xenotypes.ps1`) — 12 types including Toxoid; Mam/Avi/Rep/Fun file paths **CONFIRMED**; in-game **NEEDS VERIFICATION** |
-| Canonical PNG naming (`dogNN_<name>_<xeno>_stellaris.png`) | **IMPLEMENTED** |
-| Xenotype image-generation prompt library | **DOCUMENTED** ([portrait-generation-prompts.md](portrait-generation-prompts.md)) — Mammalian & Machine prompt bodies **ABSENT** from source export; Toxoid prompt **DOCUMENTED**; Toxoid selector/registration **IMPLEMENTED** |
-| Full UI portrait compatibility | **NEEDS VERIFICATION** |
-| Steam Workshop release | **PACKAGE READY** — structurally prepared (`mod/stellar_dogos/`); human in-game test + Steam upload remain ([docs/workshop-release.md](docs/workshop-release.md)) |
-
-Phases 3.1–7 cover intake → DDS → xenotype-aware registration → end-to-end orchestration. The player-facing **prompt library** is documented separately from the software pipeline. Workshop package structural prep is documented in [workshop-release.md](workshop-release.md); broader UI-context audit remains later.
-
----
-
-## Phase 0 — Discovery
-
-**STATUS: COMPLETE**
-
-- Investigate Stellaris **Pegasus v4.4.6** (`modsCompatibilityVersion = 4.4`)
-- Investigate portrait categories / sets / species classes / gfx portraits
-- Test `texturefile` via minimal experiment
-- Prove static portrait loading in species creation
-- Establish DDS requirements (256×256 uncompressed 32-bit RGBA, `pfFlags=0x41`, alpha)
-
----
-
-## Phase 1 — Portrait Calibration
-
-**STATUS: MOSTLY COMPLETE**
-
-Done:
-
-- Piglet working (`sd_dog_piglet`) — protected reference
-- Oakley working (`sd_dog_02`) — gold-standard visual reference
-- Angus working (`sd_dog_angus`) — regenerated ImgHERE art wired; framing accepted for now
-- Transparency / alpha rules established
-- Scale / framing: generation prompts use flexible ~80–95% occupancy + natural composition variety ([portrait-variety-standard.md](portrait-variety-standard.md)); early empirical species-UI preference ~91–92% remains a readability reference, not a rigid generation lock
-- Image-generation prompts preserved ([portrait-prompts.md](portrait-prompts.md))
-- Manual DDS pipeline established
-- ImgHERE staging convention established
-
-Remaining:
-
-- Final side-by-side visual comparison of all three
-- Decide whether Piglet needs any further refinement (do not casually regenerate)
-
----
-
-## Phase 2 — In-Game Compatibility Audit
-
-**STATUS: NEXT**
-
-Use **Oakley** as the primary test asset.
-
-Test portrait appearance in:
-
-- Species UI (beyond creation checklist already partly confirmed)
-- Leader UI
-- Council
-- Government / empire UI
-- Diplomacy
-- Contacts
-- Factions
-- Events
-- Other relevant portrait contexts
-
-**Question to answer:** Does one static portrait DDS work correctly everywhere Stellaris displays that portrait?
-
-See [portrait-testing.md](portrait-testing.md).
-
-Only after this audit should importer architecture be finalized.
-
----
-
-## Phase 3 — Portrait Importer Design / Phase 3.1 Intake
-
-**STATUS: Phase 3.1 IMPLEMENTED** (`tools/portrait-intake.ps1`); Phase 4 DDS + Phase 5 registration also implemented
-
-Before full implementation:
-
-- Fresh Repomix snapshot when coding begins
-- ChatGPT reconstructs repository
-- Determine exact implementation files
-- Define importer architecture (phased: 3.1 source prep → later DDS/registration)
-- Define validation contracts
-- Define failure behavior
-- Define naming rules (canonical `dogNN_<name>_<xeno>_stellaris.png` is **internal**; users are not required to type it)
-
-### Phase 3.1 — Source intake & preparation
-
-**STATUS: IMPLEMENTED** — `tools/portrait-intake.ps1`
-
-**User workflow:**
-
-```text
-Drop any image into ImgHERE
-  → run tools/portrait-intake.ps1 (or portrait-pipeline.ps1)
-  → enter the character's name when prompted (mandatory; no bypass)
-  → select Stellaris species type (↑/↓ or numbered fallback)
-  → tool assigns the next available dog number
-  → tool prepares the canonical source image (includes xenotype abbr)
-  → writes ImgHERE/dog##_<name>_<xeno>_stellaris.png and assets/source/...
-  → deletes the temporary input from ImgHERE (success only)
-  → STOP (intake alone) / continue to DDS+register (pipeline)
-```
-
-Phase 3.1 ends at prepared canonical PNG sources. It does **not** create DDS, portrait IDs, or registration edits.
-
-#### Interactive naming + xenotype
-
-Users must **not** be required to manually invent `dog04_…` filenames. Candidate filenames never imply name, xenotype, or sequence number.
-
-1. User places a supported image in `ImgHERE/` (any reasonable name; PNG/JPG/JPEG/WEBP at minimum).
-2. Tool detects a new supported candidate (not already a canonical asset).
-3. Tool asks: `What is this character's name?`
-4. User enters the authoritative display name (e.g. `Liberty`).
-5. Tool normalizes the name **only** as needed for a safe filename (`Liberty` → `liberty`).
-6. Empty/invalid names: keep asking — do not invent a name. No `-DogName` bypass.
-7. Tool asks for Stellaris species type (12 options including Toxoid). Selection moves in one menu; Enter accepts.
-8. **After** name + xenotype, tool chooses the next free dog number from existing canonical sources.
-9. Tool generates canonical filename: `dog##_<name>_<xeno>_stellaris.png` (e.g. `dog04_liberty_mam_stellaris.png`).
-10. Tool validates/prepares the image (PNG, square, RGBA, real alpha — no artistic regen).
-11. Canonical prepared source is written to:
-    - `ImgHERE/dog##_<name>_<xeno>_stellaris.png`
-    - `assets/source/dog##_<name>_<xeno>_stellaris.png`
-12. On **success**, delete the temporary input from `ImgHERE`. On **failure**, leave it untouched.
-13. **Stop** (intake) or continue to DDS/register (pipeline). No vanilla changes. No `_originals` archive.
-
-Filename abbreviations (PNG only; not species_class / not portrait ID):
-
-| Xenotype | Abbreviation |
-|----------|--------------|
-| Mammalian | mam |
-| Avian | avi |
-| Reptilian | rep |
-| Amphibian | amp |
-| Arthropoid | art |
-| Molluscoid | mol |
-| Fungoid | fun |
-| Plantoid | pla |
-| Lithoid | lit |
-| Necroid | nec |
-| Machine | mac |
-| Toxoid | tox |
-
-Example:
-
-```text
-ImgHERE/my_dog.png
-  → user enters "Liberty"
-  → user selects Mammalian
-  → ImgHERE/dog04_liberty_mam_stellaris.png
-  → assets/source/dog04_liberty_mam_stellaris.png
-```
-
-#### Automatic dog numbering
-
-- Scan existing canonical Stellar Xeno source assets (e.g. `assets/source/dog##_…_stellaris.png` and matching ImgHERE canons).
-- Next number = lowest unused integer after the highest present (today: dog01–dog03 → next is **dog04**).
-- Do **not** reuse numbers, renumber existing dogs, or touch Piglet / Oakley / Angus.
-
-#### Already-canonical files
-
-If a file is already named `dog##_<name>_<xeno>_stellaris.png`:
-
-- Do **not** ask for the name again
-- Treat as an explicitly named canonical asset
-- Validate/prepare normally
-- Do **not** assign another number or create duplicate canons
-
-Legacy `dog##_<name>_stellaris.png` names remain recognizable for inventory; new intakes always write the `<xeno>` form.
-#### Conflicts & safety
-
-- If the normalized canonical filename already exists → **stop and explain**; never silently overwrite
-- Do not overwrite existing prepared sources, DDS, definitions, or sets
-- Existing working dogs are regression fixtures and must remain untouched
-- Distinguish: canonical assets / new candidates / unsupported files / raw-reference images to ignore
-- If unsure whether a file is a new portrait → **ask the user**; do not guess
-- Do not process unrelated files
-
-#### Explicitly outside Phase 3.1
-
-- PNG → DDS conversion
-- DDS → portrait definition
-- Portrait definition → portrait set / category registration
-- In-game testing claims for the new dog
-
-DDS (Phase 4) and registration (Phase 5) are implemented separately; end-to-end automation is Phase 6.
-
----
-
-## Phase 4 — DDS Generation / Technical Asset Pipeline
-
-**STATUS: IMPLEMENTED** — `tools/portrait-dds.ps1`
-
-Converts a validated Phase 3.1 canonical PNG into a game DDS matching the known-good working portraits.
-
-```text
-assets/source/dog##_<name>_stellaris.png
-  → validate square RGBA + alpha
-  → downscale to 256×256 (preserve alpha; do not alter source PNG)
-  → write uncompressed 32-bit RGBA DDS (pfFlags=0x41, no mips)
-  → validate header vs Piglet reference + alpha
-  → STOP
-```
-
-**Output location:**  
-`mod/stellar_dogos/gfx/models/portraits/sd_static_test/sd_dog_<name>.dds`
-
-**Command:**
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools\portrait-dds.ps1 -Source assets\source\dog05_bruce_stellaris.png
-```
-
-**Safety:** refuses to overwrite an existing DDS; does not modify Piglet/Oakley/Angus; does not touch portrait defs/sets/categories or vanilla Stellaris.
-
-**Explicitly outside Phase 4:** portrait IDs, definition/set/category registration, in-game claims.
-
----
-
-## Phase 5 — Portrait Registration
-
-**STATUS: IMPLEMENTED** — `tools/portrait-register.ps1`
-
-Wires a Phase 4 DDS into the experiment mod:
-
-```text
-sd_dog_<name>.dds
-  → portrait ID sd_dog_<name>
-  → portraits definition (texturefile + no_texture selectors + mammalian greeting)
-  → sd_static_test set (portraits + non_randomized_portraits)
-  → Mammalian category already exposes sd_static_test (verified, not duplicated)
-  → STOP
-```
-
-**Command:**
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools\portrait-register.ps1 -Source experiment\sd_static_portrait_test\gfx\models\portraits\sd_static_test\sd_dog_bruce.dds
-```
-
-**Safety:** refuses overwrite conflicts; idempotent when already registered identically; protects Piglet/Oakley/Angus DDS hashes; does not touch vanilla Stellaris.
-
-**Does not claim** full in-game UI-context success — that remains the compatibility audit / later phases.
-
----
-
-## Phase 6 — End-to-End Automation / Proof
-
-**STATUS: IMPLEMENTED** — `tools/portrait-pipeline.ps1`
-
-Thin orchestrator over the existing tools (no new architecture):
-
-```text
-new image in ImgHERE/
-  → interactive portrait name
-  → canonical PNG (Phase 3.1)
-  → DDS (Phase 4)
-  → registration (Phase 5)
-  → STOP
-```
-
-**Command:**
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools\portrait-pipeline.ps1
-```
-
-**Phase 6 proof (Cedar):**
-
-| Check | Result |
-|-------|--------|
-| New non-canonical candidate (`mystery_portrait.png`) | **CONFIRMED** |
-| Interactive naming (`Cedar`) → `dog06_cedar_stellaris.png` | **CONFIRMED** |
-| DDS `sd_dog_cedar.dds` (256×256, uncompressed 32-bit RGBA, `pfFlags=0x41`) | **CONFIRMED** |
-| Registration `sd_dog_cedar` in definition + set | **CONFIRMED** |
-| Piglet/Oakley/Angus DDS hashes unchanged | **CONFIRMED** |
-| Idempotency (intake idle / DDS refuse / register already) | **CONFIRMED** |
-| Failure safety (opaque candidate preserved; no partial registration) | **CONFIRMED** |
-| Stellaris species-creation render for Cedar | **NEEDS VERIFICATION** (human in-game check) |
-
-**Does not claim:** leaders/council/diplomacy/other UI contexts, Workshop readiness, or universal portrait compatibility.
-
-### Generic custom-portrait purpose (product framing)
-
-**Stellar Xeno** is the current project/repository name. Dogs were the original development and regression subjects, but the workflow is intended for arbitrary custom portrait subjects and multiple Stellaris xenotypes.
-
-Workshop-facing branding should communicate custom portrait/race creation from your own images—not a dog-only tool.
-
-### Future: portrait variants (NOT IMPLEMENTED)
-
-Eventual support for multiple visual variants of the same custom portrait concept (similar to Stellaris leader portrait variants):
-
-```text
-Species Portrait
-  ├── Variant 1
-  ├── Variant 2
-  ├── Variant 3
-  └── Variant 4
-```
-
-Documented only. Do **not** implement variant IDs or redesign registration around this until a later phase explicitly schedules it.
-
----
-
-## Phase 7 — Xenotype Selection / Generic Portrait Registration
-
-**STATUS: IMPLEMENTED** — `tools/portrait-xenotypes.ps1` + xenotype-aware `portrait-register.ps1` / `portrait-pipeline.ps1`
-
-Thin layer over the existing registration path (no new framework):
-
-```text
-Finished portrait / DDS
-  → interactive xenotype menu (validated)
-  → map to species_class + experiment set + category key
-  → shared registration writes definition + set + category exposure
-  → STOP
-```
-
-**Mapping** (from Stellaris 4.4.x `common/portrait_categories`):
-
-| Xenotype | species_class | Set | Category |
-|----------|---------------|-----|----------|
-| Mammalian | MAM | `sd_static_test` (historical) | mammalians |
-| Avian | AVI | `sd_static_test_avi` | avians |
-| Reptilian | REP | `sd_static_test_rep` | reptilians |
-| Aquatic / Amphibian (user-facing label) | AQUATIC | `sd_static_test_aquatic` | aquatics |
-| Arthropoid | ART | `sd_static_test_art` | arthropoids |
-| Molluscoid | MOL | `sd_static_test_mol` | molluscoids |
-| Fungoid | FUN | `sd_static_test_fun` | fungoids |
-| Plantoid | PLANT | `sd_static_test_plant` | plantoids |
-| Lithoid | LITHOID | `sd_static_test_lithoid` | lithoids |
-| Necroid | NECROID | `sd_static_test_necroid` | necroids |
-| Machine | MACHINE | `sd_static_test_machine` | machines |
-
-User-facing species-type menu uses plain names (Mammalian, Avian, …, Amphibian, …). Arrow keys + Enter select the type in a normal console; internal `species_class` / set / category mappings are unchanged.
-
-**Phase 7 proof:**
-
-| Check | Result |
-|-------|--------|
-| Liberty → Mammalian (`sd_static_test`) | **CONFIRMED** (files) |
-| Sparrow → Avian (`sd_static_test_avi` + avians category) | **CONFIRMED** (files) |
-| Invalid selection `0` / `99` / `abc` rejected | **CONFIRMED** |
-| Idempotent re-register | **CONFIRMED** |
-| Cross-xenotype move refused (conflict) | **CONFIRMED** |
-| Piglet/Oakley/Angus/Bruce/Cedar DDS hashes | **CONFIRMED** unchanged |
-| Liberty/Sparrow in-game species creation | **NEEDS VERIFICATION** |
-| Other xenotypes in-game | **NEEDS VERIFICATION** (registration path **IMPLEMENTED**) |
-
-Portrait variants remain **NOT IMPLEMENTED** (documented under Phase 6).
-
----
-
-## Phase 8 — Failure Testing
-
-**STATUS: PLANNED** (partial coverage already exercised in Phases 3.1–7)
-
-Importer/pipeline must fail safely on:
-
-- Invalid image
-- Unsupported extension
-- Missing alpha
-- Malformed image
-- Duplicate name
-- Duplicate ID
-- Multiple new images
-- Missing conversion dependency
-- Malformed portrait definition
-- Interrupted processing
-
----
-
-## Phase 9 — Documentation / UX
-
-**STATUS: PARTIAL** — Player README + xenotype **prompt library** documented; some generation prompts still missing from source material
-
-Completed in the documentation pass:
-
-- [portrait-generation-prompts.md](portrait-generation-prompts.md) — xenotype image-generation prompts extracted from ChatGPT export (`Stellaris.html`)
-- README explains: photograph → external prompt → `ImgHERE/` → Portrait Creator
-- Toxoid: generation prompt **DOCUMENTED**; selector + registration **IMPLEMENTED** (`toxoids` / `TOX` / `tox_portrait_01`)
-- Still absent from source export (not invented): **Mammalian** and **Machine** xenotype generation prompt bodies
-
-README user workflow:
-
-1. Choose a xenotype and generate a portrait with the matching prompt ([portrait-generation-prompts.md](portrait-generation-prompts.md))
-2. Put it in `ImgHERE` (any filename)
-3. Run `portrait-pipeline.ps1`
-4. Enter the portrait's name
-5. Select xenotype (including Toxoid)
-6. Pipeline creates `dogNN_<name>_<xeno>_stellaris.png`, then DDS + registration under `mod/stellar_dogos/`
-7. Launch Stellaris
-8. Enable **Stellar Xeno** / test the portrait
-
-Developer docs explain architecture.
-
----
-
-## Phase 10 — Release Preparation
-
-**STATUS: PACKAGE READY** (structural) — human Stellaris verification + Steam upload remain
-
-Completed for Workshop packaging:
-
-- Production mod is self-contained under `mod/stellar_dogos/`
-- Package `descriptor.mod` has no developer absolute `path=`
-- Workshop thumbnail (`thumbnail.png`) + `picture="thumbnail.png"`
-- Paste-ready description: `mod/stellar_dogos/workshop_description.txt`
-- Author steps: [workshop-release.md](workshop-release.md)
-
-Still required before calling the release “verified”:
-
-- Human in-game smoke test of shipped portraits
-- Paradox Launcher → Upload Mod → Steam Workshop
-- Confirm Steam-assigned `remote_file_id` after first upload
-
-## Phase 11 — Steam Workshop
-
-**STATUS: READY TO UPLOAD** (pending human test)
-
-Only after:
-
-- Fresh structural validation of `mod/stellar_dogos/` (done in release prep)
-- Human in-game smoke test passes
-- Workshop description/thumbnail acceptable
-
-Then publish to Steam Workshop under **Stellar Xeno** branding that communicates **custom Stellaris portraits from your own images**.
----
-
-## Engineering lesson — do not automate too early
-
-The project intentionally performed several portraits **manually** before automation.
-
-That discovered:
-
-- Transparency requirements
-- Halo / light-fringe problems
-- Framing problems
-- Scale differences
-- DDS requirements
-- Portrait registration requirements
-- In-game behavior (species creation)
-
-The importer must be built from this **proven** workflow, not from early assumptions.
-
----
-
-## Regression protection
-
-Treat **Piglet** and **Oakley** as protected regression fixtures.
-
-- Importer must never silently rebuild existing portraits
-- Before/after hashes during development
-- Existing portraits change only when a task explicitly requests it
-</file>
-
 <file path="tools/portrait-intake.ps1">
 # Stellar Xeno — Phase 3.1 Portrait Intake / Source Preparation
 # Discover → classify → interactive name → number → prepare → validate → cleanup
@@ -9498,6 +9018,486 @@ if (-not (Test-SdPipelineMode)) {
 }
 Exit-SdTool 0
 return
+</file>
+
+<file path="docs/development-roadmap.md">
+# Stellar Xeno — Development Roadmap
+
+Authoritative phase status for future sessions. Cross-references:
+
+- [AI development workflow](ai-development-workflow.md)
+- [Portrait workflow](portrait-workflow.md)
+- [Portrait testing](portrait-testing.md)
+- [Project plan](../PROJECT_PLAN.md)
+
+Certainty labels: **CONFIRMED** / **ASSUMPTION** / **TARGET** / **NEEDS VERIFICATION** — see [PROJECT_PLAN.md](../PROJECT_PLAN.md).
+
+---
+
+## Current position
+
+| Item | Status |
+|------|--------|
+| Static `texturefile` portraits in 4.4.6 | **CONFIRMED** (species creation) |
+| Three dogs (Piglet, Oakley, Angus) | Working in species creation |
+| Automated portrait importer | **IMPLEMENTED** through Phase 7 (intake → DDS → xenotype register → pipeline) |
+| Production mod path | **IMPLEMENTED** — canonical output `mod/stellar_dogos/` (`tools/portrait-paths.ps1`); experiment copy retained as reference |
+| Phase 3.1 source intake (interactive naming) | **IMPLEMENTED** (`tools/portrait-intake.ps1`) |
+| Phase 4 DDS generation | **IMPLEMENTED** (`tools/portrait-dds.ps1`) |
+| Phase 5 Stellaris registration | **IMPLEMENTED** (`tools/portrait-register.ps1`) |
+| Phase 6 end-to-end pipeline proof | **IMPLEMENTED** (`tools/portrait-pipeline.ps1`) |
+| Phase 7 xenotype selection | **IMPLEMENTED** (`tools/portrait-xenotypes.ps1`) — 12 types including Toxoid; Mam/Avi/Rep/Fun file paths **CONFIRMED**; in-game **NEEDS VERIFICATION** |
+| Canonical PNG naming (`dogNN_<name>_<xeno>_stellaris.png`) | **IMPLEMENTED** |
+| Xenotype image-generation prompt library | **DOCUMENTED** ([portrait-generation-prompts.md](portrait-generation-prompts.md)) — Mammalian & Machine prompt bodies **ABSENT** from source export; Toxoid prompt **DOCUMENTED**; Toxoid selector/registration **IMPLEMENTED** |
+| Full UI portrait compatibility | **NEEDS VERIFICATION** |
+| Steam Workshop release | **PACKAGE READY** — structurally prepared (`mod/stellar_dogos/`); human in-game test + Steam upload remain ([docs/workshop-release.md](docs/workshop-release.md)) |
+
+Phases 3.1–7 cover intake → DDS → xenotype-aware registration → end-to-end orchestration. The player-facing **prompt library** is documented separately from the software pipeline. Workshop package structural prep is documented in [workshop-release.md](workshop-release.md); broader UI-context audit remains later.
+
+---
+
+## Phase 0 — Discovery
+
+**STATUS: COMPLETE**
+
+- Investigate Stellaris **Pegasus v4.4.6** (`modsCompatibilityVersion = 4.4`)
+- Investigate portrait categories / sets / species classes / gfx portraits
+- Test `texturefile` via minimal experiment
+- Prove static portrait loading in species creation
+- Establish DDS requirements (256×256 uncompressed 32-bit RGBA, `pfFlags=0x41`, alpha)
+
+---
+
+## Phase 1 — Portrait Calibration
+
+**STATUS: MOSTLY COMPLETE**
+
+Done:
+
+- Piglet working (`sd_dog_piglet`) — protected reference
+- Oakley working (`sd_dog_02`) — gold-standard visual reference
+- Angus working (`sd_dog_angus`) — regenerated ImgHERE art wired; framing accepted for now
+- Transparency / alpha rules established
+- Scale / framing: generation prompts use flexible ~80–95% occupancy + natural composition variety ([portrait-variety-standard.md](portrait-variety-standard.md)); early empirical species-UI preference ~91–92% remains a readability reference, not a rigid generation lock
+- Image-generation prompts preserved ([portrait-prompts.md](portrait-prompts.md))
+- Manual DDS pipeline established
+- ImgHERE staging convention established
+
+Remaining:
+
+- Final side-by-side visual comparison of all three
+- Decide whether Piglet needs any further refinement (do not casually regenerate)
+
+---
+
+## Phase 2 — In-Game Compatibility Audit
+
+**STATUS: NEXT**
+
+Use **Oakley** as the primary test asset.
+
+Test portrait appearance in:
+
+- Species UI (beyond creation checklist already partly confirmed)
+- Leader UI
+- Council
+- Government / empire UI
+- Diplomacy
+- Contacts
+- Factions
+- Events
+- Other relevant portrait contexts
+
+**Question to answer:** Does one static portrait DDS work correctly everywhere Stellaris displays that portrait?
+
+See [portrait-testing.md](portrait-testing.md).
+
+Only after this audit should importer architecture be finalized.
+
+---
+
+## Phase 3 — Portrait Importer Design / Phase 3.1 Intake
+
+**STATUS: Phase 3.1 IMPLEMENTED** (`tools/portrait-intake.ps1`); Phase 4 DDS + Phase 5 registration also implemented
+
+Before full implementation:
+
+- Fresh Repomix snapshot when coding begins
+- ChatGPT reconstructs repository
+- Determine exact implementation files
+- Define importer architecture (phased: 3.1 source prep → later DDS/registration)
+- Define validation contracts
+- Define failure behavior
+- Define naming rules (canonical `dogNN_<name>_<xeno>_stellaris.png` is **internal**; users are not required to type it)
+
+### Phase 3.1 — Source intake & preparation
+
+**STATUS: IMPLEMENTED** — `tools/portrait-intake.ps1`
+
+**User workflow:**
+
+```text
+Drop any image into ImgHERE
+  → run tools/portrait-intake.ps1 (or portrait-pipeline.ps1)
+  → enter the character's name when prompted (mandatory; no bypass)
+  → select Stellaris species type (↑/↓ or numbered fallback)
+  → tool assigns the next available dog number
+  → tool prepares the canonical source image (includes xenotype abbr)
+  → writes ImgHERE/dog##_<name>_<xeno>_stellaris.png and assets/source/...
+  → deletes the temporary input from ImgHERE (success only)
+  → STOP (intake alone) / continue to DDS+register (pipeline)
+```
+
+Phase 3.1 ends at prepared canonical PNG sources. It does **not** create DDS, portrait IDs, or registration edits.
+
+#### Interactive naming + xenotype
+
+Users must **not** be required to manually invent `dog04_…` filenames. Candidate filenames never imply name, xenotype, or sequence number.
+
+1. User places a supported image in `ImgHERE/` (any reasonable name; PNG/JPG/JPEG/WEBP at minimum).
+2. Tool detects a new supported candidate (not already a canonical asset).
+3. Tool asks: `What is this character's name?`
+4. User enters the authoritative display name (e.g. `Liberty`).
+5. Tool normalizes the name **only** as needed for a safe filename (`Liberty` → `liberty`).
+6. Empty/invalid names: keep asking — do not invent a name. No `-DogName` bypass.
+7. Tool asks for Stellaris species type (12 options including Toxoid). Selection moves in one menu; Enter accepts.
+8. **After** name + xenotype, tool chooses the next free dog number from existing canonical sources.
+9. Tool generates canonical filename: `dog##_<name>_<xeno>_stellaris.png` (e.g. `dog04_liberty_mam_stellaris.png`).
+10. Tool validates/prepares the image (PNG, square, RGBA, real alpha — no artistic regen).
+11. Canonical prepared source is written to:
+    - `ImgHERE/dog##_<name>_<xeno>_stellaris.png`
+    - `assets/source/dog##_<name>_<xeno>_stellaris.png`
+12. On **success**, delete the temporary input from `ImgHERE`. On **failure**, leave it untouched.
+13. **Stop** (intake) or continue to DDS/register (pipeline). No vanilla changes. No `_originals` archive.
+
+Filename abbreviations (PNG only; not species_class / not portrait ID):
+
+| Xenotype | Abbreviation |
+|----------|--------------|
+| Mammalian | mam |
+| Avian | avi |
+| Reptilian | rep |
+| Amphibian | amp |
+| Arthropoid | art |
+| Molluscoid | mol |
+| Fungoid | fun |
+| Plantoid | pla |
+| Lithoid | lit |
+| Necroid | nec |
+| Machine | mac |
+| Toxoid | tox |
+
+Example:
+
+```text
+ImgHERE/my_dog.png
+  → user enters "Liberty"
+  → user selects Mammalian
+  → ImgHERE/dog04_liberty_mam_stellaris.png
+  → assets/source/dog04_liberty_mam_stellaris.png
+```
+
+#### Automatic dog numbering
+
+- Scan existing canonical Stellar Xeno source assets (e.g. `assets/source/dog##_…_stellaris.png` and matching ImgHERE canons).
+- Next number = lowest unused integer after the highest present (today: dog01–dog03 → next is **dog04**).
+- Do **not** reuse numbers, renumber existing dogs, or touch Piglet / Oakley / Angus.
+
+#### Already-canonical files
+
+If a file is already named `dog##_<name>_<xeno>_stellaris.png`:
+
+- Do **not** ask for the name again
+- Treat as an explicitly named canonical asset
+- Validate/prepare normally
+- Do **not** assign another number or create duplicate canons
+
+Legacy `dog##_<name>_stellaris.png` names remain recognizable for inventory; new intakes always write the `<xeno>` form.
+#### Conflicts & safety
+
+- If the normalized canonical filename already exists → **stop and explain**; never silently overwrite
+- Do not overwrite existing prepared sources, DDS, definitions, or sets
+- Existing working dogs are regression fixtures and must remain untouched
+- Distinguish: canonical assets / new candidates / unsupported files / raw-reference images to ignore
+- If unsure whether a file is a new portrait → **ask the user**; do not guess
+- Do not process unrelated files
+
+#### Explicitly outside Phase 3.1
+
+- PNG → DDS conversion
+- DDS → portrait definition
+- Portrait definition → portrait set / category registration
+- In-game testing claims for the new dog
+
+DDS (Phase 4) and registration (Phase 5) are implemented separately; end-to-end automation is Phase 6.
+
+---
+
+## Phase 4 — DDS Generation / Technical Asset Pipeline
+
+**STATUS: IMPLEMENTED** — `tools/portrait-dds.ps1`
+
+Converts a validated Phase 3.1 canonical PNG into a game DDS matching the known-good working portraits.
+
+```text
+assets/source/dog##_<name>_stellaris.png
+  → validate square RGBA + alpha
+  → downscale to 256×256 (preserve alpha; do not alter source PNG)
+  → write uncompressed 32-bit RGBA DDS (pfFlags=0x41, no mips)
+  → validate header vs Piglet reference + alpha
+  → STOP
+```
+
+**Output location:**  
+`mod/stellar_dogos/gfx/models/portraits/sd_static_test/sd_dog_<name>.dds`
+
+**Command:**
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\portrait-dds.ps1 -Source assets\source\dog05_bruce_stellaris.png
+```
+
+**Safety:** refuses to overwrite an existing DDS; does not modify Piglet/Oakley/Angus; does not touch portrait defs/sets/categories or vanilla Stellaris.
+
+**Explicitly outside Phase 4:** portrait IDs, definition/set/category registration, in-game claims.
+
+---
+
+## Phase 5 — Portrait Registration
+
+**STATUS: IMPLEMENTED** — `tools/portrait-register.ps1`
+
+Wires a Phase 4 DDS into the experiment mod:
+
+```text
+sd_dog_<name>.dds
+  → portrait ID sd_dog_<name>
+  → portraits definition (texturefile + no_texture selectors + mammalian greeting)
+  → sd_static_test set (portraits + non_randomized_portraits)
+  → Mammalian category already exposes sd_static_test (verified, not duplicated)
+  → STOP
+```
+
+**Command:**
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\portrait-register.ps1 -Source experiment\sd_static_portrait_test\gfx\models\portraits\sd_static_test\sd_dog_bruce.dds
+```
+
+**Safety:** refuses overwrite conflicts; idempotent when already registered identically; protects Piglet/Oakley/Angus DDS hashes; does not touch vanilla Stellaris.
+
+**Does not claim** full in-game UI-context success — that remains the compatibility audit / later phases.
+
+---
+
+## Phase 6 — End-to-End Automation / Proof
+
+**STATUS: IMPLEMENTED** — `tools/portrait-pipeline.ps1`
+
+Thin orchestrator over the existing tools (no new architecture):
+
+```text
+new image in ImgHERE/
+  → interactive portrait name
+  → canonical PNG (Phase 3.1)
+  → DDS (Phase 4)
+  → registration (Phase 5)
+  → STOP
+```
+
+**Command:**
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\portrait-pipeline.ps1
+```
+
+**Phase 6 proof (Cedar):**
+
+| Check | Result |
+|-------|--------|
+| New non-canonical candidate (`mystery_portrait.png`) | **CONFIRMED** |
+| Interactive naming (`Cedar`) → `dog06_cedar_stellaris.png` | **CONFIRMED** |
+| DDS `sd_dog_cedar.dds` (256×256, uncompressed 32-bit RGBA, `pfFlags=0x41`) | **CONFIRMED** |
+| Registration `sd_dog_cedar` in definition + set | **CONFIRMED** |
+| Piglet/Oakley/Angus DDS hashes unchanged | **CONFIRMED** |
+| Idempotency (intake idle / DDS refuse / register already) | **CONFIRMED** |
+| Failure safety (opaque candidate preserved; no partial registration) | **CONFIRMED** |
+| Stellaris species-creation render for Cedar | **NEEDS VERIFICATION** (human in-game check) |
+
+**Does not claim:** leaders/council/diplomacy/other UI contexts, Workshop readiness, or universal portrait compatibility.
+
+### Generic custom-portrait purpose (product framing)
+
+**Stellar Xeno** is the current project/repository name. Dogs were the original development and regression subjects, but the workflow is intended for arbitrary custom portrait subjects and multiple Stellaris xenotypes.
+
+Workshop-facing branding should communicate custom portrait/race creation from your own images—not a dog-only tool.
+
+### Future: portrait variants (NOT IMPLEMENTED)
+
+Eventual support for multiple visual variants of the same custom portrait concept (similar to Stellaris leader portrait variants):
+
+```text
+Species Portrait
+  ├── Variant 1
+  ├── Variant 2
+  ├── Variant 3
+  └── Variant 4
+```
+
+Documented only. Do **not** implement variant IDs or redesign registration around this until a later phase explicitly schedules it.
+
+---
+
+## Phase 7 — Xenotype Selection / Generic Portrait Registration
+
+**STATUS: IMPLEMENTED** — `tools/portrait-xenotypes.ps1` + xenotype-aware `portrait-register.ps1` / `portrait-pipeline.ps1`
+
+Thin layer over the existing registration path (no new framework):
+
+```text
+Finished portrait / DDS
+  → interactive xenotype menu (validated)
+  → map to species_class + experiment set + category key
+  → shared registration writes definition + set + category exposure
+  → STOP
+```
+
+**Mapping** (from Stellaris 4.4.x `common/portrait_categories`):
+
+| Xenotype | species_class | Set | Category |
+|----------|---------------|-----|----------|
+| Mammalian | MAM | `sd_static_test` (historical) | mammalians |
+| Avian | AVI | `sd_static_test_avi` | avians |
+| Reptilian | REP | `sd_static_test_rep` | reptilians |
+| Aquatic / Amphibian (user-facing label) | AQUATIC | `sd_static_test_aquatic` | aquatics |
+| Arthropoid | ART | `sd_static_test_art` | arthropoids |
+| Molluscoid | MOL | `sd_static_test_mol` | molluscoids |
+| Fungoid | FUN | `sd_static_test_fun` | fungoids |
+| Plantoid | PLANT | `sd_static_test_plant` | plantoids |
+| Lithoid | LITHOID | `sd_static_test_lithoid` | lithoids |
+| Necroid | NECROID | `sd_static_test_necroid` | necroids |
+| Machine | MACHINE | `sd_static_test_machine` | machines |
+
+User-facing species-type menu uses plain names (Mammalian, Avian, …, Amphibian, …). Arrow keys + Enter select the type in a normal console; internal `species_class` / set / category mappings are unchanged.
+
+**Phase 7 proof:**
+
+| Check | Result |
+|-------|--------|
+| Liberty → Mammalian (`sd_static_test`) | **CONFIRMED** (files) |
+| Sparrow → Avian (`sd_static_test_avi` + avians category) | **CONFIRMED** (files) |
+| Invalid selection `0` / `99` / `abc` rejected | **CONFIRMED** |
+| Idempotent re-register | **CONFIRMED** |
+| Cross-xenotype move refused (conflict) | **CONFIRMED** |
+| Piglet/Oakley/Angus/Bruce/Cedar DDS hashes | **CONFIRMED** unchanged |
+| Liberty/Sparrow in-game species creation | **NEEDS VERIFICATION** |
+| Other xenotypes in-game | **NEEDS VERIFICATION** (registration path **IMPLEMENTED**) |
+
+Portrait variants remain **NOT IMPLEMENTED** (documented under Phase 6).
+
+---
+
+## Phase 8 — Failure Testing
+
+**STATUS: PLANNED** (partial coverage already exercised in Phases 3.1–7)
+
+Importer/pipeline must fail safely on:
+
+- Invalid image
+- Unsupported extension
+- Missing alpha
+- Malformed image
+- Duplicate name
+- Duplicate ID
+- Multiple new images
+- Missing conversion dependency
+- Malformed portrait definition
+- Interrupted processing
+
+---
+
+## Phase 9 — Documentation / UX
+
+**STATUS: PARTIAL** — Player README + xenotype **prompt library** documented; some generation prompts still missing from source material
+
+Completed in the documentation pass:
+
+- [portrait-generation-prompts.md](portrait-generation-prompts.md) — xenotype image-generation prompts extracted from ChatGPT export (`Stellaris.html`)
+- README explains: photograph → external prompt → `ImgHERE/` → Portrait Creator
+- Toxoid: generation prompt **DOCUMENTED**; selector + registration **IMPLEMENTED** (`toxoids` / `TOX` / `tox_portrait_01`)
+- Still absent from source export (not invented): **Mammalian** and **Machine** xenotype generation prompt bodies
+
+README user workflow:
+
+1. Choose a xenotype and generate a portrait with the matching prompt ([portrait-generation-prompts.md](portrait-generation-prompts.md))
+2. Put it in `ImgHERE` (any filename)
+3. Run `portrait-pipeline.ps1`
+4. Enter the portrait's name
+5. Select xenotype (including Toxoid)
+6. Pipeline creates `dogNN_<name>_<xeno>_stellaris.png`, then DDS + registration under `mod/stellar_dogos/`
+7. Launch Stellaris
+8. Enable **Stellar Xeno** / test the portrait
+
+Developer docs explain architecture.
+
+---
+
+## Phase 10 — Release Preparation
+
+**STATUS: PACKAGE READY** (structural) — human Stellaris verification + Steam upload remain
+
+Completed for Workshop packaging:
+
+- Production mod is self-contained under `mod/stellar_dogos/`
+- Package `descriptor.mod` has no developer absolute `path=`
+- Workshop thumbnail (`thumbnail.png`) + `picture="thumbnail.png"`
+- Paste-ready description: `mod/stellar_dogos/workshop_description.txt`
+- Author steps: [workshop-release.md](workshop-release.md)
+
+Still required before calling the release “verified”:
+
+- Human in-game smoke test of shipped portraits
+- Paradox Launcher → Upload Mod → Steam Workshop
+- Confirm Steam-assigned `remote_file_id` after first upload
+
+## Phase 11 — Steam Workshop
+
+**STATUS: READY TO UPLOAD** (pending human test)
+
+Only after:
+
+- Fresh structural validation of `mod/stellar_dogos/` (done in release prep)
+- Human in-game smoke test passes
+- Workshop description/thumbnail acceptable
+
+Then publish to Steam Workshop under **Stellar Xeno** branding that communicates **custom Stellaris portraits from your own images**.
+---
+
+## Engineering lesson — do not automate too early
+
+The project intentionally performed several portraits **manually** before automation.
+
+That discovered:
+
+- Transparency requirements
+- Halo / light-fringe problems
+- Framing problems
+- Scale differences
+- DDS requirements
+- Portrait registration requirements
+- In-game behavior (species creation)
+
+The importer must be built from this **proven** workflow, not from early assumptions.
+
+---
+
+## Regression protection
+
+Treat **Piglet** and **Oakley** as protected regression fixtures.
+
+- Importer must never silently rebuild existing portraits
+- Before/after hashes during development
+- Existing portraits change only when a task explicitly requests it
 </file>
 
 <file path="docs/portrait-workflow.md">

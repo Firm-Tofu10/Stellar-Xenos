@@ -19,6 +19,7 @@ sd_static_test = {
 		"sd_dog_liberty"
 		"sd_dog_maple"
 		"sd_dog_galian"
+		"sd_dog_ranger"
 	}
 
 	non_randomized_portraits = {
@@ -30,6 +31,7 @@ sd_static_test = {
 		"sd_dog_liberty"
 		"sd_dog_maple"
 		"sd_dog_galian"
+		"sd_dog_ranger"
 	}
 }
 
@@ -84,5 +86,21 @@ sd_static_test_aquatic = {
 
 	non_randomized_portraits = {
 		"sd_dog_slosh"
+	}
+}
+
+sd_static_test_tox = {
+	species_class = TOX
+
+	portraits = {
+		"sd_dog_davy"
+		"sd_dog_cree"
+		"sd_dog_vex"
+	}
+
+	non_randomized_portraits = {
+		"sd_dog_davy"
+		"sd_dog_cree"
+		"sd_dog_vex"
 	}
 }
