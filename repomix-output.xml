@@ -51,7 +51,15 @@ assets/
     dog05_bruce_mam_stellaris.png
     dog08_zaldrin_avi_stellaris.png
     dog09_galian_mam_stellaris.png
+    dog10_ranger_mam_stellaris.png
     dog10_slosh_amp_stellaris.png
+    dog11_davy_tox_stellaris.png
+    dog12_cree_tox_stellaris.png
+    dog13_vex_tox_stellaris.png
+    dog14_cyber_fluff_mac_stellaris.png
+    dog15_jinx_mac_stellaris.png
+    dog16_glass_rep_stellaris.png
+    dog17_piglith_rep_stellaris.png
     piglet_stellaris_portrait_framed_v2.png
     piglet_stellaris_portrait_framed.png
     piglet_stellaris_portrait_framed.png.bak_before_halo_scale
@@ -111,8 +119,11 @@ experiment/
     README.md
   sd_static_portrait_test.mod.example
 ImgHERE/
-  ChatGPT Image Aug 10, 2026, 03_48_18 PM.png
-  ChatGPT Image Aug 10, 2026, 03_51_15 PM.png
+  hiden/
+    6ad2dbe2-ba42-4a13-92e7-01453be23913.png
+    ChatGPT Image Aug 10, 2026, 05_13_38 PM.png
+    ChatGPT Image Aug 10, 2026, 05_14_45 PM.png
+  ChatGPT Image Aug 10, 2026, 06_20_51 PM.png
   dog01_piglet_mam_stellaris.png
   dog02_oakley_mam_stellaris.png
   dog03_angus_mam_stellaris.png
@@ -120,6 +131,14 @@ ImgHERE/
   dog05_bruce_mam_stellaris.png
   dog08_zaldrin_avi_stellaris.png
   dog09_galian_mam_stellaris.png
+  dog10_ranger_mam_stellaris.png
+  dog11_davy_tox_stellaris.png
+  dog12_cree_tox_stellaris.png
+  dog13_vex_tox_stellaris.png
+  dog14_cyber_fluff_mac_stellaris.png
+  dog15_jinx_mac_stellaris.png
+  dog16_glass_rep_stellaris.png
+  dog17_piglith_rep_stellaris.png
 mod/
   stellar_dogos/
     common/
@@ -136,6 +155,8 @@ mod/
             sd_dog_blitz.dds
             sd_dog_bruce.dds
             sd_dog_cedar.dds
+            sd_dog_cree.dds
+            sd_dog_davy.dds
             sd_dog_galian.dds
             sd_dog_lemon.dds
             sd_dog_liberty.dds
@@ -143,8 +164,10 @@ mod/
             sd_dog_nova.dds
             sd_dog_pepper.dds
             sd_dog_piglet.dds
+            sd_dog_ranger.dds
             sd_dog_slosh.dds
             sd_dog_sparrow.dds
+            sd_dog_vex.dds
             sd_dog_zaldrin.dds
       portraits/
         portraits/
@@ -1271,6 +1294,1440 @@ function Write-SdHost {
 }
 </file>
 
+<file path="experiment/sd_static_portrait_test/common/portrait_sets/00_sd_static_test_portrait_sets.txt">
+##############################################################
+### SD Static Portrait Test - portrait sets (EXPERIMENT ONLY)
+###
+### Pattern from vanilla common/portrait_sets/00_portrait_sets.txt:
+### - species_class = <CLASS>
+### - portraits = { "id" }
+### - non_randomized_portraits so random AI empires avoid this test art
+##############################################################
+
+sd_static_test = {
+	species_class = MAM
+
+	portraits = {
+		"sd_dog_piglet"
+		"sd_dog_02"
+		"sd_dog_angus"
+		"sd_dog_bruce"
+		"sd_dog_cedar"
+		"sd_dog_liberty"
+		"sd_dog_maple"
+	}
+
+	non_randomized_portraits = {
+		"sd_dog_piglet"
+		"sd_dog_02"
+		"sd_dog_angus"
+		"sd_dog_bruce"
+		"sd_dog_cedar"
+		"sd_dog_liberty"
+		"sd_dog_maple"
+	}
+}
+
+sd_static_test_avi = {
+	species_class = AVI
+
+	portraits = {
+		"sd_dog_sparrow"
+		"sd_dog_zaldrin"
+	}
+
+	non_randomized_portraits = {
+		"sd_dog_sparrow"
+		"sd_dog_zaldrin"
+	}
+}
+
+sd_static_test_rep = {
+	species_class = REP
+
+	portraits = {
+		"sd_dog_lemon"
+		"sd_dog_pepper"
+		"sd_dog_nova"
+	}
+
+	non_randomized_portraits = {
+		"sd_dog_lemon"
+		"sd_dog_pepper"
+		"sd_dog_nova"
+	}
+}
+</file>
+
+<file path="experiment/sd_static_portrait_test/gfx/portraits/portraits/00_sd_static_test_portraits.txt">
+##############################################################
+### SD Static Portrait Test (EXPERIMENT ONLY)
+###
+### Portraits:
+###   sd_dog_piglet - Piglet
+###   sd_dog_02 - Oakley
+###   sd_dog_angus - Angus
+###   sd_dog_bruce - Bruce
+###   sd_dog_cedar - Cedar
+###   sd_dog_liberty - Liberty
+###   sd_dog_sparrow - Sparrow
+###   sd_dog_maple - Maple
+###   sd_dog_lemon - Lemon
+###   sd_dog_pepper - Pepper
+###   sd_dog_nova - Nova
+###   sd_dog_zaldrin - Zaldrin
+##############################################################
+
+portraits = {
+	sd_dog_piglet = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_piglet.dds"
+	}
+
+	sd_dog_02 = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_02.dds"
+	}
+
+	sd_dog_angus = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_angus.dds"
+	}
+
+	sd_dog_bruce = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_bruce.dds"
+	}
+
+	sd_dog_cedar = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_cedar.dds"
+	}
+
+	sd_dog_liberty = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_liberty.dds"
+	}
+
+	sd_dog_sparrow = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "avian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_sparrow.dds"
+	}
+
+	sd_dog_maple = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_maple.dds"
+	}
+
+	sd_dog_lemon = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "reptilian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_lemon.dds"
+	}
+
+	sd_dog_pepper = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "reptilian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_pepper.dds"
+	}
+
+	sd_dog_nova = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "reptilian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_nova.dds"
+	}
+
+	sd_dog_zaldrin = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "avian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_zaldrin.dds"
+	}
+}
+</file>
+
+<file path="experiment/sd_static_portrait_test/README.md">
+# SD Static Portrait Test (experiment)
+
+Working proof-of-concept for **Stellar Xeno** static species portraits on Stellaris **Pegasus v4.4.6**.
+
+**CONFIRMED:** `texturefile` static portraits appear in Mammalian species creation.
+
+Current portraits: `sd_dog_piglet` (Piglet), `sd_dog_02` (Oakley), `sd_dog_angus` (Angus).
+
+Project docs (authoritative):
+
+- `../../PROJECT_PLAN.md`
+- `../../docs/portrait-workflow.md`
+- `../../docs/development-roadmap.md`
+- `../../docs/portrait-testing.md`
+
+## Enable in the launcher
+
+1. Ensure `Documents\Paradox Interactive\Stellaris\mod\` exists.
+2. Point a `.mod` descriptor `path=` at this folder (forward slashes).
+3. Enable the mod in the Stellaris launcher.
+4. Empire creation → **Mammalian** → select a dog portrait.
+
+## Important
+
+- Do not modify the vanilla Stellaris installation.
+- Piglet and Oakley are protected regression fixtures unless a task explicitly changes them.
+- Full UI compatibility beyond species creation is **not** fully verified yet.
+
+## Revert
+
+Disable/delete the launcher `.mod` descriptor and/or this folder. No vanilla files need restoring.
+</file>
+
+<file path="mod/stellar_dogos/descriptor.mod">
+version="0.1.0"
+tags={
+	"Graphics"
+	"Species"
+}
+name="Stellar Xeno"
+picture="thumbnail.png"
+supported_version="v4.4.*"
+remote_file_id="3780940726"
+</file>
+
+<file path="tools/portrait-paths.ps1">
+# Shared path ownership for Stellar Xeno tools.
+# Canonical production Stellaris mod output: mod/stellar_dogos/
+# Experiment copy remains at experiment/sd_static_portrait_test/ as regression/reference.
+
+# Captured when this file is dot-sourced (not when a caller later invokes helpers).
+$script:SdPathsScriptDir = Split-Path -Parent $PSCommandPath
+
+function Get-SdToolsDir {
+    return $script:SdPathsScriptDir
+}
+
+function Get-SdRepoRoot {
+    return (Resolve-Path (Join-Path (Get-SdToolsDir) "..")).Path
+}
+
+function Get-SdProductionModRelativePath {
+    return "mod\stellar_dogos"
+}
+
+function Get-SdExperimentModRelativePath {
+    # Intentional reference/regression path — not the production write target.
+    return "experiment\sd_static_portrait_test"
+}
+
+function Get-SdModRoot {
+    param(
+        [string]$RepoRoot = "",
+        # Production is the canonical output. Experiment is reference-only.
+        [ValidateSet("Production", "Experiment")]
+        [string]$Which = "Production"
+    )
+
+    if ([string]::IsNullOrWhiteSpace($RepoRoot)) {
+        $RepoRoot = Get-SdRepoRoot
+    }
+
+    $rel = if ($Which -eq "Production") {
+        Get-SdProductionModRelativePath
+    } else {
+        Get-SdExperimentModRelativePath
+    }
+
+    return (Join-Path $RepoRoot $rel)
+}
+
+function Get-SdModPaths {
+    param(
+        [string]$RepoRoot = "",
+        [ValidateSet("Production", "Experiment")]
+        [string]$Which = "Production"
+    )
+
+    if ([string]::IsNullOrWhiteSpace($RepoRoot)) {
+        $RepoRoot = Get-SdRepoRoot
+    }
+
+    $rel = if ($Which -eq "Production") {
+        Get-SdProductionModRelativePath
+    } else {
+        Get-SdExperimentModRelativePath
+    }
+
+    $root = Join-Path $RepoRoot $rel
+    return [PSCustomObject]@{
+        Which        = $Which
+        ModRoot      = $root
+        DdsDir       = Join-Path $root "gfx\models\portraits\sd_static_test"
+        PortraitsTxt = Join-Path $root "gfx\portraits\portraits\00_sd_static_test_portraits.txt"
+        SetTxt       = Join-Path $root "common\portrait_sets\00_sd_static_test_portrait_sets.txt"
+        CategoryTxt  = Join-Path $root "common\portrait_categories\zzz_sd_static_test_portrait_categories.txt"
+        Descriptor   = Join-Path $root "descriptor.mod"
+        DdsRelPrefix = (Join-Path $rel "gfx\models\portraits\sd_static_test")
+    }
+}
+
+function Get-SdRegisteredPortraitIds {
+    param(
+        [string]$PortraitsTxt = ""
+    )
+
+    if ([string]::IsNullOrWhiteSpace($PortraitsTxt)) {
+        $PortraitsTxt = (Get-SdModPaths -Which Production).PortraitsTxt
+    }
+
+    if (-not (Test-Path -LiteralPath $PortraitsTxt)) {
+        throw ("Portrait definitions missing: {0}" -f $PortraitsTxt)
+    }
+
+    $text = [IO.File]::ReadAllText($PortraitsTxt)
+    $ids = New-Object System.Collections.Generic.List[string]
+    foreach ($m in [regex]::Matches($text, '(?m)^\s*(sd_dog_[A-Za-z0-9_]+)\s*=')) {
+        $id = $m.Groups[1].Value
+        if (-not $ids.Contains($id)) { [void]$ids.Add($id) }
+    }
+    return @($ids)
+}
+
+function Get-SdProtectedPortraitIds {
+    param(
+        [string]$PortraitsTxt = ""
+    )
+    # Protect every currently registered portrait ID (including Maple).
+    return @(Get-SdRegisteredPortraitIds -PortraitsTxt $PortraitsTxt)
+}
+
+function Get-SdProtectedDdsFileNames {
+    param(
+        [string]$PortraitsTxt = ""
+    )
+    return @(Get-SdProtectedPortraitIds -PortraitsTxt $PortraitsTxt | ForEach-Object { "$_.dds" })
+}
+
+function Resolve-SdPortraitIdFromSlug {
+    param([string]$Slug)
+
+    if ([string]::IsNullOrWhiteSpace($Slug)) { return $null }
+    $lower = $Slug.Trim().ToLowerInvariant()
+    # Historical Oakley portrait ID / DDS is sd_dog_02 (not sd_dog_oakley).
+    if ($lower -eq "oakley") { return "sd_dog_02" }
+    return ("sd_dog_{0}" -f $lower)
+}
+
+function Get-SdPortraitIdentityStatus {
+    <#
+      Returns whether a character slug already has a registered definition and/or DDS.
+      Case-insensitive slug. Does not modify anything.
+    #>
+    param(
+        [string]$Slug,
+        [string]$RepoRoot = ""
+    )
+
+    if ([string]::IsNullOrWhiteSpace($RepoRoot)) {
+        $RepoRoot = Get-SdRepoRoot
+    }
+
+    $paths = Get-SdModPaths -RepoRoot $RepoRoot -Which Production
+    $portraitId = Resolve-SdPortraitIdFromSlug -Slug $Slug
+    if ([string]::IsNullOrWhiteSpace($portraitId)) {
+        return [PSCustomObject]@{
+            Slug         = $Slug
+            PortraitId   = $null
+            Registered   = $false
+            DdsExists    = $false
+            DdsPath      = $null
+            AlreadyExists = $false
+        }
+    }
+
+    $registered = (@(Get-SdRegisteredPortraitIds -PortraitsTxt $paths.PortraitsTxt) -contains $portraitId)
+    $ddsPath = Join-Path $paths.DdsDir ($portraitId + ".dds")
+    $ddsExists = Test-Path -LiteralPath $ddsPath
+
+    return [PSCustomObject]@{
+        Slug          = $Slug.ToLowerInvariant()
+        PortraitId    = $portraitId
+        Registered    = $registered
+        DdsExists     = $ddsExists
+        DdsPath       = $ddsPath
+        AlreadyExists = ($registered -or $ddsExists)
+    }
+}
+</file>
+
+<file path="tools/portrait-register.ps1">
+# Stellar Xeno — Phase 5/7: Portrait Registration
+# Registers an existing Phase 4 DDS into the production mod (mod/stellar_dogos):
+#   portrait definition + xenotype portrait set + category exposure.
+# Does not convert images or touch vanilla Stellaris.
+
+[CmdletBinding()]
+param(
+    [Parameter(Mandatory = $true, Position = 0)]
+    [string]$Source,
+
+    # Optional non-interactive xenotype (id, display name, or menu number).
+    # When omitted, an interactive xenotype menu is shown.
+    [string]$Xenotype = ""
+)
+
+$ErrorActionPreference = "Stop"
+
+. (Join-Path (Split-Path -Parent $PSCommandPath) "portrait-exit.ps1")
+. (Join-Path (Split-Path -Parent $PSCommandPath) "portrait-paths.ps1")
+
+$DdsNamePattern = '^sd_dog_(.+)\.dds$'
+# Populated after paths resolve (every currently registered ID, including Maple).
+$ProtectedIds = @()
+
+. (Join-Path (Split-Path -Parent $PSCommandPath) "portrait-xenotypes.ps1")
+
+# ---------------------------------------------------------------------------
+# Paths
+# ---------------------------------------------------------------------------
+
+function Get-RepoRoot {
+    return Get-SdRepoRoot
+}
+
+function Resolve-DdsPath {
+    param(
+        [string]$RepoRoot,
+        [string]$SourceArg
+    )
+
+    if ([IO.Path]::IsPathRooted($SourceArg) -and (Test-Path -LiteralPath $SourceArg)) {
+        return (Resolve-Path -LiteralPath $SourceArg).Path
+    }
+
+    $prod = Get-SdModPaths -RepoRoot $RepoRoot -Which Production
+    $candidates = @(
+        (Join-Path $RepoRoot $SourceArg),
+        (Join-Path $prod.DdsDir $SourceArg),
+        (Join-Path $prod.DdsDir ([IO.Path]::GetFileName($SourceArg)))
+    )
+
+    foreach ($c in $candidates) {
+        if (Test-Path -LiteralPath $c) {
+            return (Resolve-Path -LiteralPath $c).Path
+        }
+    }
+
+    throw ("DDS not found: {0}" -f $SourceArg)
+}
+
+function Get-ExperimentPaths {
+    # Compatibility alias — production is the canonical write target.
+    param([string]$RepoRoot)
+    return (Get-SdModPaths -RepoRoot $RepoRoot -Which Production)
+}
+
+# ---------------------------------------------------------------------------
+# DDS validation
+# ---------------------------------------------------------------------------
+
+function Test-PortraitDdsFile {
+    param([string]$Path)
+
+    $bytes = [IO.File]::ReadAllBytes($Path)
+    if ($bytes.Length -lt 128) { throw "DDS too small to be valid." }
+    $magic = [Text.Encoding]::ASCII.GetString($bytes, 0, 4)
+    if ($magic -ne "DDS ") { throw "Not a DDS file (bad magic)." }
+
+    $height = [BitConverter]::ToUInt32($bytes, 12)
+    $width = [BitConverter]::ToUInt32($bytes, 16)
+    $pfFlags = [BitConverter]::ToUInt32($bytes, 80)
+    $bpp = [BitConverter]::ToUInt32($bytes, 88)
+    $pitch = [BitConverter]::ToUInt32($bytes, 20)
+    $mips = [BitConverter]::ToUInt32($bytes, 28)
+
+    if ($width -ne 256 -or $height -ne 256) {
+        throw ("DDS must be 256x256 (got {0}x{1})." -f $width, $height)
+    }
+    if ($pfFlags -ne 0x41) {
+        throw ("DDS pfFlags must be 0x41 (got 0x{0:X})." -f $pfFlags)
+    }
+    if ($bpp -ne 32) {
+        throw ("DDS must be 32-bit (got {0})." -f $bpp)
+    }
+    if ($bytes.Length -ne 262272) {
+        throw ("Unexpected DDS size {0} (expected 262272 uncompressed RGBA)." -f $bytes.Length)
+    }
+
+    $a0 = 0
+    for ($y = 0; $y -lt 256; $y += 8) {
+        for ($x = 0; $x -lt 256; $x += 8) {
+            if ($bytes[128 + (($y * 256) + $x) * 4 + 3] -eq 0) { $a0++ }
+        }
+    }
+
+    return [PSCustomObject]@{
+        Width    = $width
+        Height   = $height
+        PfFlags  = $pfFlags
+        Bpp      = $bpp
+        Pitch    = $pitch
+        Mips     = $mips
+        Length   = $bytes.Length
+        SampleA0 = $a0
+    }
+}
+
+function Get-PortraitIdFromDdsName {
+    param([string]$FileName)
+
+    $m = [regex]::Match($FileName.ToLowerInvariant(), $DdsNamePattern)
+    if (-not $m.Success) {
+        throw ("DDS filename must match sd_dog_<name>.dds (got '{0}')." -f $FileName)
+    }
+    $slug = $m.Groups[1].Value
+    if ([string]::IsNullOrWhiteSpace($slug)) {
+        throw "DDS filename has empty portrait name slug."
+    }
+    return "sd_dog_$slug"
+}
+
+# ---------------------------------------------------------------------------
+# Parse existing registration
+# ---------------------------------------------------------------------------
+
+function Get-PortraitDefinitionIds {
+    param([string]$Text)
+
+    $ids = New-Object System.Collections.Generic.List[string]
+    foreach ($m in [regex]::Matches($Text, '(?m)^\s*(sd_dog_[A-Za-z0-9_]+)\s*=')) {
+        [void]$ids.Add($m.Groups[1].Value)
+    }
+    return @($ids)
+}
+
+function Get-PortraitBlockField {
+    param(
+        [string]$Text,
+        [string]$PortraitId,
+        [string]$FieldName
+    )
+
+    $pattern = '(?ms)^\s*' + [regex]::Escape($PortraitId) + '\s*=\s*\{(.*?)^\s*\}'
+    $m = [regex]::Match($Text, $pattern)
+    if (-not $m.Success) { return $null }
+
+    $fm = [regex]::Match($m.Groups[1].Value, [regex]::Escape($FieldName) + '\s*=\s*"([^"]+)"')
+    if (-not $fm.Success) { return $null }
+    return $fm.Groups[1].Value
+}
+
+function Get-PortraitTexturefile {
+    param([string]$Text, [string]$PortraitId)
+    return Get-PortraitBlockField -Text $Text -PortraitId $PortraitId -FieldName "texturefile"
+}
+
+function Get-PortraitGreeting {
+    param([string]$Text, [string]$PortraitId)
+    return Get-PortraitBlockField -Text $Text -PortraitId $PortraitId -FieldName "greeting_sound"
+}
+
+function Get-BraceBlockBody {
+    param(
+        [string]$Text,
+        [int]$OpenBraceIndex
+    )
+
+    $depth = 0
+    for ($i = $OpenBraceIndex; $i -lt $Text.Length; $i++) {
+        $ch = $Text[$i]
+        if ($ch -eq '{') { $depth++ }
+        elseif ($ch -eq '}') {
+            $depth--
+            if ($depth -eq 0) {
+                $start = $OpenBraceIndex + 1
+                $len = $i - $start
+                return [PSCustomObject]@{
+                    Body      = $Text.Substring($start, $len)
+                    EndIndex  = $i
+                }
+            }
+        }
+    }
+    throw "Unbalanced braces while parsing registration file."
+}
+
+function Get-AllPortraitSets {
+    param([string]$Text)
+
+    $sets = [ordered]@{}
+    $rx = [regex]'(?m)^([A-Za-z0-9_]+)\s*=\s*\{'
+    foreach ($m in $rx.Matches($Text)) {
+        $name = $m.Groups[1].Value
+        if ($name -eq "portraits" -or $name -eq "non_randomized_portraits") { continue }
+
+        $openIdx = $Text.IndexOf('{', $m.Index)
+        $parsed = Get-BraceBlockBody -Text $Text -OpenBraceIndex $openIdx
+        $body = $parsed.Body
+
+        $sc = [regex]::Match($body, 'species_class\s*=\s*([A-Za-z0-9_]+)')
+        $species = if ($sc.Success) { $sc.Groups[1].Value } else { $null }
+
+        $pOpen = [regex]::Match($body, '(?m)^\s*portraits\s*=\s*\{')
+        $nOpen = [regex]::Match($body, '(?m)^\s*non_randomized_portraits\s*=\s*\{')
+
+        $portraits = New-Object System.Collections.Generic.List[string]
+        $nonRand = New-Object System.Collections.Generic.List[string]
+        if ($pOpen.Success) {
+            $pBody = (Get-BraceBlockBody -Text $body -OpenBraceIndex $body.IndexOf('{', $pOpen.Index)).Body
+            foreach ($sm in [regex]::Matches($pBody, '"([^"]+)"')) { [void]$portraits.Add($sm.Groups[1].Value) }
+        }
+        if ($nOpen.Success) {
+            $nBody = (Get-BraceBlockBody -Text $body -OpenBraceIndex $body.IndexOf('{', $nOpen.Index)).Body
+            foreach ($sm in [regex]::Matches($nBody, '"([^"]+)"')) { [void]$nonRand.Add($sm.Groups[1].Value) }
+        }
+
+        $sets[$name] = [PSCustomObject]@{
+            Name         = $name
+            SpeciesClass = $species
+            Portraits    = @($portraits)
+            NonRandom    = @($nonRand)
+        }
+    }
+    return $sets
+}
+
+function Find-PortraitSetMembership {
+    param(
+        [System.Collections.Specialized.OrderedDictionary]$Sets,
+        [string]$PortraitId
+    )
+
+    $found = New-Object System.Collections.Generic.List[string]
+    foreach ($name in $Sets.Keys) {
+        $s = $Sets[$name]
+        if (($s.Portraits -contains $PortraitId) -or ($s.NonRandom -contains $PortraitId)) {
+            [void]$found.Add($name)
+        }
+    }
+    return @($found)
+}
+
+function Get-AllCategories {
+    param([string]$Text)
+
+    $cats = [ordered]@{}
+    $rx = [regex]'(?m)^([A-Za-z0-9_]+)\s*=\s*\{'
+    foreach ($m in $rx.Matches($Text)) {
+        $key = $m.Groups[1].Value
+        $openIdx = $Text.IndexOf('{', $m.Index)
+        $parsed = Get-BraceBlockBody -Text $Text -OpenBraceIndex $openIdx
+        $body = $parsed.Body
+
+        $nm = [regex]::Match($body, 'name\s*=\s*([A-Za-z0-9_]+)')
+        $setsBlock = [regex]::Match($body, '(?ms)sets\s*=\s*\{(.*?)\}')
+        $setList = New-Object System.Collections.Generic.List[string]
+        if ($setsBlock.Success) {
+            foreach ($line in ($setsBlock.Groups[1].Value -split "`r?`n")) {
+                $t = $line.Trim()
+                if ($t -match '^[A-Za-z0-9_]+$') { [void]$setList.Add($t) }
+            }
+        }
+        $cats[$key] = [PSCustomObject]@{
+            Key  = $key
+            Name = $(if ($nm.Success) { $nm.Groups[1].Value } else { $null })
+            Sets = @($setList)
+        }
+    }
+    return $cats
+}
+
+# ---------------------------------------------------------------------------
+# Writers
+# ---------------------------------------------------------------------------
+
+function Get-PortraitLabel {
+    param([string]$PortraitId)
+    switch ($PortraitId) {
+        'sd_dog_piglet' { return 'Piglet' }
+        'sd_dog_02'     { return 'Oakley' }
+        'sd_dog_angus'  { return 'Angus' }
+        'sd_dog_bruce'  { return 'Bruce' }
+        'sd_dog_cedar'  { return 'Cedar' }
+        default {
+            $slug = ($PortraitId -replace '^sd_dog_', '')
+            if ([string]::IsNullOrWhiteSpace($slug)) { return $PortraitId }
+            return ($slug.Substring(0, 1).ToUpper() + $slug.Substring(1))
+        }
+    }
+}
+
+function Build-PortraitsFile {
+    param(
+        [string[]]$OrderedIds,
+        [hashtable]$TextureById,
+        [hashtable]$GreetingById
+    )
+
+    $sb = New-Object System.Text.StringBuilder
+    [void]$sb.AppendLine("##############################################################")
+    [void]$sb.AppendLine("### Stellar Xeno - static portrait definitions")
+    [void]$sb.AppendLine("###")
+    [void]$sb.AppendLine("### Portraits:")
+    foreach ($id in $OrderedIds) {
+        [void]$sb.AppendLine(("###   {0} - {1}" -f $id, (Get-PortraitLabel -PortraitId $id)))
+    }
+    [void]$sb.AppendLine("##############################################################")
+    [void]$sb.AppendLine("")
+    [void]$sb.AppendLine("portraits = {")
+
+    for ($i = 0; $i -lt $OrderedIds.Count; $i++) {
+        $id = $OrderedIds[$i]
+        $tex = $TextureById[$id]
+        $greet = $GreetingById[$id]
+        if ([string]::IsNullOrWhiteSpace($greet)) { $greet = "mammalian_01_greetings" }
+
+        [void]$sb.AppendLine("`t$id = {")
+        [void]$sb.AppendLine("`t`tclothes_selector = `"no_texture`"")
+        [void]$sb.AppendLine("`t`tattachment_selector = `"no_texture`"")
+        [void]$sb.AppendLine("`t`tgreeting_sound = `"$greet`"")
+        [void]$sb.AppendLine("`t`ttexturefile = `"$tex`"")
+        [void]$sb.AppendLine("`t}")
+        if ($i -lt $OrderedIds.Count - 1) { [void]$sb.AppendLine("") }
+    }
+
+    [void]$sb.AppendLine("}")
+    return $sb.ToString()
+}
+
+function Build-SetsFile {
+    param([System.Collections.Specialized.OrderedDictionary]$Sets)
+
+    $sb = New-Object System.Text.StringBuilder
+    [void]$sb.AppendLine("##############################################################")
+    [void]$sb.AppendLine("### Stellar Xeno - portrait sets")
+    [void]$sb.AppendLine("###")
+    [void]$sb.AppendLine("### Pattern from vanilla common/portrait_sets/00_portrait_sets.txt:")
+    [void]$sb.AppendLine("### - species_class = CLASS")
+    [void]$sb.AppendLine("### - portraits = { `"id`" }")
+    [void]$sb.AppendLine("### - non_randomized_portraits so random AI empires avoid this art")
+    [void]$sb.AppendLine("##############################################################")
+    [void]$sb.AppendLine("")
+
+    $names = @($Sets.Keys)
+    for ($si = 0; $si -lt $names.Count; $si++) {
+        $s = $Sets[$names[$si]]
+        [void]$sb.AppendLine("$($s.Name) = {")
+        [void]$sb.AppendLine("`tspecies_class = $($s.SpeciesClass)")
+        [void]$sb.AppendLine("")
+        [void]$sb.AppendLine("`tportraits = {")
+        foreach ($id in $s.Portraits) { [void]$sb.AppendLine("`t`t`"$id`"") }
+        [void]$sb.AppendLine("`t}")
+        [void]$sb.AppendLine("")
+        [void]$sb.AppendLine("`tnon_randomized_portraits = {")
+        foreach ($id in $s.NonRandom) { [void]$sb.AppendLine("`t`t`"$id`"") }
+        [void]$sb.AppendLine("`t}")
+        [void]$sb.AppendLine("}")
+        if ($si -lt $names.Count - 1) { [void]$sb.AppendLine("") }
+    }
+
+    return $sb.ToString()
+}
+
+function Build-CategoriesFile {
+    param([System.Collections.Specialized.OrderedDictionary]$Categories)
+
+    $sb = New-Object System.Text.StringBuilder
+    [void]$sb.AppendLine("##############################################################")
+    [void]$sb.AppendLine("### Stellar Xeno - portrait category overrides")
+    [void]$sb.AppendLine("###")
+    [void]$sb.AppendLine("### Each block REPLACES the vanilla category of the same key so")
+    [void]$sb.AppendLine("### we can append one mod set with minimal change.")
+    [void]$sb.AppendLine("### Vanilla set lists were copied from Stellaris 4.4.x.")
+    [void]$sb.AppendLine("##############################################################")
+    [void]$sb.AppendLine("")
+
+    $keys = @($Categories.Keys)
+    for ($ci = 0; $ci -lt $keys.Count; $ci++) {
+        $c = $Categories[$keys[$ci]]
+        [void]$sb.AppendLine("$($c.Key) = {")
+        [void]$sb.AppendLine("`tname = $($c.Name)")
+        [void]$sb.AppendLine("")
+        [void]$sb.AppendLine("`tsets = {")
+        foreach ($setName in $c.Sets) {
+            [void]$sb.AppendLine("`t`t$setName")
+        }
+        [void]$sb.AppendLine("`t}")
+        [void]$sb.AppendLine("}")
+        if ($ci -lt $keys.Count - 1) { [void]$sb.AppendLine("") }
+    }
+
+    return $sb.ToString()
+}
+
+function Write-TextAtomic {
+    param(
+        [string]$Path,
+        [string]$Content
+    )
+
+    $tmp = $Path + ".partial"
+    $utf8NoBom = New-Object System.Text.UTF8Encoding $false
+    [IO.File]::WriteAllText($tmp, $Content, $utf8NoBom)
+    Move-Item -LiteralPath $tmp -Destination $Path -Force
+}
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+
+$repoRoot = Get-RepoRoot
+$paths = Get-ExperimentPaths -RepoRoot $repoRoot
+
+Write-SdHost "Stellar Xeno - Portrait Registration"
+Write-SdHost ""
+
+foreach ($required in @($paths.PortraitsTxt, $paths.SetTxt, $paths.CategoryTxt, $paths.DdsDir)) {
+    if (-not (Test-Path -LiteralPath $required)) {
+        throw ("Required path missing: {0}" -f $required)
+    }
+}
+
+$ddsPath = Resolve-DdsPath -RepoRoot $repoRoot -SourceArg $Source
+$ddsName = [IO.Path]::GetFileName($ddsPath)
+$portraitId = Get-PortraitIdFromDdsName -FileName $ddsName
+$displayName = ($portraitId -replace '^sd_dog_', '')
+# Title-case for player-facing messages
+$displayPretty = (Get-Culture).TextInfo.ToTitleCase($displayName.Replace('_', ' '))
+$textureRel = "gfx/models/portraits/sd_static_test/$ddsName"
+
+Write-SdHost ("Portrait: {0}" -f $displayPretty)
+Write-SdHost ""
+
+$ddsInfo = Test-PortraitDdsFile -Path $ddsPath
+
+# Resolve xenotype (interactive unless provided)
+if ([string]::IsNullOrWhiteSpace($Xenotype)) {
+    $xeno = Read-PortraitXenotypeInteractive -PortraitDisplayName $displayPretty
+} else {
+    $xeno = Resolve-PortraitXenotype -Selection $Xenotype
+    if ($null -eq $xeno) {
+        Write-Host "That species type was not recognized."
+        Write-Host "Please choose one of:"
+        $i = 1
+        foreach ($c in (Get-PortraitXenotypeCatalog)) {
+            Write-Host ("  {0}. {1}" -f $i, $c.DisplayName)
+            $i++
+        }
+        Exit-SdTool 2
+        return
+    }
+}
+
+if (-not (Test-SdPipelineMode)) {
+    Write-Host ""
+    Write-Host ("Registering as {0}..." -f $xeno.DisplayName)
+    Write-Host ""
+}
+# Protect every currently registered portrait (IDs + DDS hashes), including Maple.
+$ProtectedIds = @(Get-SdProtectedPortraitIds -PortraitsTxt $paths.PortraitsTxt)
+$protectedDds = @{}
+foreach ($k in (Get-SdProtectedDdsFileNames -PortraitsTxt $paths.PortraitsTxt)) {
+    $protectedDds[$k] = $null
+}
+foreach ($k in @($protectedDds.Keys)) {
+    $p = Join-Path $paths.DdsDir $k
+    if (Test-Path -LiteralPath $p) {
+        $protectedDds[$k] = (Get-FileHash -LiteralPath $p -Algorithm SHA256).Hash
+    }
+}
+
+$portraitsText = [IO.File]::ReadAllText($paths.PortraitsTxt)
+$setText = [IO.File]::ReadAllText($paths.SetTxt)
+$categoryText = [IO.File]::ReadAllText($paths.CategoryTxt)
+
+$defIds = Get-PortraitDefinitionIds -Text $portraitsText
+$sets = Get-AllPortraitSets -Text $setText
+$categories = Get-AllCategories -Text $categoryText
+
+# Snapshot mammalian set membership before any mutation (regression guard)
+$mamSetBefore = $null
+if ($sets.Contains("sd_static_test")) {
+    $mamSetBefore = [PSCustomObject]@{
+        Portraits = @($sets["sd_static_test"].Portraits)
+        NonRandom = @($sets["sd_static_test"].NonRandom)
+    }
+}
+
+$existingTexture = Get-PortraitTexturefile -Text $portraitsText -PortraitId $portraitId
+$existingGreeting = Get-PortraitGreeting -Text $portraitsText -PortraitId $portraitId
+$membership = @(Find-PortraitSetMembership -Sets $sets -PortraitId $portraitId)
+
+$inDef = $defIds -contains $portraitId
+$inTargetSet = $false
+if ($sets.Contains($xeno.SetName)) {
+    $target = $sets[$xeno.SetName]
+    $inTargetSet = (@($target.Portraits) -contains $portraitId) -and (@($target.NonRandom) -contains $portraitId)
+}
+
+# Idempotency / conflict
+if ($inDef -or $membership.Count -gt 0) {
+    $sameTexture = ($existingTexture -eq $textureRel)
+    $sameGreeting = ($existingGreeting -eq $xeno.GreetingSound)
+    $onlyTarget = ($membership.Count -eq 1 -and $membership[0] -eq $xeno.SetName -and $inTargetSet)
+
+    if ($inDef -and $sameTexture -and $sameGreeting -and $onlyTarget) {
+        Write-Host "This portrait is already registered."
+        Write-Host ("  Name: {0}" -f $displayPretty)
+        Write-Host ("  Species type: {0}" -f $xeno.DisplayName)
+        Write-Host "No changes were made."
+        Exit-SdTool 0
+        return
+    }
+
+    Write-Host "This portrait is already registered differently."
+    Write-Host "To protect your existing portraits, nothing was changed."
+    Write-Host ("  Portrait: {0}" -f $portraitId)
+    Write-Host ("  Existing species set(s): {0}" -f $(if ($membership.Count -eq 0) { "(none)" } else { ($membership -join ", ") }))
+    Write-Host ("  Requested species type: {0}" -f $xeno.DisplayName)
+    Exit-SdTool 2
+    return
+}
+
+if ($ProtectedIds -contains $portraitId) {
+    throw ("Refusing to modify protected portrait ID '{0}'." -f $portraitId)
+}
+
+# --- Portrait definitions (preserve existing greetings/textures) ---
+$textureMap = @{}
+$greetingMap = @{}
+foreach ($id in $defIds) {
+    $textureMap[$id] = Get-PortraitTexturefile -Text $portraitsText -PortraitId $id
+    $g = Get-PortraitGreeting -Text $portraitsText -PortraitId $id
+    if ([string]::IsNullOrWhiteSpace($g)) { $g = "mammalian_01_greetings" }
+    $greetingMap[$id] = $g
+}
+$orderedIds = @($defIds)
+if ($orderedIds -notcontains $portraitId) { $orderedIds += $portraitId }
+$textureMap[$portraitId] = $textureRel
+$greetingMap[$portraitId] = $xeno.GreetingSound
+
+$newPortraits = Build-PortraitsFile -OrderedIds $orderedIds -TextureById $textureMap -GreetingById $greetingMap
+
+# --- Portrait set for selected xenotype (create or append; preserve others) ---
+if (-not $sets.Contains($xeno.SetName)) {
+    $sets[$xeno.SetName] = [PSCustomObject]@{
+        Name         = $xeno.SetName
+        SpeciesClass = $xeno.SpeciesClass
+        Portraits    = @()
+        NonRandom    = @()
+    }
+} else {
+    $existingSet = $sets[$xeno.SetName]
+    if ($existingSet.SpeciesClass -ne $xeno.SpeciesClass) {
+        throw ("Set '{0}' species_class is '{1}' but xenotype requires '{2}'." -f $xeno.SetName, $existingSet.SpeciesClass, $xeno.SpeciesClass)
+    }
+}
+
+$targetSet = $sets[$xeno.SetName]
+$newPortraitsList = @($targetSet.Portraits)
+$newNonRandList = @($targetSet.NonRandom)
+if ($newPortraitsList -notcontains $portraitId) { $newPortraitsList += $portraitId }
+if ($newNonRandList -notcontains $portraitId) { $newNonRandList += $portraitId }
+$sets[$xeno.SetName] = [PSCustomObject]@{
+    Name         = $xeno.SetName
+    SpeciesClass = $xeno.SpeciesClass
+    Portraits    = $newPortraitsList
+    NonRandom    = $newNonRandList
+}
+
+# Ensure historical mammalian set still exists if it was present
+if (-not $sets.Contains("sd_static_test") -and $setText -match 'sd_static_test\s*=') {
+    throw "Internal error: existing sd_static_test set disappeared during parse."
+}
+
+$newSetText = Build-SetsFile -Sets $sets
+
+# --- Category: ensure selected category exposes the set; leave others alone ---
+if (-not $categories.Contains($xeno.CategoryKey)) {
+    $categories[$xeno.CategoryKey] = [PSCustomObject]@{
+        Key  = $xeno.CategoryKey
+        Name = $xeno.SpeciesClass
+        Sets = @($xeno.VanillaSets + $xeno.SetName)
+    }
+} else {
+    $cat = $categories[$xeno.CategoryKey]
+    if ($cat.Name -ne $xeno.SpeciesClass) {
+        throw ("Category '{0}' name is '{1}' but xenotype requires '{2}'." -f $xeno.CategoryKey, $cat.Name, $xeno.SpeciesClass)
+    }
+    $catSets = @($cat.Sets)
+    if ($catSets -notcontains $xeno.SetName) {
+        $catSets += $xeno.SetName
+    }
+    $categories[$xeno.CategoryKey] = [PSCustomObject]@{
+        Key  = $cat.Key
+        Name = $cat.Name
+        Sets = $catSets
+    }
+}
+
+$newCategoryText = Build-CategoriesFile -Categories $categories
+
+# Validate in-memory before write
+$vDef = Get-PortraitDefinitionIds -Text $newPortraits
+$vTex = Get-PortraitTexturefile -Text $newPortraits -PortraitId $portraitId
+$vGreet = Get-PortraitGreeting -Text $newPortraits -PortraitId $portraitId
+$vSets = Get-AllPortraitSets -Text $newSetText
+$vCats = Get-AllCategories -Text $newCategoryText
+
+if (($vDef | Where-Object { $_ -eq $portraitId }).Count -ne 1) {
+    throw "Validation failed: portrait definition count for new ID is not exactly 1."
+}
+if ($vTex -ne $textureRel) { throw "Validation failed: texturefile mismatch after edit." }
+if ($vGreet -ne $xeno.GreetingSound) { throw "Validation failed: greeting_sound mismatch after edit." }
+if (-not $vSets.Contains($xeno.SetName)) { throw "Validation failed: target set missing." }
+$vs = $vSets[$xeno.SetName]
+if (($vs.Portraits | Where-Object { $_ -eq $portraitId }).Count -ne 1) { throw "Validation failed: set portraits count invalid." }
+if (($vs.NonRandom | Where-Object { $_ -eq $portraitId }).Count -ne 1) { throw "Validation failed: non_randomized count invalid." }
+if ($vs.SpeciesClass -ne $xeno.SpeciesClass) { throw "Validation failed: species_class mismatch." }
+if (-not $vCats.Contains($xeno.CategoryKey)) { throw "Validation failed: category missing." }
+if ($vCats[$xeno.CategoryKey].Sets -notcontains $xeno.SetName) { throw "Validation failed: category does not expose set." }
+
+# Preserve protected IDs / mammalian set contents
+foreach ($protId in $ProtectedIds) {
+    if ($defIds -contains $protId) {
+        if (-not ($vDef -contains $protId)) {
+            throw ("Validation failed: protected ID '{0}' missing from definitions." -f $protId)
+        }
+        $oldTex = Get-PortraitTexturefile -Text $portraitsText -PortraitId $protId
+        $newTex = Get-PortraitTexturefile -Text $newPortraits -PortraitId $protId
+        if ($oldTex -ne $newTex) {
+            throw ("Validation failed: protected ID '{0}' texturefile changed." -f $protId)
+        }
+        $oldG = Get-PortraitGreeting -Text $portraitsText -PortraitId $protId
+        $newG = Get-PortraitGreeting -Text $newPortraits -PortraitId $protId
+        if ($oldG -ne $newG) {
+            throw ("Validation failed: protected ID '{0}' greeting_sound changed." -f $protId)
+        }
+    }
+}
+
+if ($null -ne $mamSetBefore -and $vSets.Contains("sd_static_test") -and $xeno.SetName -ne "sd_static_test") {
+    $newMam = $vSets["sd_static_test"]
+    if (($mamSetBefore.Portraits -join ",") -ne ($newMam.Portraits -join ",")) {
+        throw "Validation failed: mammalian sd_static_test portraits changed unexpectedly."
+    }
+    if (($mamSetBefore.NonRandom -join ",") -ne ($newMam.NonRandom -join ",")) {
+        throw "Validation failed: mammalian sd_static_test non_randomized changed unexpectedly."
+    }
+}
+
+Write-TextAtomic -Path $paths.PortraitsTxt -Content $newPortraits
+Write-TextAtomic -Path $paths.SetTxt -Content $newSetText
+Write-TextAtomic -Path $paths.CategoryTxt -Content $newCategoryText
+
+# Post-write validation
+$portraitsAfter = [IO.File]::ReadAllText($paths.PortraitsTxt)
+$setAfter = [IO.File]::ReadAllText($paths.SetTxt)
+$catAfter = [IO.File]::ReadAllText($paths.CategoryTxt)
+$postSets = Get-AllPortraitSets -Text $setAfter
+$postCats = Get-AllCategories -Text $catAfter
+
+$postDef = Get-PortraitDefinitionIds -Text $portraitsAfter
+$postTex = Get-PortraitTexturefile -Text $portraitsAfter -PortraitId $portraitId
+$postGreet = Get-PortraitGreeting -Text $portraitsAfter -PortraitId $portraitId
+
+if (($postDef | Where-Object { $_ -eq $portraitId }).Count -ne 1) { throw "Post-write: definition count invalid." }
+if ($postTex -ne $textureRel) { throw "Post-write: texturefile invalid." }
+if ($postGreet -ne $xeno.GreetingSound) { throw "Post-write: greeting invalid." }
+if (-not $postSets.Contains($xeno.SetName)) { throw "Post-write: set missing." }
+if ($postSets[$xeno.SetName].Portraits -notcontains $portraitId) { throw "Post-write: set portraits invalid." }
+if ($postSets[$xeno.SetName].NonRandom -notcontains $portraitId) { throw "Post-write: non_randomized invalid." }
+if ($postCats[$xeno.CategoryKey].Sets -notcontains $xeno.SetName) { throw "Post-write: category missing set." }
+
+if (-not (Test-SdPipelineMode)) {
+    Write-Host ""
+    Write-Host "Registration complete."
+    Write-Host ("  Name: {0}" -f $displayPretty)
+    Write-Host ("  Species type: {0}" -f $xeno.DisplayName)
+    Write-Host ""
+    Write-Host "Technical details:"
+    Write-Host ("  Portrait ID: {0}" -f $portraitId)
+    Write-Host ("  DDS: {0}" -f $ddsPath)
+}
+
+foreach ($k in ($protectedDds.Keys | Sort-Object)) {
+    if ($null -eq $protectedDds[$k]) { continue }
+    $p = Join-Path $paths.DdsDir $k
+    $after = (Get-FileHash -LiteralPath $p -Algorithm SHA256).Hash
+    if ($after -ne $protectedDds[$k]) {
+        throw "Protected DDS changed unexpectedly."
+    }
+}
+
+Exit-SdTool 0
+return
+</file>
+
+<file path="tools/portrait-xenotypes.ps1">
+# Stellar Xeno — Phase 7: Xenotype catalog (isolated mapping)
+# Dot-source from portrait-register.ps1 / portrait-pipeline.ps1 / portrait-intake.ps1.
+# Vanilla category keys / species_class / set lists inspected from Stellaris 4.4.x
+# common/portrait_categories/00_portrait_categories.txt (read-only).
+#
+# FilenameAbbr is for canonical PNG names only (dogNN_name_<abbr>_stellaris.png).
+# It is NOT a Stellaris species_class and must never be used as a portrait ID.
+
+function Get-PortraitXenotypeCatalog {
+    # Order = console menu order. DisplayName is user-facing; Ids/classes are internal.
+    return @(
+        [PSCustomObject]@{
+            Id              = "mammalian"
+            DisplayName     = "Mammalian"
+            FilenameAbbr    = "mam"
+            CategoryKey     = "mammalians"
+            SpeciesClass    = "MAM"
+            SetName         = "sd_static_test"          # historical / existing set — do not rename
+            GreetingSound   = "mammalian_01_greetings"
+            VanillaSets     = @("mammalians", "cybernetic_mammalians", "biogenesis_mammalians", "psionic_mammalians")
+        }
+        [PSCustomObject]@{
+            Id              = "avian"
+            DisplayName     = "Avian"
+            FilenameAbbr    = "avi"
+            CategoryKey     = "avians"
+            SpeciesClass    = "AVI"
+            SetName         = "sd_static_test_avi"
+            GreetingSound   = "avian_01_greetings"
+            VanillaSets     = @("avians", "cybernetic_avians", "synthetic_avians", "biogenesis_avians", "psionic_avians")
+        }
+        [PSCustomObject]@{
+            Id              = "reptilian"
+            DisplayName     = "Reptilian"
+            FilenameAbbr    = "rep"
+            CategoryKey     = "reptilians"
+            SpeciesClass    = "REP"
+            SetName         = "sd_static_test_rep"
+            GreetingSound   = "reptilian_01_greetings"
+            VanillaSets     = @("reptilians", "cybernetic_reptilians", "biogenesis_reptilians", "pdx_signup_reptilian")
+        }
+        [PSCustomObject]@{
+            # User-facing label is Amphibian; Stellaris class remains AQUATIC.
+            Id              = "aquatic"
+            DisplayName     = "Amphibian"
+            FilenameAbbr    = "amp"
+            CategoryKey     = "aquatics"
+            SpeciesClass    = "AQUATIC"
+            SetName         = "sd_static_test_aquatic"
+            GreetingSound   = "aqu_portrait_01"
+            VanillaSets     = @("aquatics", "synthetic_aquatics", "biogenesis_aquatic", "psionic_aquatics")
+        }
+        [PSCustomObject]@{
+            Id              = "arthropoid"
+            DisplayName     = "Arthropoid"
+            FilenameAbbr    = "art"
+            CategoryKey     = "arthropoids"
+            SpeciesClass    = "ART"
+            SetName         = "sd_static_test_art"
+            GreetingSound   = "arthropoid_01_greetings"
+            VanillaSets     = @("arthropoids", "cybernetic_arthropoids", "synthetic_arthropoids", "biogenesis_arthropoids", "psionic_arthropoids")
+        }
+        [PSCustomObject]@{
+            Id              = "molluscoid"
+            DisplayName     = "Molluscoid"
+            FilenameAbbr    = "mol"
+            CategoryKey     = "molluscoids"
+            SpeciesClass    = "MOL"
+            SetName         = "sd_static_test_mol"
+            GreetingSound   = "molluscoid_01_greetings"
+            VanillaSets     = @("molluscoids", "synthetic_molluscoids", "ep9_exclusive_molluscoid", "biogenesis_molluscoids", "psionic_molluscoids")
+        }
+        [PSCustomObject]@{
+            Id              = "fungoid"
+            DisplayName     = "Fungoid"
+            FilenameAbbr    = "fun"
+            CategoryKey     = "fungoids"
+            SpeciesClass    = "FUN"
+            SetName         = "sd_static_test_fun"
+            GreetingSound   = "fungoid_01_greetings"
+            VanillaSets     = @("fungoids", "cybernetic_fungoids", "psionic_fungoids")
+        }
+        [PSCustomObject]@{
+            Id              = "plantoid"
+            DisplayName     = "Plantoid"
+            FilenameAbbr    = "pla"
+            CategoryKey     = "plantoids"
+            SpeciesClass    = "PLANT"
+            SetName         = "sd_static_test_plant"
+            GreetingSound   = "plantoid_greetings"
+            VanillaSets     = @("plantoids", "biogenesis_plantoids")
+        }
+        [PSCustomObject]@{
+            Id              = "lithoid"
+            DisplayName     = "Lithoid"
+            FilenameAbbr    = "lit"
+            CategoryKey     = "lithoids"
+            SpeciesClass    = "LITHOID"
+            SetName         = "sd_static_test_lithoid"
+            GreetingSound   = "lithoid_portrait_1_golem"
+            VanillaSets     = @("lithoids")
+        }
+        [PSCustomObject]@{
+            Id              = "necroid"
+            DisplayName     = "Necroid"
+            FilenameAbbr    = "nec"
+            CategoryKey     = "necroids"
+            SpeciesClass    = "NECROID"
+            SetName         = "sd_static_test_necroid"
+            GreetingSound   = "necroid_portrait_01_boneworshipper"
+            VanillaSets     = @("necroids")
+        }
+        [PSCustomObject]@{
+            Id              = "machine"
+            DisplayName     = "Machine"
+            FilenameAbbr    = "mac"
+            CategoryKey     = "machines"
+            SpeciesClass    = "MACHINE"
+            SetName         = "sd_static_test_machine"
+            GreetingSound   = "robot_mammalian_greetings"
+            VanillaSets     = @("machines", "biogenesis_machines", "psionic_machines")
+        }
+        [PSCustomObject]@{
+            # Verified from Stellaris 4.4.x:
+            #   portrait_categories: toxoids { name = TOX; sets = { toxoids } }
+            #   portrait_sets: toxoids { species_class = TOX }
+            #   species_classes: TOX = { ... }
+            #   greeting example: tox_portrait_01
+            Id              = "toxoid"
+            DisplayName     = "Toxoid"
+            FilenameAbbr    = "tox"
+            CategoryKey     = "toxoids"
+            SpeciesClass    = "TOX"
+            SetName         = "sd_static_test_tox"
+            GreetingSound   = "tox_portrait_01"
+            VanillaSets     = @("toxoids")
+        }
+    )
+}
+
+function Resolve-PortraitXenotype {
+    param(
+        [AllowEmptyString()]
+        [string]$Selection = ""
+    )
+
+    if ([string]::IsNullOrWhiteSpace($Selection)) {
+        return $null
+    }
+
+    $catalog = @(Get-PortraitXenotypeCatalog)
+    $raw = $Selection.Trim()
+
+    # Numeric menu index (1-based)
+    $num = 0
+    if ([int]::TryParse($raw, [ref]$num)) {
+        if ($num -ge 1 -and $num -le $catalog.Count) {
+            return $catalog[$num - 1]
+        }
+        return $null
+    }
+
+    $lower = $raw.ToLowerInvariant()
+    # Friendly aliases (user-facing Amphibian == internal aquatic)
+    if ($lower -eq "amphibian" -or $lower -eq "aquatic") {
+        return ($catalog | Where-Object { $_.Id -eq "aquatic" } | Select-Object -First 1)
+    }
+
+    foreach ($x in $catalog) {
+        if ($x.Id -eq $lower -or
+            $x.DisplayName.ToLowerInvariant() -eq $lower -or
+            $x.FilenameAbbr -eq $lower) {
+            return $x
+        }
+    }
+    return $null
+}
+
+function Read-PortraitXenotypeArrowMenu {
+    param(
+        [object[]]$Catalog,
+        [string]$PortraitDisplayName = ""
+    )
+
+    Write-Host ""
+    Write-Host "Which Stellaris species type should this portrait belong to?"
+    Write-Host "This determines which Stellaris species category the portrait will appear under."
+    $up = [char]0x2191
+    $down = [char]0x2193
+    Write-Host ("Use {0} / {1} to choose, then press Enter." -f $up, $down)
+    Write-Host ""
+
+    $selected = 0
+    $menuTop = [Console]::CursorTop
+    $menuLines = $Catalog.Count
+    $prevVisible = [Console]::CursorVisible
+    [Console]::CursorVisible = $false
+    $esc = [char]27
+
+    function Move-CursorToMenuTop {
+        try {
+            if ($menuTop -ge 0 -and $menuTop -lt [Console]::BufferHeight) {
+                [Console]::SetCursorPosition(0, $menuTop)
+                return $true
+            }
+        } catch { }
+        try {
+            [Console]::CursorTop = $menuTop
+            [Console]::CursorLeft = 0
+            return $true
+        } catch { }
+        # Absolute reposition failed (scrolled buffer). Move up relatively via VT.
+        try {
+            $cur = [Console]::CursorTop
+            if ($cur -ge $menuLines) {
+                Write-Host -NoNewline ("{0}[{1}A" -f $esc, $menuLines)
+                return $true
+            }
+        } catch { }
+        return $false
+    }
+
+    function Write-XenoMenu {
+        param([int]$SelectedIndex)
+
+        $repositioned = Move-CursorToMenuTop
+        if (-not $repositioned) {
+            # Last resort: do not print a second copy; skip redraw.
+            return
+        }
+
+        for ($i = 0; $i -lt $Catalog.Count; $i++) {
+            Write-Host -NoNewline ("{0}[2K" -f $esc)
+            $label = $Catalog[$i].DisplayName
+            if ($i -eq $SelectedIndex) {
+                Write-Host (("  > {0}" -f $label).PadRight(40)) -ForegroundColor Cyan
+            } else {
+                Write-Host (("    {0}" -f $label).PadRight(40))
+            }
+        }
+    }
+
+    try {
+        Write-XenoMenu -SelectedIndex $selected
+        while ($true) {
+            $key = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+            # Ignore key-up / repeat noise if present.
+            if ($null -ne $key.PSObject.Properties["KeyDown"] -and -not $key.KeyDown) {
+                continue
+            }
+            switch ($key.VirtualKeyCode) {
+                38 { # Up arrow
+                    $selected = ($selected - 1)
+                    if ($selected -lt 0) { $selected = $Catalog.Count - 1 }
+                    Write-XenoMenu -SelectedIndex $selected
+                }
+                40 { # Down arrow
+                    $selected = ($selected + 1) % $Catalog.Count
+                    Write-XenoMenu -SelectedIndex $selected
+                }
+                13 { # Enter
+                    try {
+                        [Console]::CursorTop = $menuTop + $menuLines
+                        [Console]::CursorLeft = 0
+                    } catch {
+                        Write-Host ""
+                    }
+                    $check = [char]0x2713
+                    Write-Host ("{0} {1} selected." -f $check, $Catalog[$selected].DisplayName)
+                    return $Catalog[$selected]
+                }
+            }
+        }
+    } finally {
+        [Console]::CursorVisible = $prevVisible
+    }
+}
+
+function Read-PortraitXenotypeInteractive {
+    param(
+        [string]$PortraitDisplayName = ""
+    )
+
+    $catalog = @(Get-PortraitXenotypeCatalog)
+
+    # Normal console: arrow-key menu. Redirected stdin (scripted tests): numbered fallback.
+    $canUseArrowMenu = $false
+    try {
+        $canUseArrowMenu = (
+            -not [Console]::IsInputRedirected -and
+            $Host.Name -eq "ConsoleHost" -and
+            $null -ne $Host.UI -and
+            $null -ne $Host.UI.RawUI
+        )
+    } catch {
+        $canUseArrowMenu = $false
+    }
+
+    if ($canUseArrowMenu) {
+        return Read-PortraitXenotypeArrowMenu -Catalog $catalog -PortraitDisplayName $PortraitDisplayName
+    }
+
+    Write-Host ""
+    Write-Host "Which Stellaris species type should this portrait belong to?"
+    Write-Host "This determines which Stellaris species category the portrait will appear under."
+    Write-Host ""
+    for ($i = 0; $i -lt $catalog.Count; $i++) {
+        Write-Host ("  {0}. {1}" -f ($i + 1), $catalog[$i].DisplayName)
+    }
+    Write-Host ""
+
+    while ($true) {
+        Write-Host -NoNewline "> "
+        $entered = $null
+        if ([Console]::IsInputRedirected) {
+            $entered = [Console]::In.ReadLine()
+            if ($null -eq $entered) {
+                throw "No species type was chosen (input closed before a selection was made)."
+            }
+            Write-Host $entered
+        } else {
+            $entered = Read-Host
+        }
+
+        if ([string]::IsNullOrWhiteSpace($entered)) {
+            Write-Host "Please choose a species type from the list (1-$($catalog.Count))."
+            continue
+        }
+
+        $resolved = Resolve-PortraitXenotype -Selection $entered
+        if ($null -ne $resolved) {
+            $check = [char]0x2713
+            Write-Host ("{0} {1} selected." -f $check, $resolved.DisplayName)
+            return $resolved
+        }
+
+        Write-Host "That choice was not recognized."
+        Write-Host "Please enter a number from the list (1-$($catalog.Count))."
+    }
+}
+</file>
+
 <file path="docs/portrait-generation-prompts.md">
 # Stellar Xeno — Portrait Generation Prompt Library
 
@@ -1317,7 +2774,7 @@ Related:
 
 Full project-wide standard: [portrait-variety-standard.md](portrait-variety-standard.md).
 
-Universal rules are embedded in every documented prompt under **UNIVERSAL COMPOSITION VARIETY** (and Machine/Toxoid composition sections). Xenotype transforms remain specific to each prompt body.
+Universal rules are embedded in every documented prompt under **UNIVERSAL COMPOSITION VARIETY** (and Mammalian/Machine/Toxoid composition sections). Xenotype transforms remain specific to each prompt body.
 
 ---
 
@@ -1325,7 +2782,7 @@ Universal rules are embedded in every documented prompt under **UNIVERSAL COMPOS
 
 Most biological xenotype prompt bodies (Avian–Necroid) were originally extracted from the ChatGPT export `Stellaris.html`, then **updated** for the Universal Portrait Variety Standard (flexible framing, anti-template, individual variety).
 
-**Machine** and **Toxoid** Universal prompts were **CREATED** for this project (they are not export recoveries). Do not treat them as pre-existing source-attachment text.
+**Mammalian**, **Machine**, and **Toxoid** Universal prompts were **CREATED** for this project (they are not export recoveries). Do not treat them as pre-existing source-attachment text.
 
 ---
 
@@ -1344,7 +2801,7 @@ Most biological xenotype prompt bodies (Avian–Necroid) were originally extract
 
 | # | Xenotype | Prompt status | Pipeline selector |
 |---|----------|---------------|-------------------|
-| 1 | Mammalian | **ABSENT** (human→Mammalian body still missing; dog-development history in portrait-prompts.md) | **IMPLEMENTED** |
+| 1 | Mammalian | **CREATED** — Universal Mammalian Xenotype (anti-humanoid morphology override) | **IMPLEMENTED** |
 | 2 | Avian | **DOCUMENTED** + variety standard | **IMPLEMENTED** |
 | 3 | Reptilian | **DOCUMENTED** + variety standard | **IMPLEMENTED** |
 | 4 | Amphibian | **DOCUMENTED** + variety standard | **IMPLEMENTED** (display Amphibian → aquatic) |
@@ -1359,9 +2816,9 @@ Most biological xenotype prompt bodies (Avian–Necroid) were originally extract
 
 ### Notes
 
-1. Machine and Toxoid prompts are **new** project-standard entries.
+1. Mammalian, Machine, and Toxoid prompts are **new** project-standard entries.
 2. Existing Avian–Necroid prompts keep their xenotype transformation rules; rigid ~91–92% framing was replaced with flexible ~80–95% framing and composition variety.
-3. Mammalian remains absent as a Universal human→Mammalian library body; historical dog Mammalian development prompts live in [portrait-prompts.md](portrait-prompts.md).
+3. Historical dog Mammalian development prompts remain in [portrait-prompts.md](portrait-prompts.md); prefer the Universal Mammalian prompt in this library for new generation work.
 
 ---
 
@@ -1427,15 +2884,518 @@ Universal composition / anti-template / individual-variety language is shared ac
 ---
 ## 1. Mammalian
 
-**Status:** ABSENT
+**Status:** CREATED (project standard — Universal Mammalian Xenotype)  
+**Pipeline selector:** IMPLEMENTED  
+**Note:** This prompt was **created for Stellar Xeno**. It did not exist as a full body in the original ChatGPT export. It explicitly prioritizes mammalian biological transformation over human anatomy so human/humanoid references cannot survive as “human + fur.”
 
-A full **Universal Mammalian** xenotype prompt body is not yet present in this library (the original export referenced Mammalian as `1/11` but did not include the prompt text).
+```text
+STELLAR XENO — UNIVERSAL MAMMALIAN XENOTYPE
 
-Until a Universal Mammalian prompt is authored, do not invent one here from incomplete narration.
+Using the provided photograph or creature portrait as the exact identity
+reference, reinterpret this subject as a finished Stellaris-style
+MAMMALIAN species portrait.
 
-Historical **dog / Mammalian development** prompts (Piglet, framing, transparency) remain in [portrait-prompts.md](portrait-prompts.md). Those development artifacts should follow the same variety standard when reused: **consistent art direction, variable individual composition**.
+This is an artwork-generation task.
 
-When Mammalian is added, it must include the same UNIVERSAL COMPOSITION VARIETY / identity / transparency rules as Machine, Toxoid, and the other documented prompts.
+The reference determines individual identity and recognizable character.
+The Mammalian xenotype determines biology and anatomy.
+
+==================================================
+PRIORITY ORDER
+==================================================
+
+Follow this priority order strictly:
+
+1. Mammalian biological identity
+2. Reference species identity (if the reference is already a mammal/creature)
+3. Individual recognizability (personality, expression, character)
+4. Stellaris art direction
+5. Natural composition variety
+6. Individual variation
+7. Surface / material detail
+
+Do NOT allow identity preservation to override mammalian biology.
+Do NOT allow composition, clothing, hairstyle, or human facial features
+to override mammalian anatomy.
+
+The biological xenotype transformation has priority over human morphology.
+
+==================================================
+PRESERVE THE PERSON WITHOUT PRESERVING THE HUMAN
+==================================================
+
+"Preserve the identity of the reference" does NOT mean:
+"preserve the human face and put fur, animal ears, or a muzzle onto it."
+
+It means:
+Preserve the individual identity and recognizable characteristics while
+fundamentally remapping the subject's anatomy into a mammalian species.
+
+Preserve:
+
+- recognizable personality
+- expression
+- coloration
+- distinctive markings (where they can translate naturally)
+- general visual character
+- age / maturity
+- apparent build
+- emotional presence
+- gaze character
+- overall presence
+- recognizable individual traits
+
+Do NOT preserve human anatomy when that anatomy conflicts with Mammalian
+identity.
+
+Think:
+
+"the same individual as an alien mammal"
+
+NOT:
+
+"the same human wearing mammalian features."
+
+The viewer should recognize the reference's personality while being
+unable to mistake the final anatomy for a human.
+
+==================================================
+MAMMALIAN MORPHOLOGY OVERRIDE
+==================================================
+
+The Mammalian transformation MUST override humanoid anatomy.
+
+If the supplied reference is a human or humanoid person, do NOT preserve
+the human facial anatomy simply because it is recognizable.
+
+The reference person's identity must be translated INTO a mammalian
+species.
+
+Do NOT create:
+
+- a human face covered in fur
+- a human with animal ears
+- a human with a painted-on muzzle
+- a human with a black animal nose but human lips
+- a human skull with a fur texture
+- a human jaw with animal teeth
+- a human face with cosmetic animal features
+- a furry human
+- an anthropomorphic human wearing an animal mask
+- a human-shaped creature with superficial mammalian traits
+
+The result must NOT read as:
+
+"human + mammal features."
+
+It must read as:
+
+"mammalian alien species."
+
+==================================================
+FACE-FIRST TRANSFORMATION
+==================================================
+
+The face is the highest-priority area for Mammalian transformation.
+
+The generated head must be anatomically mammalian rather than human.
+
+Transform the reference into a believable animal-derived head structure
+including, where appropriate:
+
+- species-appropriate skull shape
+- animal forehead structure
+- animal brow structure
+- species-appropriate eye placement
+- animal eye shape
+- pronounced muzzle / snout where appropriate
+- species-appropriate nose
+- animal mouth structure
+- animal jaw structure
+- animal cheek structure
+- species-appropriate ears
+- species-appropriate neck anatomy
+- species-appropriate facial musculature
+- mammalian fur covering the appropriate facial regions
+
+The exact anatomy must depend on the chosen mammalian species.
+
+Do NOT force every Mammalian into a dog, wolf, fox, cat, or generic
+furry humanoid.
+
+==================================================
+HUMAN ANATOMY THAT MUST NOT SURVIVE
+==================================================
+
+When the reference is human or strongly humanoid, actively replace the
+following rather than preserving them literally:
+
+- human nose bridge
+- human nose shape
+- human lips
+- human mouth proportions
+- human jaw proportions
+- human chin
+- human cheekbones
+- human forehead
+- human ear shape
+- human facial skin distribution
+- human hairline
+- human scalp / hair structure
+- human neck proportions
+- human facial symmetry
+- human head proportions
+
+These characteristics may influence the resulting individual design only
+indirectly. They must not remain recognizably human.
+
+Examples:
+
+- A human nose becomes a species-appropriate mammalian nose or muzzle.
+- Human lips become an animal mouth structure.
+- Human ears become species-appropriate mammalian ears.
+- Human hair becomes biologically integrated fur, mane, crest, or coat.
+
+This is a biological transformation, not cosmetic modification.
+
+==================================================
+MAMMALIAN SPECIES IDENTITY
+==================================================
+
+The output must visibly communicate mammalian biology before any
+secondary artistic details.
+
+Use recognizable mammalian characteristics appropriate to the reference:
+
+- fur
+- mammalian skin / fur transitions
+- animal eyes
+- animal ears
+- muzzle / snout
+- mammalian nose
+- mammalian jaw
+- animal facial musculature
+- species-appropriate teeth
+- species-appropriate neck and torso structure
+- species-appropriate body proportions
+
+The exact combination should depend on the reference.
+
+Examples:
+
+- A canine reference remains recognizably canine.
+- A feline reference remains recognizably feline.
+- A primate reference may retain primate-like anatomy, but must still be
+  unmistakably an alien mammalian species rather than a human.
+- An ungulate reference retains appropriate ungulate morphology.
+- A rodent reference retains appropriate rodent morphology.
+
+Do not collapse every mammalian reference into the same generic
+"furry alien."
+
+==================================================
+BODY MORPHOLOGY
+==================================================
+
+Do not limit the transformation to the head.
+
+When appropriate, transform:
+
+- neck
+- shoulders
+- torso
+- chest
+- arms
+- hands / paws
+- posture
+- body proportions
+- visible anatomy
+
+The result should have a coherent mammalian body plan.
+
+Do not create a human body with an animal head unless the reference
+species genuinely calls for a strongly humanoid mammalian morphology.
+Even then, the head and visible anatomy must remain clearly mammalian.
+
+==================================================
+FUR
+==================================================
+
+Fur should be biologically integrated into the mammalian anatomy.
+
+Prefer:
+
+- realistic fur direction
+- species-appropriate coat density
+- layered fur
+- natural coat patterns
+- believable fur around muzzle and ears
+- realistic material response
+- readable anatomy beneath the coat
+
+Avoid:
+
+- furry costume appearance
+- giant artificial fur masses
+- hair behaving like clothing
+- human hairstyles pasted onto an animal
+- plastic-looking fur
+- exaggerated 3D hair clumps
+
+If the reference has human hair, reinterpret its visual character as an
+appropriate mammalian coat, mane, crest, or fur pattern rather than
+preserving human hair literally.
+
+==================================================
+CLOTHING / ACCESSORIES
+==================================================
+
+If clothing or accessories are appropriate for the Stellaris portrait
+style, they are secondary.
+
+They must never become the primary identity of the portrait.
+
+Do not allow:
+
+- human clothing
+- hats
+- hairstyles
+- armor
+- accessories
+- makeup
+
+to preserve a human silhouette after the biological transformation.
+
+The viewer must recognize the species before recognizing clothing.
+
+==================================================
+STELLARIS MAMMALIAN VISUAL TARGET
+==================================================
+
+Use the visual language of Stellaris Mammalian species portraits.
+
+Target:
+
+- strongly animal-derived heads
+- recognizable mammalian anatomy
+- distinct muzzle / snout structures where appropriate
+- species-specific ears
+- animal eyes
+- fur as a biological surface
+- varied mammalian body proportions
+- intelligent alien presence
+- sophisticated sci-fi portrait rendering
+- believable species individuality
+
+The final design should feel like it belongs in the Stellaris Mammalian
+portrait roster.
+
+It should NOT look like:
+
+- a human fantasy character
+- a furry human
+- a cosplay character
+- a person wearing an animal mask
+- a human with cosmetic animal modifications
+
+==================================================
+HUMAN REFERENCE FAILURE TEST
+==================================================
+
+If the supplied reference is a photograph of a human, temporarily ignore
+the fact that the subject is human.
+
+Ask:
+
+"If I removed the reference photograph and only saw the generated
+portrait, would I immediately classify this as a mammalian alien species
+rather than a human?"
+
+If the answer is no, the transformation has failed.
+
+A successful result must pass all of these:
+
+1. The head is anatomically mammalian.
+2. The face is not human with fur.
+3. The eyes, nose, mouth, jaw, and ears are species-appropriate.
+4. The silhouette reads as an animal-derived species.
+5. The subject remains recognizable as the same individual in personality
+   and visual character.
+6. The final portrait belongs naturally in the Stellaris Mammalian
+   category.
+
+==================================================
+MAMMALIAN PORTRAIT STYLE
+==================================================
+
+Finished Stellaris species-selection portrait.
+
+Realistic high-detail science-fiction digital artwork.
+
+Sophisticated creature design.
+
+Detailed biological fur and materials.
+
+Controlled surface detail.
+
+Realistic lighting.
+
+Subtle rim lighting.
+
+Strong facial readability.
+
+Serious intelligent presence.
+
+Professional strategy-game concept art.
+
+Alien but believable.
+
+Not photorealistic wildlife photography.
+Not generic fantasy concept art.
+Not a furry cosplay portrait.
+Not a human with animal makeup.
+
+==================================================
+MAMMALIAN COMPOSITION
+==================================================
+
+==================================================
+UNIVERSAL COMPOSITION VARIETY
+==================================================
+
+Consistent art direction, variable individual composition.
+Same species identity + different individual portrait composition.
+
+Allow natural variation in:
+
+- head orientation
+- body orientation
+- head tilt
+- gaze direction
+- facial direction
+- posture
+- camera angle
+- crop distance
+- visible torso amount
+- horizontal position
+- vertical position
+- subject scale
+- asymmetry
+- relationship between head and body orientation
+
+Possible compositions include (possibilities, NOT a fixed rotation
+schedule):
+
+- mostly frontal
+- subtle 3/4 left
+- subtle 3/4 right
+- stronger 3/4 angle
+- slight side profile
+- body angled left while head faces viewer
+- body angled right while head faces viewer
+- head turned slightly away
+- head turned toward viewer while body is angled
+- subtle head tilt
+- subject slightly left of center
+- subject slightly right of center
+- closer facial composition
+- slightly wider bust composition
+
+Each portrait independently receives a natural composition appropriate
+to its reference. Do not cycle left/right/frontal across a roster.
+
+ANTI-TEMPLATE:
+Do not repeat centered frontal portraits, perfectly symmetrical poses,
+identical head placement, identical camera distance, identical torso
+exposure, identical gaze direction, or identical body orientation.
+Do not stage mugshot / identification-photo compositions.
+
+NATURAL VARIETY ONLY (not random cameras):
+Avoid extreme camera angles, dramatic perspective distortion, cropped
+faces, awkward anatomy, poses that obscure identity, excessive profile
+views, extreme zoom, and excessive negative space.
+
+INDIVIDUAL VARIETY:
+Allow subtle variation in expression, maturity, physical build, natural
+asymmetry, minor markings, scars, coloration, eye coloration/intensity,
+coat characteristics, and personality — subordinate to the reference
+species. Do not change fundamental anatomy into a different species.
+Target: slightly different individuals of the same mammalian species.
+
+Biological transformation rules above take priority over composition
+variety.
+
+FLEXIBLE FRAMING:
+Square portrait-bust suitable for Stellaris species selection.
+Subject generally occupies approximately 80–95% of the vertical frame
+with natural variation. Exact framing depends on anatomy and composition.
+Do not require perfect centering or identical head placement.
+
+==================================================
+MAMMALIAN TRANSPARENCY
+==================================================
+
+True RGBA transparency.
+
+The subject must remain opaque.
+
+Everything outside the subject must be transparent.
+
+Do NOT include:
+
+- scenery
+- environment
+- planet
+- stars
+- laboratory
+- floor
+- room
+- landscape
+- border
+- frame
+- text
+- logo
+- watermark
+- surrounding glow
+
+Clean transparent edges with no white, black, or colored halo.
+
+Do not replace the background with white, black, gray, or another color.
+The surrounding pixels must contain real transparency.
+
+==================================================
+FINAL MAMMALIAN VALIDATION
+==================================================
+
+The final result must satisfy all of the following:
+
+1. It is unmistakably mammalian.
+2. Its facial anatomy is non-human.
+3. It does NOT look like a human with fur or animal features added.
+4. The reference person's recognizable personality and individual
+   character survive the transformation.
+5. The resulting anatomy is biologically coherent.
+6. The portrait feels like a legitimate Stellaris Mammalian species
+   portrait.
+7. Another generation can produce a different individual of the same
+   mammalian species without reverting to humanoid anatomy.
+
+The desired reaction is:
+
+"That is clearly a mammalian alien."
+
+Not:
+
+"That is a human with animal features."
+
+And when comparing multiple generations:
+
+"Those are clearly the same mammalian species, but different
+individuals."
+
+Do NOT create a DDS.
+Do NOT modify Stellaris files.
+```
 
 ---
 ## 2. Avian
@@ -5135,1746 +7095,19 @@ Do NOT modify Stellaris files.
 ---
 ## Future work (documentation only)
 
-1. Obtain and document the missing **Mammalian** human→xenotype generation prompt from authoritative source material (or author a Universal Mammalian prompt in the same style as Machine/Toxoid).
-2. Keep prompt library and [portrait-variety-standard.md](portrait-variety-standard.md) aligned when xenotype transforms change.
-3. Dog-development framing history in [portrait-prompts.md](portrait-prompts.md) remains historical; prefer this library + variety standard for new generation work.
+1. Keep prompt library and [portrait-variety-standard.md](portrait-variety-standard.md) aligned when xenotype transforms change.
+2. Dog-development framing history in [portrait-prompts.md](portrait-prompts.md) remains historical; prefer this library + variety standard for new generation work.
 
 ---
 
 ## Validation checklist (prompt system)
 
+- [x] Mammalian prompt **CREATED** — Universal Mammalian with morphology override / anti-“human + fur”
 - [x] Machine prompt **CREATED** (did not exist previously in this library as a full body)
 - [x] Toxoid prompt **CREATED** to Universal Toxoid standard (coherent with Machine + variety system)
 - [x] Universal composition variety applied to documented xenotype prompts
 - [x] Rigid ~91–92% occupancy guidance replaced with flexible ~80–95% framing
 - [x] Universal vs xenotype-specific rules documented in [portrait-variety-standard.md](portrait-variety-standard.md)
-</file>
-
-<file path="experiment/sd_static_portrait_test/common/portrait_sets/00_sd_static_test_portrait_sets.txt">
-##############################################################
-### SD Static Portrait Test - portrait sets (EXPERIMENT ONLY)
-###
-### Pattern from vanilla common/portrait_sets/00_portrait_sets.txt:
-### - species_class = <CLASS>
-### - portraits = { "id" }
-### - non_randomized_portraits so random AI empires avoid this test art
-##############################################################
-
-sd_static_test = {
-	species_class = MAM
-
-	portraits = {
-		"sd_dog_piglet"
-		"sd_dog_02"
-		"sd_dog_angus"
-		"sd_dog_bruce"
-		"sd_dog_cedar"
-		"sd_dog_liberty"
-		"sd_dog_maple"
-	}
-
-	non_randomized_portraits = {
-		"sd_dog_piglet"
-		"sd_dog_02"
-		"sd_dog_angus"
-		"sd_dog_bruce"
-		"sd_dog_cedar"
-		"sd_dog_liberty"
-		"sd_dog_maple"
-	}
-}
-
-sd_static_test_avi = {
-	species_class = AVI
-
-	portraits = {
-		"sd_dog_sparrow"
-		"sd_dog_zaldrin"
-	}
-
-	non_randomized_portraits = {
-		"sd_dog_sparrow"
-		"sd_dog_zaldrin"
-	}
-}
-
-sd_static_test_rep = {
-	species_class = REP
-
-	portraits = {
-		"sd_dog_lemon"
-		"sd_dog_pepper"
-		"sd_dog_nova"
-	}
-
-	non_randomized_portraits = {
-		"sd_dog_lemon"
-		"sd_dog_pepper"
-		"sd_dog_nova"
-	}
-}
-</file>
-
-<file path="experiment/sd_static_portrait_test/gfx/portraits/portraits/00_sd_static_test_portraits.txt">
-##############################################################
-### SD Static Portrait Test (EXPERIMENT ONLY)
-###
-### Portraits:
-###   sd_dog_piglet - Piglet
-###   sd_dog_02 - Oakley
-###   sd_dog_angus - Angus
-###   sd_dog_bruce - Bruce
-###   sd_dog_cedar - Cedar
-###   sd_dog_liberty - Liberty
-###   sd_dog_sparrow - Sparrow
-###   sd_dog_maple - Maple
-###   sd_dog_lemon - Lemon
-###   sd_dog_pepper - Pepper
-###   sd_dog_nova - Nova
-###   sd_dog_zaldrin - Zaldrin
-##############################################################
-
-portraits = {
-	sd_dog_piglet = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_piglet.dds"
-	}
-
-	sd_dog_02 = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_02.dds"
-	}
-
-	sd_dog_angus = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_angus.dds"
-	}
-
-	sd_dog_bruce = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_bruce.dds"
-	}
-
-	sd_dog_cedar = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_cedar.dds"
-	}
-
-	sd_dog_liberty = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_liberty.dds"
-	}
-
-	sd_dog_sparrow = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "avian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_sparrow.dds"
-	}
-
-	sd_dog_maple = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_maple.dds"
-	}
-
-	sd_dog_lemon = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "reptilian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_lemon.dds"
-	}
-
-	sd_dog_pepper = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "reptilian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_pepper.dds"
-	}
-
-	sd_dog_nova = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "reptilian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_nova.dds"
-	}
-
-	sd_dog_zaldrin = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "avian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_zaldrin.dds"
-	}
-}
-</file>
-
-<file path="experiment/sd_static_portrait_test/README.md">
-# SD Static Portrait Test (experiment)
-
-Working proof-of-concept for **Stellar Xeno** static species portraits on Stellaris **Pegasus v4.4.6**.
-
-**CONFIRMED:** `texturefile` static portraits appear in Mammalian species creation.
-
-Current portraits: `sd_dog_piglet` (Piglet), `sd_dog_02` (Oakley), `sd_dog_angus` (Angus).
-
-Project docs (authoritative):
-
-- `../../PROJECT_PLAN.md`
-- `../../docs/portrait-workflow.md`
-- `../../docs/development-roadmap.md`
-- `../../docs/portrait-testing.md`
-
-## Enable in the launcher
-
-1. Ensure `Documents\Paradox Interactive\Stellaris\mod\` exists.
-2. Point a `.mod` descriptor `path=` at this folder (forward slashes).
-3. Enable the mod in the Stellaris launcher.
-4. Empire creation → **Mammalian** → select a dog portrait.
-
-## Important
-
-- Do not modify the vanilla Stellaris installation.
-- Piglet and Oakley are protected regression fixtures unless a task explicitly changes them.
-- Full UI compatibility beyond species creation is **not** fully verified yet.
-
-## Revert
-
-Disable/delete the launcher `.mod` descriptor and/or this folder. No vanilla files need restoring.
-</file>
-
-<file path="mod/stellar_dogos/common/portrait_categories/zzz_sd_static_test_portrait_categories.txt">
-##############################################################
-### Stellar Xeno - portrait category overrides
-###
-### Each block REPLACES the vanilla category of the same key so
-### we can append one mod set with minimal change.
-### Vanilla set lists were copied from Stellaris 4.4.x.
-##############################################################
-
-mammalians = {
-	name = MAM
-
-	sets = {
-		mammalians
-		cybernetic_mammalians
-		biogenesis_mammalians
-		psionic_mammalians
-		sd_static_test
-	}
-}
-
-avians = {
-	name = AVI
-
-	sets = {
-		avians
-		cybernetic_avians
-		synthetic_avians
-		biogenesis_avians
-		psionic_avians
-		sd_static_test_avi
-	}
-}
-
-reptilians = {
-	name = REP
-
-	sets = {
-		reptilians
-		cybernetic_reptilians
-		biogenesis_reptilians
-		pdx_signup_reptilian
-		sd_static_test_rep
-	}
-}
-
-fungoids = {
-	name = FUN
-
-	sets = {
-		fungoids
-		cybernetic_fungoids
-		psionic_fungoids
-		sd_static_test_fun
-	}
-}
-
-aquatics = {
-	name = AQUATIC
-
-	sets = {
-		aquatics
-		synthetic_aquatics
-		biogenesis_aquatic
-		psionic_aquatics
-		sd_static_test_aquatic
-	}
-}
-</file>
-
-<file path="mod/stellar_dogos/common/portrait_sets/00_sd_static_test_portrait_sets.txt">
-##############################################################
-### Stellar Xeno - portrait sets
-###
-### Pattern from vanilla common/portrait_sets/00_portrait_sets.txt:
-### - species_class = CLASS
-### - portraits = { "id" }
-### - non_randomized_portraits so random AI empires avoid this art
-##############################################################
-
-sd_static_test = {
-	species_class = MAM
-
-	portraits = {
-		"sd_dog_piglet"
-		"sd_dog_02"
-		"sd_dog_angus"
-		"sd_dog_bruce"
-		"sd_dog_cedar"
-		"sd_dog_liberty"
-		"sd_dog_maple"
-		"sd_dog_galian"
-	}
-
-	non_randomized_portraits = {
-		"sd_dog_piglet"
-		"sd_dog_02"
-		"sd_dog_angus"
-		"sd_dog_bruce"
-		"sd_dog_cedar"
-		"sd_dog_liberty"
-		"sd_dog_maple"
-		"sd_dog_galian"
-	}
-}
-
-sd_static_test_avi = {
-	species_class = AVI
-
-	portraits = {
-		"sd_dog_sparrow"
-		"sd_dog_zaldrin"
-	}
-
-	non_randomized_portraits = {
-		"sd_dog_sparrow"
-		"sd_dog_zaldrin"
-	}
-}
-
-sd_static_test_rep = {
-	species_class = REP
-
-	portraits = {
-		"sd_dog_lemon"
-		"sd_dog_pepper"
-		"sd_dog_nova"
-	}
-
-	non_randomized_portraits = {
-		"sd_dog_lemon"
-		"sd_dog_pepper"
-		"sd_dog_nova"
-	}
-}
-
-sd_static_test_fun = {
-	species_class = FUN
-
-	portraits = {
-		"sd_dog_blitz"
-	}
-
-	non_randomized_portraits = {
-		"sd_dog_blitz"
-	}
-}
-
-sd_static_test_aquatic = {
-	species_class = AQUATIC
-
-	portraits = {
-		"sd_dog_slosh"
-	}
-
-	non_randomized_portraits = {
-		"sd_dog_slosh"
-	}
-}
-</file>
-
-<file path="mod/stellar_dogos/gfx/portraits/portraits/00_sd_static_test_portraits.txt">
-##############################################################
-### Stellar Xeno - static portrait definitions
-###
-### Portraits:
-###   sd_dog_piglet - Piglet
-###   sd_dog_02 - Oakley
-###   sd_dog_angus - Angus
-###   sd_dog_bruce - Bruce
-###   sd_dog_cedar - Cedar
-###   sd_dog_liberty - Liberty
-###   sd_dog_sparrow - Sparrow
-###   sd_dog_maple - Maple
-###   sd_dog_lemon - Lemon
-###   sd_dog_pepper - Pepper
-###   sd_dog_nova - Nova
-###   sd_dog_zaldrin - Zaldrin
-###   sd_dog_blitz - Blitz
-###   sd_dog_galian - Galian
-###   sd_dog_slosh - Slosh
-##############################################################
-
-portraits = {
-	sd_dog_piglet = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_piglet.dds"
-	}
-
-	sd_dog_02 = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_02.dds"
-	}
-
-	sd_dog_angus = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_angus.dds"
-	}
-
-	sd_dog_bruce = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_bruce.dds"
-	}
-
-	sd_dog_cedar = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_cedar.dds"
-	}
-
-	sd_dog_liberty = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_liberty.dds"
-	}
-
-	sd_dog_sparrow = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "avian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_sparrow.dds"
-	}
-
-	sd_dog_maple = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_maple.dds"
-	}
-
-	sd_dog_lemon = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "reptilian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_lemon.dds"
-	}
-
-	sd_dog_pepper = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "reptilian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_pepper.dds"
-	}
-
-	sd_dog_nova = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "reptilian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_nova.dds"
-	}
-
-	sd_dog_zaldrin = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "avian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_zaldrin.dds"
-	}
-
-	sd_dog_blitz = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "fungoid_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_blitz.dds"
-	}
-
-	sd_dog_galian = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "mammalian_01_greetings"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_galian.dds"
-	}
-
-	sd_dog_slosh = {
-		clothes_selector = "no_texture"
-		attachment_selector = "no_texture"
-		greeting_sound = "aqu_portrait_01"
-		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_slosh.dds"
-	}
-
-
-}
-</file>
-
-<file path="mod/stellar_dogos/descriptor.mod">
-version="0.1.0"
-tags={
-	"Graphics"
-	"Species"
-}
-name="Stellar Xeno"
-picture="thumbnail.png"
-supported_version="v4.4.*"
-remote_file_id="3780940726"
-</file>
-
-<file path="tools/portrait-paths.ps1">
-# Shared path ownership for Stellar Xeno tools.
-# Canonical production Stellaris mod output: mod/stellar_dogos/
-# Experiment copy remains at experiment/sd_static_portrait_test/ as regression/reference.
-
-# Captured when this file is dot-sourced (not when a caller later invokes helpers).
-$script:SdPathsScriptDir = Split-Path -Parent $PSCommandPath
-
-function Get-SdToolsDir {
-    return $script:SdPathsScriptDir
-}
-
-function Get-SdRepoRoot {
-    return (Resolve-Path (Join-Path (Get-SdToolsDir) "..")).Path
-}
-
-function Get-SdProductionModRelativePath {
-    return "mod\stellar_dogos"
-}
-
-function Get-SdExperimentModRelativePath {
-    # Intentional reference/regression path — not the production write target.
-    return "experiment\sd_static_portrait_test"
-}
-
-function Get-SdModRoot {
-    param(
-        [string]$RepoRoot = "",
-        # Production is the canonical output. Experiment is reference-only.
-        [ValidateSet("Production", "Experiment")]
-        [string]$Which = "Production"
-    )
-
-    if ([string]::IsNullOrWhiteSpace($RepoRoot)) {
-        $RepoRoot = Get-SdRepoRoot
-    }
-
-    $rel = if ($Which -eq "Production") {
-        Get-SdProductionModRelativePath
-    } else {
-        Get-SdExperimentModRelativePath
-    }
-
-    return (Join-Path $RepoRoot $rel)
-}
-
-function Get-SdModPaths {
-    param(
-        [string]$RepoRoot = "",
-        [ValidateSet("Production", "Experiment")]
-        [string]$Which = "Production"
-    )
-
-    if ([string]::IsNullOrWhiteSpace($RepoRoot)) {
-        $RepoRoot = Get-SdRepoRoot
-    }
-
-    $rel = if ($Which -eq "Production") {
-        Get-SdProductionModRelativePath
-    } else {
-        Get-SdExperimentModRelativePath
-    }
-
-    $root = Join-Path $RepoRoot $rel
-    return [PSCustomObject]@{
-        Which        = $Which
-        ModRoot      = $root
-        DdsDir       = Join-Path $root "gfx\models\portraits\sd_static_test"
-        PortraitsTxt = Join-Path $root "gfx\portraits\portraits\00_sd_static_test_portraits.txt"
-        SetTxt       = Join-Path $root "common\portrait_sets\00_sd_static_test_portrait_sets.txt"
-        CategoryTxt  = Join-Path $root "common\portrait_categories\zzz_sd_static_test_portrait_categories.txt"
-        Descriptor   = Join-Path $root "descriptor.mod"
-        DdsRelPrefix = (Join-Path $rel "gfx\models\portraits\sd_static_test")
-    }
-}
-
-function Get-SdRegisteredPortraitIds {
-    param(
-        [string]$PortraitsTxt = ""
-    )
-
-    if ([string]::IsNullOrWhiteSpace($PortraitsTxt)) {
-        $PortraitsTxt = (Get-SdModPaths -Which Production).PortraitsTxt
-    }
-
-    if (-not (Test-Path -LiteralPath $PortraitsTxt)) {
-        throw ("Portrait definitions missing: {0}" -f $PortraitsTxt)
-    }
-
-    $text = [IO.File]::ReadAllText($PortraitsTxt)
-    $ids = New-Object System.Collections.Generic.List[string]
-    foreach ($m in [regex]::Matches($text, '(?m)^\s*(sd_dog_[A-Za-z0-9_]+)\s*=')) {
-        $id = $m.Groups[1].Value
-        if (-not $ids.Contains($id)) { [void]$ids.Add($id) }
-    }
-    return @($ids)
-}
-
-function Get-SdProtectedPortraitIds {
-    param(
-        [string]$PortraitsTxt = ""
-    )
-    # Protect every currently registered portrait ID (including Maple).
-    return @(Get-SdRegisteredPortraitIds -PortraitsTxt $PortraitsTxt)
-}
-
-function Get-SdProtectedDdsFileNames {
-    param(
-        [string]$PortraitsTxt = ""
-    )
-    return @(Get-SdProtectedPortraitIds -PortraitsTxt $PortraitsTxt | ForEach-Object { "$_.dds" })
-}
-
-function Resolve-SdPortraitIdFromSlug {
-    param([string]$Slug)
-
-    if ([string]::IsNullOrWhiteSpace($Slug)) { return $null }
-    $lower = $Slug.Trim().ToLowerInvariant()
-    # Historical Oakley portrait ID / DDS is sd_dog_02 (not sd_dog_oakley).
-    if ($lower -eq "oakley") { return "sd_dog_02" }
-    return ("sd_dog_{0}" -f $lower)
-}
-
-function Get-SdPortraitIdentityStatus {
-    <#
-      Returns whether a character slug already has a registered definition and/or DDS.
-      Case-insensitive slug. Does not modify anything.
-    #>
-    param(
-        [string]$Slug,
-        [string]$RepoRoot = ""
-    )
-
-    if ([string]::IsNullOrWhiteSpace($RepoRoot)) {
-        $RepoRoot = Get-SdRepoRoot
-    }
-
-    $paths = Get-SdModPaths -RepoRoot $RepoRoot -Which Production
-    $portraitId = Resolve-SdPortraitIdFromSlug -Slug $Slug
-    if ([string]::IsNullOrWhiteSpace($portraitId)) {
-        return [PSCustomObject]@{
-            Slug         = $Slug
-            PortraitId   = $null
-            Registered   = $false
-            DdsExists    = $false
-            DdsPath      = $null
-            AlreadyExists = $false
-        }
-    }
-
-    $registered = (@(Get-SdRegisteredPortraitIds -PortraitsTxt $paths.PortraitsTxt) -contains $portraitId)
-    $ddsPath = Join-Path $paths.DdsDir ($portraitId + ".dds")
-    $ddsExists = Test-Path -LiteralPath $ddsPath
-
-    return [PSCustomObject]@{
-        Slug          = $Slug.ToLowerInvariant()
-        PortraitId    = $portraitId
-        Registered    = $registered
-        DdsExists     = $ddsExists
-        DdsPath       = $ddsPath
-        AlreadyExists = ($registered -or $ddsExists)
-    }
-}
-</file>
-
-<file path="tools/portrait-register.ps1">
-# Stellar Xeno — Phase 5/7: Portrait Registration
-# Registers an existing Phase 4 DDS into the production mod (mod/stellar_dogos):
-#   portrait definition + xenotype portrait set + category exposure.
-# Does not convert images or touch vanilla Stellaris.
-
-[CmdletBinding()]
-param(
-    [Parameter(Mandatory = $true, Position = 0)]
-    [string]$Source,
-
-    # Optional non-interactive xenotype (id, display name, or menu number).
-    # When omitted, an interactive xenotype menu is shown.
-    [string]$Xenotype = ""
-)
-
-$ErrorActionPreference = "Stop"
-
-. (Join-Path (Split-Path -Parent $PSCommandPath) "portrait-exit.ps1")
-. (Join-Path (Split-Path -Parent $PSCommandPath) "portrait-paths.ps1")
-
-$DdsNamePattern = '^sd_dog_(.+)\.dds$'
-# Populated after paths resolve (every currently registered ID, including Maple).
-$ProtectedIds = @()
-
-. (Join-Path (Split-Path -Parent $PSCommandPath) "portrait-xenotypes.ps1")
-
-# ---------------------------------------------------------------------------
-# Paths
-# ---------------------------------------------------------------------------
-
-function Get-RepoRoot {
-    return Get-SdRepoRoot
-}
-
-function Resolve-DdsPath {
-    param(
-        [string]$RepoRoot,
-        [string]$SourceArg
-    )
-
-    if ([IO.Path]::IsPathRooted($SourceArg) -and (Test-Path -LiteralPath $SourceArg)) {
-        return (Resolve-Path -LiteralPath $SourceArg).Path
-    }
-
-    $prod = Get-SdModPaths -RepoRoot $RepoRoot -Which Production
-    $candidates = @(
-        (Join-Path $RepoRoot $SourceArg),
-        (Join-Path $prod.DdsDir $SourceArg),
-        (Join-Path $prod.DdsDir ([IO.Path]::GetFileName($SourceArg)))
-    )
-
-    foreach ($c in $candidates) {
-        if (Test-Path -LiteralPath $c) {
-            return (Resolve-Path -LiteralPath $c).Path
-        }
-    }
-
-    throw ("DDS not found: {0}" -f $SourceArg)
-}
-
-function Get-ExperimentPaths {
-    # Compatibility alias — production is the canonical write target.
-    param([string]$RepoRoot)
-    return (Get-SdModPaths -RepoRoot $RepoRoot -Which Production)
-}
-
-# ---------------------------------------------------------------------------
-# DDS validation
-# ---------------------------------------------------------------------------
-
-function Test-PortraitDdsFile {
-    param([string]$Path)
-
-    $bytes = [IO.File]::ReadAllBytes($Path)
-    if ($bytes.Length -lt 128) { throw "DDS too small to be valid." }
-    $magic = [Text.Encoding]::ASCII.GetString($bytes, 0, 4)
-    if ($magic -ne "DDS ") { throw "Not a DDS file (bad magic)." }
-
-    $height = [BitConverter]::ToUInt32($bytes, 12)
-    $width = [BitConverter]::ToUInt32($bytes, 16)
-    $pfFlags = [BitConverter]::ToUInt32($bytes, 80)
-    $bpp = [BitConverter]::ToUInt32($bytes, 88)
-    $pitch = [BitConverter]::ToUInt32($bytes, 20)
-    $mips = [BitConverter]::ToUInt32($bytes, 28)
-
-    if ($width -ne 256 -or $height -ne 256) {
-        throw ("DDS must be 256x256 (got {0}x{1})." -f $width, $height)
-    }
-    if ($pfFlags -ne 0x41) {
-        throw ("DDS pfFlags must be 0x41 (got 0x{0:X})." -f $pfFlags)
-    }
-    if ($bpp -ne 32) {
-        throw ("DDS must be 32-bit (got {0})." -f $bpp)
-    }
-    if ($bytes.Length -ne 262272) {
-        throw ("Unexpected DDS size {0} (expected 262272 uncompressed RGBA)." -f $bytes.Length)
-    }
-
-    $a0 = 0
-    for ($y = 0; $y -lt 256; $y += 8) {
-        for ($x = 0; $x -lt 256; $x += 8) {
-            if ($bytes[128 + (($y * 256) + $x) * 4 + 3] -eq 0) { $a0++ }
-        }
-    }
-
-    return [PSCustomObject]@{
-        Width    = $width
-        Height   = $height
-        PfFlags  = $pfFlags
-        Bpp      = $bpp
-        Pitch    = $pitch
-        Mips     = $mips
-        Length   = $bytes.Length
-        SampleA0 = $a0
-    }
-}
-
-function Get-PortraitIdFromDdsName {
-    param([string]$FileName)
-
-    $m = [regex]::Match($FileName.ToLowerInvariant(), $DdsNamePattern)
-    if (-not $m.Success) {
-        throw ("DDS filename must match sd_dog_<name>.dds (got '{0}')." -f $FileName)
-    }
-    $slug = $m.Groups[1].Value
-    if ([string]::IsNullOrWhiteSpace($slug)) {
-        throw "DDS filename has empty portrait name slug."
-    }
-    return "sd_dog_$slug"
-}
-
-# ---------------------------------------------------------------------------
-# Parse existing registration
-# ---------------------------------------------------------------------------
-
-function Get-PortraitDefinitionIds {
-    param([string]$Text)
-
-    $ids = New-Object System.Collections.Generic.List[string]
-    foreach ($m in [regex]::Matches($Text, '(?m)^\s*(sd_dog_[A-Za-z0-9_]+)\s*=')) {
-        [void]$ids.Add($m.Groups[1].Value)
-    }
-    return @($ids)
-}
-
-function Get-PortraitBlockField {
-    param(
-        [string]$Text,
-        [string]$PortraitId,
-        [string]$FieldName
-    )
-
-    $pattern = '(?ms)^\s*' + [regex]::Escape($PortraitId) + '\s*=\s*\{(.*?)^\s*\}'
-    $m = [regex]::Match($Text, $pattern)
-    if (-not $m.Success) { return $null }
-
-    $fm = [regex]::Match($m.Groups[1].Value, [regex]::Escape($FieldName) + '\s*=\s*"([^"]+)"')
-    if (-not $fm.Success) { return $null }
-    return $fm.Groups[1].Value
-}
-
-function Get-PortraitTexturefile {
-    param([string]$Text, [string]$PortraitId)
-    return Get-PortraitBlockField -Text $Text -PortraitId $PortraitId -FieldName "texturefile"
-}
-
-function Get-PortraitGreeting {
-    param([string]$Text, [string]$PortraitId)
-    return Get-PortraitBlockField -Text $Text -PortraitId $PortraitId -FieldName "greeting_sound"
-}
-
-function Get-BraceBlockBody {
-    param(
-        [string]$Text,
-        [int]$OpenBraceIndex
-    )
-
-    $depth = 0
-    for ($i = $OpenBraceIndex; $i -lt $Text.Length; $i++) {
-        $ch = $Text[$i]
-        if ($ch -eq '{') { $depth++ }
-        elseif ($ch -eq '}') {
-            $depth--
-            if ($depth -eq 0) {
-                $start = $OpenBraceIndex + 1
-                $len = $i - $start
-                return [PSCustomObject]@{
-                    Body      = $Text.Substring($start, $len)
-                    EndIndex  = $i
-                }
-            }
-        }
-    }
-    throw "Unbalanced braces while parsing registration file."
-}
-
-function Get-AllPortraitSets {
-    param([string]$Text)
-
-    $sets = [ordered]@{}
-    $rx = [regex]'(?m)^([A-Za-z0-9_]+)\s*=\s*\{'
-    foreach ($m in $rx.Matches($Text)) {
-        $name = $m.Groups[1].Value
-        if ($name -eq "portraits" -or $name -eq "non_randomized_portraits") { continue }
-
-        $openIdx = $Text.IndexOf('{', $m.Index)
-        $parsed = Get-BraceBlockBody -Text $Text -OpenBraceIndex $openIdx
-        $body = $parsed.Body
-
-        $sc = [regex]::Match($body, 'species_class\s*=\s*([A-Za-z0-9_]+)')
-        $species = if ($sc.Success) { $sc.Groups[1].Value } else { $null }
-
-        $pOpen = [regex]::Match($body, '(?m)^\s*portraits\s*=\s*\{')
-        $nOpen = [regex]::Match($body, '(?m)^\s*non_randomized_portraits\s*=\s*\{')
-
-        $portraits = New-Object System.Collections.Generic.List[string]
-        $nonRand = New-Object System.Collections.Generic.List[string]
-        if ($pOpen.Success) {
-            $pBody = (Get-BraceBlockBody -Text $body -OpenBraceIndex $body.IndexOf('{', $pOpen.Index)).Body
-            foreach ($sm in [regex]::Matches($pBody, '"([^"]+)"')) { [void]$portraits.Add($sm.Groups[1].Value) }
-        }
-        if ($nOpen.Success) {
-            $nBody = (Get-BraceBlockBody -Text $body -OpenBraceIndex $body.IndexOf('{', $nOpen.Index)).Body
-            foreach ($sm in [regex]::Matches($nBody, '"([^"]+)"')) { [void]$nonRand.Add($sm.Groups[1].Value) }
-        }
-
-        $sets[$name] = [PSCustomObject]@{
-            Name         = $name
-            SpeciesClass = $species
-            Portraits    = @($portraits)
-            NonRandom    = @($nonRand)
-        }
-    }
-    return $sets
-}
-
-function Find-PortraitSetMembership {
-    param(
-        [System.Collections.Specialized.OrderedDictionary]$Sets,
-        [string]$PortraitId
-    )
-
-    $found = New-Object System.Collections.Generic.List[string]
-    foreach ($name in $Sets.Keys) {
-        $s = $Sets[$name]
-        if (($s.Portraits -contains $PortraitId) -or ($s.NonRandom -contains $PortraitId)) {
-            [void]$found.Add($name)
-        }
-    }
-    return @($found)
-}
-
-function Get-AllCategories {
-    param([string]$Text)
-
-    $cats = [ordered]@{}
-    $rx = [regex]'(?m)^([A-Za-z0-9_]+)\s*=\s*\{'
-    foreach ($m in $rx.Matches($Text)) {
-        $key = $m.Groups[1].Value
-        $openIdx = $Text.IndexOf('{', $m.Index)
-        $parsed = Get-BraceBlockBody -Text $Text -OpenBraceIndex $openIdx
-        $body = $parsed.Body
-
-        $nm = [regex]::Match($body, 'name\s*=\s*([A-Za-z0-9_]+)')
-        $setsBlock = [regex]::Match($body, '(?ms)sets\s*=\s*\{(.*?)\}')
-        $setList = New-Object System.Collections.Generic.List[string]
-        if ($setsBlock.Success) {
-            foreach ($line in ($setsBlock.Groups[1].Value -split "`r?`n")) {
-                $t = $line.Trim()
-                if ($t -match '^[A-Za-z0-9_]+$') { [void]$setList.Add($t) }
-            }
-        }
-        $cats[$key] = [PSCustomObject]@{
-            Key  = $key
-            Name = $(if ($nm.Success) { $nm.Groups[1].Value } else { $null })
-            Sets = @($setList)
-        }
-    }
-    return $cats
-}
-
-# ---------------------------------------------------------------------------
-# Writers
-# ---------------------------------------------------------------------------
-
-function Get-PortraitLabel {
-    param([string]$PortraitId)
-    switch ($PortraitId) {
-        'sd_dog_piglet' { return 'Piglet' }
-        'sd_dog_02'     { return 'Oakley' }
-        'sd_dog_angus'  { return 'Angus' }
-        'sd_dog_bruce'  { return 'Bruce' }
-        'sd_dog_cedar'  { return 'Cedar' }
-        default {
-            $slug = ($PortraitId -replace '^sd_dog_', '')
-            if ([string]::IsNullOrWhiteSpace($slug)) { return $PortraitId }
-            return ($slug.Substring(0, 1).ToUpper() + $slug.Substring(1))
-        }
-    }
-}
-
-function Build-PortraitsFile {
-    param(
-        [string[]]$OrderedIds,
-        [hashtable]$TextureById,
-        [hashtable]$GreetingById
-    )
-
-    $sb = New-Object System.Text.StringBuilder
-    [void]$sb.AppendLine("##############################################################")
-    [void]$sb.AppendLine("### Stellar Xeno - static portrait definitions")
-    [void]$sb.AppendLine("###")
-    [void]$sb.AppendLine("### Portraits:")
-    foreach ($id in $OrderedIds) {
-        [void]$sb.AppendLine(("###   {0} - {1}" -f $id, (Get-PortraitLabel -PortraitId $id)))
-    }
-    [void]$sb.AppendLine("##############################################################")
-    [void]$sb.AppendLine("")
-    [void]$sb.AppendLine("portraits = {")
-
-    for ($i = 0; $i -lt $OrderedIds.Count; $i++) {
-        $id = $OrderedIds[$i]
-        $tex = $TextureById[$id]
-        $greet = $GreetingById[$id]
-        if ([string]::IsNullOrWhiteSpace($greet)) { $greet = "mammalian_01_greetings" }
-
-        [void]$sb.AppendLine("`t$id = {")
-        [void]$sb.AppendLine("`t`tclothes_selector = `"no_texture`"")
-        [void]$sb.AppendLine("`t`tattachment_selector = `"no_texture`"")
-        [void]$sb.AppendLine("`t`tgreeting_sound = `"$greet`"")
-        [void]$sb.AppendLine("`t`ttexturefile = `"$tex`"")
-        [void]$sb.AppendLine("`t}")
-        if ($i -lt $OrderedIds.Count - 1) { [void]$sb.AppendLine("") }
-    }
-
-    [void]$sb.AppendLine("}")
-    return $sb.ToString()
-}
-
-function Build-SetsFile {
-    param([System.Collections.Specialized.OrderedDictionary]$Sets)
-
-    $sb = New-Object System.Text.StringBuilder
-    [void]$sb.AppendLine("##############################################################")
-    [void]$sb.AppendLine("### Stellar Xeno - portrait sets")
-    [void]$sb.AppendLine("###")
-    [void]$sb.AppendLine("### Pattern from vanilla common/portrait_sets/00_portrait_sets.txt:")
-    [void]$sb.AppendLine("### - species_class = CLASS")
-    [void]$sb.AppendLine("### - portraits = { `"id`" }")
-    [void]$sb.AppendLine("### - non_randomized_portraits so random AI empires avoid this art")
-    [void]$sb.AppendLine("##############################################################")
-    [void]$sb.AppendLine("")
-
-    $names = @($Sets.Keys)
-    for ($si = 0; $si -lt $names.Count; $si++) {
-        $s = $Sets[$names[$si]]
-        [void]$sb.AppendLine("$($s.Name) = {")
-        [void]$sb.AppendLine("`tspecies_class = $($s.SpeciesClass)")
-        [void]$sb.AppendLine("")
-        [void]$sb.AppendLine("`tportraits = {")
-        foreach ($id in $s.Portraits) { [void]$sb.AppendLine("`t`t`"$id`"") }
-        [void]$sb.AppendLine("`t}")
-        [void]$sb.AppendLine("")
-        [void]$sb.AppendLine("`tnon_randomized_portraits = {")
-        foreach ($id in $s.NonRandom) { [void]$sb.AppendLine("`t`t`"$id`"") }
-        [void]$sb.AppendLine("`t}")
-        [void]$sb.AppendLine("}")
-        if ($si -lt $names.Count - 1) { [void]$sb.AppendLine("") }
-    }
-
-    return $sb.ToString()
-}
-
-function Build-CategoriesFile {
-    param([System.Collections.Specialized.OrderedDictionary]$Categories)
-
-    $sb = New-Object System.Text.StringBuilder
-    [void]$sb.AppendLine("##############################################################")
-    [void]$sb.AppendLine("### Stellar Xeno - portrait category overrides")
-    [void]$sb.AppendLine("###")
-    [void]$sb.AppendLine("### Each block REPLACES the vanilla category of the same key so")
-    [void]$sb.AppendLine("### we can append one mod set with minimal change.")
-    [void]$sb.AppendLine("### Vanilla set lists were copied from Stellaris 4.4.x.")
-    [void]$sb.AppendLine("##############################################################")
-    [void]$sb.AppendLine("")
-
-    $keys = @($Categories.Keys)
-    for ($ci = 0; $ci -lt $keys.Count; $ci++) {
-        $c = $Categories[$keys[$ci]]
-        [void]$sb.AppendLine("$($c.Key) = {")
-        [void]$sb.AppendLine("`tname = $($c.Name)")
-        [void]$sb.AppendLine("")
-        [void]$sb.AppendLine("`tsets = {")
-        foreach ($setName in $c.Sets) {
-            [void]$sb.AppendLine("`t`t$setName")
-        }
-        [void]$sb.AppendLine("`t}")
-        [void]$sb.AppendLine("}")
-        if ($ci -lt $keys.Count - 1) { [void]$sb.AppendLine("") }
-    }
-
-    return $sb.ToString()
-}
-
-function Write-TextAtomic {
-    param(
-        [string]$Path,
-        [string]$Content
-    )
-
-    $tmp = $Path + ".partial"
-    $utf8NoBom = New-Object System.Text.UTF8Encoding $false
-    [IO.File]::WriteAllText($tmp, $Content, $utf8NoBom)
-    Move-Item -LiteralPath $tmp -Destination $Path -Force
-}
-
-# ---------------------------------------------------------------------------
-# Main
-# ---------------------------------------------------------------------------
-
-$repoRoot = Get-RepoRoot
-$paths = Get-ExperimentPaths -RepoRoot $repoRoot
-
-Write-SdHost "Stellar Xeno - Portrait Registration"
-Write-SdHost ""
-
-foreach ($required in @($paths.PortraitsTxt, $paths.SetTxt, $paths.CategoryTxt, $paths.DdsDir)) {
-    if (-not (Test-Path -LiteralPath $required)) {
-        throw ("Required path missing: {0}" -f $required)
-    }
-}
-
-$ddsPath = Resolve-DdsPath -RepoRoot $repoRoot -SourceArg $Source
-$ddsName = [IO.Path]::GetFileName($ddsPath)
-$portraitId = Get-PortraitIdFromDdsName -FileName $ddsName
-$displayName = ($portraitId -replace '^sd_dog_', '')
-# Title-case for player-facing messages
-$displayPretty = (Get-Culture).TextInfo.ToTitleCase($displayName.Replace('_', ' '))
-$textureRel = "gfx/models/portraits/sd_static_test/$ddsName"
-
-Write-SdHost ("Portrait: {0}" -f $displayPretty)
-Write-SdHost ""
-
-$ddsInfo = Test-PortraitDdsFile -Path $ddsPath
-
-# Resolve xenotype (interactive unless provided)
-if ([string]::IsNullOrWhiteSpace($Xenotype)) {
-    $xeno = Read-PortraitXenotypeInteractive -PortraitDisplayName $displayPretty
-} else {
-    $xeno = Resolve-PortraitXenotype -Selection $Xenotype
-    if ($null -eq $xeno) {
-        Write-Host "That species type was not recognized."
-        Write-Host "Please choose one of:"
-        $i = 1
-        foreach ($c in (Get-PortraitXenotypeCatalog)) {
-            Write-Host ("  {0}. {1}" -f $i, $c.DisplayName)
-            $i++
-        }
-        Exit-SdTool 2
-        return
-    }
-}
-
-if (-not (Test-SdPipelineMode)) {
-    Write-Host ""
-    Write-Host ("Registering as {0}..." -f $xeno.DisplayName)
-    Write-Host ""
-}
-# Protect every currently registered portrait (IDs + DDS hashes), including Maple.
-$ProtectedIds = @(Get-SdProtectedPortraitIds -PortraitsTxt $paths.PortraitsTxt)
-$protectedDds = @{}
-foreach ($k in (Get-SdProtectedDdsFileNames -PortraitsTxt $paths.PortraitsTxt)) {
-    $protectedDds[$k] = $null
-}
-foreach ($k in @($protectedDds.Keys)) {
-    $p = Join-Path $paths.DdsDir $k
-    if (Test-Path -LiteralPath $p) {
-        $protectedDds[$k] = (Get-FileHash -LiteralPath $p -Algorithm SHA256).Hash
-    }
-}
-
-$portraitsText = [IO.File]::ReadAllText($paths.PortraitsTxt)
-$setText = [IO.File]::ReadAllText($paths.SetTxt)
-$categoryText = [IO.File]::ReadAllText($paths.CategoryTxt)
-
-$defIds = Get-PortraitDefinitionIds -Text $portraitsText
-$sets = Get-AllPortraitSets -Text $setText
-$categories = Get-AllCategories -Text $categoryText
-
-# Snapshot mammalian set membership before any mutation (regression guard)
-$mamSetBefore = $null
-if ($sets.Contains("sd_static_test")) {
-    $mamSetBefore = [PSCustomObject]@{
-        Portraits = @($sets["sd_static_test"].Portraits)
-        NonRandom = @($sets["sd_static_test"].NonRandom)
-    }
-}
-
-$existingTexture = Get-PortraitTexturefile -Text $portraitsText -PortraitId $portraitId
-$existingGreeting = Get-PortraitGreeting -Text $portraitsText -PortraitId $portraitId
-$membership = @(Find-PortraitSetMembership -Sets $sets -PortraitId $portraitId)
-
-$inDef = $defIds -contains $portraitId
-$inTargetSet = $false
-if ($sets.Contains($xeno.SetName)) {
-    $target = $sets[$xeno.SetName]
-    $inTargetSet = (@($target.Portraits) -contains $portraitId) -and (@($target.NonRandom) -contains $portraitId)
-}
-
-# Idempotency / conflict
-if ($inDef -or $membership.Count -gt 0) {
-    $sameTexture = ($existingTexture -eq $textureRel)
-    $sameGreeting = ($existingGreeting -eq $xeno.GreetingSound)
-    $onlyTarget = ($membership.Count -eq 1 -and $membership[0] -eq $xeno.SetName -and $inTargetSet)
-
-    if ($inDef -and $sameTexture -and $sameGreeting -and $onlyTarget) {
-        Write-Host "This portrait is already registered."
-        Write-Host ("  Name: {0}" -f $displayPretty)
-        Write-Host ("  Species type: {0}" -f $xeno.DisplayName)
-        Write-Host "No changes were made."
-        Exit-SdTool 0
-        return
-    }
-
-    Write-Host "This portrait is already registered differently."
-    Write-Host "To protect your existing portraits, nothing was changed."
-    Write-Host ("  Portrait: {0}" -f $portraitId)
-    Write-Host ("  Existing species set(s): {0}" -f $(if ($membership.Count -eq 0) { "(none)" } else { ($membership -join ", ") }))
-    Write-Host ("  Requested species type: {0}" -f $xeno.DisplayName)
-    Exit-SdTool 2
-    return
-}
-
-if ($ProtectedIds -contains $portraitId) {
-    throw ("Refusing to modify protected portrait ID '{0}'." -f $portraitId)
-}
-
-# --- Portrait definitions (preserve existing greetings/textures) ---
-$textureMap = @{}
-$greetingMap = @{}
-foreach ($id in $defIds) {
-    $textureMap[$id] = Get-PortraitTexturefile -Text $portraitsText -PortraitId $id
-    $g = Get-PortraitGreeting -Text $portraitsText -PortraitId $id
-    if ([string]::IsNullOrWhiteSpace($g)) { $g = "mammalian_01_greetings" }
-    $greetingMap[$id] = $g
-}
-$orderedIds = @($defIds)
-if ($orderedIds -notcontains $portraitId) { $orderedIds += $portraitId }
-$textureMap[$portraitId] = $textureRel
-$greetingMap[$portraitId] = $xeno.GreetingSound
-
-$newPortraits = Build-PortraitsFile -OrderedIds $orderedIds -TextureById $textureMap -GreetingById $greetingMap
-
-# --- Portrait set for selected xenotype (create or append; preserve others) ---
-if (-not $sets.Contains($xeno.SetName)) {
-    $sets[$xeno.SetName] = [PSCustomObject]@{
-        Name         = $xeno.SetName
-        SpeciesClass = $xeno.SpeciesClass
-        Portraits    = @()
-        NonRandom    = @()
-    }
-} else {
-    $existingSet = $sets[$xeno.SetName]
-    if ($existingSet.SpeciesClass -ne $xeno.SpeciesClass) {
-        throw ("Set '{0}' species_class is '{1}' but xenotype requires '{2}'." -f $xeno.SetName, $existingSet.SpeciesClass, $xeno.SpeciesClass)
-    }
-}
-
-$targetSet = $sets[$xeno.SetName]
-$newPortraitsList = @($targetSet.Portraits)
-$newNonRandList = @($targetSet.NonRandom)
-if ($newPortraitsList -notcontains $portraitId) { $newPortraitsList += $portraitId }
-if ($newNonRandList -notcontains $portraitId) { $newNonRandList += $portraitId }
-$sets[$xeno.SetName] = [PSCustomObject]@{
-    Name         = $xeno.SetName
-    SpeciesClass = $xeno.SpeciesClass
-    Portraits    = $newPortraitsList
-    NonRandom    = $newNonRandList
-}
-
-# Ensure historical mammalian set still exists if it was present
-if (-not $sets.Contains("sd_static_test") -and $setText -match 'sd_static_test\s*=') {
-    throw "Internal error: existing sd_static_test set disappeared during parse."
-}
-
-$newSetText = Build-SetsFile -Sets $sets
-
-# --- Category: ensure selected category exposes the set; leave others alone ---
-if (-not $categories.Contains($xeno.CategoryKey)) {
-    $categories[$xeno.CategoryKey] = [PSCustomObject]@{
-        Key  = $xeno.CategoryKey
-        Name = $xeno.SpeciesClass
-        Sets = @($xeno.VanillaSets + $xeno.SetName)
-    }
-} else {
-    $cat = $categories[$xeno.CategoryKey]
-    if ($cat.Name -ne $xeno.SpeciesClass) {
-        throw ("Category '{0}' name is '{1}' but xenotype requires '{2}'." -f $xeno.CategoryKey, $cat.Name, $xeno.SpeciesClass)
-    }
-    $catSets = @($cat.Sets)
-    if ($catSets -notcontains $xeno.SetName) {
-        $catSets += $xeno.SetName
-    }
-    $categories[$xeno.CategoryKey] = [PSCustomObject]@{
-        Key  = $cat.Key
-        Name = $cat.Name
-        Sets = $catSets
-    }
-}
-
-$newCategoryText = Build-CategoriesFile -Categories $categories
-
-# Validate in-memory before write
-$vDef = Get-PortraitDefinitionIds -Text $newPortraits
-$vTex = Get-PortraitTexturefile -Text $newPortraits -PortraitId $portraitId
-$vGreet = Get-PortraitGreeting -Text $newPortraits -PortraitId $portraitId
-$vSets = Get-AllPortraitSets -Text $newSetText
-$vCats = Get-AllCategories -Text $newCategoryText
-
-if (($vDef | Where-Object { $_ -eq $portraitId }).Count -ne 1) {
-    throw "Validation failed: portrait definition count for new ID is not exactly 1."
-}
-if ($vTex -ne $textureRel) { throw "Validation failed: texturefile mismatch after edit." }
-if ($vGreet -ne $xeno.GreetingSound) { throw "Validation failed: greeting_sound mismatch after edit." }
-if (-not $vSets.Contains($xeno.SetName)) { throw "Validation failed: target set missing." }
-$vs = $vSets[$xeno.SetName]
-if (($vs.Portraits | Where-Object { $_ -eq $portraitId }).Count -ne 1) { throw "Validation failed: set portraits count invalid." }
-if (($vs.NonRandom | Where-Object { $_ -eq $portraitId }).Count -ne 1) { throw "Validation failed: non_randomized count invalid." }
-if ($vs.SpeciesClass -ne $xeno.SpeciesClass) { throw "Validation failed: species_class mismatch." }
-if (-not $vCats.Contains($xeno.CategoryKey)) { throw "Validation failed: category missing." }
-if ($vCats[$xeno.CategoryKey].Sets -notcontains $xeno.SetName) { throw "Validation failed: category does not expose set." }
-
-# Preserve protected IDs / mammalian set contents
-foreach ($protId in $ProtectedIds) {
-    if ($defIds -contains $protId) {
-        if (-not ($vDef -contains $protId)) {
-            throw ("Validation failed: protected ID '{0}' missing from definitions." -f $protId)
-        }
-        $oldTex = Get-PortraitTexturefile -Text $portraitsText -PortraitId $protId
-        $newTex = Get-PortraitTexturefile -Text $newPortraits -PortraitId $protId
-        if ($oldTex -ne $newTex) {
-            throw ("Validation failed: protected ID '{0}' texturefile changed." -f $protId)
-        }
-        $oldG = Get-PortraitGreeting -Text $portraitsText -PortraitId $protId
-        $newG = Get-PortraitGreeting -Text $newPortraits -PortraitId $protId
-        if ($oldG -ne $newG) {
-            throw ("Validation failed: protected ID '{0}' greeting_sound changed." -f $protId)
-        }
-    }
-}
-
-if ($null -ne $mamSetBefore -and $vSets.Contains("sd_static_test") -and $xeno.SetName -ne "sd_static_test") {
-    $newMam = $vSets["sd_static_test"]
-    if (($mamSetBefore.Portraits -join ",") -ne ($newMam.Portraits -join ",")) {
-        throw "Validation failed: mammalian sd_static_test portraits changed unexpectedly."
-    }
-    if (($mamSetBefore.NonRandom -join ",") -ne ($newMam.NonRandom -join ",")) {
-        throw "Validation failed: mammalian sd_static_test non_randomized changed unexpectedly."
-    }
-}
-
-Write-TextAtomic -Path $paths.PortraitsTxt -Content $newPortraits
-Write-TextAtomic -Path $paths.SetTxt -Content $newSetText
-Write-TextAtomic -Path $paths.CategoryTxt -Content $newCategoryText
-
-# Post-write validation
-$portraitsAfter = [IO.File]::ReadAllText($paths.PortraitsTxt)
-$setAfter = [IO.File]::ReadAllText($paths.SetTxt)
-$catAfter = [IO.File]::ReadAllText($paths.CategoryTxt)
-$postSets = Get-AllPortraitSets -Text $setAfter
-$postCats = Get-AllCategories -Text $catAfter
-
-$postDef = Get-PortraitDefinitionIds -Text $portraitsAfter
-$postTex = Get-PortraitTexturefile -Text $portraitsAfter -PortraitId $portraitId
-$postGreet = Get-PortraitGreeting -Text $portraitsAfter -PortraitId $portraitId
-
-if (($postDef | Where-Object { $_ -eq $portraitId }).Count -ne 1) { throw "Post-write: definition count invalid." }
-if ($postTex -ne $textureRel) { throw "Post-write: texturefile invalid." }
-if ($postGreet -ne $xeno.GreetingSound) { throw "Post-write: greeting invalid." }
-if (-not $postSets.Contains($xeno.SetName)) { throw "Post-write: set missing." }
-if ($postSets[$xeno.SetName].Portraits -notcontains $portraitId) { throw "Post-write: set portraits invalid." }
-if ($postSets[$xeno.SetName].NonRandom -notcontains $portraitId) { throw "Post-write: non_randomized invalid." }
-if ($postCats[$xeno.CategoryKey].Sets -notcontains $xeno.SetName) { throw "Post-write: category missing set." }
-
-if (-not (Test-SdPipelineMode)) {
-    Write-Host ""
-    Write-Host "Registration complete."
-    Write-Host ("  Name: {0}" -f $displayPretty)
-    Write-Host ("  Species type: {0}" -f $xeno.DisplayName)
-    Write-Host ""
-    Write-Host "Technical details:"
-    Write-Host ("  Portrait ID: {0}" -f $portraitId)
-    Write-Host ("  DDS: {0}" -f $ddsPath)
-}
-
-foreach ($k in ($protectedDds.Keys | Sort-Object)) {
-    if ($null -eq $protectedDds[$k]) { continue }
-    $p = Join-Path $paths.DdsDir $k
-    $after = (Get-FileHash -LiteralPath $p -Algorithm SHA256).Hash
-    if ($after -ne $protectedDds[$k]) {
-        throw "Protected DDS changed unexpectedly."
-    }
-}
-
-Exit-SdTool 0
-return
-</file>
-
-<file path="tools/portrait-xenotypes.ps1">
-# Stellar Xeno — Phase 7: Xenotype catalog (isolated mapping)
-# Dot-source from portrait-register.ps1 / portrait-pipeline.ps1 / portrait-intake.ps1.
-# Vanilla category keys / species_class / set lists inspected from Stellaris 4.4.x
-# common/portrait_categories/00_portrait_categories.txt (read-only).
-#
-# FilenameAbbr is for canonical PNG names only (dogNN_name_<abbr>_stellaris.png).
-# It is NOT a Stellaris species_class and must never be used as a portrait ID.
-
-function Get-PortraitXenotypeCatalog {
-    # Order = console menu order. DisplayName is user-facing; Ids/classes are internal.
-    return @(
-        [PSCustomObject]@{
-            Id              = "mammalian"
-            DisplayName     = "Mammalian"
-            FilenameAbbr    = "mam"
-            CategoryKey     = "mammalians"
-            SpeciesClass    = "MAM"
-            SetName         = "sd_static_test"          # historical / existing set — do not rename
-            GreetingSound   = "mammalian_01_greetings"
-            VanillaSets     = @("mammalians", "cybernetic_mammalians", "biogenesis_mammalians", "psionic_mammalians")
-        }
-        [PSCustomObject]@{
-            Id              = "avian"
-            DisplayName     = "Avian"
-            FilenameAbbr    = "avi"
-            CategoryKey     = "avians"
-            SpeciesClass    = "AVI"
-            SetName         = "sd_static_test_avi"
-            GreetingSound   = "avian_01_greetings"
-            VanillaSets     = @("avians", "cybernetic_avians", "synthetic_avians", "biogenesis_avians", "psionic_avians")
-        }
-        [PSCustomObject]@{
-            Id              = "reptilian"
-            DisplayName     = "Reptilian"
-            FilenameAbbr    = "rep"
-            CategoryKey     = "reptilians"
-            SpeciesClass    = "REP"
-            SetName         = "sd_static_test_rep"
-            GreetingSound   = "reptilian_01_greetings"
-            VanillaSets     = @("reptilians", "cybernetic_reptilians", "biogenesis_reptilians", "pdx_signup_reptilian")
-        }
-        [PSCustomObject]@{
-            # User-facing label is Amphibian; Stellaris class remains AQUATIC.
-            Id              = "aquatic"
-            DisplayName     = "Amphibian"
-            FilenameAbbr    = "amp"
-            CategoryKey     = "aquatics"
-            SpeciesClass    = "AQUATIC"
-            SetName         = "sd_static_test_aquatic"
-            GreetingSound   = "aqu_portrait_01"
-            VanillaSets     = @("aquatics", "synthetic_aquatics", "biogenesis_aquatic", "psionic_aquatics")
-        }
-        [PSCustomObject]@{
-            Id              = "arthropoid"
-            DisplayName     = "Arthropoid"
-            FilenameAbbr    = "art"
-            CategoryKey     = "arthropoids"
-            SpeciesClass    = "ART"
-            SetName         = "sd_static_test_art"
-            GreetingSound   = "arthropoid_01_greetings"
-            VanillaSets     = @("arthropoids", "cybernetic_arthropoids", "synthetic_arthropoids", "biogenesis_arthropoids", "psionic_arthropoids")
-        }
-        [PSCustomObject]@{
-            Id              = "molluscoid"
-            DisplayName     = "Molluscoid"
-            FilenameAbbr    = "mol"
-            CategoryKey     = "molluscoids"
-            SpeciesClass    = "MOL"
-            SetName         = "sd_static_test_mol"
-            GreetingSound   = "molluscoid_01_greetings"
-            VanillaSets     = @("molluscoids", "synthetic_molluscoids", "ep9_exclusive_molluscoid", "biogenesis_molluscoids", "psionic_molluscoids")
-        }
-        [PSCustomObject]@{
-            Id              = "fungoid"
-            DisplayName     = "Fungoid"
-            FilenameAbbr    = "fun"
-            CategoryKey     = "fungoids"
-            SpeciesClass    = "FUN"
-            SetName         = "sd_static_test_fun"
-            GreetingSound   = "fungoid_01_greetings"
-            VanillaSets     = @("fungoids", "cybernetic_fungoids", "psionic_fungoids")
-        }
-        [PSCustomObject]@{
-            Id              = "plantoid"
-            DisplayName     = "Plantoid"
-            FilenameAbbr    = "pla"
-            CategoryKey     = "plantoids"
-            SpeciesClass    = "PLANT"
-            SetName         = "sd_static_test_plant"
-            GreetingSound   = "plantoid_greetings"
-            VanillaSets     = @("plantoids", "biogenesis_plantoids")
-        }
-        [PSCustomObject]@{
-            Id              = "lithoid"
-            DisplayName     = "Lithoid"
-            FilenameAbbr    = "lit"
-            CategoryKey     = "lithoids"
-            SpeciesClass    = "LITHOID"
-            SetName         = "sd_static_test_lithoid"
-            GreetingSound   = "lithoid_portrait_1_golem"
-            VanillaSets     = @("lithoids")
-        }
-        [PSCustomObject]@{
-            Id              = "necroid"
-            DisplayName     = "Necroid"
-            FilenameAbbr    = "nec"
-            CategoryKey     = "necroids"
-            SpeciesClass    = "NECROID"
-            SetName         = "sd_static_test_necroid"
-            GreetingSound   = "necroid_portrait_01_boneworshipper"
-            VanillaSets     = @("necroids")
-        }
-        [PSCustomObject]@{
-            Id              = "machine"
-            DisplayName     = "Machine"
-            FilenameAbbr    = "mac"
-            CategoryKey     = "machines"
-            SpeciesClass    = "MACHINE"
-            SetName         = "sd_static_test_machine"
-            GreetingSound   = "robot_mammalian_greetings"
-            VanillaSets     = @("machines", "biogenesis_machines", "psionic_machines")
-        }
-        [PSCustomObject]@{
-            # Verified from Stellaris 4.4.x:
-            #   portrait_categories: toxoids { name = TOX; sets = { toxoids } }
-            #   portrait_sets: toxoids { species_class = TOX }
-            #   species_classes: TOX = { ... }
-            #   greeting example: tox_portrait_01
-            Id              = "toxoid"
-            DisplayName     = "Toxoid"
-            FilenameAbbr    = "tox"
-            CategoryKey     = "toxoids"
-            SpeciesClass    = "TOX"
-            SetName         = "sd_static_test_tox"
-            GreetingSound   = "tox_portrait_01"
-            VanillaSets     = @("toxoids")
-        }
-    )
-}
-
-function Resolve-PortraitXenotype {
-    param(
-        [AllowEmptyString()]
-        [string]$Selection = ""
-    )
-
-    if ([string]::IsNullOrWhiteSpace($Selection)) {
-        return $null
-    }
-
-    $catalog = @(Get-PortraitXenotypeCatalog)
-    $raw = $Selection.Trim()
-
-    # Numeric menu index (1-based)
-    $num = 0
-    if ([int]::TryParse($raw, [ref]$num)) {
-        if ($num -ge 1 -and $num -le $catalog.Count) {
-            return $catalog[$num - 1]
-        }
-        return $null
-    }
-
-    $lower = $raw.ToLowerInvariant()
-    # Friendly aliases (user-facing Amphibian == internal aquatic)
-    if ($lower -eq "amphibian" -or $lower -eq "aquatic") {
-        return ($catalog | Where-Object { $_.Id -eq "aquatic" } | Select-Object -First 1)
-    }
-
-    foreach ($x in $catalog) {
-        if ($x.Id -eq $lower -or
-            $x.DisplayName.ToLowerInvariant() -eq $lower -or
-            $x.FilenameAbbr -eq $lower) {
-            return $x
-        }
-    }
-    return $null
-}
-
-function Read-PortraitXenotypeArrowMenu {
-    param(
-        [object[]]$Catalog,
-        [string]$PortraitDisplayName = ""
-    )
-
-    Write-Host ""
-    Write-Host "Which Stellaris species type should this portrait belong to?"
-    Write-Host "This determines which Stellaris species category the portrait will appear under."
-    $up = [char]0x2191
-    $down = [char]0x2193
-    Write-Host ("Use {0} / {1} to choose, then press Enter." -f $up, $down)
-    Write-Host ""
-
-    $selected = 0
-    $menuTop = [Console]::CursorTop
-    $menuLines = $Catalog.Count
-    $prevVisible = [Console]::CursorVisible
-    [Console]::CursorVisible = $false
-    $esc = [char]27
-
-    function Move-CursorToMenuTop {
-        try {
-            if ($menuTop -ge 0 -and $menuTop -lt [Console]::BufferHeight) {
-                [Console]::SetCursorPosition(0, $menuTop)
-                return $true
-            }
-        } catch { }
-        try {
-            [Console]::CursorTop = $menuTop
-            [Console]::CursorLeft = 0
-            return $true
-        } catch { }
-        # Absolute reposition failed (scrolled buffer). Move up relatively via VT.
-        try {
-            $cur = [Console]::CursorTop
-            if ($cur -ge $menuLines) {
-                Write-Host -NoNewline ("{0}[{1}A" -f $esc, $menuLines)
-                return $true
-            }
-        } catch { }
-        return $false
-    }
-
-    function Write-XenoMenu {
-        param([int]$SelectedIndex)
-
-        $repositioned = Move-CursorToMenuTop
-        if (-not $repositioned) {
-            # Last resort: do not print a second copy; skip redraw.
-            return
-        }
-
-        for ($i = 0; $i -lt $Catalog.Count; $i++) {
-            Write-Host -NoNewline ("{0}[2K" -f $esc)
-            $label = $Catalog[$i].DisplayName
-            if ($i -eq $SelectedIndex) {
-                Write-Host (("  > {0}" -f $label).PadRight(40)) -ForegroundColor Cyan
-            } else {
-                Write-Host (("    {0}" -f $label).PadRight(40))
-            }
-        }
-    }
-
-    try {
-        Write-XenoMenu -SelectedIndex $selected
-        while ($true) {
-            $key = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
-            # Ignore key-up / repeat noise if present.
-            if ($null -ne $key.PSObject.Properties["KeyDown"] -and -not $key.KeyDown) {
-                continue
-            }
-            switch ($key.VirtualKeyCode) {
-                38 { # Up arrow
-                    $selected = ($selected - 1)
-                    if ($selected -lt 0) { $selected = $Catalog.Count - 1 }
-                    Write-XenoMenu -SelectedIndex $selected
-                }
-                40 { # Down arrow
-                    $selected = ($selected + 1) % $Catalog.Count
-                    Write-XenoMenu -SelectedIndex $selected
-                }
-                13 { # Enter
-                    try {
-                        [Console]::CursorTop = $menuTop + $menuLines
-                        [Console]::CursorLeft = 0
-                    } catch {
-                        Write-Host ""
-                    }
-                    $check = [char]0x2713
-                    Write-Host ("{0} {1} selected." -f $check, $Catalog[$selected].DisplayName)
-                    return $Catalog[$selected]
-                }
-            }
-        }
-    } finally {
-        [Console]::CursorVisible = $prevVisible
-    }
-}
-
-function Read-PortraitXenotypeInteractive {
-    param(
-        [string]$PortraitDisplayName = ""
-    )
-
-    $catalog = @(Get-PortraitXenotypeCatalog)
-
-    # Normal console: arrow-key menu. Redirected stdin (scripted tests): numbered fallback.
-    $canUseArrowMenu = $false
-    try {
-        $canUseArrowMenu = (
-            -not [Console]::IsInputRedirected -and
-            $Host.Name -eq "ConsoleHost" -and
-            $null -ne $Host.UI -and
-            $null -ne $Host.UI.RawUI
-        )
-    } catch {
-        $canUseArrowMenu = $false
-    }
-
-    if ($canUseArrowMenu) {
-        return Read-PortraitXenotypeArrowMenu -Catalog $catalog -PortraitDisplayName $PortraitDisplayName
-    }
-
-    Write-Host ""
-    Write-Host "Which Stellaris species type should this portrait belong to?"
-    Write-Host "This determines which Stellaris species category the portrait will appear under."
-    Write-Host ""
-    for ($i = 0; $i -lt $catalog.Count; $i++) {
-        Write-Host ("  {0}. {1}" -f ($i + 1), $catalog[$i].DisplayName)
-    }
-    Write-Host ""
-
-    while ($true) {
-        Write-Host -NoNewline "> "
-        $entered = $null
-        if ([Console]::IsInputRedirected) {
-            $entered = [Console]::In.ReadLine()
-            if ($null -eq $entered) {
-                throw "No species type was chosen (input closed before a selection was made)."
-            }
-            Write-Host $entered
-        } else {
-            $entered = Read-Host
-        }
-
-        if ([string]::IsNullOrWhiteSpace($entered)) {
-            Write-Host "Please choose a species type from the list (1-$($catalog.Count))."
-            continue
-        }
-
-        $resolved = Resolve-PortraitXenotype -Selection $entered
-        if ($null -ne $resolved) {
-            $check = [char]0x2713
-            Write-Host ("{0} {1} selected." -f $check, $resolved.DisplayName)
-            return $resolved
-        }
-
-        Write-Host "That choice was not recognized."
-        Write-Host "Please enter a number from the list (1-$($catalog.Count))."
-    }
-}
 </file>
 
 <file path="docs/portrait-prompts.md">
@@ -7395,6 +7628,356 @@ Also note `error.log` / `game.log` lines mentioning the portrait ID or DDS path 
 These confirmations do **not** close Phase 2.
 </file>
 
+<file path="mod/stellar_dogos/common/portrait_categories/zzz_sd_static_test_portrait_categories.txt">
+##############################################################
+### Stellar Xeno - portrait category overrides
+###
+### Each block REPLACES the vanilla category of the same key so
+### we can append one mod set with minimal change.
+### Vanilla set lists were copied from Stellaris 4.4.x.
+##############################################################
+
+mammalians = {
+	name = MAM
+
+	sets = {
+		mammalians
+		cybernetic_mammalians
+		biogenesis_mammalians
+		psionic_mammalians
+		sd_static_test
+	}
+}
+
+avians = {
+	name = AVI
+
+	sets = {
+		avians
+		cybernetic_avians
+		synthetic_avians
+		biogenesis_avians
+		psionic_avians
+		sd_static_test_avi
+	}
+}
+
+reptilians = {
+	name = REP
+
+	sets = {
+		reptilians
+		cybernetic_reptilians
+		biogenesis_reptilians
+		pdx_signup_reptilian
+		sd_static_test_rep
+	}
+}
+
+fungoids = {
+	name = FUN
+
+	sets = {
+		fungoids
+		cybernetic_fungoids
+		psionic_fungoids
+		sd_static_test_fun
+	}
+}
+
+aquatics = {
+	name = AQUATIC
+
+	sets = {
+		aquatics
+		synthetic_aquatics
+		biogenesis_aquatic
+		psionic_aquatics
+		sd_static_test_aquatic
+	}
+}
+
+toxoids = {
+	name = TOX
+
+	sets = {
+		toxoids
+		sd_static_test_tox
+	}
+}
+</file>
+
+<file path="mod/stellar_dogos/common/portrait_sets/00_sd_static_test_portrait_sets.txt">
+##############################################################
+### Stellar Xeno - portrait sets
+###
+### Pattern from vanilla common/portrait_sets/00_portrait_sets.txt:
+### - species_class = CLASS
+### - portraits = { "id" }
+### - non_randomized_portraits so random AI empires avoid this art
+##############################################################
+
+sd_static_test = {
+	species_class = MAM
+
+	portraits = {
+		"sd_dog_piglet"
+		"sd_dog_02"
+		"sd_dog_angus"
+		"sd_dog_bruce"
+		"sd_dog_cedar"
+		"sd_dog_liberty"
+		"sd_dog_maple"
+		"sd_dog_galian"
+		"sd_dog_ranger"
+	}
+
+	non_randomized_portraits = {
+		"sd_dog_piglet"
+		"sd_dog_02"
+		"sd_dog_angus"
+		"sd_dog_bruce"
+		"sd_dog_cedar"
+		"sd_dog_liberty"
+		"sd_dog_maple"
+		"sd_dog_galian"
+		"sd_dog_ranger"
+	}
+}
+
+sd_static_test_avi = {
+	species_class = AVI
+
+	portraits = {
+		"sd_dog_sparrow"
+		"sd_dog_zaldrin"
+	}
+
+	non_randomized_portraits = {
+		"sd_dog_sparrow"
+		"sd_dog_zaldrin"
+	}
+}
+
+sd_static_test_rep = {
+	species_class = REP
+
+	portraits = {
+		"sd_dog_lemon"
+		"sd_dog_pepper"
+		"sd_dog_nova"
+	}
+
+	non_randomized_portraits = {
+		"sd_dog_lemon"
+		"sd_dog_pepper"
+		"sd_dog_nova"
+	}
+}
+
+sd_static_test_fun = {
+	species_class = FUN
+
+	portraits = {
+		"sd_dog_blitz"
+	}
+
+	non_randomized_portraits = {
+		"sd_dog_blitz"
+	}
+}
+
+sd_static_test_aquatic = {
+	species_class = AQUATIC
+
+	portraits = {
+		"sd_dog_slosh"
+	}
+
+	non_randomized_portraits = {
+		"sd_dog_slosh"
+	}
+}
+
+sd_static_test_tox = {
+	species_class = TOX
+
+	portraits = {
+		"sd_dog_davy"
+		"sd_dog_cree"
+		"sd_dog_vex"
+	}
+
+	non_randomized_portraits = {
+		"sd_dog_davy"
+		"sd_dog_cree"
+		"sd_dog_vex"
+	}
+}
+</file>
+
+<file path="mod/stellar_dogos/gfx/portraits/portraits/00_sd_static_test_portraits.txt">
+##############################################################
+### Stellar Xeno - static portrait definitions
+###
+### Portraits:
+###   sd_dog_piglet - Piglet
+###   sd_dog_02 - Oakley
+###   sd_dog_angus - Angus
+###   sd_dog_bruce - Bruce
+###   sd_dog_cedar - Cedar
+###   sd_dog_liberty - Liberty
+###   sd_dog_sparrow - Sparrow
+###   sd_dog_maple - Maple
+###   sd_dog_lemon - Lemon
+###   sd_dog_pepper - Pepper
+###   sd_dog_nova - Nova
+###   sd_dog_zaldrin - Zaldrin
+###   sd_dog_blitz - Blitz
+###   sd_dog_galian - Galian
+###   sd_dog_slosh - Slosh
+###   sd_dog_ranger - Ranger
+###   sd_dog_davy - Davy
+###   sd_dog_cree - Cree
+###   sd_dog_vex - Vex
+##############################################################
+
+portraits = {
+	sd_dog_piglet = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_piglet.dds"
+	}
+
+	sd_dog_02 = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_02.dds"
+	}
+
+	sd_dog_angus = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_angus.dds"
+	}
+
+	sd_dog_bruce = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_bruce.dds"
+	}
+
+	sd_dog_cedar = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_cedar.dds"
+	}
+
+	sd_dog_liberty = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_liberty.dds"
+	}
+
+	sd_dog_sparrow = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "avian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_sparrow.dds"
+	}
+
+	sd_dog_maple = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_maple.dds"
+	}
+
+	sd_dog_lemon = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "reptilian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_lemon.dds"
+	}
+
+	sd_dog_pepper = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "reptilian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_pepper.dds"
+	}
+
+	sd_dog_nova = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "reptilian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_nova.dds"
+	}
+
+	sd_dog_zaldrin = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "avian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_zaldrin.dds"
+	}
+
+	sd_dog_blitz = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "fungoid_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_blitz.dds"
+	}
+
+	sd_dog_galian = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_galian.dds"
+	}
+
+	sd_dog_slosh = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "aqu_portrait_01"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_slosh.dds"
+	}
+
+	sd_dog_ranger = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "mammalian_01_greetings"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_ranger.dds"
+	}
+
+	sd_dog_davy = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "tox_portrait_01"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_davy.dds"
+	}
+
+	sd_dog_cree = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "tox_portrait_01"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_cree.dds"
+	}
+
+	sd_dog_vex = {
+		clothes_selector = "no_texture"
+		attachment_selector = "no_texture"
+		greeting_sound = "tox_portrait_01"
+		texturefile = "gfx/models/portraits/sd_static_test/sd_dog_vex.dds"
+	}
+}
+</file>
+
 <file path="tools/portrait-dds.ps1">
 # Stellar Xeno — Phase 4: Canonical PNG → DDS
 # Converts a validated Phase 3.1 source PNG into a 256x256 uncompressed
@@ -7862,416 +8445,6 @@ Write-SdHost ""
 Write-SdHost "Game texture created."
 Exit-SdTool 0
 return
-</file>
-
-<file path="tools/portrait-pipeline.ps1">
-# Stellar Xeno — Phase 6: End-to-End Portrait Pipeline
-# Chains existing tools: intake → species-type selection → DDS → registration.
-# Does NOT redesign architecture, accept a name CLI bypass, or touch vanilla Stellaris.
-#
-# Interactive naming is mandatory. Species type is chosen with the arrow-key menu
-# (or numbered fallback when stdin is redirected). The pipeline never derives the
-# portrait name or species type from the candidate filename.
-#
-# Normal UX: run without piping; answer the on-screen prompts.
-# Scripted proof (optional): pipe answers that go THROUGH the visible prompts, e.g.:
-#   @"
-#   Maple
-#   1
-#   "@ | powershell ... -File tools\portrait-pipeline.ps1
-
-[CmdletBinding()]
-param()
-
-$ErrorActionPreference = "Stop"
-
-. (Join-Path (Split-Path -Parent $PSCommandPath) "portrait-exit.ps1")
-. (Join-Path (Split-Path -Parent $PSCommandPath) "portrait-paths.ps1")
-
-$CanonicalPattern = '^dog(\d+)_(.+)_([a-z]{3})_stellaris\.png$'
-$LegacyCanonicalPattern = '^dog(\d+)_(.+)_stellaris\.png$'
-
-function Get-RepoRoot {
-    return Get-SdRepoRoot
-}
-
-function Get-Sha256Map {
-    param(
-        [string]$Directory,
-        [string[]]$FileNames
-    )
-
-    $map = @{}
-    foreach ($name in $FileNames) {
-        $path = Join-Path $Directory $name
-        if (Test-Path -LiteralPath $path) {
-            $map[$name] = (Get-FileHash -LiteralPath $path -Algorithm SHA256).Hash
-        }
-    }
-    return $map
-}
-
-function Assert-Sha256Unchanged {
-    param(
-        [hashtable]$Before,
-        [hashtable]$After,
-        [string]$Label
-    )
-
-    $ok = $true
-    foreach ($k in ($Before.Keys | Sort-Object)) {
-        if (-not $After.ContainsKey($k)) {
-            Write-Host ("  {0}: MISSING after {1}" -f $k, $Label)
-            $ok = $false
-            continue
-        }
-        $same = ($Before[$k] -eq $After[$k])
-        if (-not $same) {
-            Write-Host ("  {0}: CHANGED" -f $k)
-            $ok = $false
-        }
-    }
-    if (-not $ok) {
-        throw ("Protected assets changed during {0}." -f $Label)
-    }
-}
-
-function Get-CanonicalNames {
-    param([string]$Directory)
-
-    if (-not (Test-Path -LiteralPath $Directory)) { return @() }
-    return @(
-        Get-ChildItem -LiteralPath $Directory -File |
-            Where-Object {
-                $n = $_.Name.ToLowerInvariant()
-                ($n -match $CanonicalPattern) -or ($n -match $LegacyCanonicalPattern)
-            } |
-            ForEach-Object { $_.Name } |
-            Sort-Object
-    )
-}
-
-function Test-PortraitIdRegistered {
-    param(
-        [string]$PortraitsTxt,
-        [string]$PortraitId
-    )
-
-    $ids = @(Get-SdRegisteredPortraitIds -PortraitsTxt $PortraitsTxt)
-    return ($ids -contains $PortraitId)
-}
-
-function Resolve-PortraitIdFromSlug {
-    param([string]$Slug)
-    return (Resolve-SdPortraitIdFromSlug -Slug $Slug)
-}
-
-function Get-PendingCanonicalPortraits {
-    param(
-        [string]$ImgHere,
-        [string]$AssetsSource,
-        [string]$DdsDir,
-        [string]$PortraitsTxt
-    )
-
-    $pending = New-Object System.Collections.Generic.List[object]
-    foreach ($name in (Get-CanonicalNames -Directory $ImgHere)) {
-        $m = [regex]::Match($name.ToLowerInvariant(), $CanonicalPattern)
-        if (-not $m.Success) { continue } # legacy canons are not auto-finished here
-
-        $slug = $m.Groups[2].Value
-        $abbr = $m.Groups[3].Value
-        $portraitId = Resolve-PortraitIdFromSlug -Slug $slug
-        $ddsPath = Join-Path $DdsDir "$portraitId.dds"
-        $registered = Test-PortraitIdRegistered -PortraitsTxt $PortraitsTxt -PortraitId $portraitId
-        $ddsExists = Test-Path -LiteralPath $ddsPath
-        if ($registered -and $ddsExists) { continue }
-
-        $imgPath = Join-Path $ImgHere $name
-        $assetsPath = Join-Path $AssetsSource $name
-        [void]$pending.Add([PSCustomObject]@{
-            FileName    = $name
-            Slug        = $slug
-            XenoAbbr    = $abbr
-            PortraitId  = $portraitId
-            ImgHerePath = $imgPath
-            AssetsPath  = $assetsPath
-            NeedsDds    = (-not $ddsExists)
-            NeedsReg    = (-not $registered)
-        })
-    }
-
-    return @($pending | Sort-Object FileName)
-}
-
-function Invoke-ChildScript {
-    param(
-        [string]$ScriptPath,
-        # Named parameters as a hashtable (e.g. @{ Source = $path }).
-        # Do NOT pass @("-Source", $path) — string-array splatting treats
-        # "-Source" as a positional value when invoking scripts with &.
-        [hashtable]$Arguments = @{},
-        [string]$PhaseName = ""
-    )
-
-    # Run in THIS PowerShell process so Write-Host prompts and the arrow-key
-    # xenotype menu share the user's real console. Nested powershell.exe was
-    # breaking stdin/stdout and made registration fail without a species choice.
-    $env:STELLAR_DOGOS_INPROCESS = "1"
-    $global:STELLAR_DOGOS_EXITCODE = 0
-    $label = if ($PhaseName) { $PhaseName } else { Split-Path -Leaf $ScriptPath }
-
-    try {
-        & $ScriptPath @Arguments
-        $code = 0
-        if ($null -ne $global:STELLAR_DOGOS_EXITCODE) {
-            $code = [int]$global:STELLAR_DOGOS_EXITCODE
-        }
-        return [PSCustomObject]@{
-            ExitCode = $code
-            Error    = $null
-        }
-    } catch {
-        Write-Host ""
-        Write-Host ("Something went wrong while preparing your portrait ({0})." -f $label)
-        Write-Host ("  {0}" -f $_.Exception.Message)
-        if ($_.InvocationInfo -and $_.InvocationInfo.PositionMessage) {
-            Write-Host $_.InvocationInfo.PositionMessage
-        }
-        return [PSCustomObject]@{
-            ExitCode = 1
-            Error    = $_.Exception.Message
-        }
-    } finally {
-        Remove-Item Env:\STELLAR_DOGOS_INPROCESS -ErrorAction SilentlyContinue
-    }
-}
-
-# ---------------------------------------------------------------------------
-# Main
-# ---------------------------------------------------------------------------
-
-$repoRoot = Get-RepoRoot
-$toolsDir = Join-Path $repoRoot "tools"
-$imgHere = Join-Path $repoRoot "ImgHERE"
-$assetsSource = Join-Path $repoRoot "assets\source"
-$modPaths = Get-SdModPaths -RepoRoot $repoRoot -Which Production
-$ddsDir = $modPaths.DdsDir
-$ProtectedDds = @(Get-SdProtectedDdsFileNames -PortraitsTxt $modPaths.PortraitsTxt)
-$intakeScript = Join-Path $toolsDir "portrait-intake.ps1"
-$ddsScript = Join-Path $toolsDir "portrait-dds.ps1"
-$registerScript = Join-Path $toolsDir "portrait-register.ps1"
-$xenotypesScript = Join-Path $toolsDir "portrait-xenotypes.ps1"
-$pathsHelper = Join-Path $toolsDir "portrait-paths.ps1"
-$validateScript = Join-Path $toolsDir "portrait-validate.ps1"
-
-Write-Host "Stellar Xeno - Portrait Creator"
-Write-Host ""
-
-foreach ($required in @($imgHere, $assetsSource, $ddsDir, $modPaths.PortraitsTxt, $modPaths.SetTxt, $modPaths.CategoryTxt, $intakeScript, $ddsScript, $registerScript, $xenotypesScript, $pathsHelper, $validateScript)) {
-    if (-not (Test-Path -LiteralPath $required)) {
-        throw ("Required path missing: {0}" -f $required)
-    }
-}
-
-. $xenotypesScript
-. $validateScript
-
-$env:STELLAR_DOGOS_PIPELINE = "1"
-try {
-    $hashesBefore = Get-Sha256Map -Directory $ddsDir -FileNames $ProtectedDds
-    $global:STELLAR_DOGOS_LAST_DISPLAY_NAME = $null
-    $global:STELLAR_DOGOS_LAST_XENOTYPE_ID = $null
-    $global:STELLAR_DOGOS_LAST_CANONICAL_NAME = $null
-
-    $canonicalName = $null
-    $displayName = $null
-    $xeno = $null
-    $fromPendingCanon = $false
-
-    $intakeResult = Invoke-ChildScript -ScriptPath $intakeScript -PhaseName "portrait preparation"
-
-    if ($intakeResult.ExitCode -ne 0) {
-        Write-Host ""
-        Write-Host "Could not prepare the portrait. Your original image was left in ImgHERE so you can try again."
-        if ($intakeResult.Error) {
-            Write-Host ("Details: {0}" -f $intakeResult.Error)
-        }
-        exit $intakeResult.ExitCode
-    }
-
-    if (-not [string]::IsNullOrWhiteSpace($global:STELLAR_DOGOS_LAST_CANONICAL_NAME)) {
-        $canonicalName = $global:STELLAR_DOGOS_LAST_CANONICAL_NAME
-        $displayName = $global:STELLAR_DOGOS_LAST_DISPLAY_NAME
-        $xenoId = $global:STELLAR_DOGOS_LAST_XENOTYPE_ID
-        $xeno = Resolve-PortraitXenotype -Selection $xenoId
-        if ($null -eq $xeno) {
-            throw ("Could not resolve species type from intake selection '{0}'." -f $xenoId)
-        }
-    } else {
-        # No raw new candidate this run — finish ONE already-named pending canon if any.
-        $pending = @(Get-PendingCanonicalPortraits -ImgHere $imgHere -AssetsSource $assetsSource -DdsDir $ddsDir -PortraitsTxt $modPaths.PortraitsTxt)
-        if ($pending.Count -eq 0) {
-            # Intake already printed the friendly "no new portrait" message when applicable.
-            exit 0
-        }
-
-        $chosen = $pending[0]
-        $fromPendingCanon = $true
-        if ($pending.Count -gt 1) {
-            Write-Host ""
-            Write-Host ("Multiple portraits are waiting ({0})." -f $pending.Count)
-            Write-Host ("Processing this one now: {0}" -f $chosen.FileName)
-            Write-Host "Run the tool again to process the next portrait."
-        }
-
-        Write-Host ""
-        Write-Host "New portrait found:"
-        Write-Host ("  {0}" -f $chosen.FileName)
-
-        $canonicalName = $chosen.FileName
-        $displayName = (Get-Culture).TextInfo.ToTitleCase($chosen.Slug.Replace('_', ' '))
-        $xeno = Resolve-PortraitXenotype -Selection $chosen.XenoAbbr
-        if ($null -eq $xeno) {
-            throw ("Could not resolve species type from filename abbreviation '{0}' in {1}." -f $chosen.XenoAbbr, $canonicalName)
-        }
-
-        # If already registered under a different species class, do not finish with the wrong abbr.
-        $idStatus = Get-SdPortraitIdentityStatus -Slug $chosen.Slug -RepoRoot $repoRoot
-        $mem = Get-SdPortraitSetMembershipDetailed -SetTxt $modPaths.SetTxt
-        if ($idStatus.Registered -and $mem.ContainsKey($idStatus.PortraitId)) {
-            $regClass = $mem[$idStatus.PortraitId][0].SpeciesClass
-            if ($xeno.SpeciesClass -ne $regClass) {
-                Write-Host ""
-                Write-Host "Filename xenotype does not match the existing registration."
-                Write-Host ("  File            : {0}" -f $chosen.FileName)
-                Write-Host ("  File implies    : {0}" -f $xeno.DisplayName)
-                Write-Host ("  Registered as   : species_class {0}" -f $regClass)
-                Write-Host ("  Portrait ID     : {0}" -f $idStatus.PortraitId)
-                Write-Host "Rename the canonical PNG to the correct _<xeno>_ abbreviation, or leave the registered portrait as-is."
-                exit 2
-            }
-        }
-
-        # Ensure assets/source has the same canonical file (copy only if missing).
-        if (-not (Test-Path -LiteralPath $chosen.AssetsPath)) {
-            Copy-Item -LiteralPath $chosen.ImgHerePath -Destination $chosen.AssetsPath -Force
-        }
-
-        $global:STELLAR_DOGOS_LAST_CANONICAL_NAME = $canonicalName
-        $global:STELLAR_DOGOS_LAST_DISPLAY_NAME = $displayName
-        $global:STELLAR_DOGOS_LAST_XENOTYPE_ID = $xeno.Id
-    }
-
-    $canonicalRel = Join-Path "assets\source" $canonicalName
-    $canonicalPath = Join-Path $assetsSource $canonicalName
-
-    if (-not (Test-Path -LiteralPath $canonicalPath)) {
-        throw ("Prepared portrait image missing: {0}" -f $canonicalPath)
-    }
-
-    # Lock the candidate for this invocation — do not re-discover / switch mid-run.
-    $lockedCanonicalName = $canonicalName
-    $lockedCanonicalPath = (Resolve-Path -LiteralPath $canonicalPath).Path
-
-    $m = [regex]::Match($lockedCanonicalName.ToLowerInvariant(), $CanonicalPattern)
-    if (-not $m.Success) {
-        throw ("Unexpected prepared filename (expected dogNN_name_xeno_stellaris.png): {0}" -f $lockedCanonicalName)
-    }
-    $slug = $m.Groups[2].Value
-    $xenoAbbr = $m.Groups[3].Value
-    if ([string]::IsNullOrWhiteSpace($displayName)) {
-        $displayName = (Get-Culture).TextInfo.ToTitleCase($slug.Replace('_', ' '))
-    }
-    $portraitId = Resolve-PortraitIdFromSlug -Slug $slug
-    $ddsName = "$portraitId.dds"
-    $ddsPath = Join-Path $ddsDir $ddsName
-
-    if ($null -eq $xeno) {
-        throw "Species type was not resolved for this portrait."
-    }
-    if ($xeno.FilenameAbbr -ne $xenoAbbr) {
-        throw ("Filename xenotype '{0}' does not match selected species type '{1}'." -f $xenoAbbr, $xeno.DisplayName)
-    }
-    $speciesLabel = $xeno.DisplayName
-
-    # Same-file guard before mutating game assets.
-    if ($lockedCanonicalName -ne $global:STELLAR_DOGOS_LAST_CANONICAL_NAME) {
-        throw ("Candidate switched mid-run (expected {0}, now {1}). Aborting." -f $lockedCanonicalName, $global:STELLAR_DOGOS_LAST_CANONICAL_NAME)
-    }
-    if (-not (Test-Path -LiteralPath $lockedCanonicalPath)) {
-        throw ("Locked candidate file disappeared: {0}" -f $lockedCanonicalPath)
-    }
-
-    Write-Host ""
-    Write-Host "Preparing your portrait..."
-
-    $ddsResult = Invoke-ChildScript -ScriptPath $ddsScript -Arguments @{ Source = $canonicalRel } -PhaseName "game texture"
-    if ($ddsResult.ExitCode -ne 0) {
-        Write-Host ""
-        Write-Host "Could not finish preparing your portrait."
-        if ($ddsResult.Error) {
-            Write-Host ("Details: {0}" -f $ddsResult.Error)
-        }
-        Write-Host ("Exit code: {0}" -f $ddsResult.ExitCode)
-        exit $ddsResult.ExitCode
-    }
-
-    if (-not (Test-Path -LiteralPath $ddsPath)) {
-        throw ("Expected game texture was not created: {0}" -f $ddsPath)
-    }
-
-    if ($lockedCanonicalName -ne $global:STELLAR_DOGOS_LAST_CANONICAL_NAME) {
-        throw ("Candidate switched before registration (expected {0}). Aborting." -f $lockedCanonicalName)
-    }
-
-    $regRel = Join-Path $modPaths.DdsRelPrefix $ddsName
-    $regResult = Invoke-ChildScript -ScriptPath $registerScript -Arguments @{
-        Source   = $regRel
-        Xenotype = $xeno.Id
-    } -PhaseName "registration"
-    if ($regResult.ExitCode -ne 0) {
-        Write-Host ""
-        Write-Host "Could not finish preparing your portrait."
-        Write-Host ("Exit code: {0}" -f $regResult.ExitCode)
-        if ($regResult.Error) {
-            Write-Host ("Details: {0}" -f $regResult.Error)
-        } else {
-            Write-Host "See the messages above for the exact reason."
-        }
-        exit $regResult.ExitCode
-    }
-
-    $hashesAfter = Get-Sha256Map -Directory $ddsDir -FileNames $ProtectedDds
-    Assert-Sha256Unchanged -Before $hashesBefore -After $hashesAfter -Label "portrait creation"
-
-    $validation = Test-SdPortraitRegistration -RepoRoot $repoRoot
-    if (-not $validation.Ok) {
-        Write-Host ""
-        Write-Host "Portrait files were written, but registration validation reported errors:"
-        foreach ($e in $validation.Errors) { Write-Host ("  - {0}" -f $e) }
-        exit 3
-    }
-
-    Write-Host ""
-    $check = [char]0x2713
-    Write-Host ("{0} Portrait created successfully!" -f $check)
-    Write-Host ("Name: {0}" -f $displayName)
-    Write-Host ("Species type: {0}" -f $speciesLabel)
-    Write-Host ""
-    Write-Host "Your portrait is now ready to use in Stellaris."
-    Write-Host ""
-    Write-Host "Technical details:"
-    Write-Host ("  Portrait ID: {0}" -f $portraitId)
-    Write-Host ("  Source: {0}" -f $lockedCanonicalPath)
-    Write-Host ("  DDS: {0}" -f $ddsPath)
-    if ($fromPendingCanon) {
-        Write-Host ("  Note: finished an already-named pending portrait ({0})." -f $lockedCanonicalName)
-    }
-    exit 0
-} finally {
-    Remove-Item Env:\STELLAR_DOGOS_PIPELINE -ErrorAction SilentlyContinue
-}
 </file>
 
 <file path="tools/portrait-intake.ps1">
@@ -9018,6 +9191,446 @@ if (-not (Test-SdPipelineMode)) {
 }
 Exit-SdTool 0
 return
+</file>
+
+<file path="tools/portrait-pipeline.ps1">
+# Stellar Xeno — Phase 6: End-to-End Portrait Pipeline
+# Chains existing tools: intake → species-type selection → DDS → registration.
+# Does NOT redesign architecture, accept a name CLI bypass, or touch vanilla Stellaris.
+#
+# Orchestration priority (one portrait per invocation):
+#   1. Pending canonical PNG missing DDS and/or registration → finish DDS + register
+#      (no name/xenotype prompts; raw candidates in ImgHERE do not block this)
+#   2. Else new raw ImgHERE candidate → interactive intake → DDS → register
+#   3. Else nothing to do → exit 0
+#
+# Interactive naming is mandatory for raw candidates only. Species type is chosen
+# with the arrow-key menu (or numbered fallback when stdin is redirected). The
+# pipeline never derives the portrait name or species type from a raw filename.
+#
+# Normal UX: run without piping; answer the on-screen prompts.
+# Scripted proof (optional): pipe answers that go THROUGH the visible prompts, e.g.:
+#   @"
+#   Maple
+#   1
+#   "@ | powershell ... -File tools\portrait-pipeline.ps1
+
+[CmdletBinding()]
+param()
+
+$ErrorActionPreference = "Stop"
+
+. (Join-Path (Split-Path -Parent $PSCommandPath) "portrait-exit.ps1")
+. (Join-Path (Split-Path -Parent $PSCommandPath) "portrait-paths.ps1")
+
+$CanonicalPattern = '^dog(\d+)_(.+)_([a-z]{3})_stellaris\.png$'
+$LegacyCanonicalPattern = '^dog(\d+)_(.+)_stellaris\.png$'
+
+function Get-RepoRoot {
+    return Get-SdRepoRoot
+}
+
+function Get-Sha256Map {
+    param(
+        [string]$Directory,
+        [string[]]$FileNames
+    )
+
+    $map = @{}
+    foreach ($name in $FileNames) {
+        $path = Join-Path $Directory $name
+        if (Test-Path -LiteralPath $path) {
+            $map[$name] = (Get-FileHash -LiteralPath $path -Algorithm SHA256).Hash
+        }
+    }
+    return $map
+}
+
+function Assert-Sha256Unchanged {
+    param(
+        [hashtable]$Before,
+        [hashtable]$After,
+        [string]$Label
+    )
+
+    $ok = $true
+    foreach ($k in ($Before.Keys | Sort-Object)) {
+        if (-not $After.ContainsKey($k)) {
+            Write-Host ("  {0}: MISSING after {1}" -f $k, $Label)
+            $ok = $false
+            continue
+        }
+        $same = ($Before[$k] -eq $After[$k])
+        if (-not $same) {
+            Write-Host ("  {0}: CHANGED" -f $k)
+            $ok = $false
+        }
+    }
+    if (-not $ok) {
+        throw ("Protected assets changed during {0}." -f $Label)
+    }
+}
+
+function Get-CanonicalNames {
+    param([string]$Directory)
+
+    if (-not (Test-Path -LiteralPath $Directory)) { return @() }
+    return @(
+        Get-ChildItem -LiteralPath $Directory -File |
+            Where-Object {
+                $n = $_.Name.ToLowerInvariant()
+                ($n -match $CanonicalPattern) -or ($n -match $LegacyCanonicalPattern)
+            } |
+            ForEach-Object { $_.Name } |
+            Sort-Object
+    )
+}
+
+function Test-PortraitIdRegistered {
+    param(
+        [string]$PortraitsTxt,
+        [string]$PortraitId
+    )
+
+    $ids = @(Get-SdRegisteredPortraitIds -PortraitsTxt $PortraitsTxt)
+    return ($ids -contains $PortraitId)
+}
+
+function Resolve-PortraitIdFromSlug {
+    param([string]$Slug)
+    return (Resolve-SdPortraitIdFromSlug -Slug $Slug)
+}
+
+function Get-PendingCanonicalPortraits {
+    param(
+        [string]$ImgHere,
+        [string]$AssetsSource,
+        [string]$DdsDir,
+        [string]$PortraitsTxt
+    )
+
+    $pending = New-Object System.Collections.Generic.List[object]
+    foreach ($name in (Get-CanonicalNames -Directory $ImgHere)) {
+        $m = [regex]::Match($name.ToLowerInvariant(), $CanonicalPattern)
+        if (-not $m.Success) { continue } # legacy canons are not auto-finished here
+
+        $slug = $m.Groups[2].Value
+        $abbr = $m.Groups[3].Value
+        $portraitId = Resolve-PortraitIdFromSlug -Slug $slug
+        $ddsPath = Join-Path $DdsDir "$portraitId.dds"
+        $registered = Test-PortraitIdRegistered -PortraitsTxt $PortraitsTxt -PortraitId $portraitId
+        $ddsExists = Test-Path -LiteralPath $ddsPath
+        if ($registered -and $ddsExists) { continue }
+
+        $imgPath = Join-Path $ImgHere $name
+        $assetsPath = Join-Path $AssetsSource $name
+        [void]$pending.Add([PSCustomObject]@{
+            FileName    = $name
+            Slug        = $slug
+            XenoAbbr    = $abbr
+            PortraitId  = $portraitId
+            ImgHerePath = $imgPath
+            AssetsPath  = $assetsPath
+            NeedsDds    = (-not $ddsExists)
+            NeedsReg    = (-not $registered)
+        })
+    }
+
+    return @($pending | Sort-Object FileName)
+}
+
+function Invoke-ChildScript {
+    param(
+        [string]$ScriptPath,
+        # Named parameters as a hashtable (e.g. @{ Source = $path }).
+        # Do NOT pass @("-Source", $path) — string-array splatting treats
+        # "-Source" as a positional value when invoking scripts with &.
+        [hashtable]$Arguments = @{},
+        [string]$PhaseName = ""
+    )
+
+    # Run in THIS PowerShell process so Write-Host prompts and the arrow-key
+    # xenotype menu share the user's real console. Nested powershell.exe was
+    # breaking stdin/stdout and made registration fail without a species choice.
+    $env:STELLAR_DOGOS_INPROCESS = "1"
+    $global:STELLAR_DOGOS_EXITCODE = 0
+    $label = if ($PhaseName) { $PhaseName } else { Split-Path -Leaf $ScriptPath }
+
+    try {
+        & $ScriptPath @Arguments
+        $code = 0
+        if ($null -ne $global:STELLAR_DOGOS_EXITCODE) {
+            $code = [int]$global:STELLAR_DOGOS_EXITCODE
+        }
+        return [PSCustomObject]@{
+            ExitCode = $code
+            Error    = $null
+        }
+    } catch {
+        Write-Host ""
+        Write-Host ("Something went wrong while preparing your portrait ({0})." -f $label)
+        Write-Host ("  {0}" -f $_.Exception.Message)
+        if ($_.InvocationInfo -and $_.InvocationInfo.PositionMessage) {
+            Write-Host $_.InvocationInfo.PositionMessage
+        }
+        return [PSCustomObject]@{
+            ExitCode = 1
+            Error    = $_.Exception.Message
+        }
+    } finally {
+        Remove-Item Env:\STELLAR_DOGOS_INPROCESS -ErrorAction SilentlyContinue
+    }
+}
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+
+$repoRoot = Get-RepoRoot
+$toolsDir = Join-Path $repoRoot "tools"
+$imgHere = Join-Path $repoRoot "ImgHERE"
+$assetsSource = Join-Path $repoRoot "assets\source"
+$modPaths = Get-SdModPaths -RepoRoot $repoRoot -Which Production
+$ddsDir = $modPaths.DdsDir
+$ProtectedDds = @(Get-SdProtectedDdsFileNames -PortraitsTxt $modPaths.PortraitsTxt)
+$intakeScript = Join-Path $toolsDir "portrait-intake.ps1"
+$ddsScript = Join-Path $toolsDir "portrait-dds.ps1"
+$registerScript = Join-Path $toolsDir "portrait-register.ps1"
+$xenotypesScript = Join-Path $toolsDir "portrait-xenotypes.ps1"
+$pathsHelper = Join-Path $toolsDir "portrait-paths.ps1"
+$validateScript = Join-Path $toolsDir "portrait-validate.ps1"
+
+Write-Host "Stellar Xeno - Portrait Creator"
+Write-Host ""
+
+foreach ($required in @($imgHere, $assetsSource, $ddsDir, $modPaths.PortraitsTxt, $modPaths.SetTxt, $modPaths.CategoryTxt, $intakeScript, $ddsScript, $registerScript, $xenotypesScript, $pathsHelper, $validateScript)) {
+    if (-not (Test-Path -LiteralPath $required)) {
+        throw ("Required path missing: {0}" -f $required)
+    }
+}
+
+. $xenotypesScript
+. $validateScript
+
+$env:STELLAR_DOGOS_PIPELINE = "1"
+try {
+    $hashesBefore = Get-Sha256Map -Directory $ddsDir -FileNames $ProtectedDds
+    $global:STELLAR_DOGOS_LAST_DISPLAY_NAME = $null
+    $global:STELLAR_DOGOS_LAST_XENOTYPE_ID = $null
+    $global:STELLAR_DOGOS_LAST_CANONICAL_NAME = $null
+
+    $canonicalName = $null
+    $displayName = $null
+    $xeno = $null
+    $fromPendingCanon = $false
+    $needsDds = $true
+    $needsReg = $true
+
+    # Priority 1: finish ONE already-named canonical portrait missing DDS and/or registration.
+    # Raw ImgHERE candidates (including failed ones like Oakadile) must not block this.
+    $pending = @(Get-PendingCanonicalPortraits -ImgHere $imgHere -AssetsSource $assetsSource -DdsDir $ddsDir -PortraitsTxt $modPaths.PortraitsTxt)
+    if ($pending.Count -gt 0) {
+        $chosen = $pending[0]
+        $fromPendingCanon = $true
+        $needsDds = [bool]$chosen.NeedsDds
+        $needsReg = [bool]$chosen.NeedsReg
+
+        Write-Host "Pending canonical portraits found."
+        if ($pending.Count -gt 1) {
+            Write-Host ("  Waiting: {0}" -f $pending.Count)
+            Write-Host ("Processing this one now:")
+            Write-Host ("  {0}" -f $chosen.FileName)
+            Write-Host "Run the tool again to process the next portrait."
+        } else {
+            Write-Host "Processing:"
+            Write-Host ("  {0}" -f $chosen.FileName)
+        }
+
+        $canonicalName = $chosen.FileName
+        $displayName = (Get-Culture).TextInfo.ToTitleCase($chosen.Slug.Replace('_', ' '))
+        $xeno = Resolve-PortraitXenotype -Selection $chosen.XenoAbbr
+        if ($null -eq $xeno) {
+            throw ("Could not resolve species type from filename abbreviation '{0}' in {1}." -f $chosen.XenoAbbr, $canonicalName)
+        }
+
+        # If already registered under a different species class, do not finish with the wrong abbr.
+        $idStatus = Get-SdPortraitIdentityStatus -Slug $chosen.Slug -RepoRoot $repoRoot
+        $mem = Get-SdPortraitSetMembershipDetailed -SetTxt $modPaths.SetTxt
+        if ($idStatus.Registered -and $mem.ContainsKey($idStatus.PortraitId)) {
+            $regClass = $mem[$idStatus.PortraitId][0].SpeciesClass
+            if ($xeno.SpeciesClass -ne $regClass) {
+                Write-Host ""
+                Write-Host "Filename xenotype does not match the existing registration."
+                Write-Host ("  File            : {0}" -f $chosen.FileName)
+                Write-Host ("  File implies    : {0}" -f $xeno.DisplayName)
+                Write-Host ("  Registered as   : species_class {0}" -f $regClass)
+                Write-Host ("  Portrait ID     : {0}" -f $idStatus.PortraitId)
+                Write-Host "Rename the canonical PNG to the correct _<xeno>_ abbreviation, or leave the registered portrait as-is."
+                exit 2
+            }
+        }
+
+        # Ensure assets/source has the same canonical file (copy only if missing).
+        if (-not (Test-Path -LiteralPath $chosen.AssetsPath)) {
+            Copy-Item -LiteralPath $chosen.ImgHerePath -Destination $chosen.AssetsPath -Force
+        }
+
+        $global:STELLAR_DOGOS_LAST_CANONICAL_NAME = $canonicalName
+        $global:STELLAR_DOGOS_LAST_DISPLAY_NAME = $displayName
+        $global:STELLAR_DOGOS_LAST_XENOTYPE_ID = $xeno.Id
+    } else {
+        # Priority 2: interactive intake for a new raw candidate (only when nothing pending).
+        $intakeResult = Invoke-ChildScript -ScriptPath $intakeScript -PhaseName "portrait preparation"
+
+        if ($intakeResult.ExitCode -ne 0) {
+            Write-Host ""
+            Write-Host "Could not prepare the portrait. Your original image was left in ImgHERE so you can try again."
+            if ($intakeResult.Error) {
+                Write-Host ("Details: {0}" -f $intakeResult.Error)
+            }
+            exit $intakeResult.ExitCode
+        }
+
+        if ([string]::IsNullOrWhiteSpace($global:STELLAR_DOGOS_LAST_CANONICAL_NAME)) {
+            # Priority 3: nothing pending and no new candidate prepared.
+            Write-Host ""
+            Write-Host "Portrait pipeline is up to date."
+            Write-Host "No pending canonical portraits and no new ImgHERE candidates to process."
+            exit 0
+        }
+
+        $canonicalName = $global:STELLAR_DOGOS_LAST_CANONICAL_NAME
+        $displayName = $global:STELLAR_DOGOS_LAST_DISPLAY_NAME
+        $xenoId = $global:STELLAR_DOGOS_LAST_XENOTYPE_ID
+        $xeno = Resolve-PortraitXenotype -Selection $xenoId
+        if ($null -eq $xeno) {
+            throw ("Could not resolve species type from intake selection '{0}'." -f $xenoId)
+        }
+        $needsDds = $true
+        $needsReg = $true
+    }
+
+    $canonicalRel = Join-Path "assets\source" $canonicalName
+    $canonicalPath = Join-Path $assetsSource $canonicalName
+
+    if (-not (Test-Path -LiteralPath $canonicalPath)) {
+        throw ("Prepared portrait image missing: {0}" -f $canonicalPath)
+    }
+
+    # Lock the candidate for this invocation — do not re-discover / switch mid-run.
+    $lockedCanonicalName = $canonicalName
+    $lockedCanonicalPath = (Resolve-Path -LiteralPath $canonicalPath).Path
+
+    $m = [regex]::Match($lockedCanonicalName.ToLowerInvariant(), $CanonicalPattern)
+    if (-not $m.Success) {
+        throw ("Unexpected prepared filename (expected dogNN_name_xeno_stellaris.png): {0}" -f $lockedCanonicalName)
+    }
+    $slug = $m.Groups[2].Value
+    $xenoAbbr = $m.Groups[3].Value
+    if ([string]::IsNullOrWhiteSpace($displayName)) {
+        $displayName = (Get-Culture).TextInfo.ToTitleCase($slug.Replace('_', ' '))
+    }
+    $portraitId = Resolve-PortraitIdFromSlug -Slug $slug
+    $ddsName = "$portraitId.dds"
+    $ddsPath = Join-Path $ddsDir $ddsName
+
+    if ($null -eq $xeno) {
+        throw "Species type was not resolved for this portrait."
+    }
+    if ($xeno.FilenameAbbr -ne $xenoAbbr) {
+        throw ("Filename xenotype '{0}' does not match selected species type '{1}'." -f $xenoAbbr, $xeno.DisplayName)
+    }
+    $speciesLabel = $xeno.DisplayName
+
+    # Same-file guard before mutating game assets.
+    if ($lockedCanonicalName -ne $global:STELLAR_DOGOS_LAST_CANONICAL_NAME) {
+        throw ("Candidate switched mid-run (expected {0}, now {1}). Aborting." -f $lockedCanonicalName, $global:STELLAR_DOGOS_LAST_CANONICAL_NAME)
+    }
+    if (-not (Test-Path -LiteralPath $lockedCanonicalPath)) {
+        throw ("Locked candidate file disappeared: {0}" -f $lockedCanonicalPath)
+    }
+
+    Write-Host ""
+    Write-Host "Preparing your portrait..."
+
+    if ($needsDds) {
+        if (Test-Path -LiteralPath $ddsPath) {
+            Write-Host ("Game texture already exists (will not overwrite): {0}" -f $ddsPath)
+        } else {
+            $ddsResult = Invoke-ChildScript -ScriptPath $ddsScript -Arguments @{ Source = $canonicalRel } -PhaseName "game texture"
+            if ($ddsResult.ExitCode -ne 0) {
+                Write-Host ""
+                Write-Host "Could not finish preparing your portrait."
+                if ($ddsResult.Error) {
+                    Write-Host ("Details: {0}" -f $ddsResult.Error)
+                }
+                Write-Host ("Exit code: {0}" -f $ddsResult.ExitCode)
+                exit $ddsResult.ExitCode
+            }
+        }
+    } else {
+        Write-Host ("Game texture already present; skipping DDS generation.")
+    }
+
+    if (-not (Test-Path -LiteralPath $ddsPath)) {
+        throw ("Expected game texture missing: {0}" -f $ddsPath)
+    }
+
+    if ($lockedCanonicalName -ne $global:STELLAR_DOGOS_LAST_CANONICAL_NAME) {
+        throw ("Candidate switched before registration (expected {0}). Aborting." -f $lockedCanonicalName)
+    }
+
+    if ($needsReg) {
+        $regRel = Join-Path $modPaths.DdsRelPrefix $ddsName
+        $regResult = Invoke-ChildScript -ScriptPath $registerScript -Arguments @{
+            Source   = $regRel
+            Xenotype = $xeno.Id
+        } -PhaseName "registration"
+        if ($regResult.ExitCode -ne 0) {
+            Write-Host ""
+            Write-Host "Could not finish preparing your portrait."
+            Write-Host ("Exit code: {0}" -f $regResult.ExitCode)
+            if ($regResult.Error) {
+                Write-Host ("Details: {0}" -f $regResult.Error)
+            } else {
+                Write-Host "See the messages above for the exact reason."
+            }
+            exit $regResult.ExitCode
+        }
+    } else {
+        Write-Host "Portrait already registered; skipping registration."
+    }
+
+    $hashesAfter = Get-Sha256Map -Directory $ddsDir -FileNames $ProtectedDds
+    Assert-Sha256Unchanged -Before $hashesBefore -After $hashesAfter -Label "portrait creation"
+
+    $validation = Test-SdPortraitRegistration -RepoRoot $repoRoot
+    if (-not $validation.Ok) {
+        Write-Host ""
+        Write-Host "Portrait files were written, but registration validation reported errors:"
+        foreach ($e in $validation.Errors) { Write-Host ("  - {0}" -f $e) }
+        exit 3
+    }
+
+    Write-Host ""
+    $check = [char]0x2713
+    Write-Host ("{0} Portrait created successfully!" -f $check)
+    Write-Host ("Name: {0}" -f $displayName)
+    Write-Host ("Species type: {0}" -f $speciesLabel)
+    Write-Host ""
+    Write-Host "Your portrait is now ready to use in Stellaris."
+    Write-Host ""
+    Write-Host "Technical details:"
+    Write-Host ("  Portrait ID: {0}" -f $portraitId)
+    Write-Host ("  Source: {0}" -f $lockedCanonicalPath)
+    Write-Host ("  DDS: {0}" -f $ddsPath)
+    if ($fromPendingCanon) {
+        Write-Host ("  Note: finished an already-named pending portrait ({0})." -f $lockedCanonicalName)
+    }
+    exit 0
+} finally {
+    Remove-Item Env:\STELLAR_DOGOS_PIPELINE -ErrorAction SilentlyContinue
+}
 </file>
 
 <file path="docs/development-roadmap.md">
